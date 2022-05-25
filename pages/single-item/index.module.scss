@@ -1,0 +1,148 @@
+.footercon {
+    margin-top: 10vw;
+}
+@media only screen and (max-width: 600px) {
+    .sciCon {
+        flex-direction: column;
+        align-items: center !important;
+    }
+    .scihead h1 {
+        width: 80vw !important;
+        font-size: 8vw !important;
+    }
+    .sciuploadseccon h4 {
+        font-size: 2vw !important;
+    }
+    .sciuploadseccon p {
+        font-size: 2vw !important;
+    }
+    .sciuploadbox {
+        width: 80vw !important;
+        height: 25vw !important;
+    }
+    .itemdetailsformcon h4 {
+        font-size: 2vw !important;
+    }
+    .itemdetailsforminput label {
+        font-size: 2vw !important;
+    }
+    .itemdetailsforminput input {
+        width: 80vw !important;
+        height: 7vw !important;
+        font-size: 2vw !important;
+    }
+    .itemdetailsforminput input::placeholder {
+        font-size: 2vw !important;
+    }
+    .itemdetailsforminput select {
+        width: 81vw !important;
+        height: 8vw !important;
+        font-size: 2vw !important;
+    }
+    .itemdetailformdropdowns-con {
+        width: 80vw !important;
+    }
+    .itemdetailsforminput1 label {
+        font-size: 2vw !important;
+    }
+    .itemdetailsformdropdown label {
+        font-size: 2vw !important;
+    }
+    .itemdetailsformdropdown select {
+        width: 22vw !important;
+        height: 7vw !important;
+        font-size: 2vw !important;
+    }
+    .itemdetailsforminput1 input {
+        width: 22vw !important;
+        height: 7vw !important;
+        font-size: 2vw !important;
+    }
+    .itemdetailsforminput1 input::placeholder {
+        font-size: 2vw !important;
+    }
+    .divider {
+        width: 80vw !important;
+    }
+    .putonscalesec {
+        width: 80vw !important;
+    }
+    .putonscalesec1 p {
+        font-size: 2vw !important;
+    }
+    .putonscalebtnsec {
+        width: 80vw !important;
+    }
+    .putonscalebtnsec button {
+        width: 20vw !important;
+        height: 7vw !important;
+        font-size: 2vw !important;
+    }
+    .putonscalebtnsec button span img {
+        width: 2vw !important;
+        height: 2vw !important;
+    }
+    .putonscalebtnsec p {
+        font-size: 2vw !important;
+    }
+    .preview-card {
+        width: 80vw !important;
+        height: 130vw !important;
+    }
+    .previewheading h1 {
+        font-size: 4vw !important;
+    }
+    .previewcardimg img {
+        width: 60vw !important;
+        height: 70vw !important;
+    }
+    .previewcardname {
+        width: 60vw !important;
+    }
+    .previewcardname p {
+        font-size: 4vw !important;
+    }
+    .previewcardprice {
+        width: 10vw !important;
+        height: 4vw !important;
+    }
+    .previewcardprice p {
+        font-size: 2vw !important;
+    }
+    .previewstockcon {
+        width: 60vw !important;
+    }
+    .previewstockcon img {
+        width: 28vw !important;
+        height: 4vw !important;
+    }
+    .previewstockcon p {
+        font-size: 2.5vw !important;
+    }
+    .previewdivider {
+        width: 60vw !important;
+    }
+    .bidsec {
+        width: 60vw !important;
+    }
+    .bidsec1 img {
+        width: 3vw !important;
+        height: 3vw !important;
+    }
+    .bidsec1 p {
+        font-size: 2.5vw !important;
+    }
+    .bidsec2 p {
+        font-size: 2.5vw !important;
+    }
+    .clearsec img {
+        width: 3.4vw !important;
+        height: 3.4vw !important;
+    }
+    .clearsec p {
+        font-size: 3vw !important;
+    }
+    .clearsec {
+        padding-right: 45vw !important;
+    }
+}

@@ -1,0 +1,99 @@
+.hotcollectionsec1 {
+    width: 30vw;
+    height: 19vw;
+    background-image: url('/assets/listingcardimg.png');
+    background-size: 100% 100% cover;
+    background-position: center;
+    border-radius: 10px;
+}
+.hotcollectionsec2 {
+    width: 9vw;
+    height: 6vw;
+    background-image: url('/assets/listingsubcardimg.png');
+    background-size: 100% 100% cover;
+    background-position: center;
+    border-radius: 10px;
+}
+.hotcollectionseccon {
+    width: 30vw;
+}
+.hotcollectionsec2con {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1vw;
+}
+.artist img {
+    width: 1.7vw;
+    height: 1.7vw;
+}
+.artist p {
+    font-size: 1.1vw;
+    color: #E6E8EC;
+    padding-left: 1vw;
+}
+.artist {
+    display: flex;
+    align-items: center;
+}
+.quantity {
+    width: 5vw;
+    height: 1.9vw;
+    border-radius: 4px;
+    border: 2px solid #E6E8EC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.quantity p {
+    font-size: 1.1vw;
+    color: white;
+}
+.hotcollectionsec3con h2 {
+    font-size: 2.4vw;
+    color: white;
+    font-weight: 500;
+}
+.hotcollectionsec3contentcon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -2vw;
+}
+.hotcollectionsec3con h2 {
+    padding-left: 0;
+}
+@media only screen and (max-width: 600px) {
+    .hotcollectionseccon {
+        width: 80vw;
+        margin-top: 3vw;
+    }
+    .hotcollectionsec1 {
+        width: 80vw;
+        height: 50vw;
+    }
+    .hotcollectionsec2 {
+        width: 25vw;
+        height: 15vw;
+    }
+    .hotcollectionsec3con h2 {
+        font-size: 5vw;
+    }
+    .artist img {
+        width: 5vw;
+        height: 5vw;
+    }
+    .artist p {
+        font-size: 2.5vw;
+    }
+    .quantity {
+        width: 10vw;
+        height: 4vw;
+    }
+    .quantity p {
+        font-size: 2vw;
+    }
+    .hotcollectioncardparent h2 {
+        font-size: 5vw;
+    }
+}

@@ -1,0 +1,176 @@
+.contactheading h1 {
+  font-size: 2.6vw;
+  color: white;
+  font-weight: 500;
+}
+.contactheading p {
+  font-size: 1.3vw;
+  color: white;
+}
+.contactheading {
+  width: 37vw;
+  text-align: center;
+}
+.contactheadingcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2vw;
+}
+.contentpagecontentsec1input label {
+  font-size: 1vw;
+  color: #f78f21;
+}
+.contentpagecontentsec1input input {
+  height: 3.5vw;
+  font-size: 1vw;
+  background: #f6f6f6;
+  border-radius: 3px;
+  color: #919aa3;
+  outline: none;
+  border: none;
+  margin-top: 1vw;
+}
+.contentpagecontentsec1input input::placeholder {
+  font-size: 1vw;
+  color: #919aa3;
+  padding-left: 1vw;
+}
+.contentpagecontentsec1input {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.contentpagecontentsec1input textarea {
+  width: 50vw;
+  height: 12vw;
+  font-size: 1vw;
+  background: #f6f6f6;
+  border-radius: 3px;
+  color: #919aa3;
+  outline: none;
+  border: none;
+  margin-top: 1vw;
+}
+.contentpagecontentsec1input {
+  margin-top: 2vw;
+}
+.contentpagecontentsec1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50vw;
+  flex-wrap: wrap;
+}
+.submitbtn button {
+  width: 9.2vw;
+  height: 3.5vw;
+  background: #f2994a;
+  border-radius: 90px;
+  font-size: 1.1vw;
+  color: white;
+  border: none;
+}
+.submitbtn {
+    margin-top: 2vw;
+}
+.contactpagecontentsec2 {
+    width: 25vw;
+    height: 26vw;
+    background: #F2994A;
+}
+.contactpagescontentsec2heading h1 {
+    font-size: 1.7vw;
+    padding-left: 3vw;
+    padding-top: 4vw;
+}
+.contactpagecontentsec2information img {
+    width: 1.3vw;
+    height: 1.3vw;
+    margin-top: 1.4vw;
+}
+.contactpagecontentsec2information p {
+    font-size: 1.1vw;
+    width: 14vw;
+}
+.contactpagecontentsec2information {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 17vw;
+}
+.contactpagecontentsec2informationcon {
+    margin-left: 3vw;
+}
+.contactpagecontent {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+@media only screen and (max-width: 600px) {
+    .contactpagecontent {
+        flex-direction: column;
+    }
+    .contentpagecontentsec1 {
+        flex-direction: column;
+        width: 100vw;
+    }
+    .contentpagecontentsec1input input {
+        width: 80vw !important;
+        height: 6vw;
+        font-size: 2vw;
+    }
+    .contentpagecontentsec1input input::placeholder {
+        font-size: 2vw;
+    }
+    .contentpagecontentsec1input label {
+        font-size: 2vw;
+    }
+    .contentpagecontentsec1input textarea {
+        width: 80vw !important;
+        height: 40vw;
+        font-size: 2vw;
+    }
+    .submitbtn button {
+        width: 20vw;
+        height: 6vw;
+        font-size: 2vw;
+        margin-left: 9vw;
+    }
+    .contactpagecontentsec2 {
+        width: 80vw !important;
+        height: 50vw;
+        margin-top: 5vw;
+    }
+    .contactpagescontentsec2heading h1 {
+        font-size: 3.7vw;
+    }
+    .contactpagecontentsec2information {
+        width: 34vw;
+    }
+    .contactpagecontentsec2information img {
+        width: 2.6vw;
+        height: 2.6vw;
+        margin-top: 2.8vw;
+    }
+    .contactpagecontentsec2information p {
+        width: 28vw;
+        font-size: 2.2vw;
+    }
+    .contactpagecontentsec2informationcon {
+        margin-left: 6vw
+    }
+    .contactpagescontentsec2heading h1 {
+        margin-left: 3.5vw;
+    }
+    .contactheading {
+        width: 80vw;
+    }
+    .contactheading h1 {
+        font-size: 5.2vw;
+    }
+    .contactheading p {
+        font-size: 2.6vw;
+    }
+}

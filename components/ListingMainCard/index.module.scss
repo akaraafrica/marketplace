@@ -1,0 +1,81 @@
+.listingmaincardsec1 img {
+    width: 33.8vw;
+    height: 32.6vw;
+    border-radius: 12px;
+}
+.listingmaincardsec1contentcon img {
+    width: 3.5vw;
+    height: 3.5vw;
+    margin-top: 1vw;
+}
+.listingcardsec1content h4 {
+    font-size: 1.7vw;
+    color: white;
+    font-weight: 500;
+}
+.listingcardsec1content p {
+    font-size: 1.1vw;
+    color: white;
+}
+.listingcardsec1content {
+    line-height: 0.1vw;
+    margin-left: 1vw;
+}
+.listingmaincardsec1contentcon {
+    display: flex;
+    align-items: center;
+}
+.listingcardsec2content p {
+    font-size: 1vw;
+    color: #777E91;
+}
+.listingcardsec2price {
+    width: 4.9vw;
+    height: 1.9vw;
+    border-radius: 4px;
+    border: 2px solid #45B36B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.listingcardsec2price p {
+    font-size: 1vw;
+    color: #45B36B;
+}
+.listingcardsec2content {
+    line-height: 0.5vw;
+}
+.listingmaincardcontentcon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.listingmaincard {
+    width: 33.8vw;
+}
+@media only screen and (max-width: 600px) {
+    .listingmaincard {
+        width: 80vw;
+    }
+    .listingmaincardsec1 img {
+        width: 80vw;
+        height: 78vw;
+    }
+    .listingmaincardsec1contentcon img {
+        width: 7vw;
+        height: 7vw;
+    }
+    .listingcardsec1content h4 {
+        font-size: 3.5vw;
+    }
+    .listingcardsec1content p {
+        font-size: 2.5vw;
+    }
+    .listingcardsec2content p {
+        font-size: 2.5vw;
+    }
+    .listingcardsec2price {
+        width: 15vw;
+        height: 4vw;
+    }
+}
