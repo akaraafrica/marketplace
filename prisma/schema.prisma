@@ -36,7 +36,10 @@ model User {
   email String
   password String
   profile Profile? 
-  profileId Int
+  profileId Int?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt 
+
 }
 
 
@@ -53,4 +56,4 @@ model Profile {
 
 //npx prisma studio
 //npx prisma push
-//npx prisma migrate dev --name init
+//npx prisma migrate dev 
