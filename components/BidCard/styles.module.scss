@@ -1,0 +1,172 @@
+.bidSec {
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+  }
+  .auctionHeading {
+    color: white;
+    font-size: 4vw;
+    font-weight: 600;
+  }
+  .profileInfoCardCon {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 2vw;
+  }
+  .profileInfoCard {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: white;
+    height: 2.5vw;
+    width: auto;
+  }
+  .profileInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    color: white;
+    height: 100%;
+    margin-left: 0.6vw;
+  }
+  .profileInfoClass {
+    color: #777e90;
+    font-size: 0.85vw;
+  }
+  .profileInfoDesc {
+    color: #fcfcfd;
+    font-size: 1vw;
+  }
+  .currentBidCon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vw;
+    text-align: center;
+    padding: 3vw 0;
+    background-color: #23262f;
+    border-radius: 2vw;
+  }
+  .currentBidSec {
+    display: flex;
+    flex-direction: column;
+  }
+  .auctionEnding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vw;
+  }
+  .timerCon {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 120%;
+  }
+  .timerCon span {
+    display: flex;
+    flex-direction: column;
+  }
+  .currentBid {
+    font-size: 1.4vw;
+    color: #fcfcfd;
+  }
+  .priceETH {
+    font-size: 3vw;
+    color: #fcfcfd;
+  }
+  .priceUSD {
+    font-size: 2vw;
+    color: #777e90;
+  }
+  .auctionEndingText {
+    font-size: 1.6vw;
+    color: #fcfcfd;
+  }
+  .hours,
+  .minutes,
+  .seconds {
+    font-size: 2vw;
+    color: #fcfcfd;
+    margin-top: 0.8vw;
+  }
+  .hrs,
+  .mins,
+  .secs {
+    font-size: 1.2vw;
+    color: #777e90;
+  }
+  .bidBtn {
+      color: black;
+      background-color: #f2994a;
+      width: 100%;
+      height: 2.8vw;
+      font-size: 1.1vw;
+      border: none;
+      border-radius: 2vw;
+      margin-top: 2vw;
+  }
+  .viewBtn {
+      color: rgb(255, 255, 255);
+      background-color: #000000;
+      width: 100%;
+      height: 2.8vw;
+      font-size: 1.1vw;
+      border: 1px solid #353945;
+      border-radius: 2vw;
+      margin-top: 1vw;
+}
+@media only screen and (max-width: 600px) {
+    .bidSec {
+        width: 80vw;
+    }
+    .auctionHeading {
+        font-size: 8vw;
+    }
+    .profileInfoCard div {
+        width: 7vw !important;
+        height: 7vw !important;
+    }
+    .profileInfoDesc {
+        font-size: 3vw;
+    }
+    .profileInfoClass {
+        font-size: 2.5vw;
+    }
+    .profileInfoCard {
+        height: 7vw;
+    }
+    .currentBid {
+        font-size: 4.5vw;
+    }
+    .priceETH {
+        font-size: 6vw;
+    }
+    .priceUSD {
+        font-size: 4vw;
+    }
+    .auctionEndingText {
+        font-size: 3.5vw;
+    }
+    .hours, .minutes, .seconds {
+        font-size: 4vw;
+    }
+    .hrs, .mins, .secs {
+        font-size: 2.5vw;
+    }
+    .bidBtn {
+        height: 6vw;
+        font-size: 2.5vw;
+    }
+    .viewBtn {
+        height: 6vw;
+        font-size: 2.5vw;   
+    }
+}

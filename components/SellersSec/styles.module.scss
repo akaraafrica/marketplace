@@ -1,0 +1,31 @@
+.popularCon {
+    display: flex;
+    flex-direction: column;
+}
+.popularText {
+  font-size: 1.4vw;
+  color: #777e90;
+  font-weight: 600;
+}
+.sellersText {
+  font-size: 2.4vw;
+  color: #fcfcfd;
+  font-weight: 600;
+}
+.popularHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+@media only screen and (max-width: 600px) {
+    .popularHeader {
+        flex-wrap: wrap;
+    }
+    .popularText {
+        font-size: 3vw;
+    }
+    .sellersText {
+        font-size: 5vw;
+    }
+}

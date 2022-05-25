@@ -1,0 +1,117 @@
+.css-n6v7qi-MuiPaper-root-MuiDrawer-paper {
+    height: 75% !important;
+    width: 100% !important;
+    background-color: black !important;
+}
+.mobileheaderSearchInput {
+    width: 90vw;
+    height: 10vw;
+    border: 2px solid #353945;
+    border-radius: 8px;
+}
+.mobileheaderSearchInput input {
+    width: 60vw;
+    height: 9vw;
+    font-size: 3vw;
+    color: #777E91;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+.mobileheaderSearchInput input::placeholder {
+    font-size: 2vw;
+    color: #030303;
+} 
+.mobileheaderSearchInput img {
+    width: 3.2vw;
+    height: 3.2vw;
+}
+.mobileheaderSearchInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.mobileheaderSearchInputcon {
+    margin-top: 3vw;
+    padding-bottom: 3vw;
+}
+.mobileheaderdivider {
+    width: 100vw;
+    height: 0.2vw;
+    background: #353945;
+}
+.mobileheaderlink span  {
+    font-size: 4vw;
+    color: #777E91;
+    padding-top: 2vw;
+    padding-bottom: 3vw;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+}
+.mobilenotificationsec span {
+    font-size: 4vw;
+    color: #777E91;
+}
+.css-i4bv87-MuiSvgIcon-root {
+    fill: #777E91 !important;
+}
+.mobilenotificationsec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2vw;
+    padding-bottom: 3vw;
+    /* width: 30vw; */
+}
+.mobileheadercontent {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mobilenotificationseccon {
+    width: 90vw;
+}
+.mobileprofile {
+    display: flex;
+    align-items: center;
+}
+.mobileprofile span {
+    margin-left: 1vw;
+}
+.mobileprofile img {
+    width: 7vw;
+    height: 7vw;
+}
+.mobileuploadbtn button {
+    width: 80.8vw;
+    height: 7.9vw;
+    background-color: #F2994A;
+    font-size: 3.1vw;
+    color: white;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-weight: 600;
+    margin-top: 4vw;
+}
+.mobileHeaderupper img {
+    width: 25vw;
+    height: 8vw;
+}
+.mobileHeaderupper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90vw;
+    padding-bottom: 3.5vw;
+}
+.mobileHeaderupper button {
+    background: transparent;
+    border: none;
+}
+.mobileheadercontent {
+    background-color: black;
+}
