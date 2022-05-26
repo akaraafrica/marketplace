@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URI")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+// Models ...
+
+model Item{
+  owner String
+  tokenId String @unique
+  description String @db.VarChar(250)
+  images String[]
+  video String
+}
+
+model CollectionType {
+  name String @unique
+  minOwners Int
+  maxOwners Int
+  minItems Int
+  maxItems Int
+  typeId String @unique @default(uuid())
+
+}
+
+model User {
+  address String @id @unique 
+  email String
+  password String
+  profile Profile? 
+  profileId Int?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt 
+
+}
+
+
+model Profile {
+  name String
+  avatar String
+  dob String
+  id String @id @default(uuid())
+  user User @relation(fields: [userId], references: [address])
+  userId String
+  
+}
+
+
+//npx prisma studio
+//npx prisma push
+//npx prisma migrate dev 
