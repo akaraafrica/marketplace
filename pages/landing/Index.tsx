@@ -8,14 +8,18 @@ import styles from "./styles.module.scss";
 import ListingMainCard from "../../components/ListingMainCard/index";
 import ListingSubCard from "../../components/ListingSubCard/index";
 import UpdateFromCreators from "../../components/UpdateFromCreators/index";
-import rightarrow from "/assets/rightArrow.svg";
 import Hotitems from "../../components/HotItems";
 import Discover from "../../components/DiscoverSec/index";
 import HotCollectionCard from "../../components/HotCollectionsCard/index";
 import SubscribeModal from "../../components/SubscribeModal/index";
 import HowItWorks from "../../components/HowItWorks/index";
-import Slider from "infinite-react-carousel";
+// import Slider from "infinite-react-carousel";
 import HotCollectionMobile from "../../components/HotCollectionMobile/index";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination, Autoplay } from "swiper";
+
+SwiperCore.use([Pagination, Autoplay]);
 
 const LandingPage = () => {
   const settings = {
@@ -32,7 +36,7 @@ const LandingPage = () => {
       <div className={styles.styles} >
         <LandingMain />
       </div>
-        <LandingBidding />
+        {/* <LandingBidding /> */}
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>
@@ -52,7 +56,7 @@ const LandingPage = () => {
             <button>
               Discover more
               <span>
-                <img src={rightarrow} />
+                <img src={`/assets/rightArrow.svg`} />
               </span>
             </button>
           </div>
@@ -66,32 +70,46 @@ const LandingPage = () => {
           <HotCollectionMobile />
         </div>
         <div className={styles.hotcollectioncardwrapper}>
-          <Slider {...settings}>
-            <div>
+          <Swiper
+                  spaceBetween={30}
+                  breakpoints={{
+                    200: { slidesPerView: 1.5 },
+                    700: { slidesPerView: 2.5 },
+                    1200: { slidesPerView: 1.5 },
+                    2500: { slidesPerView: 1.5 },
+                  }}
+                  loop
+                  className={`swiper-wrapper ${styles.slideWrapper}`}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+          >
+            <SwiperSlide>
               <HotCollectionCard />
-            </div>
-            <div>
+            </SwiperSlide>
+            <SwiperSlide>
               <HotCollectionCard />
-            </div>
-            <div>
+            </SwiperSlide>
+            <SwiperSlide>
               <HotCollectionCard />
-            </div>
-            <div>
+            </SwiperSlide>
+            <SwiperSlide>
               <HotCollectionCard />
-            </div>
-            <div>
+            </SwiperSlide>
+            <SwiperSlide>
               <HotCollectionCard />
-            </div>
-            <div>
+            </SwiperSlide>
+            <SwiperSlide>
               <HotCollectionCard />
-            </div>
-            <div>
+            </SwiperSlide>
+            <SwiperSlide>
               <HotCollectionCard />
-            </div>
-            <div>
+            </SwiperSlide>
+            <SwiperSlide>
               <HotCollectionCard />
-            </div>
-          </Slider>
+            </SwiperSlide>
+          </Swiper>
         </div>
       </div>
       <Discover />

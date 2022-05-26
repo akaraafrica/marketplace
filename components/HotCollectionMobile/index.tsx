@@ -1,6 +1,10 @@
 import React from 'react'
-import Slider from 'infinite-react-carousel';
+// import Slider from 'infinite-react-carousel';
 import HotCollectionCard from '../HotCollectionsCard/index';
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination, Autoplay } from "swiper";
+
+SwiperCore.use([Pagination, Autoplay]);
 
 function HotCollectionMobile () {
     const settings =  {
@@ -12,35 +16,36 @@ function HotCollectionMobile () {
       };
     return(
         <div className="hotcollectionmobilecon">
-            <Slider { ...settings }>
-          <div>
-        <HotCollectionCard />
-        </div>
-        <div>
-        <HotCollectionCard />
-        </div>
-        <div>
-        <HotCollectionCard />
-        </div>
-        <div>
-        <HotCollectionCard />
-        </div>
-        <div>
-        <HotCollectionCard />
-        </div>
-        <div>
-        <HotCollectionCard />
-        </div>
-        <div>
-        <HotCollectionCard />
-        </div>
-        <div>
-        <HotCollectionCard />
-        </div>
-        <div>
-        <HotCollectionCard />
-        </div>
-        </Slider>
+          <Swiper 
+          >
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <HotCollectionCard />
+            </SwiperSlide>
+        </Swiper>
         </div>
     );
 }

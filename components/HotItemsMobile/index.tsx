@@ -2,6 +2,11 @@ import React from 'react'
 import Slider from 'infinite-react-carousel';
 import HotItemCard from "../HotItemsCard";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination, Autoplay } from "swiper";
+
+SwiperCore.use([Pagination, Autoplay]);
+
 function HotItemsMobile () {
     const settings =  {
         arrows: false,
@@ -12,98 +17,99 @@ function HotItemsMobile () {
       };
     return(
         <div className="hotitemsmobilecon">
-            <Slider { ...settings }>
-          <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        <div>
-        <HotItemCard
-          ProductImg={`/assets/productimg.png`}
-          Name="Amazing digital art"
-          Price="2.45 ETH"
-          Stock="3 in stock"
-          Avatar={`/assets/avatars.png`}
-          HighestBid="0.001 ETH"
-        />
-        </div>
-        </Slider>
+          <Swiper
+          >
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+          <SwiperSlide>
+          <HotItemCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/avatars.png`}
+            HighestBid="0.001 ETH"
+          />
+          </SwiperSlide>
+        </Swiper>
         </div>
     );
 }

@@ -1,10 +1,8 @@
 import React from "react";
-import auctionAvatar from "/assets/auctionAvatar.png";
 import { Avatar } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
-import "./styles.module.scss";
-import Trophyicon from '/assets/TrophyIcon.svg'
+import styles from "./styles.module.scss";
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -14,14 +12,14 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 
 const SellersCard = () => {
   return (
-    <div className="sellerCardMain">
-      <div className="sellerCardHeaderCon">
-        <div className="sellerCardHeader">
-          <span className="sellerCardChip">
+    <div className={styles.sellerCardMain}>
+      <div className={styles.sellerCardHeaderCon}>
+        <div className={styles.sellerCardHeader}>
+          <span className={styles.sellerCardChip}>
             <span
-            className="sellercardchipimg"
-            ><img src={Trophyicon} /></span>
-            <span className="sellerCardNum">#1</span>
+            className={styles.sellercardchipimg}
+            ><img src={`/assets/TrophyIcon.svg`} /></span>
+            <span className={styles.sellerCardNum}>#1</span>
           </span>
           <span>
             <span
@@ -37,9 +35,9 @@ const SellersCard = () => {
             ></span>
           </span>
         </div>
-        <div className="sellerCardDivider"></div>
+        <div className={styles.sellerCardDivider}></div>
       </div>
-      <div className="sellerCardBodyMain">
+      <div className={styles.sellerCardBodyMain}>
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -51,15 +49,15 @@ const SellersCard = () => {
           }
         >
           <Avatar
-            src={auctionAvatar}
+            src={`/assets/auctionAvatar.png`}
             alt="seller-photo"
-            className="selercardavatar"
+            className={styles.selercardavatar}
           />
         </Badge>
-        <div className="sellerCardBody">
-          <span className="sellerName">Payton Harris</span>
-          <span className="sellerPrice">
-            2.456 <span className="sellerPriceETHColor">ETH</span>
+        <div className={styles.sellerCardBody}>
+          <span className={styles.sellerName}>Payton Harris</span>
+          <span className={styles.sellerPrice}>
+            2.456 <span className={styles.sellerPriceETHColor}>ETH</span>
           </span>
         </div>
       </div>
