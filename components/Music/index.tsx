@@ -1,33 +1,31 @@
 import React from 'react'
 import ProfileCard from '../ProfileCard/index'
-import productimg from "/assets/product img.png";
-import avators from "/assets/avatars.png";
 
 function Music () {
     return(
         <div className="allitems">
         <ProfileCard
-          ProductImg={productimg}
+          ProductImg={`/assets/productimg.png`}
           Name="Amazing digital art"
           Price="2.45 ETH"
           Stock="3 in stock"
-          Avatar={avators}
+          Avatar={`/assets/avatars.png`}
           HighestBid="0.001 ETH"
         />
          <ProfileCard
-          ProductImg={productimg}
+          ProductImg={`/assets/productimg.png`}
           Name="Amazing digital art"
           Price="2.45 ETH"
           Stock="3 in stock"
-          Avatar={avators}
+          Avatar={`/assets/avatars.png`}
           HighestBid="0.001 ETH"
         />
          <ProfileCard
-          ProductImg={productimg}
+          ProductImg={`/assets/productimg.png`}
           Name="Amazing digital art"
           Price="2.45 ETH"
           Stock="3 in stock"
-          Avatar={avators}
+          Avatar={`/assets/avatars.png`}
           HighestBid="0.001 ETH"
         />
       </div>

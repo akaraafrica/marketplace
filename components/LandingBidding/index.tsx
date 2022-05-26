@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import Plyr from "plyr-react";
-import Poster from "/assets/01.png";
-import "plyr-react/dist/plyr.css";
-import "./styles.module.scss";
+import styles from "./styles.module.scss";
 import BidCard from "../BidCard";
 
 const LandingBidding = () => {
@@ -16,13 +14,13 @@ const LandingBidding = () => {
   };
 
   useEffect(() => {
-    document.querySelector("#videoSec video").setAttribute("poster", Poster);
-  }, [Poster]);
+    document.querySelector(".videoSec video").setAttribute("poster", `/assets/01.png`);
+  }, [`poster`]);
 
   return (
-    <div id="videoSec">
+    <div className={styles.videoSec}>
       <Plyr
-        source={videoSrc}
+        source={`https://www.w3schools.com/html/mov_bbb.mp4`}
         options={{
           rewind: false,
         }}
