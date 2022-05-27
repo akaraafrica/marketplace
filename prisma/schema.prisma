@@ -26,8 +26,7 @@ model Item{
   price Float
   openForBid Boolean
   acceptedBid Float
-  bid Bid[] 
-
+  bids Bid[] 
 }
 
 model Bid {
@@ -37,7 +36,6 @@ model Bid {
   updatedDate DateTime @updatedAt
   bidders User[]
   item Item @relation(fields: [bidId],references: [tokenId])
-
 }
 
 model CollectionType {
@@ -48,7 +46,6 @@ model CollectionType {
   maxItems Int
   typeId String @unique @default(uuid())
   collection Collection?
-
 }
 
 model User {
@@ -63,15 +60,6 @@ model User {
   collection Collection?
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt 
-
-}
-
-model Bio {
-  firstname String
-  lastname String
-  gender Gender @default(MALE)
-  username String @id
-
 }
 
 model Collection {
@@ -80,8 +68,8 @@ model Collection {
   type CollectionType? @relation(fields: [collectiontypeId], references: [name])
   collectiontypeId String
   items String[]
-  img String[]
-  vid String[]
+  images String[]
+  videos String[]
   description String
   owners String
   created DateTime @default(now())
@@ -95,8 +83,6 @@ model Rating {
   entityType EntityType @default(User)
   user User @relation(fields: [userId], references: [address])
   userId String
-
-
 }
 model Profile {
   name String
@@ -107,12 +93,13 @@ model Profile {
   userId String
   phoneNumber Int
   verified Boolean
-  
+  bio String
 }
 
 enum Gender {
   MALE
   FEMALE
+  NON_BINARY
   OTHERS
 }
 enum EntityType {
@@ -120,6 +107,3 @@ enum EntityType {
   Single
   Collection
 }
-//npx prisma studio
-//npx prisma push
-//npx prisma migrate dev 
