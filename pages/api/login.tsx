@@ -8,5 +8,5 @@ const prisma = new PrismaClient()
 export default async function  Login(req:NextApiRequest,res:NextApiResponse) {
     const email = req.body.email
     
-    res.send('The Login Route')
+    // res.send('The Login Route')
 }
