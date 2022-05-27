@@ -107,3 +107,7 @@ enum EntityType {
   Single
   Collection
 }
+
+//npx prisma studio
+//npx prisma push
+//npx prisma migrate dev 
