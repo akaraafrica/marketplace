@@ -56,4 +56,4 @@ model Profile {
 
 //npx prisma studio
 //npx prisma push
-//npx prisma migrate dev 
+//npx prisma migrate dev  
