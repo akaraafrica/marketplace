@@ -5,14 +5,19 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import "./styles.css";
-import Slider from "infinite-react-carousel";
+import styles from "./styles.module.scss";
+// import Slider from "infinite-react-carousel";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Pagination, Autoplay } from "swiper";
+
+SwiperCore.use([Pagination, Autoplay]);
 
 const SellersSec = () => {
-  const deviceWidth = window.innerWidth;
-  const settings = {
-    slidesPerRow: deviceWidth <= 600 ? 2 : 5,
-  };
+ // const deviceWidth = window.innerWidth;
+  // const settings = {
+  //   slidesPerRow: deviceWidth <= 600 ? 2 : 5,
+  // };
   const names = [
     "Oliver Hansen",
     "Van Henry",
@@ -36,10 +41,10 @@ const SellersSec = () => {
   };
   return (
     <div style={{ backgroundColor: "#23262f", padding: "5vw 5vw" }}>
-      <div className="popularHeader">
-        <div className="popularCon">
-          <span className="popularText">Popular</span>
-          <span className="sellersText">
+      <div className={styles.popularHeader}>
+        <div className={styles.popularCon}>
+          <span className={styles.popularText}>Popular</span>
+          <span className={styles.sellersText}>
             Sellers{" "}
             <div
               style={{
@@ -72,33 +77,33 @@ const SellersSec = () => {
           </FormControl>
         </div>
       </div>
-      <Slider {...settings}>
-        <div>
+      <Swiper 
+      >
+        <SwiperSlide>
           <SellersCard />
-        </div>
-        <div>
+        </SwiperSlide>
+        <SwiperSlide>
           <SellersCard />
-        </div>
-        <div>
+        </SwiperSlide>
+        <SwiperSlide>
           <SellersCard />
-        </div>
-        <div>
+        </SwiperSlide>
+        <SwiperSlide>
           <SellersCard />
-        </div>
-        <div>
+        </SwiperSlide>
+        <SwiperSlide>
           <SellersCard />
-        </div>
-        <div>
+        </SwiperSlide>
+        <SwiperSlide>
           <SellersCard />
-        </div>
-        <div>
+        </SwiperSlide>
+        <SwiperSlide>
           <SellersCard />
-        </div>
-        <div>
+        </SwiperSlide>
+        <SwiperSlide>
           <SellersCard />
-        </div>
-        <div></div>
-      </Slider>
+        </SwiperSlide>
+      </Swiper>
     </div>
   );
 };
