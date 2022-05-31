@@ -50,7 +50,7 @@ model CollectionType {
 
 model User {
   address String @id @unique 
-  email String
+  email String @unique
   password String
   profile Profile? 
   profileId Int?
