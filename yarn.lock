@@ -2,6 +2,31 @@
 # yarn lockfile v1
 
 
+"@ampproject/toolbox-core@^1.0.1", "@ampproject/toolbox-core@^1.1.1":
+  "integrity" "sha512-jcuVJUnGDRUEJgMYO6QVdf1dBy/oLZX3NjN2hYG48biFcPCvXevuv4xYFZMJsnsHSvXKg8y0qB8rANNyhTUN/A=="
+  "resolved" "https://registry.npmjs.org/@ampproject/toolbox-core/-/toolbox-core-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "node-fetch" "2.6.0"
+
+"@ampproject/toolbox-optimizer@1.0.1":
+  "integrity" "sha512-zz1cJsQWBvfg2h1ce2/bbgNdSkTjIY7PaF7QhWMzYVcfvdxGSAykA+Ajt+F13H6adNAtIn09s96z/+6pn7XiXQ=="
+  "resolved" "https://registry.npmjs.org/@ampproject/toolbox-optimizer/-/toolbox-optimizer-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "@ampproject/toolbox-core" "^1.0.1"
+    "@ampproject/toolbox-runtime-version" "^1.0.1"
+    "css" "2.2.4"
+    "parse5" "5.1.0"
+    "parse5-htmlparser2-tree-adapter" "5.1.0"
+
+"@ampproject/toolbox-runtime-version@^1.0.1":
+  "integrity" "sha512-ibmw5p+0Sz+wingbX/Dyboe8a0+XDkMfFGSM7KFE0h2z3Op9MADup8ZPLeHT54Z7cYKmB6ob60FVHtQQDhEXNw=="
+  "resolved" "https://registry.npmjs.org/@ampproject/toolbox-runtime-version/-/toolbox-runtime-version-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "@ampproject/toolbox-core" "^1.1.1"
+
 "@babel/code-frame@^7.0.0":
   version "7.16.7"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.16.7.tgz"
@@ -419,6 +444,11 @@
   dependencies:
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
+
+"@types/bcryptjs@^2.4.2":
+  "integrity" "sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ=="
+  "resolved" "https://registry.npmjs.org/@types/bcryptjs/-/bcryptjs-2.4.2.tgz"
+  "version" "2.4.2"
 
 "@types/json5@^0.0.29":
   version "0.0.29"
