@@ -1,0 +1,89 @@
+.sideBar {
+    background-color: #050505;
+    width: 100%;
+    padding: 100px 50px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
+    @media (max-width: 800px) {
+        width: 100%;
+        padding: 100px 40px 32px;
+    }
+
+    .image {
+        width: 129px;
+        height: 46.06px;
+    }
+
+    .leftCenter {
+        display: flex;
+        flex-direction: column;
+
+        h6 {
+            color: #ffffff;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 28px;
+            line-height: 38px;
+            letter-spacing: -1px;
+        }
+        span {
+            display: inline-block;
+        }
+        .emphasis {
+            color: #F78F21;
+        }
+        p {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: -0.2px;
+            color: #E5E5E5;
+            max-width: 340px;
+        }
+        
+    }
+    .leftBottom {
+        .title {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 30px;
+            letter-spacing: -1px;
+            color: #FFFFFF;
+            margin-bottom: 30px;
+        }
+        ul {
+            list-style-image: url('/assets/check.svg');
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 22px;
+            margin-bottom: 200px;
+
+            span {
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 22px;
+                letter-spacing: -0.5px;
+                color: #FFFFFF;
+                margin-left: 18px;
+            }
+        }
+        .listItem {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 22px;
+            letter-spacing: -0.5px;
+            color: #FFFFFF;
+        }
+    }
+    .icons {
+        display: flex;
+        gap: 16.83px;
+    }
+}
