@@ -3,13 +3,15 @@ import styles from "./index.module.scss";
 import HotItemCard from "../HotItemsCard";
 import ProfileCard from '../ProfileCard'
 import HotItemMobile from '../HotItemsMobile'
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
-SwiperCore.use([Pagination, Autoplay]);
+
 
 function HotItems() {
+
+  SwiperCore.use([Pagination, Autoplay]);
+
     const settings =  {
       arrows: false,
       arrowsBlock: false,

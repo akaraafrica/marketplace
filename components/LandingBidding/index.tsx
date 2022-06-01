@@ -14,13 +14,16 @@ const LandingBidding = () => {
   };
 
   useEffect(() => {
-    document.querySelector(".videoSec video").setAttribute("poster", `/assets/01.png`);
-  }, [`poster`]);
+   // var document  = window.document;
+    document?.querySelector("#videoSec video").setAttribute("poster", `/assets/01.png`);
+  }, []);
 
   return (
-    <div className={styles.videoSec}>
+    <div id="videoSec" className={styles.videoSec}>
       <Plyr
-        source={`https://www.w3schools.com/html/mov_bbb.mp4`}
+        src={`https://www.w3schools.com/html/mov_bbb.mp4`}
+        width={500}
+        height={500}
         options={{
           rewind: false,
         }}
