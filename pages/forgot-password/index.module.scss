@@ -1,0 +1,32 @@
+.forgot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+
+    .title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 38px;
+        text-align: center;
+        color: #050505;
+        margin-bottom: -5px;
+    }
+    .text {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 128%;
+        text-align: center;
+        color: #24243B;
+        margin-bottom: 30px;
+    }
+    .action {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        margin-top: 40px;
+    }
+}
