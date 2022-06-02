@@ -1,16 +1,16 @@
 import React from "react";
-import "./styles.module.scss";
+import styles from "./styles.module.scss";
 
 const LandingMain = () => {
   return (
-    <div className="landingMain">
-      <span className="subHead">Create, explore, & collect AFRICAN NFTs.</span>
-      <span className="headOne">Buy and Own</span>
-      <span className="headTwo">
-        <span className="headColor">Awesome </span>
+    <div className={styles.landingMain}>
+      <span className={styles.subHead}>Create, explore, & collect AFRICAN NFTs.</span>
+      <span className={styles.headOne}>Buy and Own</span>
+      <span className={styles.headTwo}>
+        <span className={styles.headColor}>Awesome </span>
         African NFTs
       </span>
-      <button className="landingBtn">Start your search</button>
+      <button className={styles.landingBtn}>Start your search</button>
     </div>
   );
 };

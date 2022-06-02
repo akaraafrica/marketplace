@@ -1,10 +1,12 @@
 import React from 'react'
+import styles from './index.module.scss';
 
 function NotificationModal () {
     return(
         <div className={styles.notificationModalCon}>
             <div className={styles.tooltipiconcon}>
-            <img className={styles.tooltipicon} src={toolTipIcon} />
+            {/* <img className={styles.tooltipicon} src={toolTipIcon} /> */}
+            <img className={styles.tooltipicon} src={`/assets/notificationImg.png`} />
             </div>
             <div className={styles.notificationModal}>
                 <div className={styles.notificationModalHead}>

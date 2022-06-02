@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SellersCard from "../SellersCard";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,13 +11,19 @@ import styles from "./styles.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
-SwiperCore.use([Pagination, Autoplay]);
+
 
 const SellersSec = () => {
- // const deviceWidth = window.innerWidth;
-  // const settings = {
-  //   slidesPerRow: deviceWidth <= 600 ? 2 : 5,
-  // };
+
+  SwiperCore.use([Pagination, Autoplay]);
+  
+  useEffect(()=>{
+    const deviceWidth = window.innerWidth;
+    const settings = {
+      slidesPerRow: deviceWidth <= 600 ? 2 : 5,
+    };
+  },[])
+
   const names = [
     "Oliver Hansen",
     "Van Henry",

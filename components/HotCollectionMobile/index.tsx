@@ -4,9 +4,12 @@ import HotCollectionCard from '../HotCollectionsCard/index';
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
-SwiperCore.use([Pagination, Autoplay]);
+
 
 function HotCollectionMobile () {
+
+  SwiperCore.use([Pagination, Autoplay]);
+  
     const settings =  {
         arrows: false,
         arrowsBlock: false,
