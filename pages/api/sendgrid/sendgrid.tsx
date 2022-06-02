@@ -57,13 +57,13 @@ const object = {
     from: "info@mbizi.org",
     heading: "Welcome to Akara",
     subject: "Did you get my message",
-    template:'98983f81-e1af-11ec-b571-3a1ce2c5c5e7',
-    // template: 'd-1fbec631dc1248fc9b79e51299b0917f',
+    // template:'98983f81-e1af-11ec-b571-3a1ce2c5c5e7',
+    template: 'd-1fbec631dc1248fc9b79e51299b0917f',
     description: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius sunt magnam dolores repellat, voluptatibus provident dignissimos et perspiciatis modi iure.",
     dynamicTemplateData: {
         firstname: 'Julliet',
         last_name: 'Odogwu',
-        note:'Thank you'
+        url: 'www.google.com'
     }
 }
 try {
