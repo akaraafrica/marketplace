@@ -1,9 +1,8 @@
 import React from 'react'
-import { PrismaClient } from "@prisma/client";
+import prisma from '../../utils/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 
-const prisma = new PrismaClient()
 
 export default async function ForgotPassword(req: NextApiRequest, res: NextApiResponse) {
 
