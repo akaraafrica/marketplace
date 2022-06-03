@@ -65,7 +65,7 @@ const Index = () => {
         </div>
         <ToastContainer 
             position="top-center"
-            autoClose={3000}
+            autoClose={7000}
             hideProgressBar={true}
             newestOnTop={false}
             closeOnClick
