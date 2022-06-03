@@ -13,15 +13,15 @@ import Discover from "../../components/DiscoverSec/index";
 import HotCollectionCard from "../../components/HotCollectionsCard/index";
 import SubscribeModal from "../../components/SubscribeModal/index";
 import HowItWorks from "../../components/HowItWorks/index";
-// import Slider from "infinite-react-carousel";
 import HotCollectionMobile from "../../components/HotCollectionMobile/index";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
-SwiperCore.use([Pagination, Autoplay]);
 
 const LandingPage = () => {
+
+  SwiperCore.use([Pagination, Autoplay]);
+
   const settings = {
     arrows: false,
     arrowsBlock: false,
@@ -36,7 +36,7 @@ const LandingPage = () => {
       <div className={styles.styles} >
         <LandingMain />
       </div>
-        {/* <LandingBidding /> */}
+        <LandingBidding />
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>

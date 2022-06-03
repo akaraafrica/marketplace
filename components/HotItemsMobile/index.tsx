@@ -1,13 +1,13 @@
 import React from 'react'
-import Slider from 'infinite-react-carousel';
 import HotItemCard from "../HotItemsCard";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
-SwiperCore.use([Pagination, Autoplay]);
 
 function HotItemsMobile () {
+
+  SwiperCore.use([Pagination, Autoplay]);
+
     const settings =  {
         arrows: false,
         arrowsBlock: false,
