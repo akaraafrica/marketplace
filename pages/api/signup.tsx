@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
+import Sendgrid from './sendgrid/sendgrid';
 
 
 interface DT {
@@ -42,8 +43,10 @@ export default async function  Signup(req:NextApiRequest,res:NextApiResponse) {
        }
     })
  
- const token = await jwt.sign({user: newUser}, 'secret', {expiresIn: '2d'})
+ const token = jwt.sign({ user: newUser }, 'secret', { expiresIn: '2d' })
  
+    
+
     return res.status(200).json({
        user: newUser,
        token
