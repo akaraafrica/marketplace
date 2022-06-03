@@ -3,75 +3,34 @@ import mail from "@sendgrid/mail";
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 
+    const key = process.env.SENDGRID_API_KEY
+    mail.setApiKey(key)
+    const temp = 'd-1fbec631dc1248fc9b79e51299b0917f'
 
-interface MailData {
-    to: string,
-    from: string,
-    subject:string,
-    template: string,
-    description?:string,
-    
-    }
+export default async function sendgrid(req:NextApiRequest,res:NextApiResponse) {
 
+    try {
+        if(!req.body.to) return res.status(406).send("Reciever's email is needed")
+        if(!req.body.from) return res.status(406).send("Senders's email is needed")
+        if(!req.body.templateId) return res.status(406).send(" Email template is needed")
+        
+        await mail.send({
+            to: req.body.to,
+            from: req.body.from,
+            templateId: req.body.templateId,
+            dynamicTemplateData: {
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                subject: req.body.subject,
+                resetLink: req.body.resetLink,
+                emailComfirmLink: req.body.emailComfirmLink,
 
-
-export async function Sendmail( {
-    to,from,subject, template, description
-}:MailData) {
-
-    const key: string = process.env.SENDGRID_API_KEY
-    mail.setApiKey(key);
-
-    const dynamicData = {
-        description:'we re one ',
-
-    }
-    
-     try {
-       mail.send({
-        to: to,
-        from: from,
-        subject: subject,
-        templateId: template,
-        dynamicTemplateData: {
-            description: dynamicData.description
-        }
-    
+            }
         })
-
-      return('Email sent')
-     } catch (error) {
-         console.log(error)
-         return (error)
-     }
-
-
-}
-
-
-
-export default async function SendgridTemplate(req:NextApiRequest,res:NextApiResponse) {
-
-const object = {
-    to: 'kcblack22@gmail.com',
-    from: "info@mbizi.org",
-    heading: "Welcome to Akara",
-    subject: "Did you get my message",
-    // template:'98983f81-e1af-11ec-b571-3a1ce2c5c5e7',
-    template: 'd-1fbec631dc1248fc9b79e51299b0917f',
-    description: " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius sunt magnam dolores repellat, voluptatibus provident dignissimos et perspiciatis modi iure.",
-    dynamicTemplateData: {
-        firstname: 'Julliet',
-        last_name: 'Odogwu',
-        url: 'www.google.com'
-    }
-}
-try {
-    { Sendmail(object ) 
-    }
-    res.send('Email sent successfully')
-} catch (error) {
-    console.log(error)
-   return res.send(error)
-}
+          return res.status(200).send('Email sent')
+  
+       } catch (error) {
+           console.log(error)
+           return res.send(error)
+       }
 }
