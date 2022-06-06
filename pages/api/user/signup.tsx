@@ -89,6 +89,10 @@ if(req.method === 'DELETE'){
     }
     res.send('User deleted succesfuly')
 }
+if(req.method === 'GET'){
+    const allusers = await prisma.user.findMany()
+    return res.send(allusers)
+}
 else  {
    return res.send('Method not allowed')
 }

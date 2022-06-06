@@ -6,7 +6,7 @@ export default async function VerifiedUsers(req:NextApiRequest,res:NextApiRespon
 const prisma = new PrismaClient()
 
 try {
-    const vuser = await prisma.user.findFirst({
+    const vuser = await prisma.user.findMany({
         where:{
             verified: true
         }
