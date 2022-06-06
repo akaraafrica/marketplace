@@ -1,5 +1,5 @@
 import React from 'react'
-import { PrismaClient } from "@prisma/client";
+import prisma from '../../utils/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
@@ -10,7 +10,6 @@ interface DT {
     password: string
 }
 
-const prisma = new PrismaClient()
 
 export default async function  Signup(req:NextApiRequest,res:NextApiResponse) {
     

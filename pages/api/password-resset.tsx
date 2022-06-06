@@ -1,9 +1,8 @@
 import React from 'react'
-import { PrismaClient } from "@prisma/client";
+import prisma from '../../utils/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
 
-const prisma = new PrismaClient()
 
 export default async function PasswordResset(req: NextApiRequest, res: NextApiResponse) {
     const { password } = req.body

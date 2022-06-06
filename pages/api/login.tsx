@@ -1,13 +1,9 @@
 import React from 'react'
-import { PrismaClient } from "@prisma/client";
+import prisma from '../../utils/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
-
-
-
-const prisma = new PrismaClient()
 
 export default async function  Login(req:NextApiRequest,res:NextApiResponse) {
     
@@ -27,22 +23,23 @@ export default async function  Login(req:NextApiRequest,res:NextApiResponse) {
             email: req.body.email,
             
         }
-     })
+    })
 
     
-     const secret = process.env.JWT_KEY
+    const secret = process.env.JWT_KEY
     
     
     try {
      
-   if(email){
-       if(await bcrypt.compare(password, myUser?.password)){
-        const token = jwt.sign({email}, secret , { expiresIn: '2d'} )
-     res.json({message: 'Logged In'})
-       } else {
-           return res.send('Invalid password, try again')
-       }
-   }
+        if(email){
+            const compare = await bcrypt.compare(password, myUser.password)
+            if(compare){
+                const token = jwt.sign({email}, secret , { expiresIn: '2d'} )
+            res.json({message: 'Logged In', accessToken: token})
+            } else {
+                return res.send('Invalid password, try again')
+            }
+        }
    
     } catch (error) {
         res.send(` ${error} `)
