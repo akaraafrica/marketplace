@@ -10,12 +10,12 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 export default async function Sendgrid(req:NextApiRequest,res:NextApiResponse,data:{}) {
 
     try {
-        if(!req.body.to) return res.status(406).send("Reciever's email is needed")
+        // if(!req.body.to) return res.status(406).send("Reciever's email is needed")
         if(!req.body.from) return res.status(406).send("Senders's email is needed")
         if(!req.body.templateId) return res.status(406).send(" Email template is needed")
         
 
-        const data = {
+        const Emaildata = {
             to: req.body.to,
             from: req.body.from,
             templateId: req.body.templateId,
@@ -26,7 +26,7 @@ export default async function Sendgrid(req:NextApiRequest,res:NextApiResponse,da
                 resetLink: req.body.resetLink,
                 emailComfirmLink: req.body.emailComfirmLink,
         }}
-        await mail.send(data)
+        await mail.send(Emaildata)
           return res.status(200).send('Email sent')
   
        } catch (error) {

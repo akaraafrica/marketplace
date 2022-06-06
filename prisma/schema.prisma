@@ -57,6 +57,7 @@ model User {
   bid Bid ? @relation(fields: [bidId], references: [bidId])
   bidId String?
   rating Rating?
+  verified Boolean @default(false)
   collection Collection?
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt 
@@ -92,7 +93,6 @@ model Profile {
   user User @relation(fields: [userId], references: [address])
   userId String
   phoneNumber Int
-  verified Boolean
   bio String
 }
 
