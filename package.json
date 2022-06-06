@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.8.2",
     "@sendgrid/mail": "^7.7.0",
     "@types/sendgrid": "^4.3.0",
+    "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^8.5.1",
     "next": "12.1.6",
@@ -27,6 +28,7 @@
     "react-icons": "^4.4.0",
     "react-lottie-player": "^1.4.3",
     "react-redux": "^8.0.2",
+    "react-toastify": "^9.0.3",
     "sass": "^1.52.1",
     "swiper": "^8.1.6"
   },

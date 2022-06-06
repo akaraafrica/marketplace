@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
 try {
     const vuser = await prisma.user.findFirst({
         where:{
-            verified: false
+            verified: true
         }
     })
     res.status(200).send(vuser)

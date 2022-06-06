@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { createWrapper, HYDRATE } from 'next-redux-wrapper'
+import userSlice from './reducers/userSlice'
 
 const combinedReducer = combineReducers({
     // pass in the individual reducer slices below 
-    
+    userSlice
 })
 
 

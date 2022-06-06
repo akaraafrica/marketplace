@@ -1,11 +1,10 @@
 import React from 'react'
-import { PrismaClient } from "@prisma/client";
+import prisma from '../../utils/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import Sendmail from '../../../components/sendgrid/Sendmail';
 
 
-const prisma = new PrismaClient()
 
 export default async function ForgotPassword(req: NextApiRequest, res: NextApiResponse) {
 
@@ -39,7 +38,7 @@ export default async function ForgotPassword(req: NextApiRequest, res: NextApiRe
                 from: 'info@mbizi.org',
                 templateId: 'd-1fbec631dc1248fc9b79e51299b0917f',
                 dynamicTemplateData: {
-                    firstname: userEmail,
+                    email: userEmail,
                     resetLink: link
             }}
 
