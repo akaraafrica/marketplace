@@ -1,4 +1,6 @@
 .root {
+    width: 100%;
+    overflow-x: hidden;
     .breadcrumbWrap {
         display: flex;
         flex-direction: row;
@@ -21,6 +23,9 @@
         border: 2px solid #353945;
         border-radius: 90px;
         cursor: pointer;
+        @media (max-width: 800px) {
+            display: none;
+        }
 
         .backText {
             font-style: normal;
@@ -50,19 +55,28 @@
         padding: 80px 0;
         background: #141416;
         border-bottom: 1px solid #353945;
+        box-sizing: border-box;
+        @media (max-width: 800px) {
+            padding: 80px 40px;
+        }
         .top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 50%;
+            @media (max-width: 800px) {
+                width: 100%;
+            }
 
             h3 {
                 font-style: normal;
                 font-weight: 700;
                 font-size: 48px;
-                line-height: 56px;
                 letter-spacing: -0.02em;
                 color: #FCFCFD;
+                @media (max-width: 800px) {
+                    font-size: 32px;
+                }
             }
             .markButton {
                 box-sizing: border-box;
@@ -74,6 +88,9 @@
                 border: 2px solid #353945;
                 border-radius: 90px;
                 cursor: pointer;
+                @media (max-width: 800px) {
+                    width: 120px;
+                }
         
                 .markText {
                     font-style: normal;
@@ -93,6 +110,9 @@
             gap: 24px;
             width: 50%;
             margin: 64px 0 48px;
+            @media (max-width: 800px) {
+                width: 100%;
+            }
 
             .navItem {
                 display: flex;
@@ -117,6 +137,9 @@
             display: flex;
             flex-direction: column;
             width: 50%;
+            @media (max-width: 800px) {
+                width: 100%;
+            }
 
 
             .listItem {
@@ -129,6 +152,10 @@
                 width: 100%;
                 cursor: pointer;
                 border-radius: 20px;
+                @media (max-width: 800px) {
+                    width: 100%;
+                    gap: 0;
+                }
                 
 
                 
@@ -137,22 +164,33 @@
                     display: flex;
                     align-items: center;
                     gap: 20px;
+
+                    @media (max-width: 800px) {
+                        gap: 0;
+                    }
+
                     .avatar {
                         border-radius: 50%;
                         width: 128px;
                         height: 128px;
+                        @media (max-width: 800px) {
+                            width: 80px;
+                            height: 80px;
+                        }
                     }
                     .desc {
                         display: block;
                         flex-direction: column;
                         padding: 20px;
+                        @media (max-width: 800px) {
+                            width: 100%;
+                        }
 
                         .title {
                             font-style: normal;
                             font-weight: 600;
                             font-size: 20px;
                             color: #FCFCFD;
-                            align-self: stretch;
                             
                         }
                         .sub {
