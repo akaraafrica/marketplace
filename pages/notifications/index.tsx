@@ -37,12 +37,12 @@ const Index = () => {
             <div className={styles.breadcrumb}>
                 <span>Profile</span>
                 <span>&gt;</span>
-                <span>Notification</span>
+                <span>Notifications</span>
             </div>
         </div>
         <div className={styles.notification}>
             <div className={styles.top}>
-                <h3>Notification</h3>
+                <h3>Notifications</h3>
                 <div className={styles.markButton}>
                     <p className={styles.markText}>Mark all as read</p>
                 </div>
