@@ -20,6 +20,7 @@
         height: 40px;
         border: 2px solid #353945;
         border-radius: 90px;
+        cursor: pointer;
 
         .backText {
             font-style: normal;
@@ -39,6 +40,7 @@
         line-height: 16px;
         text-align: center;
         color: #777E91;
+        cursor: pointer;
     }
     .notification {
         display: flex;
@@ -71,6 +73,7 @@
                 height: 40px;
                 border: 2px solid #353945;
                 border-radius: 90px;
+                cursor: pointer;
         
                 .markText {
                     font-style: normal;
@@ -107,6 +110,7 @@
                 font-size: 14px;
                 line-height: 16px;
                 color: #FCFCFD;
+                cursor: pointer;
             }
         }
         .list {
@@ -120,9 +124,14 @@
                 flex-direction: row;
                 align-items: center;
                 justify-content: space-between;
-                padding: 16px 20px 16px 16px;
+                padding: 20px;
                 gap: 24px;
                 width: 100%;
+                cursor: pointer;
+                border-radius: 20px;
+                
+
+                
 
                 .left {
                     display: flex;
@@ -168,6 +177,9 @@
                     background: #F2994A;
                     border-radius: 16px;
                 }
+            }
+            .listItem:hover {
+                background-color: #23262F;
             }
         }
     }

@@ -3,6 +3,7 @@ import styles from './index.module.scss'
 import Footer from '../../components/Footer/index'
 import Header from '../../components/Header/index'
 import {BiArrowBack} from 'react-icons/bi'
+import { useRouter } from 'next/router'
 
 interface ListItemProps {
     title: string,
@@ -19,17 +20,17 @@ const ListItem: React.FC<ListItemProps> = ({title, subTitle, date}) => (
                 <span className={styles.date}>{date}</span>
             </div>
         </div>
-        
-        <div className={styles.dot}></div>
+        <span className={styles.dot}></span>
     </div>
 )
 
-const index = () => {
+const Index = () => {
+    const router = useRouter()
   return (
     <div className={styles.root}>
         <Header />
         <div className={styles.breadcrumbWrap}>
-            <div className={styles.backButton}>
+            <div onClick={() => router.push('/')} className={styles.backButton}>
                 <BiArrowBack />
                 <p className={styles.backText}>Back to home</p>
             </div>
@@ -63,4 +64,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index
