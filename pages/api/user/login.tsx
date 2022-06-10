@@ -1,5 +1,5 @@
 import React from 'react'
-import prisma from '../../utils/lib/prisma'
+import prisma from '../../../utils/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
@@ -25,16 +25,17 @@ export default async function  Login(req:NextApiRequest,res:NextApiResponse) {
         }
     })
 
-    
+    if(!myUser) res.end('You have not been signed up. Please signup to login')
+
     const secret = process.env.JWT_KEY
     
     
     try {
      
         if(email){
-            const compare = await bcrypt.compare(password, myUser.password)
+            const compare = await bcrypt.compare(password, myUser ? myUser.password : '')
             if(compare){
-                const token = jwt.sign({email}, secret , { expiresIn: '2d'} )
+                const token = jwt.sign({email}, secret || '' , { expiresIn: '2d'} )
             res.json({message: 'Logged In', accessToken: token})
             } else {
                 return res.send('Invalid password, try again')

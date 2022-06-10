@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from 'react'
 import styles from './index.module.scss'
 import DiscoverSelect from '../DiscoverSelect/index'
@@ -29,7 +31,7 @@ function Discover () {
                        <span className={open === 5 ? 'dactive' : 'dtablink'} onClick={() => setOpen(5)}>Video</span>
                    </div>
                    <div className={styles.Filterbtn}>
-                       <button>Filter <span><img src={`/assets/crossicon.svg`} /></span></button>
+                       <button>Filter <span><img alt="crossicon" src={`/assets/crossicon.svg`} /></span></button>
                    </div>
                </div>
                </div>

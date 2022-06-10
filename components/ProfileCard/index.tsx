@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from 'react'
 import './index.module.scss'
 
@@ -6,20 +8,20 @@ function ProfileCard (props:any) {
         <div>
             <div className="previewcardcontentcon">
               <div className="previewcardimg">
-                  <img src={props.ProductImg} />
+                  <img alt="product image" src={props.ProductImg} />
               </div>
               <div className="previewcardname">
                   <p>{props.Name}</p>
                   <div className="previewcardprice"><p>{props.Price}</p></div>
               </div>
               <div className="previewstockcon">
-                <img src={props.Avatar} />
+                <img alt="avatar" src={props.Avatar} />
                 <p>{props.Stock}</p>
               </div>
               <div className="previewdivider"></div>
               <div className="bidsec">
                 <div className="bidsec1">
-                  <img src={`/assets/bidicon.svg`} />
+                  <img alt="bid icon" src={`/assets/bidicon.svg`} />
                   <p>Highest bid <span>{props.HighestBid}</span></p>
                 </div>
                 <div className="bidsec2">

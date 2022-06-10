@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from "react";
 import { Avatar } from "@mui/material";
 import Badge from "@mui/material/Badge";
@@ -18,7 +20,7 @@ const SellersCard = () => {
           <span className={styles.sellerCardChip}>
             <span
             className={styles.sellercardchipimg}
-            ><img src={`/assets/TrophyIcon.svg`} /></span>
+            ><img alt="trophy icon" src={`/assets/TrophyIcon.svg`} /></span>
             <span className={styles.sellerCardNum}>#1</span>
           </span>
           <span>

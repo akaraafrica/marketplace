@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
+
 import React from 'react'
 import styles from './index.module.scss'
 
@@ -7,7 +10,7 @@ function HowitWorks () {
             <h1 className={styles.howitworksheading}>How it works</h1>
             <div className={styles.howitworksseccontent}>
                 <div className={styles.howitworksseccontentsec1}>
-                    <img src={`/assets/howitworksimg.png`} />
+                    <img alt="how ti works image" src={`/assets/howitworksimg.png`} />
                 </div>
                 <div className={styles.howitworksseccontentsec2con}>
                     <div className={styles.howitworkseccontentsec2}>

@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 
     const key = process.env.SENDGRID_API_KEY
-    mail.setApiKey(key)
+    mail.setApiKey(key || '')
     const temp = 'd-1fbec631dc1248fc9b79e51299b0917f'
 
 interface DT {

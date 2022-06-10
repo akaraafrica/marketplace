@@ -1,7 +1,7 @@
 import jwt, { GetPublicKeyOrSecret, Secret } from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-const secretKey = process.env.JWT_KEY;
+const secretKey = process.env.JWT_KEY || '';
 
 export default class AuthServices {
   static async generateJwt(payload:{} , secret = secretKey) {

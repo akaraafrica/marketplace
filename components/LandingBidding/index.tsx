@@ -14,8 +14,10 @@ const LandingBidding = () => {
   };
 
   useEffect(() => {
-   // var document  = window.document;
-    document?.querySelector("#videoSec video").setAttribute("poster", `/assets/01.png`);
+
+      // @ts-ignore
+      document.querySelector("#videoSec video").setAttribute("poster", `/assets/01.png`);
+    
   }, []);
 
   return (
@@ -25,7 +27,7 @@ const LandingBidding = () => {
         width={500}
         height={500}
         options={{
-          rewind: false,
+        //  rewind: false,
         }}
       />
       <BidCard />
