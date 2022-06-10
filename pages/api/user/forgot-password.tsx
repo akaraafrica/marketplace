@@ -2,7 +2,7 @@ import React from 'react'
 import prisma from '../../../utils/lib/prisma'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
-import Sendmail from '../../../components/sendgrid/Sendmail';
+import Sendmail from '../../../utils/sendgrid/Sendmail';
 
 
 

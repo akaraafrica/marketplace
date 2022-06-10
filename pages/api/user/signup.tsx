@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import Sendmail from '../../../components/sendgrid/Sendmail';
+import Sendmail from '../../../utils/sendgrid/Sendmail';
 
 
 interface DT {
@@ -21,14 +21,7 @@ export default async function  Signup(req:NextApiRequest,res:NextApiResponse) {
 
     let link = ''
     // console.log('Welcome:', userEmail )
-    const Emaildata = {
-        to: userEmail,
-        from: 'info@mbizi.org',
-        templateId: 'd-1fbec631dc1248fc9b79e51299b0917f',
-        dynamicTemplateData: {
-            firstname: userEmail,
-            resetLink: link
-    }}
+   
     const oldUser = await prisma.user.findFirst({
         where:{
             email:userEmail,
@@ -62,6 +55,16 @@ export default async function  Signup(req:NextApiRequest,res:NextApiResponse) {
         link = `localhost:3000/api/user/activate/${userEmail}/${token}`
         console.log("Secret:",token)
 
+        const Emaildata = {
+            to: userEmail,
+            from: 'info@mbizi.org',
+            templateId: 'd-1fbec631dc1248fc9b79e51299b0917f',
+            name: 'Sam',
+            email:'userEmail',
+            link: link,
+            subject:userEmail
+    }
+
         Sendmail(Emaildata)
              return (res.status(200).json({
                  user: newUser,
@@ -89,6 +92,8 @@ if(req.method === 'DELETE'){
     }
     res.send('User deleted succesfuly')
 }
+
+
 if(req.method === 'GET'){
     const allusers = await prisma.user.findMany()
     return res.send(allusers)

@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { getMaxListeners } from 'process';
-import Sendmail from '../../../../../components/sendgrid/Sendmail';
+import Sendmail from '../../../../../utils/sendgrid/Sendmail';
 
 
 interface DT {
