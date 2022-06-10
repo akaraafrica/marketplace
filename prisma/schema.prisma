@@ -1,113 +1,106 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URI")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URI")
+  shadowDatabaseUrl = env("DATABASE_URI")
 }
 
-// Models ...
-
-model Item{
-  owner String
-  tokenId String @unique
-  description String @db.VarChar(250)
-  images String[]
-  video String
-  created DateTime @default(now())
-  updated DateTime @updatedAt
-  publishedAt DateTime?
-  published Boolean
-  price Float
-  openForBid Boolean
+model Item {
+  owner       String
+  tokenId     String    @unique
+  description String    @db.VarChar(250)
+  images      String[]
+  video       String
   acceptedBid Float
-  bids Bid[] 
+  created     DateTime  @default(now())
+  openForBid  Boolean
+  price       Float
+  published   Boolean
+  publishedAt DateTime?
+  updated     DateTime  @updatedAt
+  bids        Bid?
 }
 
 model Bid {
-  bidId String @id
-  amount Float
+  bidId       String   @id
+  amount      Float
   createdDate DateTime @default(now())
   updatedDate DateTime @updatedAt
-  bidders User[]
-  item Item @relation(fields: [bidId],references: [tokenId])
+  item        Item     @relation(fields: [bidId], references: [tokenId])
+  bidders     User[]
 }
 
 model CollectionType {
-  name String @unique
-  minOwners Int
-  maxOwners Int
-  minItems Int
-  maxItems Int
-  typeId String @unique @default(uuid())
+  name       String      @unique
+  minOwners  Int
+  maxOwners  Int
+  minItems   Int
+  maxItems   Int
+  typeId     String      @unique @default(uuid())
   collection Collection?
 }
 
 model User {
-  address String @id @unique 
-  email String @unique
-  password String
-  profile Profile? 
-  profileId Int?
-  bid Bid ? @relation(fields: [bidId], references: [bidId])
-  bidId String?
-  rating Rating?
-  verified Boolean @default(false)
+  address    String      @id @unique
+  email      String      @unique
+  password   String
+  profileId  Int?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?   @updatedAt
+  bidId      String?
+  verified   Boolean     @default(false)
+  bid        Bid?        @relation(fields: [bidId], references: [bidId])
   collection Collection?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt 
+  profile    Profile?
+  rating     Rating?
 }
 
 model Collection {
-  name String
-  typeId String @id @default(uuid())
-  type CollectionType? @relation(fields: [collectiontypeId], references: [name])
-  collectiontypeId String
-  items String[]
-  images String[]
-  videos String[]
-  description String
-  owners String
-  created DateTime @default(now())
-  upated DateTime @updatedAt
-  users User? @relation(fields: [userId], references: [address])
-  userId String @unique
+  name             String
+  typeId           String         @id @default(uuid())
+  collectiontypeId String         @unique
+  items            String[]
+  description      String
+  owners           String
+  created          DateTime       @default(now())
+  upated           DateTime       @updatedAt
+  userId           String         @unique
+  images           String[]
+  videos           String[]
+  type             CollectionType @relation(fields: [collectiontypeId], references: [name])
+  users            User           @relation(fields: [userId], references: [address])
 }
 
 model Rating {
-  entityId String @id
+  entityId   String     @id
   entityType EntityType @default(User)
-  user User @relation(fields: [userId], references: [address])
-  userId String
+  userId     String     @unique
+  user       User       @relation(fields: [userId], references: [address])
 }
+
 model Profile {
-  name String
-  avatar String
-  dob String
-  id String @id @default(uuid())
-  user User @relation(fields: [userId], references: [address])
-  userId String
+  name        String
+  avatar      String
+  dob         String
+  userId      String @unique
+  id          String @id @default(uuid())
   phoneNumber Int
-  bio String
+  bio         String
+  user        User   @relation(fields: [userId], references: [address])
 }
 
 enum Gender {
   MALE
   FEMALE
-  NON_BINARY
   OTHERS
+  NON_BINARY
 }
+
 enum EntityType {
   User
   Single
   Collection
 }
-
-//npx prisma studio
-//npx prisma push
-//npx prisma migrate dev 

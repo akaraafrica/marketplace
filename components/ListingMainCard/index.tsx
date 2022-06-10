@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
+
 import React from 'react'
 import styles from './index.module.scss'
 
@@ -6,11 +9,11 @@ function ListingMainCard () {
         <div className={styles.listingmaincardcon}>
             <div className={styles.listingmaincard}>
                 <div className={styles.listingmaincardsec1}>
-                    <img src={`/assets/listingcardimg.png`} />
+                    <img alt="listing card image" src={`/assets/listingcardimg.png`} />
                 </div>
                 <div className={styles.listingmaincardcontentcon}>
                 <div className={styles.listingmaincardsec1contentcon}>
-                    <img src={`/assets/Avator.svg`} />
+                    <img alt="avatar" src={`/assets/Avator.svg`} />
                     <div className={styles.listingcardsec1content}>
                         <h4>The future of ETH®</h4>
                         <p>18 in stock</p>

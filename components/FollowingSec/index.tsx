@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from 'react'
 import styles from './index.module.scss'
 
@@ -6,7 +8,7 @@ function FollowingSec (props : any) {
         <div className={styles.followingseccon}>
             <div className={styles.followingsec}>
                 <div className={styles.followingsec1con}>
-                    <img src={props.ProfilePhoto} />
+                    <img alt="profile photo" src={props.ProfilePhoto} />
                     <div className={styles.followingsec1content}>
                         <h4>{props.Name}</h4>
                         <p>{props.Followers}</p>
@@ -14,10 +16,10 @@ function FollowingSec (props : any) {
                     </div>
                 </div>
                 <div className={styles.followingsec2con}>
-                    <img src={props.FollowerImage} />
-                    <img src={props.FollowerImage} />
-                    <img src={props.FollowerImage} />
-                    <img src={props.FollowerImage} />
+                    <img alt="follower image "  src={props.FollowerImage} />
+                    <img alt="follower image " src={props.FollowerImage} />
+                    <img alt="follower image " src={props.FollowerImage} />
+                    <img alt="follower image " src={props.FollowerImage} />
                 </div>
             </div>
         </div>

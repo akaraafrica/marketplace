@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
@@ -29,14 +32,14 @@ console.log(state)
     >
      <div className={styles.mobileheadercontent}>
      <div className={styles.mobileHeaderupper}>
-            <img src={`/assets/Logo.png`} />
+            <img alt="logo" src={`/assets/Logo.png`} />
             <button onClick={toggleDrawer(anchor, false)}><CloseIcon style={{height: '10vw', width: '10vw'}} /></button>
         </div>
         <div className={styles.mobileheaderdivider}></div>
          <div className={styles.mobileheaderSearchInputcon} >
      <div className={styles.mobileheaderSearchInput}>
             <input type="text" placeholder="Search" />
-            <img src={`/assets/searchIcon.svg`} />
+            <img alt="search icon" src={`/assets/searchIcon.svg`} />
           </div>
           </div>
           <div className={styles.mobilenotificationseccon}>
@@ -45,7 +48,7 @@ console.log(state)
                 setNotificationOpen(false);
               }} className={styles.mobilenotificationsec}>
               <div className={styles.mobileprofile}>
-              <img src={`/assets/Avator.svg`} />
+              <img alt="avatar" src={`/assets/Avator.svg`} />
               <span>7.00698 ETH</span>
               </div>
               <ArrowDropDownIcon />
@@ -88,8 +91,10 @@ console.log(state)
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}><MenuIcon style={{height: '10vw', width: '10vw'}} /></Button>
           <SwipeableDrawer
-            anchor={anchor}
-            open={state[anchor]}
+            // anchor={anchor}
+            // open={state[anchor]}
+            anchor={'right'}
+            open={state['top']}
             onClose={toggleDrawer(anchor, false)}
             onOpen={toggleDrawer(anchor, true)}
           >

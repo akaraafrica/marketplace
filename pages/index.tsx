@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from "react";
 import Image from "next/image";
 import Lottie from "react-lottie-player";

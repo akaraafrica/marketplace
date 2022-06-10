@@ -33,7 +33,7 @@ const names = [
   'Kelly Snyder',
 ];
 
-function getStyles(name, personName, theme) {
+function getStyles(name: string, personName: string[], theme: any) {
   return {
     fontWeight:
       personName.indexOf(name) === -1
@@ -42,11 +42,11 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelect(props) {
+export default function MultipleSelect(props: any) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [personName, setPersonName] = React.useState([""]);
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const {
       target: { value },
     } = event;
@@ -71,7 +71,7 @@ export default function MultipleSelect(props) {
         >
           {names.map((name) => (
             <MenuItem
-            labelStyle={{ color: 'green' }}
+              //labelStyle={{ color: 'green' }}
               key={name}
               value={name}
               style={getStyles(name, personName, theme)}

@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
+
 import React from "react";
 import styles from "./index.module.scss";
 import HotItemCard from "../HotItemsCard";
@@ -5,8 +8,6 @@ import ProfileCard from '../ProfileCard'
 import HotItemMobile from '../HotItemsMobile'
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
-
-
 
 function HotItems() {
 
@@ -27,12 +28,12 @@ function HotItems() {
           <div className={styles.hotitemsbtn}>
             <button>
               <span>
-                <img src={`/assets/leftArrow.svg`} />
+                <img alt="leftarrow" src={`/assets/leftArrow.svg`} />
               </span>
             </button>
             <button>
               <span>
-                <img src={`/assets/rightArrow.svg`} />
+                <img alt="rightarrow" src={`/assets/rightArrow.svg`} />
               </span>
             </button>
           </div>

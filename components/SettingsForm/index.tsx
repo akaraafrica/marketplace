@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from "react";
 import styles from "./index.module.scss";
 import Switch from "@mui/material/Switch";
@@ -18,7 +20,7 @@ function SettingsForm() {
         <div className={styles.settingformcontentcon}>
           <div className={styles.settimgformsec1}>
             <div className={styles.settingformsec1profilecard}>
-              <img src={`/assets/profilephoto.png`} />
+              <img alt="profile photo" src={`/assets/profilephoto.png`} />
               <div className={styles.settingformprofilecardtext}>
                 <h4>Profile photo</h4>
                 <p>
@@ -82,7 +84,7 @@ function SettingsForm() {
               <div className={styles.addsocialaccountbtn}>
                 <button>
                   <span>
-                    <img src={`/assets/plusicon.svg`} />
+                    <img alt="plus icon" src={`/assets/plusicon.svg`} />
                   </span>
                   Add more social account
                 </button>
@@ -90,14 +92,14 @@ function SettingsForm() {
               <div className={styles.socialtext}>
                 <p>
                   To update your settings you should sign message through your
-                  wallet. Click 'Update profile' then sign the message
+                  wallet. Click &apos Update profile &apos then sign the message
                 </p>
               </div>
               <div className={styles.clearallsec}></div>
               <div className={styles.clearallsec}>
                 <button>Update Profile</button>
                 <div className={styles.clearsecone}>
-                  <img src={`/assets/closeicon.svg`} />
+                  <img alt="close icon" src={`/assets/closeicon.svg`} />
                   <p>Clear all</p>
                 </div>
               </div>

@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from "react";
 import styles from "./index.module.scss";
 import Header from "../../components/Header";
@@ -77,7 +79,7 @@ function ContactPage() {
             </div>
             <div className={styles.contactpagecontentsec2informationcon}>
             <div className={styles.contactpagecontentsec2information}>
-              <img src={`/assets/locationIcon.svg`} />
+              <img alt="location icon" src={`/assets/locationIcon.svg`} />
               <p>
                 3rd Floor, Suite 01, Nusaiba Tower Plot 117 Ahmadu Bello Way,
                 Abuja, Nigeria
@@ -86,7 +88,7 @@ function ContactPage() {
             </div>
             <div className={styles.contactpagecontentsec2informationcon}>
             <div className={styles.contactpagecontentsec2information}>
-              <img src={`/assets/callIcon.svg`} />
+              <img alt="call icon" src={`/assets/callIcon.svg`} />
               <p>
               +2349084884444
               </p>
@@ -94,7 +96,7 @@ function ContactPage() {
             </div>
             <div className={styles.contactpagecontentsec2informationcon}>
             <div className={styles.contactpagecontentsec2information}>
-              <img src={`/assets/mailIcon.svg`} />
+              <img alt="mail icon" src={`/assets/mailIcon.svg`} />
               <p>
               info@akara.com
               </p>

@@ -1,5 +1,5 @@
 import '../styles/globals.scss'
-import "plyr-react/dist/plyr.css";
+import "plyr-react/plyr.css"
 import "swiper/css/pagination"
 import "swiper/css"
 import "swiper/css/bundle"

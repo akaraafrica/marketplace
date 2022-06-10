@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -56,7 +58,7 @@ const LandingPage = () => {
             <button>
               Discover more
               <span>
-                <img src={`/assets/rightArrow.svg`} />
+                <img alt="right arrow" src={`/assets/rightArrow.svg`} />
               </span>
             </button>
           </div>

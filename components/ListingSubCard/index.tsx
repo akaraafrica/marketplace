@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
+
 import React from 'react'
 import styles from './index.module.scss'
 
@@ -6,12 +9,12 @@ function ListingSubCard () {
         <div className={styles.listingsubcardcon}>
             <div className={styles.listingsubcard}>
                 <div className={styles.listingsubcardsec1}>
-                    <img src={`/assets/listingsubcardimg.png`} />
+                    <img alt="listing subcard" src={`/assets/listingsubcardimg.png`} />
                 </div>
                 <div className={styles.listingsubcardsec2}>
                     <p className={styles.listingsubcardsec2heading}>ETH never die</p>
                     <div className={styles.listingsubpricesec}>
-                        <img src={`/assets/Avator.svg`} />
+                        <img alt="avatar" src={`/assets/Avator.svg`} />
                         <div className={styles.listingcardsec2pricecon}>
                         <div className={styles.listingcardsec2price}>
                         <p>1.125 ETH</p>

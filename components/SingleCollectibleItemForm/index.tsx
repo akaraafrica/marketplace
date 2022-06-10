@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from "react";
 import styles from"./index.module.scss";
 import Switch from '@mui/material/Switch';
@@ -17,7 +19,7 @@ function SingleCollectibleItem() {
             <p>Drag or choose your file to upload</p>
           </div>
           <div className={styles.sciuploadbox}>
-            <img src={`/assets/uploadicon.svg`} />
+            <img alt="upload icon" src={`/assets/uploadicon.svg`} />
             <p>PNG, GIF, WEBP, MP4 or MP3. Max 1Gb.</p>
           </div>
         </div>
@@ -85,20 +87,20 @@ function SingleCollectibleItem() {
           </div>
           <div className={styles.previewcardcontentcon}>
               <div className={styles.previewcardimg}>
-                  <img src={`/assets/product img.png`} />
+                  <img alt="product image" src={`/assets/productimg.png`} />
               </div>
               <div className={styles.previewcardname}>
                   <p>Black Golden Tiger</p>
                   <div className={styles.previewcardprice}><p>2.45 ETH</p></div>
               </div>
               <div className={styles.previewstockcon}>
-                <img src={`/assets/avatars.png`} />
+                <img alt="avatars" src={`/assets/avatars.png`} />
                 <p>3 in stock</p>
               </div>
               <div className={styles.previewdivider}></div>
               <div className={styles.bidsec}>
                 <div className={styles.bidsec1}>
-                  <img src={`/assets/bidicon.svg`} />
+                  <img alt="bid icon" src={`/assets/bidicon.svg`} />
                   <p>Highest bid <span>0.001 ETH</span></p>
                 </div>
                 <div className={styles.bidsec2}>
@@ -106,7 +108,7 @@ function SingleCollectibleItem() {
                 </div>
               </div>
               <div className={styles.clearsec}>
-                <img src={`/assets/closeicon.svg`} />
+                <img alt="close icon" src={`/assets/closeicon.svg`} />
                 <p>Clear all</p>
               </div>
           </div>
