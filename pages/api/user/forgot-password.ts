@@ -2,6 +2,8 @@ import prisma from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import Sendmail from "../../../utils/sendgrid/sendmail";
+import { Prisma } from "@prisma/client";
+import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function ForgotPassword(
   req: NextApiRequest,
@@ -44,6 +46,9 @@ export default async function ForgotPassword(
       return res.send("No such user exist");
     }
   } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      return res.status(500).send(ParsePrismaError(error));
+    }
     return res.status(500).send(error);
   }
 }

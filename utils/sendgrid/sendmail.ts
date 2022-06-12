@@ -1,6 +1,4 @@
-import React from "react";
 import mail, { MailDataRequired } from "@sendgrid/mail";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 const key = process.env.SENDGRID_API_KEY;
 mail.setApiKey(key || "");

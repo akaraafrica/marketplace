@@ -1,5 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { ParsePrismaError } from "../../../../../utils/helpers/prisma.error";
 
 interface DT {
   email: string;
@@ -24,6 +25,9 @@ export default async function Emailverification(
         },
       });
     } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        return res.status(500).send(ParsePrismaError(error));
+      }
       console.log(error);
     }
   }

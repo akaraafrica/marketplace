@@ -2,6 +2,8 @@ import prisma from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { Prisma } from "@prisma/client";
+import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function Login(req: NextApiRequest, res: NextApiResponse) {
   const { email, password } = req.body;
@@ -37,6 +39,9 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
       }
     }
   } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      return res.status(500).send(ParsePrismaError(error));
+    }
     return res.status(500).end(` ${error} `);
   }
 }

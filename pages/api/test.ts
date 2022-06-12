@@ -1,4 +1,3 @@
-import React from "react";
 import mail from "@sendgrid/mail";
 import type { NextApiRequest, NextApiResponse } from "next";
 import SendMail from "../../utils/sendgrid/sendmail";
@@ -22,6 +21,10 @@ export default async function Test(req: NextApiRequest, res: NextApiResponse) {
     },
   };
 
-  await SendMail(data);
-  res.send(`Email sent to ${data.to}`);
+  try {
+    await SendMail(data);
+    res.send(`Email sent to ${data.to}`);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 }

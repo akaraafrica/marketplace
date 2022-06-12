@@ -1,8 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import Sendmail from "../../../utils/sendgrid/sendmail";
+import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 interface DT {
   email: string;
@@ -82,7 +83,10 @@ export default async function Signup(
           message: "Please check your email to confirm",
         });
       } catch (error) {
-        res.status(500).json({
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          return res.status(500).send(ParsePrismaError(error));
+        }
+        return res.status(500).json({
           message: error,
         });
       }
