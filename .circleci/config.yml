@@ -24,6 +24,8 @@ jobs:
           name: Run Prettier test
           command: npm run test-all
   heroku/deploy-via-git:
+    requires:
+      - build
     # post-steps:
     #   - run: your-database-migration-command
     # pre-steps:
