@@ -1,6 +1,16 @@
 orbs:
   heroku: circleci/heroku@1.2.6
 version: 2.1
+workflows:
+  heroku_deploy:
+    jobs:
+      - build
+      - heroku/deploy-via-git:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
 jobs:
   build:
     working_directory: ~/repo
@@ -23,9 +33,7 @@ jobs:
       - run:
           name: Run Prettier test
           command: npm run test-all
-  heroku/deploy-via-git:
-    requires:
-      - build
+
     # post-steps:
     #   - run: your-database-migration-command
     # pre-steps:
