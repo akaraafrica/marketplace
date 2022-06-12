@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import Sendmail from "../../../utils/sendgrid/Sendmail";
+import Sendmail from "../../../utils/sendgrid/sendmail";
 
 interface DT {
   email: string;

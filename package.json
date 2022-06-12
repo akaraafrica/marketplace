@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install",
+    "check-types": "tsc --pretty --noEmit",
+    "check-format": "prettier --check --ignore-unknown --stdin --stdin-filepath \"{}\" ",
+    "check-lint": "eslint . --ext ts --ext tsx --ext js",
+    "format": "prettier --write .",
+    "test": "npm run test-all",
+    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -22,7 +29,7 @@
     "jsonwebtoken": "^8.5.1",
     "next": "12.1.6",
     "next-redux-wrapper": "^7.0.5",
-    "plyr-react": "5.0.2",
+    "plyr-react": "4.0.0-alpha.5",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-icons": "^4.4.0",
@@ -42,6 +49,7 @@
     "eslint": "^8.17.0",
     "eslint-config-next": "12.1.6",
     "prisma": "^3.14.0",
-    "typescript": "4.6.4"
+    "typescript": "4.6.4",
+    "husky": "^8.0.0"
   }
 }

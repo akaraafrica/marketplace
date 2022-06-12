@@ -1,10 +1,10 @@
 import React from "react";
 import mail from "@sendgrid/mail";
 import type { NextApiRequest, NextApiResponse } from "next";
-import Sendmail from "../../utils/sendgrid/Sendmail";
+import SendMail from "../../utils/sendgrid/sendmail";
 
 const key = process.env.SENDGRID_API_KEY;
-mail.setApiKey(key);
+mail.setApiKey(key || "");
 const temp = "d-1fbec631dc1248fc9b79e51299b0917f";
 
 export default async function Test(req: NextApiRequest, res: NextApiResponse) {
@@ -16,11 +16,12 @@ export default async function Test(req: NextApiRequest, res: NextApiResponse) {
       firstname: "Jake",
       lastname: req.body.lastname,
       subject: "Can we meet?",
+      link: "",
       resetLink: req.body.resetLink,
       emailComfirmLink: req.body.emailComfirmLink,
     },
   };
 
-  await Sendmail(data);
+  await SendMail(data);
   res.send(`Email sent to ${data.to}`);
 }
