@@ -3,11 +3,11 @@
 import React from "react";
 import styles from "./index.module.scss";
 import Header from "../../components/Header";
-import HotItems from '../../components/HotItems/index'
+import HotItems from "../../components/HotItems/index";
 import Footer from "../../components/Footer/index";
 
 function ContactPage() {
- // document.body.style = "background: black;";
+  // document.body.style = "background: black;";
   return (
     <div className={styles.contactpagecon}>
       <div className={styles.contactpage}>
@@ -78,29 +78,25 @@ function ContactPage() {
               <h1>Contact Information</h1>
             </div>
             <div className={styles.contactpagecontentsec2informationcon}>
-            <div className={styles.contactpagecontentsec2information}>
-              <img alt="location icon" src={`/assets/locationIcon.svg`} />
-              <p>
-                3rd Floor, Suite 01, Nusaiba Tower Plot 117 Ahmadu Bello Way,
-                Abuja, Nigeria
-              </p>
-            </div>
-            </div>
-            <div className={styles.contactpagecontentsec2informationcon}>
-            <div className={styles.contactpagecontentsec2information}>
-              <img alt="call icon" src={`/assets/callIcon.svg`} />
-              <p>
-              +2349084884444
-              </p>
-            </div>
+              <div className={styles.contactpagecontentsec2information}>
+                <img alt="location icon" src={`/assets/locationIcon.svg`} />
+                <p>
+                  3rd Floor, Suite 01, Nusaiba Tower Plot 117 Ahmadu Bello Way,
+                  Abuja, Nigeria
+                </p>
+              </div>
             </div>
             <div className={styles.contactpagecontentsec2informationcon}>
-            <div className={styles.contactpagecontentsec2information}>
-              <img alt="mail icon" src={`/assets/mailIcon.svg`} />
-              <p>
-              info@akara.com
-              </p>
+              <div className={styles.contactpagecontentsec2information}>
+                <img alt="call icon" src={`/assets/callIcon.svg`} />
+                <p>+2349084884444</p>
+              </div>
             </div>
+            <div className={styles.contactpagecontentsec2informationcon}>
+              <div className={styles.contactpagecontentsec2information}>
+                <img alt="mail icon" src={`/assets/mailIcon.svg`} />
+                <p>info@akara.com</p>
+              </div>
             </div>
           </div>
         </div>

@@ -10,8 +10,8 @@ import Following from "../../components/Following/index";
 import Footer from "../../components/Footer/index";
 
 const ProfilePage = () => {
-    const [open,setOpen] = React.useState(0)
- // document.body.style = "background: black;";
+  const [open, setOpen] = React.useState(0);
+  // document.body.style = "background: black;";
   return (
     <div>
       <Header />
@@ -62,7 +62,7 @@ const ProfilePage = () => {
               </button>
             </div>
             <div className={styles.profilecardsocialicons}>
-              <img alt=""  src={`/assets/twittericonone.svg`} />
+              <img alt="" src={`/assets/twittericonone.svg`} />
               <img alt="" src={`/assets/instagramiconone.svg`} />
               <img alt="" src={`/assets/facebookiconone.svg`} />
             </div>
@@ -76,10 +76,30 @@ const ProfilePage = () => {
               <div className={styles.profilepagesec2head}>
                 <div className={styles.headlinks}>
                   <ul>
-                    <li className={open === 0 ? styles.active  : styles.tablink} onClick={() => setOpen(0)}>Gallery</li>
-                    <li className={open === 1 ? styles.active  : styles.tablink} onClick={() => setOpen(1)}>Collections</li>
-                    <li className={open === 2 ? styles.active  : styles.tablink} onClick={() => setOpen(2)}>Favourites</li>
-                    <li className={open === 3 ? styles.active  : styles.tablink} onClick={() => setOpen(3)}>Following</li>
+                    <li
+                      className={open === 0 ? styles.active : styles.tablink}
+                      onClick={() => setOpen(0)}
+                    >
+                      Gallery
+                    </li>
+                    <li
+                      className={open === 1 ? styles.active : styles.tablink}
+                      onClick={() => setOpen(1)}
+                    >
+                      Collections
+                    </li>
+                    <li
+                      className={open === 2 ? styles.active : styles.tablink}
+                      onClick={() => setOpen(2)}
+                    >
+                      Favourites
+                    </li>
+                    <li
+                      className={open === 3 ? styles.active : styles.tablink}
+                      onClick={() => setOpen(3)}
+                    >
+                      Following
+                    </li>
                   </ul>
                 </div>
                 <div className={styles.uploaditembtn}>
@@ -97,5 +117,5 @@ const ProfilePage = () => {
       <Footer />
     </div>
   );
-}
+};
 export default ProfilePage;

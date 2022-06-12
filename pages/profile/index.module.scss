@@ -148,112 +148,112 @@
   border: none;
 }
 .profilepagesec2head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 58vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 58vw;
 }
 .profilepagesec2con {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-evenly;
-    width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  width: 100%;
 }
 .profilepagecard {
-    margin-top: -10vw;
+  margin-top: -10vw;
 }
 .profilepagesec2parent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .active {
-    color: #F2994A;
-    font-size: 1.1vw;
-    list-style-type: none;
+  color: #f2994a;
+  font-size: 1.1vw;
+  list-style-type: none;
 }
 @media only screen and (max-width: 600px) {
-    .profilepagesec2con {
-        flex-direction: column;
-        align-items: center !important;
-    }
-    .profilepagesec1 {
-        height: 50vw !important;
-    }
-    .profilepagesec1 button {
-        width: 18vw !important;
-        height: 6vw !important;
-        font-size: 2vw !important;
-    }
-    .profilepagesec1 button span img {
-        width: 2vw !important;
-        height: 2vw !important;
-    }
-    .profilepagecard {
-        width: 50vw !important;
-        height: 110vw !important;
-    }
-    .profilecardimg img {
-        width: 30vw !important;
-        height: 30vw !important;
-    }
-    .profilecardname h4 {
-        font-size: 5vw !important;
-    }
-    .profileid p {
-        font-size: 3vw !important;
-    }
-    .profileid img {
-        width: 3vw !important;
-        height: 3vw !important;
-    }
-    .profilecarddesc p {
-        font-size: 3.5vw !important;
-    }
-    .profileid {
-        margin-top: -3vw !important;
-    }
-    .profilecardwebsitelink p {
-        font-size: 3vw !important;
-    }
-    .profilecardwebsitelink img {
-        width: 3vw !important;
-        height: 3vw !important;
-    }
-    .followbtn {
-            width: 15vw !important;
-            height: 6vw !important;
-            font-size: 2.5vw !important;
-    }
-    .iconbtn {
-        width: 7vw !important;
-        height: 7vw !important;
-    }
-    .profilecardsocialicons img {
-        width: 6vw !important;
-        height: 6vw !important;
-    }
-    .profilecarddivider {
-        width: 40vw !important;
-    }
-    .membersince p {
-        font-size: 3vw !important;
-    }
-    .headlinks ul {
-        width: 40vw !important;
-    }
-    .profilepagesec2head {
-        width: 70vw !important;
-    }
-    .active {
-        font-size: 2vw !important;
-    }
-    .tablink {
-        font-size: 2vw !important;
-    }
-    .uploaditembtn button {
-        width: 15vw !important;
-        height: 5vw !important;
-        font-size: 2vw !important;
-    }
+  .profilepagesec2con {
+    flex-direction: column;
+    align-items: center !important;
   }
+  .profilepagesec1 {
+    height: 50vw !important;
+  }
+  .profilepagesec1 button {
+    width: 18vw !important;
+    height: 6vw !important;
+    font-size: 2vw !important;
+  }
+  .profilepagesec1 button span img {
+    width: 2vw !important;
+    height: 2vw !important;
+  }
+  .profilepagecard {
+    width: 50vw !important;
+    height: 110vw !important;
+  }
+  .profilecardimg img {
+    width: 30vw !important;
+    height: 30vw !important;
+  }
+  .profilecardname h4 {
+    font-size: 5vw !important;
+  }
+  .profileid p {
+    font-size: 3vw !important;
+  }
+  .profileid img {
+    width: 3vw !important;
+    height: 3vw !important;
+  }
+  .profilecarddesc p {
+    font-size: 3.5vw !important;
+  }
+  .profileid {
+    margin-top: -3vw !important;
+  }
+  .profilecardwebsitelink p {
+    font-size: 3vw !important;
+  }
+  .profilecardwebsitelink img {
+    width: 3vw !important;
+    height: 3vw !important;
+  }
+  .followbtn {
+    width: 15vw !important;
+    height: 6vw !important;
+    font-size: 2.5vw !important;
+  }
+  .iconbtn {
+    width: 7vw !important;
+    height: 7vw !important;
+  }
+  .profilecardsocialicons img {
+    width: 6vw !important;
+    height: 6vw !important;
+  }
+  .profilecarddivider {
+    width: 40vw !important;
+  }
+  .membersince p {
+    font-size: 3vw !important;
+  }
+  .headlinks ul {
+    width: 40vw !important;
+  }
+  .profilepagesec2head {
+    width: 70vw !important;
+  }
+  .active {
+    font-size: 2vw !important;
+  }
+  .tablink {
+    font-size: 2vw !important;
+  }
+  .uploaditembtn button {
+    width: 15vw !important;
+    height: 5vw !important;
+    font-size: 2vw !important;
+  }
+}

@@ -1,63 +1,63 @@
 .listingsubcardsec1 img {
-    width: 15vw;
-    height: 11.6vw;
+  width: 15vw;
+  height: 11.6vw;
 }
 .listingsubpricesec img {
-    width: 1.7vw;
-    height: 1.7vw;
+  width: 1.7vw;
+  height: 1.7vw;
 }
 .listingsubpricesec span {
-    font-size: 1.1vw;
-    color: #777E91;
-    margin-left: 1vw;
+  font-size: 1.1vw;
+  color: #777e91;
+  margin-left: 1vw;
 }
 .listingsubpricesec {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .listingcardsec2pricecon {
-    margin-left: 1vw;
+  margin-left: 1vw;
 }
 .listingsubcardsec2heading {
-    font-size: 2vw;
-    color: white;
+  font-size: 2vw;
+  color: white;
 }
 .listingcardsubsec2btn button {
-    width: 7.2vw;
-    height: 2.3vw;
-    border-radius: 90px;
-    border: 2px solid #777E91;
-    font-size: 1vw;
-    background-color: transparent;
-    color: white;
-    margin-top: 1vw;
+  width: 7.2vw;
+  height: 2.3vw;
+  border-radius: 90px;
+  border: 2px solid #777e91;
+  font-size: 1vw;
+  background-color: transparent;
+  color: white;
+  margin-top: 1vw;
 }
 .listingsubcard {
-    display: flex;
-    align-items: center ;
+  display: flex;
+  align-items: center;
 }
 .listingsubcardsec2 {
-    margin-top: -3vw;
-    margin-left: 1vw;
+  margin-top: -3vw;
+  margin-left: 1vw;
 }
 @media only screen and (max-width: 600px) {
-    .listingsubcardsec1 img {
-        width: 30vw;
-        height: 22vw;
-    }
-    .listingsubcardsec2heading {
-        font-size: 4vw;
-    }
-    .listingsubpricesec img {
-        width: 4vw;
-        height: 4vw;
-    }
-    .listingcardsec2price p {
-        font-size: 2vw;
-    }
-    .listingcardsubsec2btn button {
-            width: 15vw;
-            height: 5vw;
-            font-size: 2vw;
-    }
+  .listingsubcardsec1 img {
+    width: 30vw;
+    height: 22vw;
+  }
+  .listingsubcardsec2heading {
+    font-size: 4vw;
+  }
+  .listingsubpricesec img {
+    width: 4vw;
+    height: 4vw;
+  }
+  .listingcardsec2price p {
+    font-size: 2vw;
+  }
+  .listingcardsubsec2btn button {
+    width: 15vw;
+    height: 5vw;
+    font-size: 2vw;
+  }
 }

@@ -1,293 +1,293 @@
 .scihead h1 {
-    font-size: 3.5vw;
-    color: white;
-    width: 28vw;
+  font-size: 3.5vw;
+  color: white;
+  width: 28vw;
 }
 .sciuploadbox {
-    width: 46vw;
-    height: 13vw;
-    background: #23262F;
-    border-radius: 16px;
+  width: 46vw;
+  height: 13vw;
+  background: #23262f;
+  border-radius: 16px;
 }
 .sciuploadbox img {
-    width: 1.7vw;
-    height: 1.7vw;
+  width: 1.7vw;
+  height: 1.7vw;
 }
 .sciuploadbox p {
-    font-size: 1vw;
-    color: #777E91;
+  font-size: 1vw;
+  color: #777e91;
 }
 .sciuploadbox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    flex-direction: column;
-    margin-top: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  margin-top: 2vw;
 }
 .sciuploadseccon h4 {
-    font-size: 1.17vw;
-    color: #FCFCFD;
+  font-size: 1.17vw;
+  color: #fcfcfd;
 }
 .sciuploadseccon p {
-    font-size: 1vw;
-    color: #777E91
+  font-size: 1vw;
+  color: #777e91;
 }
 .uploadsechead {
-    line-height: 0.5vw;
+  line-height: 0.5vw;
 }
 .itemdetailsformcon h4 {
-    font-size: 1.17vw;
-    color: white;
-    font-weight: 400;
+  font-size: 1.17vw;
+  color: white;
+  font-weight: 400;
 }
 .itemdetailsforminput label {
-    font-size: 1vw;
-    color: #B1B5C3;
+  font-size: 1vw;
+  color: #b1b5c3;
 }
 .itemdetailsforminput input {
-    width: 46vw;
-    height: 3.5vw;
-    background-color: transparent;
-    border: 2px solid #353945;
-    border-radius: 12px;
-    color: #777E91;
-    font-size: 1vw;
-    outline: none;
-    margin-top: 0.7vw;
+  width: 46vw;
+  height: 3.5vw;
+  background-color: transparent;
+  border: 2px solid #353945;
+  border-radius: 12px;
+  color: #777e91;
+  font-size: 1vw;
+  outline: none;
+  margin-top: 0.7vw;
 }
 .itemdetailsforminput1 label {
-    font-size: 1vw;
-    color: #B1B5C3;
+  font-size: 1vw;
+  color: #b1b5c3;
 }
 .itemdetailsforminput1 input {
-    width: 13.9vw;
-    height: 3.8vw;
-    background-color: transparent;
-    border: 2px solid #353945;
-    border-radius: 12px;
-    color: #777E91;
-    font-size: 1vw;
-    outline: none;
-    margin-top: 0.7vw;
+  width: 13.9vw;
+  height: 3.8vw;
+  background-color: transparent;
+  border: 2px solid #353945;
+  border-radius: 12px;
+  color: #777e91;
+  font-size: 1vw;
+  outline: none;
+  margin-top: 0.7vw;
 }
 .itemdetailsforminput select {
-    width: 46.5vw;
-    height: 3.8vw;
-    background-color: transparent;
-    border: 2px solid #353945;
-    border-radius: 12px;
-    color: #777E91;
-    font-size: 1vw;
-    outline: none;
-    margin-top: 0.7vw;
+  width: 46.5vw;
+  height: 3.8vw;
+  background-color: transparent;
+  border: 2px solid #353945;
+  border-radius: 12px;
+  color: #777e91;
+  font-size: 1vw;
+  outline: none;
+  margin-top: 0.7vw;
 }
 .itemdetailsformdropdown label {
-    font-size: 1vw;
-    color: #B1B5C3;
+  font-size: 1vw;
+  color: #b1b5c3;
 }
 .itemdetailsformdropdown select {
-    width: 13.9vw;
-    height: 3.8vw;
-    background-color:  #141416;
-    border: 2px solid #353945;
-    border-radius: 12px;
-    color: #777E91;
-    font-size: 1vw;
-    outline: none;
-    margin-top: 0.7vw;
+  width: 13.9vw;
+  height: 3.8vw;
+  background-color: #141416;
+  border: 2px solid #353945;
+  border-radius: 12px;
+  color: #777e91;
+  font-size: 1vw;
+  outline: none;
+  margin-top: 0.7vw;
 }
 .itemdetailsforminput input::placeholder {
-    color: #777E91;
-    font-size: 1vw;
-    padding-left: 1vw;
+  color: #777e91;
+  font-size: 1vw;
+  padding-left: 1vw;
 }
 .itemdetailsforminput1 input::placeholder {
-    color: #777E91;
-    font-size: 1vw;
-    padding-left: 1vw;
+  color: #777e91;
+  font-size: 1vw;
+  padding-left: 1vw;
 }
 .itemdetailsforminput {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    margin-top: 2vw;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 2vw;
 }
 .itemdetailsformdropdown {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    margin-top: 2vw;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 2vw;
 }
 .itemdetailsforminput1 {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    margin-top: 2vw;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 2vw;
 }
 .itemdetailformdropdownsCon {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 46.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 46.5vw;
 }
 .divider {
-    width: 46.5vw;
-    height: 0.1vw;
-    background-color: #353945;
-    margin-top: 2vw;
+  width: 46.5vw;
+  height: 0.1vw;
+  background-color: #353945;
+  margin-top: 2vw;
 }
 .putonscalesec1 p {
-    font-size: 1vw;
-    color: #777E90;
+  font-size: 1vw;
+  color: #777e90;
 }
 .putonscalesec1 {
-    line-height: 0.5vw;
+  line-height: 0.5vw;
 }
 .putonscalesec {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 46vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 46vw;
 }
 .putonscalebtnsec button {
-    width: 12vw;
-    height: 3.5vw;
-    background-color: #F2994A;
-    color: white;
-    font-size: 1.17vw;
-    border-radius: 90px;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  width: 12vw;
+  height: 3.5vw;
+  background-color: #f2994a;
+  color: white;
+  font-size: 1.17vw;
+  border-radius: 90px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .putonscalebtnsec button span img {
-    width: 2vw;
-    height: 0.66vw;
+  width: 2vw;
+  height: 0.66vw;
 }
 .putonscalebtnsec p {
-    font-size: 1.17vw;
-    color: white;
+  font-size: 1.17vw;
+  color: white;
 }
 .putonscalebtnsec {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 46vw;
-    margin-top: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 46vw;
+  margin-top: 2vw;
 }
 .previewCard {
-    width: 25vw;
-    height: 47vw;
-    background: #141416;
-    border: 1px solid #353945;
-    border-radius: 16px;
+  width: 25vw;
+  height: 47vw;
+  background: #141416;
+  border: 1px solid #353945;
+  border-radius: 16px;
 }
 .previewheading h1 {
-    font-size: 1.7vw;
-    color: white;
-    font-weight: 500;
-    padding-left: 3.5vw;
-    margin-top: 1vw;
+  font-size: 1.7vw;
+  color: white;
+  font-weight: 500;
+  padding-left: 3.5vw;
+  margin-top: 1vw;
 }
 .previewcardimg img {
-    width: 18.7vw;
-    height: 22vw;
+  width: 18.7vw;
+  height: 22vw;
 }
 .previewcardname p {
-    font-size: 1.17vw;
-    color: white;
+  font-size: 1.17vw;
+  color: white;
 }
 .previewcardprice p {
-    font-size: 1vw;
-    color: #45B36B;
+  font-size: 1vw;
+  color: #45b36b;
 }
 .previewcardprice {
-    width: 4.9vw;
-    height: 1.9vw;
-    border: 2px solid #45B36B;
-    border-radius: 4px;
-    justify-content: center;
-align-items: center;
-display: flex;
+  width: 4.9vw;
+  height: 1.9vw;
+  border: 2px solid #45b36b;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 .previewcardname {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 18.7vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 18.7vw;
 }
 .previewstockcon img {
-    width: 12.9vw;
-    height: 1.7vw;
+  width: 12.9vw;
+  height: 1.7vw;
 }
 .previewstockcon p {
-    font-size: 1.1vw;
-    color: #353945;
+  font-size: 1.1vw;
+  color: #353945;
 }
 .previewstockcon {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 18.7vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 18.7vw;
 }
 .previewdivider {
-    width: 18.7vw;
-    height: 0.1vw;
-    background: #353945;
+  width: 18.7vw;
+  height: 0.1vw;
+  background: #353945;
 }
 .bidsec1 img {
-    width: 1.4vw;
-    height: 1.4vw;
+  width: 1.4vw;
+  height: 1.4vw;
 }
 .bidsec1 p {
-    font-size: 1.1vw;
-    color: #777E91;
+  font-size: 1.1vw;
+  color: #777e91;
 }
 .bidsec1 p span {
-    color: #353945;
+  color: #353945;
 }
 .bidsec1 {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .bidsec2 p {
-    font-size: 1.1vw;
-    color: #777E91;
+  font-size: 1.1vw;
+  color: #777e91;
 }
 .bidsec {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 18.7vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 18.7vw;
 }
 .clearsec img {
-    width: 1.7vw;
-    height: 1.7vw;
+  width: 1.7vw;
+  height: 1.7vw;
 }
 .clearsec p {
-    font-size: 1.1vw;
-    color: #777E91;
-    padding-left: 0.5vw;
+  font-size: 1.1vw;
+  color: #777e91;
+  padding-left: 0.5vw;
 }
 .clearsec {
-    display: flex;
-    align-items: center;
-    padding-right: 13vw;
+  display: flex;
+  align-items: center;
+  padding-right: 13vw;
 }
 .previewcardcontentcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 3vw;
 }
 .sciCon {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-evenly;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
 }
 .preview-card {
-    margin-top: 3vw;
+  margin-top: 3vw;
 }

@@ -1,140 +1,140 @@
 .profilemodalcon {
-    width: 18vw;
-    height: 29vw;
-    margin-right: -28vw;
-    z-index: 100;
-    position: fixed;
-    margin-top: -1.2vw;
+  width: 18vw;
+  height: 29vw;
+  margin-right: -28vw;
+  z-index: 100;
+  position: fixed;
+  margin-top: -1.2vw;
 }
 .profilemodal {
-    width: 18vw;
-    height: 28vw;
-    background-color: #141416;
-    border-radius: 17px;
+  width: 18vw;
+  height: 28vw;
+  background-color: #141416;
+  border-radius: 17px;
 }
 .profilemodalhead h1 {
-    font-size: 1.7vw;
-    color: white;
-    font-weight: 500;
+  font-size: 1.7vw;
+  color: white;
+  font-weight: 500;
 }
 .profilemodalheadsec2 p {
-    font-size: 1vw;
-    color: #777E91;
+  font-size: 1vw;
+  color: #777e91;
 }
 .profilemodalheadsec2 img {
-    width: 1vw;
-    height: 1vw;
+  width: 1vw;
+  height: 1vw;
 }
 .profilemodalheadsec2 {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .profilemodalhead {
-    line-height: 0.2vw;
-    padding-top: 1vw;
-    padding-left: 1vw;
+  line-height: 0.2vw;
+  padding-top: 1vw;
+  padding-left: 1vw;
 }
 .balancecard {
-    width: 16.3vw;
-    height: 4.9vw;
-    background: #23262F;
-    box-shadow: 0px 24px 24px -16px rgba(15, 15, 15, 0.2);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    margin-left: 0.8vw;
-    margin-top: 1vw;
+  width: 16.3vw;
+  height: 4.9vw;
+  background: #23262f;
+  box-shadow: 0px 24px 24px -16px rgba(15, 15, 15, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  margin-left: 0.8vw;
+  margin-top: 1vw;
 }
 .balancecardsec1 img {
-    width: 2.9vw;
-    height: 2.9vw;
-    margin-left: 1vw;
+  width: 2.9vw;
+  height: 2.9vw;
+  margin-left: 1vw;
 }
 .balancecardsec2 p {
-    font-size: 0.8vw;
-    color: #777E91;
+  font-size: 0.8vw;
+  color: #777e91;
 }
 .balancecardsec2 h1 {
-    font-size: 1.7vw;
-    color: #FCFCFD;
-    font-weight: 500;
+  font-size: 1.7vw;
+  color: #fcfcfd;
+  font-weight: 500;
 }
 .balancecardsec2 {
-    line-height: 0.5vw;
-    padding-left: 1vw;
+  line-height: 0.5vw;
+  padding-left: 1vw;
 }
 .profilemodallist img {
-    width: 1.4vw;
-    height: 1.4vw;
-    margin-left: 1vw;
+  width: 1.4vw;
+  height: 1.4vw;
+  margin-left: 1vw;
 }
 .profilemodallist p {
-    font-size: 1vw;
-    color: #777E91;
-    padding-left: 1vw;
+  font-size: 1vw;
+  color: #777e91;
+  padding-left: 1vw;
 }
 .profilemodallist {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .line {
-    width: 16vw;
-    height: 0.2vw;
-    background: #353945;
-    margin-left: 0.7vw;
+  width: 16vw;
+  height: 0.2vw;
+  background: #353945;
+  margin-left: 0.7vw;
 }
 .profilemodallistcon {
-    margin-top: 1vw;
+  margin-top: 1vw;
 }
 @media only screen and (max-width: 600px) {
-    .tooltipiconcon {
-        display: none;
-    }
-    .profilemodal {
-        width: 80vw;
-        height: 75vw;
-    }
-    .profilemodalhead h1 {
-        font-size: 8vw;
-    }
-    .profilemodalhead {
-        padding-left: 3vw;
-    }
-    .profilemodalheadsec2 p {
-        font-size: 4vw;
-    }
-    .profilemodalheadsec2 img {
-        width: 3vw;
-        height: 3vw;
-    }
-    .balancecard {
-        width: 60vw;
-        height: 10vw;
-    }
-    .balancecardsec1 img {
-        width: 6vw;
-        height:  6vw;
-    }
-    .balancecardsec2 p {
-        font-size: 2vw;
-    }
-    .balancecardsec2 h1 {
-        font-size: 4vw;
-    }
-    .profilemodalcon {
-        width: 80vw;
-        height: 60vw;
-        margin-right: 0;
-        margin-top: 58vw;
-    }
-    .profilemodallist img {
-        width: 5vw;
-        height: 5vw;
-    }
-    .profilemodallist p {
-        font-size: 3vw;
-    }
-    .line {
-        width: 60vw;
-    }
+  .tooltipiconcon {
+    display: none;
   }
+  .profilemodal {
+    width: 80vw;
+    height: 75vw;
+  }
+  .profilemodalhead h1 {
+    font-size: 8vw;
+  }
+  .profilemodalhead {
+    padding-left: 3vw;
+  }
+  .profilemodalheadsec2 p {
+    font-size: 4vw;
+  }
+  .profilemodalheadsec2 img {
+    width: 3vw;
+    height: 3vw;
+  }
+  .balancecard {
+    width: 60vw;
+    height: 10vw;
+  }
+  .balancecardsec1 img {
+    width: 6vw;
+    height: 6vw;
+  }
+  .balancecardsec2 p {
+    font-size: 2vw;
+  }
+  .balancecardsec2 h1 {
+    font-size: 4vw;
+  }
+  .profilemodalcon {
+    width: 80vw;
+    height: 60vw;
+    margin-right: 0;
+    margin-top: 58vw;
+  }
+  .profilemodallist img {
+    width: 5vw;
+    height: 5vw;
+  }
+  .profilemodallist p {
+    font-size: 3vw;
+  }
+  .line {
+    width: 60vw;
+  }
+}

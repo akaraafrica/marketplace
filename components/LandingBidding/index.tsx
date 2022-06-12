@@ -15,20 +15,24 @@ const LandingBidding = () => {
 
   let playerRef = useRef();
   useEffect(() => {
-      // @ts-ignore
-      document.querySelector("#videoSec video").setAttribute("poster", `/assets/01.png`);
+    // @ts-ignore
+    document
+      .querySelector("#videoSec video")
+      .setAttribute("poster", `/assets/01.png`);
   }, []);
 
   return (
     <div id="videoSec" className={styles.videoSec}>
       <Plyr
-      //  ref={playerRef}
+        //  ref={playerRef}
         source={videoSrc}
         width={500}
         height={500}
-        options={{
-        //  rewind: false,
-        }}
+        options={
+          {
+            //  rewind: false,
+          }
+        }
       />
       <BidCard />
     </div>

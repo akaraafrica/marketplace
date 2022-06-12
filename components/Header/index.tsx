@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./index.module.scss";
 import NotificationModal from "../NotificationModal/index";
 import ProfileModal from "../ProfileModal/index";
-import MobileHeader from '../MobileHeader/index'
+import MobileHeader from "../MobileHeader/index";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
@@ -12,12 +12,12 @@ function Header() {
   return (
     <div>
       <div className={styles.headerCon}>
-      <div className={styles.mobileheadercon}>
-      <div className={styles.mobileHeaderupper}>
+        <div className={styles.mobileheadercon}>
+          <div className={styles.mobileHeaderupper}>
             <img alt="logo" src={`/assets/Logo.png`} />
             <MobileHeader />
-        </div>
           </div>
+        </div>
         <div className={styles.Header}>
           <div className={styles.headerSec1Logo}>
             <img alt="logo" src={`/assets/Logo.png`} />

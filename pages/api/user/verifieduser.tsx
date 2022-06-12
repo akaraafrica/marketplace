@@ -1,21 +1,21 @@
-import { NextApiRequest, NextApiResponse}  from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-export default async function VerifiedUsers(req:NextApiRequest,res:NextApiResponse){
+export default async function VerifiedUsers(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const prisma = new PrismaClient();
 
-const prisma = new PrismaClient()
-
-try {
+  try {
     const vuser = await prisma.user.findMany({
-        where:{
-            verified: true
-        }
-    })
-    res.status(200).send(vuser)
-} catch (error) {
-    console.log(error)
-    return res.status(209).send(error)
-
-}
-
+      where: {
+        verified: true,
+      },
+    });
+    res.status(200).send(vuser);
+  } catch (error) {
+    console.log(error);
+    return res.status(209).send(error);
+  }
 }

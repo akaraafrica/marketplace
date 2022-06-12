@@ -1,16 +1,16 @@
 .css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
-    color: white !important;
-  }
-  .css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase {
-    color: #777E91 !important;
-  }
-  .css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked
-    + .MuiSwitch-track {
-    background-color: #F2994A !important;
-  }
-  .css-1yjjitx-MuiSwitch-track {
-    background-color: white !important;
-  }
-  .css-187mznn-MuiSlider-root {
-    color: #f2994a !important;
-  }
+  color: white !important;
+}
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase {
+  color: #777e91 !important;
+}
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked
+  + .MuiSwitch-track {
+  background-color: #f2994a !important;
+}
+.css-1yjjitx-MuiSwitch-track {
+  background-color: white !important;
+}
+.css-187mznn-MuiSlider-root {
+  color: #f2994a !important;
+}

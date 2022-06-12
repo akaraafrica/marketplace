@@ -11,6 +11,6 @@ const register = (address, email, password) => {
 };
 
 const authService = {
-    register,
-  };
-  export default authService;
+  register,
+};
+export default authService;

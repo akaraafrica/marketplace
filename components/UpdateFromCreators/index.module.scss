@@ -1,71 +1,71 @@
 .updatefromcreatorsec1 {
-    background-image: url('/assets/Avator.svg');
-    background-size: 100% 100%;
-    width: 4vw;
-    height: 4vw;
+  background-image: url("/assets/Avator.svg");
+  background-size: 100% 100%;
+  width: 4vw;
+  height: 4vw;
 }
 .updatefromcreatornum p {
-    font-size: 1.1vw;
-    font-weight: 600;
+  font-size: 1.1vw;
+  font-weight: 600;
 }
 .updatefromcreatornum {
-    width: 1.7vw;
-    height: 1.7vw;
-    border-radius: 64px;
-    background: #FCFCFD;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 1.7vw;
+  height: 1.7vw;
+  border-radius: 64px;
+  background: #fcfcfd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .updatefromcreatorsec2 h4 {
-    font-size: 1.2vw;
-    color: white;
-    font-weight: 500;
+  font-size: 1.2vw;
+  color: white;
+  font-weight: 500;
 }
 .updatefromcreatorsec2 p {
-    font-size: 1vw;
-    color: white;
+  font-size: 1vw;
+  color: white;
 }
 .updatefromcreatorsec2 p span {
-    color: #777E91;
+  color: #777e91;
 }
 .updatefromcreatorsec2 {
-    line-height: 0.5vw;
-    margin-top: -0.3vw;
-    margin-left: 1vw;
+  line-height: 0.5vw;
+  margin-top: -0.3vw;
+  margin-left: 1vw;
 }
 .updatefromcreateor {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 @media only screen and (max-width: 600px) {
-    .updatefromcreatorsec1 {
-        width: 8vw !important;
-        height: 8vw !important;
-    }
-    .updatefromcreatornum {
-        width: 2.5vw !important;
-        height: 2.5vw !important;
-    }
-    .updatefromcreatornum p {
-        font-size: 1.8vw;
-    }
-    .updatefromcreatorsec2 h4 {
-        font-size: 2.4vw;
-    }
-    .updatefromcreatorsec2 p {
-        font-size: 2vw;
-    }
-    .updatefromcreatorheading {
-        font-size: 3vw;
-    }
-    .discovermore button {
-        width: 22vw;
-        height: 6vw;
-        font-size: 2vw;
-    }
-    .discovermore button span img {
-        width: 2.5vw;
-        height: 2.5vw;
-    }
+  .updatefromcreatorsec1 {
+    width: 8vw !important;
+    height: 8vw !important;
+  }
+  .updatefromcreatornum {
+    width: 2.5vw !important;
+    height: 2.5vw !important;
+  }
+  .updatefromcreatornum p {
+    font-size: 1.8vw;
+  }
+  .updatefromcreatorsec2 h4 {
+    font-size: 2.4vw;
+  }
+  .updatefromcreatorsec2 p {
+    font-size: 2vw;
+  }
+  .updatefromcreatorheading {
+    font-size: 3vw;
+  }
+  .discovermore button {
+    width: 22vw;
+    height: 6vw;
+    font-size: 2vw;
+  }
+  .discovermore button span img {
+    width: 2.5vw;
+    height: 2.5vw;
+  }
 }

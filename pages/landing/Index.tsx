@@ -19,9 +19,7 @@ import HotCollectionMobile from "../../components/HotCollectionMobile/index";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
-
 const LandingPage = () => {
-
   SwiperCore.use([Pagination, Autoplay]);
 
   const settings = {
@@ -31,14 +29,14 @@ const LandingPage = () => {
     slidesPerRow: 3,
     autoplay: true,
   };
- // document.body.style = "background: black;";
+  // document.body.style = "background: black;";
   return (
     <div>
       <Header />
-      <div className={styles.styles} >
+      <div className={styles.styles}>
         <LandingMain />
       </div>
-        <LandingBidding />
+      <LandingBidding />
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>
@@ -73,19 +71,19 @@ const LandingPage = () => {
         </div>
         <div className={styles.hotcollectioncardwrapper}>
           <Swiper
-                  spaceBetween={30}
-                  breakpoints={{
-                    200: { slidesPerView: 1.5 },
-                    700: { slidesPerView: 2.5 },
-                    1200: { slidesPerView: 1.5 },
-                    2500: { slidesPerView: 1.5 },
-                  }}
-                  loop
-                  className={`swiper-wrapper ${styles.slideWrapper}`}
-                  autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                  }}
+            spaceBetween={30}
+            breakpoints={{
+              200: { slidesPerView: 1.5 },
+              700: { slidesPerView: 2.5 },
+              1200: { slidesPerView: 1.5 },
+              2500: { slidesPerView: 1.5 },
+            }}
+            loop
+            className={`swiper-wrapper ${styles.slideWrapper}`}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
           >
             <SwiperSlide>
               <HotCollectionCard />

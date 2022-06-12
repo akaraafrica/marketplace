@@ -1,29 +1,29 @@
 .layout {
+  width: 100%;
+  display: flex;
+  background-color: #ffffff;
+  @media (max-width: 800px) {
     width: 100%;
-    display: flex;
-    background-color: #ffffff;
-    @media (max-width: 800px) {
-        width: 100%;
-    }
-    
-    .sidebar {
-        width: 400px;
-        @media (max-width: 800px) {
-            position: fixed;
-            margin-left: -150%;
-            transition: 5s;
-        }
-    }
+  }
 
-    .children {
-        width: calc(100% - 400px);
-        padding: 230px 0 0;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        text-align: center;
-        @media (max-width: 800px) {
-            width: 100%;
-        }
+  .sidebar {
+    width: 400px;
+    @media (max-width: 800px) {
+      position: fixed;
+      margin-left: -150%;
+      transition: 5s;
     }
+  }
+
+  .children {
+    width: calc(100% - 400px);
+    padding: 230px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    @media (max-width: 800px) {
+      width: 100%;
+    }
+  }
 }
