@@ -1,10 +1,5 @@
-import React from "react";
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import { getMaxListeners } from "process";
-import Sendmail from "../../../../../utils/sendgrid/sendmail";
 
 interface DT {
   email: string;

@@ -25,7 +25,7 @@ const Index = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(state);
     try {
-      const res = await axios.post("/api/signup", {
+      const res = await axios.post("/api/user/signup", {
         address: address,
         ...state,
       });

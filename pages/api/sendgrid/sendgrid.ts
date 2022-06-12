@@ -1,4 +1,3 @@
-import React from "react";
 import mail from "@sendgrid/mail";
 import type { NextApiRequest, NextApiResponse } from "next";
 

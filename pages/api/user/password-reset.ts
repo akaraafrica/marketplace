@@ -1,9 +1,8 @@
-import React from "react";
 import prisma from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 
-export default async function PasswordResset(
+export default async function PasswordReset(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

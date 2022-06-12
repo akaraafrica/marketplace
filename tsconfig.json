@@ -19,7 +19,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/bio.js",
+    "pages/api/bio.ts",
     "store/reducers/userSlice.js"
   ],
   "exclude": ["node_modules"]

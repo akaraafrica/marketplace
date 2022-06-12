@@ -1,3 +1,5 @@
+orbs:
+  heroku: circleci/heroku@1.2.6
 version: 2.1
 jobs:
   build:
@@ -21,3 +23,8 @@ jobs:
       - run:
           name: Run Prettier test
           command: npm run test-all
+  heroku/deploy-via-git:
+    # post-steps:
+    #   - run: your-database-migration-command
+    # pre-steps:
+    #   - run: command-that-run-before-deploying

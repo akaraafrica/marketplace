@@ -1,4 +1,3 @@
-import React from "react";
 import prisma from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
@@ -10,13 +9,14 @@ export default async function ForgotPassword(
 ) {
   const { password } = req.body;
   const userEmail = req.body.email;
-  const checkuser = await prisma.user.findFirst({
-    where: {
-      email: userEmail,
-    },
-  });
 
   try {
+    const checkuser = await prisma.user.findFirst({
+      where: {
+        email: userEmail,
+      },
+    });
+
     if (checkuser) {
       const secret = process.env.JWT_KEY + checkuser.password;
 
@@ -43,5 +43,7 @@ export default async function ForgotPassword(
     } else {
       return res.send("No such user exist");
     }
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 }

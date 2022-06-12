@@ -24,7 +24,7 @@ const Index = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(state);
     try {
-      const res = await axios.post("/api/login", {
+      const res = await axios.post("/api/user/login", {
         ...state,
       });
       if (res.status === 200) {

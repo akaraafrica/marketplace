@@ -1,9 +1,13 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../utils/lib/prisma";
 
-export default async function profile(req, res) {
+export default async function profile(
+  req: NextApiRequest,
+  res: NextApiResponse
+  ) {
   if (req.method === "GET") {
     try {
-      const result = await prisma.user.findMany();
+      const result = await prisma.item.findMany();
       res.status(200).json(result);
     } catch (error) {
       console.log("Eror:", error);
@@ -11,20 +15,13 @@ export default async function profile(req, res) {
   }
   if (req.method === "POST") {
     try {
-      const data = await prisma.user.create({
+      const data = await prisma.item.create({
         data: {
-          address: req.body.address,
-          email: req.body.email,
-          password: req.body.password,
-          profileId: req.body.profileId,
-
-          profile: {
-            create: {
-              name: req.body.name,
-              avatar: req.body.avatar,
-              dob: req.body.dob,
-            },
-          },
+          owner: req.body.owner,
+          tokenId: req.body.tokenId,
+          description: req.body.description,
+          images: req.body.images,
+          video: req.body.video,
         },
       });
       res.status(200).json(data);
