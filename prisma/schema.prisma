@@ -58,6 +58,7 @@ model User {
   bidId String?
   rating Rating?
   collection Collection?
+  notifications Notification?
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt 
 }
@@ -94,6 +95,15 @@ model Profile {
   phoneNumber Int
   verified Boolean
   bio String
+}
+model Notification {
+  id String  @id @default(uuid())
+  user User @relation(fields: [userId], references: [address])
+  userId String
+  title String
+  content String
+  status Boolean
+  created DateTime @default(now())
 }
 
 enum Gender {
