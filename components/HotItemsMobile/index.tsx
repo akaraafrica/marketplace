@@ -1,25 +1,22 @@
-import React from 'react'
+import React from "react";
 import HotItemCard from "../HotItemsCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
-
-function HotItemsMobile () {
-
+function HotItemsMobile() {
   SwiperCore.use([Pagination, Autoplay]);
 
-    const settings =  {
-        arrows: false,
-        arrowsBlock: false,
-        shift: 10,
-        slidesPerRow: 1,
-        autoplay: true
-      };
-    return(
-        <div className="hotitemsmobilecon">
-          <Swiper
-          >
-          <SwiperSlide>
+  const settings = {
+    arrows: false,
+    arrowsBlock: false,
+    shift: 10,
+    slidesPerRow: 1,
+    autoplay: true,
+  };
+  return (
+    <div className="hotitemsmobilecon">
+      <Swiper>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -28,8 +25,8 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-          <SwiperSlide>
+        </SwiperSlide>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -38,8 +35,8 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-          <SwiperSlide>
+        </SwiperSlide>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -48,8 +45,8 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-          <SwiperSlide>
+        </SwiperSlide>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -58,8 +55,8 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-          <SwiperSlide>
+        </SwiperSlide>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -68,8 +65,8 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-          <SwiperSlide>
+        </SwiperSlide>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -78,8 +75,8 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-          <SwiperSlide>
+        </SwiperSlide>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -88,8 +85,8 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-          <SwiperSlide>
+        </SwiperSlide>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -98,8 +95,8 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-          <SwiperSlide>
+        </SwiperSlide>
+        <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}
             Name="Amazing digital art"
@@ -108,9 +105,9 @@ function HotItemsMobile () {
             Avatar={`/assets/avatars.png`}
             HighestBid="0.001 ETH"
           />
-          </SwiperSlide>
-        </Swiper>
-        </div>
-    );
+        </SwiperSlide>
+      </Swiper>
+    </div>
+  );
 }
-export default HotItemsMobile
+export default HotItemsMobile;

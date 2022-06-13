@@ -1,118 +1,118 @@
 .notificationModalCon {
-    width: 28.9vw;
-    height: 39vw;
-    margin-right: 6.5vw;
-    z-index: 100;
-    position: fixed;
-    margin-top: -1.2vw;
+  width: 28.9vw;
+  height: 39vw;
+  margin-right: 6.5vw;
+  z-index: 100;
+  position: fixed;
+  margin-top: -1.2vw;
 }
 .notificationModal {
-    width: 28.9vw;
-    height: 36vw;
-    background-color: #141416;
-    border-radius: 25px;
+  width: 28.9vw;
+  height: 36vw;
+  background-color: #141416;
+  border-radius: 25px;
 }
 .tooltipicon {
-    width: 2.3vw;
-    height: 1.17vw;
-    margin-bottom: -0.4vw;
+  width: 2.3vw;
+  height: 1.17vw;
+  margin-bottom: -0.4vw;
 }
 .tooltipiconcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .notificstionmodalcontentsec1 img {
-    width: 7.3vw;
-    height: 6.5vw;
-    border-radius: 10px;
+  width: 7.3vw;
+  height: 6.5vw;
+  border-radius: 10px;
 }
 .notificationmodalcontentsec2 h4 {
-    font-size: 1.2vw;
-    color: white;
-    font-weight: 500;
+  font-size: 1.2vw;
+  color: white;
+  font-weight: 500;
 }
 .notificationmodalcontentsec2 p {
-    font-size: 0.8vw;
-    color: #777E91;
+  font-size: 0.8vw;
+  color: #777e91;
 }
 .notificationmodalcontentsec2 {
-    line-height: 0.4vw;
-    margin-left: 1vw;
+  line-height: 0.4vw;
+  margin-left: 1vw;
 }
 .acticeNotification img {
-    width: 0.8vw;
-    height: 0.8vw;
+  width: 0.8vw;
+  height: 0.8vw;
 }
 .notificationmodalcontent {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    margin-top: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: 1vw;
 }
 .notificstionmodalcontentseccon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .notificationModalHead h1 {
-    font-size: 2.3vw;
-    color: white;
+  font-size: 2.3vw;
+  color: white;
 }
 .notificationModalHead button {
-    width: 5.8vw;
-    height: 2.9vw;
-    background-color: #F2994A;
-    font-size: 1.1vw;
-    color: white;
-    border-radius: 25px;
-    border: none;
-    outline: none;
-    font-weight: 600;
+  width: 5.8vw;
+  height: 2.9vw;
+  background-color: #f2994a;
+  font-size: 1.1vw;
+  color: white;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-weight: 600;
 }
 .notificationModalHead {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 1vw;
-    padding-right: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1vw;
+  padding-right: 1vw;
 }
 @media only screen and (max-width: 600px) {
-    .tooltipiconcon {
-        display: none;
-    }
-    .notificationModal {
-        width: 80vw;
-        height: 65vw;
-    }
-    .notificationModalHead h1 {
-        font-size: 5vw;
-    }
-    .notificationModalHead button {
-        width: 15vw;
-        height: 5vw;
-        font-size: 2vw;
-    }
-    .notificstionmodalcontentsec1 img {
-        width: 15vw;
-        height: 13vw;
-    }
-    .notificationmodalcontentsec2 h4 {
-        font-size: 2.5vw;
-    }
-    .notificationmodalcontentsec2 p {
-        font-size: 2vw;
-    }
-    .acticeNotification img {
-        width: 1.8vw;
-        height: 1.8vw;
-    }
-    .notificationModalCon {
-        width: 80vw;
-        height: 65vw;
-        margin-right: 0;
-        margin-top: 80vw;
-    }
+  .tooltipiconcon {
+    display: none;
   }
+  .notificationModal {
+    width: 80vw;
+    height: 65vw;
+  }
+  .notificationModalHead h1 {
+    font-size: 5vw;
+  }
+  .notificationModalHead button {
+    width: 15vw;
+    height: 5vw;
+    font-size: 2vw;
+  }
+  .notificstionmodalcontentsec1 img {
+    width: 15vw;
+    height: 13vw;
+  }
+  .notificationmodalcontentsec2 h4 {
+    font-size: 2.5vw;
+  }
+  .notificationmodalcontentsec2 p {
+    font-size: 2vw;
+  }
+  .acticeNotification img {
+    width: 1.8vw;
+    height: 1.8vw;
+  }
+  .notificationModalCon {
+    width: 80vw;
+    height: 65vw;
+    margin-right: 0;
+    margin-top: 80vw;
+  }
+}

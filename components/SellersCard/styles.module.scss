@@ -68,39 +68,39 @@
   color: #777e90;
 }
 .sellercardchipimg {
-    color: white;
-    width: 1vw;
-    height: 1vw;
+  color: white;
+  width: 1vw;
+  height: 1vw;
 }
 .selercardavatar {
-    width: 4vw !important;
-    height: 4vw !important;
-    margin-top: 1.5vw !important;
+  width: 4vw !important;
+  height: 4vw !important;
+  margin-top: 1.5vw !important;
 }
 @media only screen and (max-width: 600px) {
-    .sellerCardMain {
-        width: 30vw;
-        height: 33vw;
-    }
-    .sellerCardChip {
-        width: 8vw;
-        height: 4vw;
-    }
-    .sellercardchipimg {
-        width: 2vw;
-        height: 2vw;
-    }
-    .sellerCardNum {
-        font-size: 2vw;
-    }
-    .sellerName {
-        font-size: 3vw;
-    }
-    .sellerPrice {
-        font-size: 2vw;
-    }
-    .selercardavatar {
-        width: 11vw !important;
-        height: 11vw !important;
-    }
+  .sellerCardMain {
+    width: 30vw;
+    height: 33vw;
+  }
+  .sellerCardChip {
+    width: 8vw;
+    height: 4vw;
+  }
+  .sellercardchipimg {
+    width: 2vw;
+    height: 2vw;
+  }
+  .sellerCardNum {
+    font-size: 2vw;
+  }
+  .sellerName {
+    font-size: 3vw;
+  }
+  .sellerPrice {
+    font-size: 2vw;
+  }
+  .selercardavatar {
+    width: 11vw !important;
+    height: 11vw !important;
+  }
 }

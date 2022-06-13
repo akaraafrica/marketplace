@@ -1,15 +1,15 @@
-import jwt, { GetPublicKeyOrSecret, Secret } from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import jwt, { GetPublicKeyOrSecret, Secret } from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
-const secretKey = process.env.JWT_KEY;
+const secretKey = process.env.JWT_KEY || "";
 
 export default class AuthServices {
-  static async generateJwt(payload:{} , secret = secretKey) {
-    const token = await jwt.sign({ payload }, secret, { expiresIn: '1d' });
+  static async generateJwt(payload: {}, secret = secretKey) {
+    const token = await jwt.sign({ payload }, secret, { expiresIn: "1d" });
     return token;
   }
 
-  static async hashPassword(password:string) {
+  static async hashPassword(password: string) {
     const hashPass = await bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     return hashPass;
   }
