@@ -56,7 +56,7 @@ model User {
   collection Collection?
   profile    Profile?
   rating     Rating?
-  notifications Notification?
+  notifications Notification[]
 }
 
 model Collection {
