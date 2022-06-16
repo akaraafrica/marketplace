@@ -1,6 +1,8 @@
 .listingsubcardsec1 img {
   width: 15vw;
   height: 20vh;
+  border-radius: 5px;
+  
 }
 .listingsubpricesec img {
   width: 1.7vw;
@@ -41,6 +43,8 @@
 .listingsubcard {
   display: flex;
   align-items: center;
+  margin-top: 1%;
+  margin-bottom: 3%;
 }
 .listingsubcardsec2 {
   margin-top: 0vw;
@@ -49,6 +53,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+}
+.show{
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-around;
 }
 @media only screen and (max-width: 600px) {
   .listingsubcardsec1 img {

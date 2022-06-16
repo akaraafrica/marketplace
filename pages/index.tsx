@@ -20,8 +20,11 @@ import SubscribeModal from "../components/SubscribeModal/index";
 import HowItWorks from "../components/HowItWorks/index";
 import HotCollectionMobile from "../components/HotCollectionMobile/index";
 
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
+import ListingSubCardDynamic from "../components/ListingSubCard/ListingSubCardDynamic";
+import UpdateFromCreatorsShow from "../components/UpdateFromCreators/UpdateFromCreatorsShow";
 
 const Home = () => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -58,18 +61,19 @@ const Home = () => {
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>
-          <ListingSubCard />
-          <ListingSubCard />
-          <ListingSubCard />
+          <ListingSubCardDynamic/>
+          {/* <ListingSubCard /> */}
+          {/* <ListingSubCard />
+          <ListingSubCard /> */}
         </div>
         <div className={styles.updatefromcreatorparent}>
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>
+          <UpdateFromCreatorsShow />
+          {/* <UpdateFromCreators />
           <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators />
+          <UpdateFromCreators /> */}
           <div className={styles.discovermore}>
             <button>
               Discover more
