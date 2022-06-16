@@ -9,7 +9,7 @@ function Footer() {
     <div className={styles.footercon}>
       <div className={styles.footer}>
         <div className={styles.footersec1}>
-          <img src="/assets/Logo.png" />
+          <img src="/assets/Logo.png" alt="" />
           <div className={styles.footersec1text}>
             <p>Copyright © 2020 Akara Marketplace</p>
             <p>All rights reserved</p>
