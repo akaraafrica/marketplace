@@ -1,10 +1,10 @@
 .listingsubcardsec1 img {
   width: 15vw;
-  height: 11.6vw;
+  height: 20vh;
 }
 .listingsubpricesec img {
   width: 1.7vw;
-  height: 1.7vw;
+  height: 2.9vh;
 }
 .listingsubpricesec span {
   font-size: 1.1vw;
@@ -13,14 +13,20 @@
 }
 .listingsubpricesec {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  margin-bottom: -1vh;
+  margin-top: -2vh;
+  
 }
 .listingcardsec2pricecon {
   margin-left: 1vw;
+  align-items: center;
 }
 .listingsubcardsec2heading {
   font-size: 2vw;
   color: white;
+  // margin-bottom: -1vw;
+  margin-top: -1vh;
 }
 .listingcardsubsec2btn button {
   width: 7.2vw;
@@ -30,15 +36,19 @@
   font-size: 1vw;
   background-color: transparent;
   color: white;
-  margin-top: 1vw;
+  margin-top: 0vw;
 }
 .listingsubcard {
   display: flex;
   align-items: center;
 }
 .listingsubcardsec2 {
-  margin-top: -3vw;
+  margin-top: 0vw;
   margin-left: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 @media only screen and (max-width: 600px) {
   .listingsubcardsec1 img {
@@ -50,7 +60,7 @@
   }
   .listingsubpricesec img {
     width: 4vw;
-    height: 4vw;
+    height: 3vh;
   }
   .listingcardsec2price p {
     font-size: 2vw;

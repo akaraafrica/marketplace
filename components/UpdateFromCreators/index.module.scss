@@ -37,6 +37,15 @@
 .updatefromcreateor {
   display: flex;
   align-items: center;
+  background-color: #000;
+}
+.badge{
+  background-color: #000;
+  color: #FFF;
+}
+.avatar{
+  border-radius: 50% !important;
+  object-fit: contain;
 }
 @media only screen and (max-width: 600px) {
   .updatefromcreatorsec1 {
@@ -68,4 +77,11 @@
     width: 2.5vw;
     height: 2.5vw;
   }
+  .updatefromcreateor {
+    margin-bottom: 2vh;
+    margin-left: 2vw;
+    width: 100vw;
+    // overflow-y: scroll;
+  }
+  
 }
