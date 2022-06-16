@@ -6,11 +6,11 @@ import styles from "./index.module.scss";
 
 function ListingMainCard() {
   const data = {
-    bid:'1.125 ETH',
-    stock: '18 in stock',
-    image: '/assets/listingcardimg.png',
-    avatar: '/assets/Avator.svg'
-  }
+    bid: "1.125 ETH",
+    stock: "18 in stock",
+    image: "/assets/listingcardimg.png",
+    avatar: "/assets/Avator.svg",
+  };
   return (
     <div className={styles.listingmaincardcon}>
       <div className={styles.listingmaincard}>

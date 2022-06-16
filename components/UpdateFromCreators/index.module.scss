@@ -43,19 +43,19 @@
   align-items: center;
   background-color: #000;
 }
-.badge{
+.badge {
   background-color: #000;
-  color: #FFF;
+  color: #fff;
 }
-.avatar{
+.avatar {
   border-radius: 50% !important;
   object-fit: contain;
   height: 60px;
   width: 60px;
-  border: 1px solid #FFF;
+  border: 1px solid #fff;
   padding: 2px;
 }
-.show{
+.show {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -96,5 +96,4 @@
     width: 100vw;
     // overflow-y: scroll;
   }
-  
 }

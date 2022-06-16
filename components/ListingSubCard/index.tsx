@@ -6,13 +6,13 @@ import React from "react";
 import styles from "./index.module.scss";
 
 interface DT {
-  image: string,
-  avatar: string,
-  value: string,
-  number: string,
-  title:string
+  image: string;
+  avatar: string;
+  value: string;
+  number: string;
+  title: string;
 }
-function ListingSubCard({ image, avatar, value, number,title }: DT) {
+function ListingSubCard({ image, avatar, value, number, title }: DT) {
   return (
     <div className={styles.listingsubcardcon}>
       <div className={styles.listingsubcard}>
@@ -34,7 +34,6 @@ function ListingSubCard({ image, avatar, value, number,title }: DT) {
             <button>Place a bid</button>
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -20,7 +20,6 @@ import SubscribeModal from "../components/SubscribeModal/index";
 import HowItWorks from "../components/HowItWorks/index";
 import HotCollectionMobile from "../components/HotCollectionMobile/index";
 
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import ListingSubCardDynamic from "../components/ListingSubCard/ListingSubCardDynamic";
@@ -61,7 +60,7 @@ const Home = () => {
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>
-          <ListingSubCardDynamic/>
+          <ListingSubCardDynamic />
           {/* <ListingSubCard /> */}
           {/* <ListingSubCard />
           <ListingSubCard /> */}

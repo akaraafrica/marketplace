@@ -41,17 +41,16 @@ const LandingPage = () => {
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>
-          <ListingSubCardDynamic/>
-          
+          <ListingSubCardDynamic />
         </div>
         <div className={styles.updatefromcreatorparent}>
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>
+          {/* <UpdateFromCreators />
           <UpdateFromCreators />
           <UpdateFromCreators />
-          <UpdateFromCreators /> 
-          <UpdateFromCreators />
+          <UpdateFromCreators /> */}
           <div className={styles.discovermore}>
             <button>
               Discover more
