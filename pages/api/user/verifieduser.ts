@@ -1,13 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Prisma, PrismaClient } from "@prisma/client";
+import prisma, { Prisma } from "../../../utils/lib/prisma";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function VerifiedUsers(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const prisma = new PrismaClient();
-
   try {
     const vuser = await prisma.user.findMany({
       where: {

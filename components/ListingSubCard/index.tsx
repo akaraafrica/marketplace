@@ -27,7 +27,6 @@ function ListingSubCard() {
             <button>Place a bid</button>
           </div>
         </div>
-       
       </div>
     </div>
   );

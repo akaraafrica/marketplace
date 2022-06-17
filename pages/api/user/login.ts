@@ -1,8 +1,7 @@
-import prisma from "../../../utils/lib/prisma";
+import prisma, { Prisma } from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { Prisma } from "@prisma/client";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function Login(req: NextApiRequest, res: NextApiResponse) {
