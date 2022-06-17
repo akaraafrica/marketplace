@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import prisma, { Prisma } from "../../../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ParsePrismaError } from "../../../../../utils/helpers/prisma.error";
 
@@ -6,8 +6,6 @@ interface DT {
   email: string;
   password: string;
 }
-
-const prisma = new PrismaClient();
 
 export default async function Emailverification(
   req: NextApiRequest,

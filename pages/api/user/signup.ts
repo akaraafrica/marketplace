@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import prisma, { Prisma } from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -9,8 +9,6 @@ interface DT {
   email: string;
   password: string;
 }
-
-const prisma = new PrismaClient();
 
 export default async function Signup(
   req: NextApiRequest,
@@ -59,10 +57,11 @@ export default async function Signup(
             email: userEmail,
             password: encryptedPassword,
             address,
+            notifications: {},
           },
         });
 
-        const token = jwt.sign({ user: newUser }, secret, {
+        const token = jwt.sign({ user: address }, secret, {
           expiresIn: "2d",
         });
         link = `${process.env.NEXT_BASE_URL}/api/user/activate/${userEmail}/${token}`;
