@@ -31,5 +31,5 @@ export default async function Emailverification(
       console.log(error);
     }
   }
-  res.send("Email activated");
+  res.redirect("/success");
 }
