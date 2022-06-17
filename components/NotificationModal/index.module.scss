@@ -9,8 +9,11 @@
 .notificationModal {
   width: 28.9vw;
   height: 36vw;
-  background-color: #141416;
+  // background-color: #141416;
+  background-color: #23262F;
   border-radius: 25px;
+  padding: 10px;
+  overflow-y: scroll;
 }
 .tooltipicon {
   width: 2.3vw;
@@ -24,22 +27,32 @@
 }
 .notificstionmodalcontentsec1 img {
   width: 7.3vw;
-  height: 6.5vw;
+  height: 7.5vw;
   border-radius: 10px;
 }
 .notificationmodalcontentsec2 h4 {
   font-size: 1.2vw;
   color: white;
   font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: -5px;
 }
 .notificationmodalcontentsec2 p {
   font-size: 0.8vw;
   color: #777e91;
+  margin-top: 10px;
 }
 .notificationmodalcontentsec2 {
-  line-height: 0.4vw;
+  // line-height: 0.4vw;
   margin-left: 1vw;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
+// .value{
+//   margin-top: 10px;
+// }
 .acticeNotification img {
   width: 0.8vw;
   height: 0.8vw;
@@ -52,6 +65,10 @@
   padding-right: 1vw;
   margin-top: 1vw;
 }
+.container :hover{
+background-color: #394051;
+cursor: pointer;
+}
 .notificstionmodalcontentseccon {
   display: flex;
   align-items: center;
@@ -60,6 +77,8 @@
 .notificationModalHead h1 {
   font-size: 2.3vw;
   color: white;
+  padding-top: 5px;
+  font-weight: 500;
 }
 .notificationModalHead button {
   width: 5.8vw;
@@ -79,6 +98,9 @@
   padding-left: 1vw;
   padding-right: 1vw;
 }
+.icon{
+  color: #23262F;
+}
 @media only screen and (max-width: 600px) {
   .tooltipiconcon {
     display: none;
@@ -89,6 +111,7 @@
   }
   .notificationModalHead h1 {
     font-size: 5vw;
+    font-weight: 500;
   }
   .notificationModalHead button {
     width: 15vw;

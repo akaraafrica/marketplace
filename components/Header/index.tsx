@@ -40,6 +40,9 @@ function Header() {
             }}
           >
             <div className={styles.activeNotification}></div>
+            <div className={styles.showNotification}>
+              {notificationOpen && <NotificationModal />}
+            </div>
           </div>
           <div className={styles.headerSec5Btns}>
             <button>Upload</button>
@@ -59,7 +62,6 @@ function Header() {
         </div>
       </div>
       <div className={styles.modals}>
-        {notificationOpen && <NotificationModal />}
         {profileOpen && <ProfileModal />}
       </div>
     </div>

@@ -65,6 +65,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+  position: relative;
 }
 .activeNotification {
   width: 0.8vw;
@@ -121,6 +122,12 @@
   align-items: flex-start;
   justify-content: center;
   margin-left: 50vw;
+}
+.showNotification{
+  position: absolute;
+  padding: 40px;
+  left: -600%;
+  margin: 20px auto;
 }
 @media only screen and (max-width: 600px) {
   .Header {

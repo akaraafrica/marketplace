@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import styles from "./index.module.scss";
 import { Badge } from "@mui/material";
