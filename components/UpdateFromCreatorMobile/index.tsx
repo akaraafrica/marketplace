@@ -1,11 +1,7 @@
-import React from 'react'
-import './index.module.scss'
+import React from "react";
+import "./index.module.scss";
 
-function UpdateFromCreaterMobile () {
-    return(
-        <div className='ufcmcon'>
-            
-        </div>
-    );
+function UpdateFromCreaterMobile() {
+  return <div className="ufcmcon"></div>;
 }
-export default UpdateFromCreaterMobile
+export default UpdateFromCreaterMobile;

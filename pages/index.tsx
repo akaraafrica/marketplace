@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from "react";
 import Image from "next/image";
 import Lottie from "react-lottie-player";
@@ -22,7 +24,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
 const Home = () => {
-
   SwiperCore.use([Pagination, Autoplay]);
 
   const settings = {
@@ -36,24 +37,24 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div className={styles.styles} >
-      <div className={styles.lottieBg}>
-        <Lottie
-          loop
-          animationData={lottieJson}
-          play
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            left: 0,
-            right: 0,
-          }}
-        />
-      </div>
+      <div className={styles.styles}>
+        <div className={styles.lottieBg}>
+          <Lottie
+            loop
+            animationData={lottieJson}
+            play
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "absolute",
+              left: 0,
+              right: 0,
+            }}
+          />
+        </div>
         <LandingMain />
       </div>
-        <LandingBidding />
+      <LandingBidding />
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>
@@ -88,20 +89,20 @@ const Home = () => {
         </div>
         <div className={styles.hotcollectioncardwrapper}>
           <Swiper
-                   spaceBetween={30}
-                   width={200}
-                  // breakpoints={{
-                  //   200: { slidesPerView: 1.5 },
-                  //   700: { slidesPerView: 2.5 },
-                  //   1200: { slidesPerView: 1.5 },
-                  //   2500: { slidesPerView: 1.5 },
-                  // }}
-                  loop
-                  className={`swiper-wrapper ${styles.slideWrapper}`}
-                  autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                  }}
+            spaceBetween={30}
+            width={200}
+            // breakpoints={{
+            //   200: { slidesPerView: 1.5 },
+            //   700: { slidesPerView: 2.5 },
+            //   1200: { slidesPerView: 1.5 },
+            //   2500: { slidesPerView: 1.5 },
+            // }}
+            loop
+            className={`swiper-wrapper ${styles.slideWrapper}`}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
           >
             <SwiperSlide>
               <HotCollectionCard />

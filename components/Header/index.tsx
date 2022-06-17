@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+// TODO: convert this to NextImage when given the chance
 import React from "react";
 import styles from "./index.module.scss";
 import NotificationModal from "../NotificationModal/index";
 import ProfileModal from "../ProfileModal/index";
-import MobileHeader from '../MobileHeader/index'
+import MobileHeader from "../MobileHeader/index";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
@@ -11,15 +12,15 @@ function Header() {
   return (
     <div>
       <div className={styles.headerCon}>
-      <div className={styles.mobileheadercon}>
-      <div className={styles.mobileHeaderupper}>
-            <img src={`/assets/Logo.png`} />
+        <div className={styles.mobileheadercon}>
+          <div className={styles.mobileHeaderupper}>
+            <img alt="logo" src={`/assets/Logo.png`} />
             <MobileHeader />
-        </div>
           </div>
+        </div>
         <div className={styles.Header}>
           <div className={styles.headerSec1Logo}>
-            <img src={`/assets/Logo.png`} />
+            <img alt="logo" src={`/assets/Logo.png`} />
           </div>
           <div className={styles.headerSec2Links}>
             <ul>
@@ -29,7 +30,7 @@ function Header() {
           </div>
           <div className={styles.headerSec3SearchInput}>
             <input type="text" placeholder="Search" />
-            <img src={`/assets/searchIcon.svg`} />
+            <img alt="search icon" src={`/assets/searchIcon.svg`} />
           </div>
           <div
             className={styles.headerSec4Notification}
@@ -49,7 +50,7 @@ function Header() {
                 setNotificationOpen(false);
               }}
             >
-              <img src={`/assets/Avator.svg`} />
+              <img alt="avatar" src={`/assets/Avator.svg`} />
               <p>
                 7.00698 <span>ETH</span>
               </p>

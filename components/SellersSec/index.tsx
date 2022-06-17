@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import SellersCard from "../SellersCard";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,18 +11,15 @@ import styles from "./styles.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 
-
-
 const SellersSec = () => {
-
   SwiperCore.use([Pagination, Autoplay]);
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     const deviceWidth = window.innerWidth;
     const settings = {
       slidesPerRow: deviceWidth <= 600 ? 2 : 5,
     };
-  },[])
+  }, []);
 
   const names = [
     "Oliver Hansen",
@@ -40,8 +37,8 @@ const SellersSec = () => {
     PaperProps: {
       style: {
         width: 250,
-        backgroundColor: 'black',
-        color: 'white'
+        backgroundColor: "black",
+        color: "white",
       },
     },
   };
@@ -83,8 +80,7 @@ const SellersSec = () => {
           </FormControl>
         </div>
       </div>
-      <Swiper 
-      >
+      <Swiper>
         <SwiperSlide>
           <SellersCard />
         </SwiperSlide>

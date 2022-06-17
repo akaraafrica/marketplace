@@ -15,6 +15,12 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/bio.js", "store/reducers/userSlice.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/api/bio.ts",
+    "store/reducers/userSlice.js"
+  ],
   "exclude": ["node_modules"]
 }

@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install",
+    "check-types": "tsc --pretty --noEmit",
+    "check-format": "prettier --check .",
+    "check-lint": "eslint . --ext ts --ext tsx --ext js",
+    "format": "prettier --write .",
+    "test": "npm run test-all",
+    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -15,12 +22,14 @@
     "@mui/material": "^5.8.0",
     "@prisma/client": "^3.14.0",
     "@reduxjs/toolkit": "^1.8.2",
+    "@sendgrid/mail": "^7.7.0",
+    "@types/sendgrid": "^4.3.0",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^8.5.1",
     "next": "12.1.6",
     "next-redux-wrapper": "^7.0.5",
-    "plyr-react": "^4.0.0",
+    "plyr-react": "4.0.0-alpha.5",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-icons": "^4.4.0",
@@ -37,8 +46,10 @@
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.4",
     "@zeit/next-css": "^1.0.1",
-    "eslint": "8.15.0",
+    "eslint": "^8.17.0",
     "eslint-config-next": "12.1.6",
+    "husky": "^8.0.0",
+    "prettier": "^2.6.2",
     "prisma": "^3.14.0",
     "typescript": "4.6.4"
   }

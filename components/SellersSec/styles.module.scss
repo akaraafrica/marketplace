@@ -1,6 +1,6 @@
 .popularCon {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .popularText {
   font-size: 1.4vw;
@@ -19,13 +19,13 @@
   justify-content: space-between;
 }
 @media only screen and (max-width: 600px) {
-    .popularHeader {
-        flex-wrap: wrap;
-    }
-    .popularText {
-        font-size: 3vw;
-    }
-    .sellersText {
-        font-size: 5vw;
-    }
+  .popularHeader {
+    flex-wrap: wrap;
+  }
+  .popularText {
+    font-size: 3vw;
+  }
+  .sellersText {
+    font-size: 5vw;
+  }
 }

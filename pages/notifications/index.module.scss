@@ -1,0 +1,217 @@
+.root {
+  width: 100%;
+  overflow-x: hidden;
+  .breadcrumbWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 70px;
+    gap: 10px;
+    background: #141416;
+    border-bottom: 1px solid #353945;
+  }
+  .backButton {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 153px;
+    height: 40px;
+    border: 2px solid #353945;
+    border-radius: 90px;
+    cursor: pointer;
+    @media (max-width: 800px) {
+      display: none;
+    }
+
+    .backText {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 16px;
+      text-align: center;
+      color: #fcfcfd;
+    }
+  }
+  .breadcrumb {
+    display: flex;
+    gap: 40px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #777e91;
+    cursor: pointer;
+  }
+  .notification {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+    background: #141416;
+    border-bottom: 1px solid #353945;
+    box-sizing: border-box;
+    @media (max-width: 800px) {
+      padding: 80px 40px;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 50%;
+      @media (max-width: 800px) {
+        width: 100%;
+      }
+
+      h3 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 48px;
+        letter-spacing: -0.02em;
+        color: #fcfcfd;
+        @media (max-width: 800px) {
+          font-size: 32px;
+        }
+      }
+      .markButton {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 153px;
+        height: 40px;
+        border: 2px solid #353945;
+        border-radius: 90px;
+        cursor: pointer;
+        @media (max-width: 800px) {
+          width: 120px;
+        }
+
+        .markText {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 16px;
+          text-align: center;
+          color: #fcfcfd;
+          margin-top: 17px;
+        }
+      }
+    }
+    .nav {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24px;
+      width: 50%;
+      margin: 64px 0 48px;
+      @media (max-width: 800px) {
+        width: 100%;
+      }
+
+      .navItem {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 6px 12px;
+        gap: 10px;
+        width: 100px;
+        height: 28px;
+        background: #353945;
+        border-radius: 100px;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+        color: #fcfcfd;
+        cursor: pointer;
+      }
+    }
+    .list {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      @media (max-width: 800px) {
+        width: 100%;
+      }
+
+      .listItem {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        gap: 24px;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 20px;
+        @media (max-width: 800px) {
+          width: 100%;
+          gap: 0;
+        }
+
+        .left {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          @media (max-width: 800px) {
+            gap: 0;
+          }
+
+          .avatar {
+            border-radius: 50%;
+            width: 128px;
+            height: 128px;
+            @media (max-width: 800px) {
+              width: 80px;
+              height: 80px;
+            }
+          }
+          .desc {
+            display: block;
+            flex-direction: column;
+            padding: 20px;
+            @media (max-width: 800px) {
+              width: 100%;
+            }
+
+            .title {
+              font-style: normal;
+              font-weight: 600;
+              font-size: 20px;
+              color: #fcfcfd;
+            }
+            .sub {
+              font-style: normal;
+              font-weight: 400;
+              font-size: 12px;
+              color: #e6e8ec;
+            }
+            .date {
+              font-style: normal;
+              font-weight: 600;
+              font-size: 10px;
+              color: #777e91;
+            }
+          }
+        }
+        .dot {
+          width: 12px;
+          height: 12px;
+          background: #f2994a;
+          border-radius: 16px;
+        }
+      }
+      .listItem:hover {
+        background-color: #23262f;
+      }
+    }
+  }
+}
