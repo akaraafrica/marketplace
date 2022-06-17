@@ -16,6 +16,7 @@
   height: 30vw;
   border-left: 2px solid #353945;
   padding-left: 2vw;
+  overflow: scroll;
 }
 .discovermore button {
   width: 11.4vw;
@@ -39,6 +40,7 @@
   justify-content: space-between;
   flex-direction: column;
   height: 40vw;
+  padding: 0px 0px 20px 0px;
 }
 .listingcardparent {
   display: flex;
@@ -94,5 +96,12 @@
   }
   .hotcollectioncardwrapper {
     display: none;
+  }
+  .updatefromcreatorheading {
+    font-size: 18px;
+  }
+  .discovermore button {
+    width: 30vw;
+    height: 5vh;
   }
 }

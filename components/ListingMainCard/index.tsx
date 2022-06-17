@@ -22,7 +22,7 @@ function ListingMainCard() {
           <div className={styles.listingcardsec2content}>
             <p>Highest bid</p>
             <div className={styles.listingcardsec2price}>
-              <p>1.125 ETH</p>
+              <p className={styles.listingcardsec2price}>1.125 ETH</p>
             </div>
           </div>
         </div>

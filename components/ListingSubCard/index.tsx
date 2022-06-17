@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 
+import { Box } from "@mui/material";
 import React from "react";
 import styles from "./index.module.scss";
 
