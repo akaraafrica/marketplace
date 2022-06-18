@@ -2,6 +2,7 @@
 // TODO: convert this to NextImage when given the chance
 
 import React from "react";
+import NextImage from "../../utils/helpers/NextImage";
 import styles from "./index.module.scss";
 
 function ListingMainCard() {
@@ -9,7 +10,12 @@ function ListingMainCard() {
     <div className={styles.listingmaincardcon}>
       <div className={styles.listingmaincard}>
         <div className={styles.listingmaincardsec1}>
-          <img alt="listing card image" src={`/assets/listingcardimg.png`} />
+          {/* <img alt="listing card image" src={`/assets/listingcardimg.png`} /> */}
+          <NextImage
+            src={`/assets/listingcardimg.png`}
+            height={438}
+            width={458}
+          />
         </div>
         <div className={styles.listingmaincardcontentcon}>
           <div className={styles.listingmaincardsec1contentcon}>

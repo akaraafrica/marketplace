@@ -16,7 +16,6 @@
   height: 30vw;
   border-left: 2px solid #353945;
   padding-left: 2vw;
-  overflow: scroll;
 }
 .discovermore button {
   width: 11.4vw;
@@ -82,14 +81,14 @@
     margin-left: 10vw;
   }
   .listingsubcardparent {
-    height: 80vw;
+    min-height: 400px;
     margin-top: 4vw;
   }
   .updatefromcreatorparent {
     border: none;
-    height: 60vw;
+    height: 500px;
     margin-top: 4vw;
-    padding-bottom: 3vw;
+    padding-bottom: 24px;
   }
   .hotcollectioncardcontainer {
     flex-direction: column;

@@ -2,10 +2,10 @@
   width: 15vw;
   height: 20vh;
 }
-.listingsubpricesec img {
-  width: 1.7vw;
-  height: 2.9vh;
-}
+// .listingsubpricesec img {
+//   width: 1.7vw;
+//   height: 2.9vh;
+// }
 .listingsubpricesec span {
   font-size: 1.1vw;
   color: #777e91;
@@ -13,22 +13,29 @@
 }
 .listingsubpricesec {
   display: flex;
-  justify-content: center;
-  margin-bottom: -1vh;
-  margin-top: -2vh;
+  justify-content: space-evenly;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 1px;
+  margin-top: -10px;
 }
 .listingcardsec2pricecon {
-  margin-left: 1vw;
+  margin-left: 4px;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  border: 2px solid green !important;
+  border-radius: 5px;
+  color: green !important;
 }
 .listingsubcardsec2heading {
-  font-size: 2vw;
+  font-size: 16px;
   color: white;
-  // margin-bottom: -1vw;
-  margin-top: -1vh;
+  font-weight: 500;
+  margin-bottom: -1px;
 }
 .listingcardsubsec2btn button {
-  width: 7.2vw;
+  width: 80px;
   height: 2.3vw;
   border-radius: 90px;
   border: 2px solid #777e91;
@@ -37,9 +44,29 @@
   color: white;
   margin-top: 0vw;
 }
+// .listingcardsubsec2btn :nth-child(odd) {
+//   width: 7.2vw;
+//     height: 35px;
+//     border-radius: 90px;
+//     border: 2px solid #777e91;
+//     font-size: 1vw;
+//     background-color: transparent;
+//     color: white;
+//     margin-top: 0vw;
+// }
+//   width: 7.2vw;
+//   height: 2.3vw;
+//   border-radius: 90px;
+//   border: 2px solid #777e91;
+//   font-size: 1vw;
+//   background-color: transparent;
+//   color: white;
+//   margin-top: 0vw;
+// }
 .listingsubcard {
   display: flex;
   align-items: center;
+  overflow-y: scroll;
 }
 .listingsubcardsec2 {
   margin-top: 0vw;
@@ -49,10 +76,21 @@
   justify-content: center;
   align-items: flex-start;
 }
+.listingcardsec2price {
+  font-size: 12px;
+  border: 2px solid green !important;
+  border-radius: 5px;
+  color: green;
+  padding: 2px;
+  margin: 0px 5px;
+}
 @media only screen and (max-width: 600px) {
   .listingsubcardsec1 img {
     width: 30vw;
     height: 22vw;
+  }
+  .listingsubcard {
+    overflow-y: scroll;
   }
   .listingsubcardsec2heading {
     font-size: 4vw;
@@ -61,12 +99,16 @@
     width: 4vw;
     height: 3vh;
   }
-  .listingcardsec2price p {
-    font-size: 2vw;
+  .listingcardsec2price {
+    font-size: 12px;
+    border: 2px solid green !important;
+    border-radius: 5px;
+    color: green;
+    margin: 0px 2px;
   }
   .listingcardsubsec2btn button {
-    width: 15vw;
-    height: 5vw;
+    width: 60px;
+    height: 20px;
     font-size: 2vw;
   }
 }

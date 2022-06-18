@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
 import { Badge, Box } from "@mui/material";
-import Image from "next/image";
+import NextImage from "../../utils/helpers/NextImage";
 
 function UpdateFromCreators() {
   return (
@@ -25,9 +25,10 @@ function UpdateFromCreators() {
             horizontal: "left",
           }}
         >
-          <img
-            alt="My avatar"
-            src="/assets/Avator.svg"
+          <NextImage
+            src={`/assets/Avator.svg`}
+            height={30}
+            width={30}
             className={styles.avatar}
           />
         </Badge>
