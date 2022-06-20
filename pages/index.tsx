@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
-import Image from "next/image";
 import Lottie from "react-lottie-player";
 import lottieJson from "../lotties/json-background.json";
 import Footer from "../components/Footer";
@@ -66,10 +65,12 @@ const Home = () => {
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>
-          <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators />
+          <div className={styles.updateformholder}>
+            <UpdateFromCreators />
+            <UpdateFromCreators />
+            <UpdateFromCreators />
+            <UpdateFromCreators />
+          </div>
           <div className={styles.discovermore}>
             <button>
               Discover more
