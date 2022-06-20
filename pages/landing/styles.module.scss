@@ -13,13 +13,13 @@
   align-items: flex-start;
   justify-content: space-between;
   flex-direction: column;
-  height: 30vw;
+  // height: 30vw;
   border-left: 2px solid #353945;
   padding-left: 2vw;
 }
 .discovermore button {
-  width: 11.4vw;
-  height: 2.9vw;
+  width: 150px;
+  height: 40px;
   border-radius: 90px;
   border: 2px solid #777e91;
   font-size: 1.1vw;
@@ -84,12 +84,13 @@
   .listingsubcardparent {
     min-height: 400px;
     margin-top: 4vw;
+    display: none;
   }
   .updatefromcreatorparent {
     border: none;
-    height: 500px;
-    margin-top: 4vw;
-    padding-bottom: 24px;
+    height: 400px;
+    margin-top: 20px;
+    margin-bottom: -240px;
   }
   .hotcollectioncardcontainer {
     flex-direction: column;
@@ -101,8 +102,17 @@
     font-size: 18px;
   }
   .discovermore button {
-    width: 30vw;
-    height: 5vh;
+    // width: 30vw;
+    // height: 5vh;
+    display: none;
+  }
+  .updateformholder {
+    display: flex;
+    width: 100vw;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    margin-top: -300px;
+    padding: 5px;
   }
 }
 

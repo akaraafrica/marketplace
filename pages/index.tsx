@@ -65,10 +65,12 @@ const Home = () => {
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>
-          <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators />
+          <div className={styles.updateformholder}>
+            <UpdateFromCreators />
+            <UpdateFromCreators />
+            <UpdateFromCreators />
+            <UpdateFromCreators />
+          </div>
           <div className={styles.discovermore}>
             <button>
               Discover more
