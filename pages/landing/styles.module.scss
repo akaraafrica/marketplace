@@ -105,3 +105,9 @@
     height: 5vh;
   }
 }
+
+@media only screen and (max-width: 1200px) {
+  .listingsubcardparent {
+    height: 400px;
+  }
+}
