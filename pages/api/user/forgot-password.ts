@@ -26,28 +26,29 @@ export default async function ForgotPassword(
         adress: checkuser.address,
       };
       const token = await jwt.sign(payload, secret, { expiresIn: "30m" });
-      const link = `localhost:3000/auth/password-reset/${payload.email}/${token}`;
+      const link = `${process.env.NEXT_BASE_URL}/password-reset/${payload.email}/${token}`;
 
       const emailData = {
         to: userEmail,
         from: "info@mbizi.org",
         templateId: "d-1fbec631dc1248fc9b79e51299b0917f",
-        dynamicTemplateData: {
-          email: userEmail,
-          resetLink: link,
-        },
+        email: userEmail,
+        link: link,
+        subject: "Reset Password",
       };
 
       console.log(link);
       Sendmail(emailData);
-      res.send("Password reset link has been sent to your email");
+      return res
+        .status(200)
+        .json({ message: "Password reset link has been sent to your email" });
     } else {
-      return res.send("No such user exist");
+      return res.status(404).json({ message: "No such user exist" });
     }
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       return res.status(500).send(ParsePrismaError(error));
     }
-    return res.status(500).send(error);
+    return res.status(400).json(error);
   }
 }
