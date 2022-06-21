@@ -12,15 +12,6 @@ function UpdateFromCreators({ badgecontent, name, value, avatar }: DT) {
   return (
     <div className={styles.updatefromcreatorscon}>
       <div className={styles.updatefromcreateor}>
-        {/* <div className={styles.updatefromcreatorsec1}>
-          <div className={styles.updatefromcreatornum}>
-            <Badge color='success' badgeContent={2} anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left'
-            }}></Badge>
-          </div>
-        </div> */}
-        {/* <div style={{backgroundColor:'#000',borderRadius:'50%'}}> */}
         <Badge
           className={styles.badge}
           color="success"

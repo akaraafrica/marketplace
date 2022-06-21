@@ -61,9 +61,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className={styles.modals}>
-        {profileOpen && <ProfileModal />}
-      </div>
+      <div className={styles.modals}>{profileOpen && <ProfileModal />}</div>
     </div>
   );
 }
