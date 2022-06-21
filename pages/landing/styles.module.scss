@@ -92,7 +92,7 @@
     margin-top: 118px;
     align-items: center;
     padding: 20px;
-    width: 100vw;
+    width: 100%;
     height: 900px;
     margin-bottom: 50px;
     grid-template-columns: 1fr;
@@ -102,7 +102,7 @@
   }
   .updatefromcreatorparent {
     border: none;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -113,7 +113,7 @@
     display: none;
   }
   .updatefromcreatorheading {
-    font-size: 18px;
+    font-size: 12px;
     text-align: left;
     margin-top: -20px;
   }
@@ -126,13 +126,12 @@
     display: flex;
     width: 100vw;
     flex-direction: row;
-    overflow-y: scroll;
-    justify-content: flex-start;
     overflow-x: scroll;
+    justify-content: flex-start;
   }
 }
 
-@media only screen and (min-width: 1400) {
+@media only screen and (min-width: 1400px) {
   .listingcardparent {
     display: flex;
     justify-content: center;

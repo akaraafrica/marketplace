@@ -27,6 +27,7 @@ function ListingSubCard() {
               border: "1px solid green",
               fontSize: "10px",
               borderRadius: "3px",
+              padding: "5px"
             }}
           >
             {" "}
