@@ -21,7 +21,6 @@ function UpdateFromCreators({ badgecontent, name, value, avatar }: DT) {
             horizontal: "left",
           }}
         >
-          
           <NextImage
             src={`/assets/Avator.svg`}
             height={30}

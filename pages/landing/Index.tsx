@@ -48,7 +48,7 @@ const LandingPage = () => {
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>
-          <UpdateFromCreatorsShow/>
+          <UpdateFromCreatorsShow />
           {/* <UpdateFromCreators />
           <UpdateFromCreators />
           <UpdateFromCreators />

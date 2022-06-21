@@ -16,11 +16,7 @@ interface DT {
 function ListingSubCard({ image, avatar, value, number, title }: DT) {
   return (
     <div className={styles.cont}>
-      <NextImage
-        src={image}
-        height="180px"
-        width="180px"
-      />
+      <NextImage src={image} height="180px" width="180px" />
 
       <div className={styles.rightcard}>
         <Typography sx={{ color: "white" }}> {title}</Typography>
@@ -40,7 +36,7 @@ function ListingSubCard({ image, avatar, value, number, title }: DT) {
           </Typography>
           <Typography sx={{ color: "white", fontSize: "10px" }}>
             {" "}
-           {number}
+            {number}
           </Typography>
         </div>
         <button>Place a bid</button>
