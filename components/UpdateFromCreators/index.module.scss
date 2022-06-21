@@ -79,9 +79,16 @@
     height: 2.5vw;
   }
   .updatefromcreateor {
-    margin-bottom: 2vh;
-    margin-left: 2vw;
-    width: 120px;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-right: 150px;
+    display: flex;
+    flex-wrap: wrap;
     // overflow-y: scroll;
+  }
+}
+@media screen and (min-width:620) and (max-width){
+  .updatefromcreateor{
+    width: 100vw;
   }
 }

@@ -18,6 +18,7 @@ import HowItWorks from "../../components/HowItWorks/index";
 import HotCollectionMobile from "../../components/HotCollectionMobile/index";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
+import { Box } from "@mui/material";
 
 const LandingPage = () => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -40,9 +41,7 @@ const LandingPage = () => {
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>
-          <ListingSubCard />
-          <ListingSubCard />
-          <ListingSubCard />
+          <Box sx={{ backgroundColor: "red" }}></Box>
         </div>
         <div className={styles.updatefromcreatorparent}>
           <p className={styles.updatefromcreatorheading}>
