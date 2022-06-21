@@ -1,49 +1,73 @@
-.listingsubcardsec1 img {
-  width: 15vw;
-  height: 20vh;
+.rightcard {
 }
-// .listingsubpricesec img {
-//   width: 1.7vw;
-//   height: 2.9vh;
-// }
-.listingsubpricesec span {
-  font-size: 1.1vw;
-  color: #777e91;
-  margin-left: 1vw;
+.image {
+  height: auto;
+  width: 50%;
+  object-fit: contain;
 }
-.listingsubpricesec {
+
+.first {
   display: flex;
-  justify-content: space-evenly;
-  width: 100%;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1px;
-  margin-top: -10px;
 }
-.listingcardsec2pricecon {
-  margin-left: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid green !important;
-  border-radius: 5px;
-  color: green !important;
-}
-.listingsubcardsec2heading {
-  font-size: 16px;
-  color: white;
-  font-weight: 500;
-  margin-bottom: -1px;
-}
-.listingcardsubsec2btn button {
+.rightcard button {
   width: 80px;
-  height: 2.3vw;
+  height: 20px;
   border-radius: 90px;
   border: 2px solid #777e91;
-  font-size: 1vw;
+  font-size: 10px;
   background-color: transparent;
   color: white;
-  margin-top: 0vw;
+  margin-top: 0px;
 }
+.cont {
+  // background-color: green;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+// .listingsubpricesec span {
+//   font-size: 1.1vw;
+//   color: #777e91;
+//   margin-left: 1vw;
+// }
+// .listingsubpricesec {
+//   display: flex;
+//   justify-content: space-evenly;
+//   width: 100%;
+//   align-items: center;
+//   margin-bottom: 1px;
+//   margin-top: -10px;
+// }
+// .listingcardsec2pricecon {
+//   margin-left: 4px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border: 2px solid green !important;
+//   border-radius: 5px;
+//   color: green !important;
+// }
+// .listingsubcardsec2heading {
+//   font-size: 16px;
+//   color: white;
+//   font-weight: 500;
+//   margin-bottom: -1px;
+// }
+// .listingcardsubsec2btn button {
+//   width: 80px;
+//   height: 2.3vw;
+//   border-radius: 90px;
+//   border: 2px solid #777e91;
+//   font-size: 1vw;
+//   background-color: transparent;
+//   color: white;
+//   margin-top: 0vw;
+// }
 // .listingcardsubsec2btn :nth-child(odd) {
 //   width: 7.2vw;
 //     height: 35px;
@@ -63,52 +87,53 @@
 //   color: white;
 //   margin-top: 0vw;
 // }
-.listingsubcard {
-  display: flex;
-  align-items: center;
-  overflow-y: scroll;
-}
-.listingsubcardsec2 {
-  margin-top: 0vw;
-  margin-left: 1vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-.listingcardsec2price {
-  font-size: 12px;
-  border: 2px solid green !important;
-  border-radius: 5px;
-  color: green;
-  padding: 2px;
-  margin: 0px 5px;
-}
-@media only screen and (max-width: 600px) {
-  .listingsubcardsec1 img {
-    width: 30vw;
-    height: 22vw;
-  }
-  .listingsubcard {
-    overflow-y: scroll;
-  }
-  .listingsubcardsec2heading {
-    font-size: 4vw;
-  }
-  .listingsubpricesec img {
-    width: 4vw;
-    height: 3vh;
-  }
-  .listingcardsec2price {
-    font-size: 12px;
-    border: 2px solid green !important;
-    border-radius: 5px;
-    color: green;
-    margin: 0px 2px;
-  }
-  .listingcardsubsec2btn button {
-    width: 60px;
-    height: 20px;
-    font-size: 2vw;
-  }
-}
+// .listingsubcard {
+//   display: flex;
+//   align-items: center;
+//   // height: 200px;
+// }
+// .listingsubcardsec2 {
+//   // margin-top: 0vw;
+//   // margin-left: 1vw;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: flex-start;
+// }
+// .listingcardsec2price {
+//   font-size: 12px;
+//   border: 2px solid green !important;
+//   border-radius: 5px;
+//   color: green;
+//   padding: 2px;
+//   margin: 0px 5px;
+// }
+// @media only screen and (max-width: 600px) {
+//   .listingsubcardsec1 img {
+//     width: 30px;
+//     height: 22px;
+//   }
+//   .listingsubcard {
+//     overflow-y: scroll;
+//   }
+//   .listingsubcardsec2heading {
+//     font-size: 40px;
+//   }
+//   .listingsubpricesec img {
+//     width: 40px;
+//     height: 3vh;
+//   }
+//   .listingcardsec2price {
+//     font-size: 8px;
+//     border: 2px solid green !important;
+//     border-radius: 5px;
+//     color: green;
+//     margin: 0px 2px;
+//     width: 100%;
+//   }
+//   .listingcardsubsec2btn button {
+//     width: 60px;
+//     height: 20px;
+//     font-size: 20px;
+//   }
+// }

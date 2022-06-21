@@ -21,6 +21,7 @@ import HotCollectionMobile from "../components/HotCollectionMobile/index";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
+import { Box, Typography } from "@mui/material";
 
 const Home = () => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -55,13 +56,17 @@ const Home = () => {
       </div>
       <LandingBidding />
       <div className={styles.listingcardparent}>
-        <ListingMainCard />
+        <Box sx={{ borderRadius: "5px" }}>
+          <ListingMainCard />
+        </Box>
+
         <div className={styles.listingsubcardparent}>
           <ListingSubCard />
           <ListingSubCard />
           <ListingSubCard />
         </div>
-        <div className={styles.updatefromcreatorparent}>
+
+        <div className={styles.updatefromcreatorheading}>
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>
