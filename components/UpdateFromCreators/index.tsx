@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
-import { Badge } from "@mui/material";
+import { Badge, Box } from "@mui/material";
+import NextImage from "../../utils/helpers/NextImage";
 interface DT {
   badgecontent: number;
   name: string;
@@ -11,15 +12,6 @@ function UpdateFromCreators({ badgecontent, name, value, avatar }: DT) {
   return (
     <div className={styles.updatefromcreatorscon}>
       <div className={styles.updatefromcreateor}>
-        {/* <div className={styles.updatefromcreatorsec1}>
-          <div className={styles.updatefromcreatornum}>
-            <Badge color='success' badgeContent={2} anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left'
-            }}></Badge>
-          </div>
-        </div> */}
-        {/* <div style={{backgroundColor:'#000',borderRadius:'50%'}}> */}
         <Badge
           className={styles.badge}
           color="success"
@@ -29,7 +21,13 @@ function UpdateFromCreators({ badgecontent, name, value, avatar }: DT) {
             horizontal: "left",
           }}
         >
-          <img alt="My avatar" src={avatar} className={styles.avatar} />
+          
+          <NextImage
+            src={`/assets/Avator.svg`}
+            height={30}
+            width={30}
+            className={styles.avatar}
+          />
         </Badge>
         {/* </div> */}
         <div className={styles.updatefromcreatorsec2}>

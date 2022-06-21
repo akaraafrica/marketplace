@@ -56,6 +56,7 @@ model User {
   collection Collection?
   profile    Profile?
   rating     Rating?
+  notifications Notification[]
 }
 
 model Collection {
@@ -90,6 +91,15 @@ model Profile {
   phoneNumber Int
   bio         String
   user        User   @relation(fields: [userId], references: [address])
+}
+model Notification {
+  id String  @id @default(uuid())
+  user User @relation(fields: [userId], references: [address])
+  userId String
+  title String
+  content String
+  status Boolean
+  created DateTime @default(now())
 }
 
 enum Gender {

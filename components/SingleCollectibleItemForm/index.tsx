@@ -78,7 +78,7 @@ function SingleCollectibleItem() {
             <button>
               Create item
               <span>
-                <img src={`/assets/arrow.svg`} />
+                <img src={`/assets/arrow.svg`} alt="" />
               </span>
             </button>
             <p>Auto saving</p>

@@ -19,6 +19,7 @@ import HotCollectionMobile from "../../components/HotCollectionMobile/index";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import ListingSubCardDynamic from "../../components/ListingSubCard/ListingSubCardDynamic";
+import UpdateFromCreatorsShow from "../../components/UpdateFromCreators/UpdateFromCreatorsShow";
 
 const LandingPage = () => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -47,6 +48,7 @@ const LandingPage = () => {
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>
+          <UpdateFromCreatorsShow/>
           {/* <UpdateFromCreators />
           <UpdateFromCreators />
           <UpdateFromCreators />

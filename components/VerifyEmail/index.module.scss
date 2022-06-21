@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .image {
+    width: 200px;
+    height: 200px;
+  }
+  .title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+    color: #050505;
+    margin-bottom: -5px;
+  }
+  .text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 128%;
+    text-align: center;
+    color: #24243b;
+    margin-bottom: 30px;
+  }
+}

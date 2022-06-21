@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import prisma, { Prisma } from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -9,8 +9,6 @@ interface DT {
   email: string;
   password: string;
 }
-
-const prisma = new PrismaClient();
 
 export default async function Signup(
   req: NextApiRequest,
@@ -44,34 +42,37 @@ export default async function Signup(
             .json({ message: "Please provide password to sign up" });
 
         if (oldUser) {
-          return res.status(409).send("User already exist, please login");
+          return res
+            .status(409)
+            .json({ message: "User already exist, please login" });
         }
 
         const encryptedPassword = await bcrypt.hash(password, 10);
-        console.log("User emai:", userEmail);
+        // console.log("User email:", userEmail);
 
-        const secret = process.env.JWT_KEY + Date();
+        const secret: string = process.env.JWT_KEY!;
 
         const newUser = await prisma.user.create({
           data: {
             email: userEmail,
             password: encryptedPassword,
             address,
+            notifications: {},
           },
         });
 
-        const token = jwt.sign({ user: newUser }, "secret", {
+        const token = jwt.sign({ user: address }, secret, {
           expiresIn: "2d",
         });
-        link = `localhost:3000/api/user/activate/${userEmail}/${token}`;
-        console.log("Secret:", token);
+        link = `${process.env.NEXT_BASE_URL}/api/user/activate/${userEmail}/${token}`;
+        // console.log("Secret:", token);
 
         const Emaildata = {
           to: userEmail,
           from: "info@mbizi.org",
           templateId: "d-1fbec631dc1248fc9b79e51299b0917f",
-          name: "Sam",
-          email: "userEmail",
+          name: userEmail,
+          email: userEmail,
           link: link,
           subject: userEmail,
         };

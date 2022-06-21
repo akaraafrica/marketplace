@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
-import Image from "next/image";
 import Lottie from "react-lottie-player";
 import lottieJson from "../lotties/json-background.json";
 import Footer from "../components/Footer";
@@ -11,7 +10,6 @@ import LandingMain from "../components/LandingMain";
 import SellersSec from "../components/SellersSec";
 import styles from "./landing/styles.module.scss";
 import ListingMainCard from "../components/ListingMainCard/index";
-import ListingSubCard from "../components/ListingSubCard/index";
 import UpdateFromCreators from "../components/UpdateFromCreators/index";
 import Hotitems from "../components/HotItems";
 import Discover from "../components/DiscoverSec/index";
@@ -24,6 +22,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import ListingSubCardDynamic from "../components/ListingSubCard/ListingSubCardDynamic";
 import UpdateFromCreatorsShow from "../components/UpdateFromCreators/UpdateFromCreatorsShow";
+import { Box, Typography } from "@mui/material";
 
 const Home = () => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -58,14 +57,18 @@ const Home = () => {
       </div>
       <LandingBidding />
       <div className={styles.listingcardparent}>
-        <ListingMainCard />
+        <Box sx={{ borderRadius: "5px" }}>
+          <ListingMainCard />
+        </Box>
+
         <div className={styles.listingsubcardparent}>
           <ListingSubCardDynamic />
           {/* <ListingSubCard /> */}
           {/* <ListingSubCard />
           <ListingSubCard /> */}
         </div>
-        <div className={styles.updatefromcreatorparent}>
+
+        <div className={styles.updatefromcreatorheading}>
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>

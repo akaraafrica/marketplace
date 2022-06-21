@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
+import NextImage from "../../utils/helpers/NextImage";
 import styles from "./index.module.scss";
 
 interface DT {
@@ -14,26 +15,35 @@ interface DT {
 }
 function ListingSubCard({ image, avatar, value, number, title }: DT) {
   return (
-    <div className={styles.listingsubcardcon}>
-      <div className={styles.listingsubcard}>
-        <div className={styles.listingsubcardsec1}>
-          <img alt="listing subcard" src={image} />
+    <div className={styles.cont}>
+      <NextImage
+        src={image}
+        height="180px"
+        width="180px"
+      />
+
+      <div className={styles.rightcard}>
+        <Typography sx={{ color: "white" }}> {title}</Typography>
+        <div className={styles.first}>
+          <NextImage src={avatar} height={60} width={40} />
+          <Typography
+            sx={{
+              color: "green",
+              border: "1px solid green",
+              fontSize: "10px",
+              borderRadius: "3px",
+              padding: "5px",
+            }}
+          >
+            {" "}
+            {value}
+          </Typography>
+          <Typography sx={{ color: "white", fontSize: "10px" }}>
+            {" "}
+           {number}
+          </Typography>
         </div>
-        <div className={styles.listingsubcardsec2}>
-          <p className={styles.listingsubcardsec2heading}>{title}</p>
-          <div className={styles.listingsubpricesec}>
-            <img alt="avatar" src={avatar} />
-            <div className={styles.listingcardsec2pricecon}>
-              <div className={styles.listingcardsec2price}>
-                <p>{value} </p>
-              </div>
-            </div>
-            <span>{number} </span>
-          </div>
-          <div className={styles.listingcardsubsec2btn}>
-            <button>Place a bid</button>
-          </div>
-        </div>
+        <button>Place a bid</button>
       </div>
     </div>
   );

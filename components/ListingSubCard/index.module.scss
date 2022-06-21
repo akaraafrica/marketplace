@@ -1,80 +1,142 @@
-.listingsubcardsec1 img {
-  width: 15vw;
-  height: 20vh;
-  border-radius: 5px;
+.rightcard {
 }
-.listingsubpricesec img {
-  width: 1.7vw;
-  height: 2.9vh;
+.image {
+  height: auto;
+  width: 50%;
+  object-fit: contain;
 }
-.listingsubpricesec span {
-  font-size: 1.1vw;
-  color: #777e91;
-  margin-left: 1vw;
-}
-.listingsubpricesec {
+
+.first {
   display: flex;
-  justify-content: center;
-  margin-bottom: -1vh;
-  margin-top: -2vh;
-}
-.listingcardsec2pricecon {
-  margin-left: 1vw;
+  justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
-.listingsubcardsec2heading {
-  font-size: 2vw;
-  color: white;
-  // margin-bottom: -1vw;
-  margin-top: -1vh;
-}
-.listingcardsubsec2btn button {
-  width: 7.2vw;
-  height: 2.3vw;
+.rightcard button {
+  width: 80px;
+  height: 20px;
   border-radius: 90px;
   border: 2px solid #777e91;
-  font-size: 1vw;
+  font-size: 10px;
   background-color: transparent;
   color: white;
-  margin-top: 0vw;
+  margin-top: 0px;
 }
-.listingsubcard {
+.cont {
+  // background-color: green;
   display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
   align-items: center;
   margin-top: 1%;
   margin-bottom: 3%;
 }
-.listingsubcardsec2 {
-  margin-top: 0vw;
-  margin-left: 1vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-.show {
-  display: flex;
-  flex-direction: column;
-  // justify-content: space-around;
-}
-@media only screen and (max-width: 600px) {
-  .listingsubcardsec1 img {
-    width: 30vw;
-    height: 22vw;
-  }
-  .listingsubcardsec2heading {
-    font-size: 4vw;
-  }
-  .listingsubpricesec img {
-    width: 4vw;
-    height: 3vh;
-  }
-  .listingcardsec2price p {
-    font-size: 2vw;
-  }
-  .listingcardsubsec2btn button {
-    width: 15vw;
-    height: 5vw;
-    font-size: 2vw;
-  }
-}
+
+// .listingsubpricesec span {
+//   font-size: 1.1vw;
+//   color: #777e91;
+//   margin-left: 1vw;
+// }
+// .listingsubpricesec {
+//   display: flex;
+//   justify-content: space-evenly;
+//   width: 100%;
+//   align-items: center;
+//   margin-bottom: 1px;
+//   margin-top: -10px;
+// }
+// .listingcardsec2pricecon {
+//   margin-left: 4px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border: 2px solid green !important;
+//   border-radius: 5px;
+//   color: green !important;
+// }
+// .listingsubcardsec2heading {
+//   font-size: 16px;
+//   color: white;
+//   font-weight: 500;
+//   margin-bottom: -1px;
+// }
+// .listingcardsubsec2btn button {
+//   width: 80px;
+//   height: 2.3vw;
+//   border-radius: 90px;
+//   border: 2px solid #777e91;
+//   font-size: 1vw;
+//   background-color: transparent;
+//   color: white;
+//   margin-top: 0vw;
+// }
+// .listingcardsubsec2btn :nth-child(odd) {
+//   width: 7.2vw;
+//     height: 35px;
+//     border-radius: 90px;
+//     border: 2px solid #777e91;
+//     font-size: 1vw;
+//     background-color: transparent;
+//     color: white;
+//     margin-top: 0vw;
+// }
+//   width: 7.2vw;
+//   height: 2.3vw;
+//   border-radius: 90px;
+//   border: 2px solid #777e91;
+//   font-size: 1vw;
+//   background-color: transparent;
+//   color: white;
+//   margin-top: 0vw;
+// }
+// .listingsubcard {
+//   display: flex;
+//   align-items: center;
+//   // height: 200px;
+// }
+// .listingsubcardsec2 {
+//   // margin-top: 0vw;
+//   // margin-left: 1vw;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: flex-start;
+// }
+// .listingcardsec2price {
+//   font-size: 12px;
+//   border: 2px solid green !important;
+//   border-radius: 5px;
+//   color: green;
+//   padding: 2px;
+//   margin: 0px 5px;
+// }
+// @media only screen and (max-width: 600px) {
+//   .listingsubcardsec1 img {
+//     width: 30px;
+//     height: 22px;
+//   }
+//   .listingsubcard {
+//     overflow-y: scroll;
+//   }
+//   .listingsubcardsec2heading {
+//     font-size: 40px;
+//   }
+//   .listingsubpricesec img {
+//     width: 40px;
+//     height: 3vh;
+//   }
+//   .listingcardsec2price {
+//     font-size: 8px;
+//     border: 2px solid green !important;
+//     border-radius: 5px;
+//     color: green;
+//     margin: 0px 2px;
+//     width: 100%;
+//   }
+//   .listingcardsubsec2btn button {
+//     width: 60px;
+//     height: 20px;
+//     font-size: 20px;
+//   }
+// }
