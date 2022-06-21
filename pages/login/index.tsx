@@ -41,7 +41,7 @@ const Index = () => {
       });
       if (res.status === 200) {
         toast.success("Welcome to Akara, Login successful.");
-        localStorage.setItem("user", res.data.accessToken);
+        localStorage.setItem("user", res.data.user.address);
         dispatch(setUser(res.data));
         router.push("/");
       }
