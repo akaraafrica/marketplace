@@ -8,8 +8,6 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
   const { email, password } = req.body;
   if (req.method === "GET") return res.end("Method not allowed");
 
-  if (!email && !password)
-    return res.status(400).json({ message: "You need login details to login" });
   if (!email)
     return res
       .status(400)
@@ -48,10 +46,12 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
         return res.status(401).json({ message: "Invalid password, try again" });
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       return res.status(500).send(ParsePrismaError(error));
     }
-    return res.status(500).end(` ${error} `);
+    return res.json({
+      message: error.message,
+    });
   }
 }
