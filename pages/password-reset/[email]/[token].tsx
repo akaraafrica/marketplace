@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 const Index = () => {
   const [password, setPassword] = useState("");
   const [confirm, setConfrim] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
   const email = router.query.email;
 
@@ -25,10 +26,10 @@ const Index = () => {
 
     try {
       if (!password) {
-        return toast.error("Type your new password.");
+        return setError("Type your new password.");
       }
       if (!confirm) {
-        return toast.error("Confirm your new password.");
+        return setError("Confirm your new password.");
       }
       const res = await axios.post("/api/user/password-reset", {
         email: email,
@@ -39,8 +40,16 @@ const Index = () => {
         router.push("/login");
         return toast.success("Password reset was successful.");
       }
-    } catch (error) {
-      return toast.error("Something went wrong, try again.");
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        return setError(error.response.data.message);
+      }
+      if (error.response.status === 400) {
+        return setError(error.response.data.message);
+      }
+      if (error.response.status === 500) {
+        return setError("Server error, please try again later");
+      }
     }
   };
   return (
@@ -48,6 +57,7 @@ const Index = () => {
       <div className={styles.root}>
         <h6 className={styles.title}>Reset Password</h6>
         <p className={styles.text}>Reset your account password</p>
+        {error !== "" && <span className={styles.error}>{error}</span>}
         <div className={styles.inputs}>
           <OnboardingInput
             onChange={handleChange}
