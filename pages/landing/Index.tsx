@@ -8,7 +8,7 @@ import LandingMain from "../../components/LandingMain";
 import SellersSec from "../../components/SellersSec";
 import styles from "./styles.module.scss";
 import ListingMainCard from "../../components/ListingMainCard/index";
-import ListingSubCard from "../../components/ListingSubCard/index";
+// import ListingSubCard from "../../components/ListingSubCard/index";
 import UpdateFromCreators from "../../components/UpdateFromCreators/index";
 import Hotitems from "../../components/HotItems";
 import Discover from "../../components/DiscoverSec/index";
@@ -18,7 +18,8 @@ import HowItWorks from "../../components/HowItWorks/index";
 import HotCollectionMobile from "../../components/HotCollectionMobile/index";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
-import { Box } from "@mui/material";
+import ListingSubCardDynamic from "../../components/ListingSubCard/ListingSubCardDynamic";
+import UpdateFromCreatorsShow from "../../components/UpdateFromCreators/UpdateFromCreatorsShow";
 
 const LandingPage = () => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -41,16 +42,17 @@ const LandingPage = () => {
       <div className={styles.listingcardparent}>
         <ListingMainCard />
         <div className={styles.listingsubcardparent}>
-          <Box sx={{ backgroundColor: "red" }}></Box>
+          <ListingSubCardDynamic />
         </div>
         <div className={styles.updatefromcreatorparent}>
           <p className={styles.updatefromcreatorheading}>
             Latest upload from creators 🔥
           </p>
+          <UpdateFromCreatorsShow />
+          {/* <UpdateFromCreators />
           <UpdateFromCreators />
           <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators />
+          <UpdateFromCreators /> */}
           <div className={styles.discovermore}>
             <button>
               Discover more

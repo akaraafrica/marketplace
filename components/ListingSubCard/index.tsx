@@ -2,24 +2,26 @@
 // TODO: convert this to NextImage when given the chance
 
 import { Box, Typography } from "@mui/material";
-import { height } from "@mui/system";
 import React from "react";
 import NextImage from "../../utils/helpers/NextImage";
 import styles from "./index.module.scss";
 
-function ListingSubCard() {
+interface DT {
+  image: string;
+  avatar: string;
+  value: string;
+  number: string;
+  title: string;
+}
+function ListingSubCard({ image, avatar, value, number, title }: DT) {
   return (
     <div className={styles.cont}>
-      <NextImage
-        src={`/assets/listingsubcardimg.png`}
-        height="180px"
-        width="180px"
-      />
+      <NextImage src={image} height="180px" width="180px" />
 
       <div className={styles.rightcard}>
-        <Typography sx={{ color: "white" }}> ETH never die </Typography>
+        <Typography sx={{ color: "white" }}> {title}</Typography>
         <div className={styles.first}>
-          <NextImage src={`/assets/Avator.svg`} height={60} width={40} />
+          <NextImage src={avatar} height={60} width={40} />
           <Typography
             sx={{
               color: "green",
@@ -30,11 +32,11 @@ function ListingSubCard() {
             }}
           >
             {" "}
-            0.277 ETH
+            {value}
           </Typography>
           <Typography sx={{ color: "white", fontSize: "10px" }}>
             {" "}
-            2 0f 3
+            {number}
           </Typography>
         </div>
         <button>Place a bid</button>
