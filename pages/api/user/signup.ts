@@ -42,9 +42,10 @@ export default async function Signup(
             .json({ message: "Please provide password to sign up" });
 
         if (oldUser) {
-          return res
-            .status(409)
-            .json({ message: "User already exist, please login" });
+          return res.status(409).json({
+            message:
+              "User already exist, please login or click on forgot password to reset your password",
+          });
         }
 
         const encryptedPassword = await bcrypt.hash(password, 10);
@@ -83,12 +84,12 @@ export default async function Signup(
           token,
           message: "Please check your email to confirm",
         });
-      } catch (error) {
+      } catch (error: any) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           return res.status(500).send(ParsePrismaError(error));
         }
-        return res.status(500).json({
-          message: error,
+        return res.json({
+          message: error.message,
         });
       }
       break;

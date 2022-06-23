@@ -13,11 +13,12 @@ import VerifyEmail from "../../components/VerifyEmail";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const [verify, setVerify] = useState(false);
   const router = useRouter();
 
   // create random strings for the wallet address
-  const address = "abcdefghijklmn";
+  const address = state.email + Date.now();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,19 +26,23 @@ const Index = () => {
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    setError("");
     const pattern =
       /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
     const result = pattern.test(state.email);
 
     try {
-      if (!state.email || !state.password) {
-        return toast.error("Email or password field is empty");
+      if (!state.email) {
+        return setError("Email field is empty");
+      }
+      if (!state.password) {
+        return setError("Password field is empty");
       }
       if (!result) {
-        return toast.error("Invalid email, check email and try again");
+        return setError("Invalid email, check email and try again");
       }
       if (state.password.length < 6) {
-        return toast.error(
+        return setError(
           "Password is too short, choose a more secured password"
         );
       }
@@ -55,8 +60,16 @@ const Index = () => {
         setVerify(true);
       }
       console.log(res);
-    } catch (error) {
-      toast.error("Something went wrong, try again.");
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        return setError(error.response.data.message);
+      }
+      if (error.response.status === 409) {
+        return setError(error.response.data.message);
+      }
+      if (error.response.status === 500) {
+        return setError("Server error, please try again later");
+      }
     }
   };
 
@@ -72,7 +85,8 @@ const Index = () => {
         <div className={styles.login}>
           <h6 className={styles.title}>Sign Up</h6>
           <p className={styles.text}>Sign up with your email and password</p>
-          <div className={styles.inputs}>
+          {error !== "" && <span className={styles.error}>{error}</span>}
+          <form className={styles.inputs}>
             <OnboardingInput
               onChange={handleChange}
               label="Email"
@@ -87,7 +101,7 @@ const Index = () => {
               type="password"
               placeholder="***********"
             />
-          </div>
+          </form>
           <OnboardingButton text="Sign up" onClick={handleSubmit} />
           {/* <span className={styles.forgot}>Forgot Password</span> */}
           <span className={styles.continue}>Or continue with</span>

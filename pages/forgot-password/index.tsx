@@ -11,6 +11,7 @@ import VerifyEmail from "../../components/VerifyEmail";
 const Index = () => {
   const [email, setEmail] = useState("");
   const [verify, setVerify] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
@@ -25,12 +26,10 @@ const Index = () => {
 
     try {
       if (!email) {
-        return toast.error(
-          "You need to input your email to reset your password"
-        );
+        return setError("Email field is empty");
       }
       if (!result) {
-        return toast.error("Invalid email, check email and try again");
+        return setError("Invalid email, check email and try again");
       }
 
       const res = await axios.post("/api/user/forgot-password", {
@@ -43,8 +42,16 @@ const Index = () => {
           "Email has been sent to mailbox with reset password link."
         );
       }
-    } catch (error) {
-      return toast.error("Something went wrong, try again.");
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        return setError(error.response.data.message);
+      }
+      if (error.response.status === 400) {
+        return setError(error.response.data.message);
+      }
+      if (error.response.status === 500) {
+        return setError("Server error, please try again later");
+      }
     }
   };
   return (
@@ -58,6 +65,7 @@ const Index = () => {
         <div className={styles.forgot}>
           <h6 className={styles.title}>Forgot Password</h6>
           <p>Type your correct email address to get your password reset link</p>
+          {error !== "" && <span className={styles.error}>{error}</span>}
           <div className={styles.action}>
             <OnboardingInput
               label="Email"
