@@ -1,3 +1,80 @@
 .previewcardcontentcon {
-  margin: 2vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .previewcardimg {
+    width: 100%;
+
+    img {
+      width: 100%;
+      border-radius: 20px;
+    }
+  }
+
+  .previewcardnamebox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 5px;
+    color: #fcfcfd;
+
+    .previewcardprice {
+      span {
+        border: 1px solid #45b36b;
+        color: #45b36b;
+        padding: 3px 3px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+    }
+  }
+  .previewstockcon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .avatars {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        margin: -8px;
+        border: 2px solid #353945;
+      }
+
+      :first-child {
+        margin: 0;
+      }
+    }
+  }
+
+  hr {
+    color: #353945;
+    border: 1px solid #353945;
+  }
+
+  .bidsec {
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: space-between;
+
+    .bidsec1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3px;
+
+      span {
+        span {
+          color: #fcfcfd;
+        }
+      }
+    }
+  }
 }

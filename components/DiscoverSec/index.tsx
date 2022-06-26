@@ -10,12 +10,69 @@ import Game from "../Game/index";
 import Photography from "../Photography/index";
 import Music from "../Music/index";
 import Video from "../Video/index";
+import { IoChevronDownCircleOutline } from "react-icons/io5";
+
+interface CustomSelectProps {
+  placeholder: string;
+}
+const CustomSelect: React.FC<CustomSelectProps> = ({ placeholder }) => {
+  return (
+    <div className={styles.customInput}>
+      <input type="text" placeholder={placeholder} />
+      <IoChevronDownCircleOutline size={20} />
+    </div>
+  );
+};
 
 function Discover() {
   const [open, setOpen] = React.useState(0);
   return (
-    <div className={styles.discovercon}>
-      <div className={styles.discover}>
+    <div className={styles.discoverContainer}>
+      <h1>Discover</h1>
+      <div className={styles.navbar}>
+        <div className={styles.recent}>
+          <CustomSelect placeholder="Recently added" />
+        </div>
+        <div className={styles.navs}>
+          <span className={styles.navItem}>All items</span>
+          <span className={styles.navItem}>Art</span>
+          <span className={styles.navItem}>Game</span>
+          <span className={styles.navItem}>Photography</span>
+          <span className={styles.navItem}>Music</span>
+          <span className={styles.navItem}>Video</span>
+        </div>
+        <div className={styles.filterBtn}>
+          <span>Filter</span>
+          &#x2715;
+        </div>
+      </div>
+      <hr />
+      <div className={styles.filters}>
+        <div className={styles.filter}>
+          <span>PRICE</span>
+          <CustomSelect placeholder="Highest price" />
+        </div>
+        <div className={styles.filter}>
+          <span>LIKES</span>
+          <CustomSelect placeholder="Most liked" />
+        </div>
+        <div className={styles.filter}>
+          <span>CREATOR</span>
+          <CustomSelect placeholder="Verified only" />
+        </div>
+        <div className={styles.filter}>
+          <span>PRICE RANGE</span>
+          <ProgressBar />
+          <div className={styles.eth}>
+            <span>0.01 ETH</span>
+            <span>10 ETH</span>
+          </div>
+        </div>
+      </div>
+      <div className={styles.discoverCont}>
+        <AllItems />
+      </div>
+      {/* <div className={styles.discover}>
         <div className={styles.discoverheading}>
           <h1>Discover</h1>
         </div>
@@ -100,7 +157,7 @@ function Discover() {
           {open === 4 && <Music />}
           {open === 5 && <Video />}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

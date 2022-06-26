@@ -5,7 +5,7 @@ import Slider from "@mui/material/Slider";
 
 export default function SliderSizes() {
   return (
-    <Box width={300}>
+    <Box width="100%">
       <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
     </Box>
   );
