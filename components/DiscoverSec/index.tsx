@@ -34,12 +34,42 @@ function Discover() {
           <CustomSelect placeholder="Recently added" />
         </div>
         <div className={styles.navs}>
-          <span className={styles.navItem}>All items</span>
-          <span className={styles.navItem}>Art</span>
-          <span className={styles.navItem}>Game</span>
-          <span className={styles.navItem}>Photography</span>
-          <span className={styles.navItem}>Music</span>
-          <span className={styles.navItem}>Video</span>
+          <span
+            onClick={() => setOpen(0)}
+            className={`${styles.navItem} ${open === 0 ? styles.active : ""}`}
+          >
+            All items
+          </span>
+          <span
+            onClick={() => setOpen(1)}
+            className={`${styles.navItem} ${open === 1 ? styles.active : ""}`}
+          >
+            Art
+          </span>
+          <span
+            onClick={() => setOpen(2)}
+            className={`${styles.navItem} ${open === 2 ? styles.active : ""}`}
+          >
+            Game
+          </span>
+          <span
+            onClick={() => setOpen(3)}
+            className={`${styles.navItem} ${open === 3 ? styles.active : ""}`}
+          >
+            Photography
+          </span>
+          <span
+            onClick={() => setOpen(4)}
+            className={`${styles.navItem} ${open === 4 ? styles.active : ""}`}
+          >
+            Music
+          </span>
+          <span
+            onClick={() => setOpen(5)}
+            className={`${styles.navItem} ${open === 5 ? styles.active : ""}`}
+          >
+            Video
+          </span>
         </div>
         <div className={styles.filterBtn}>
           <span>Filter</span>
@@ -70,7 +100,12 @@ function Discover() {
         </div>
       </div>
       <div className={styles.discoverCont}>
-        <AllItems />
+        {open === 0 && <AllItems />}
+        {open === 1 && <Art />}
+        {open === 2 && <Game />}
+        {open === 3 && <Photography />}
+        {open === 4 && <Music />}
+        {open === 5 && <Video />}
       </div>
       {/* <div className={styles.discover}>
         <div className={styles.discoverheading}>

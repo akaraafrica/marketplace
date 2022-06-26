@@ -37,6 +37,11 @@
       color: #fcfcfc;
     }
   }
+  .active {
+    background: #353945;
+    border-radius: 100px;
+    padding: 6px 12px;
+  }
   .navbar {
     display: flex;
     align-items: center;
@@ -69,6 +74,7 @@
         font-size: 14px;
         line-height: 16px;
         color: #777e91;
+        cursor: pointer;
       }
     }
 
@@ -83,6 +89,7 @@
       border-radius: 90px;
       color: #fcfcfd;
       font-size: 16px;
+      cursor: pointer;
     }
   }
   hr {
