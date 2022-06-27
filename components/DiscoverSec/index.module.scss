@@ -1,123 +1,265 @@
-.discoverheading h1 {
-  font-size: 2.9vw;
-  color: white;
-  font-weight: 500;
-  padding-left: 4vw;
-}
-.dtablink {
-  font-size: 1.1vw;
-  color: #777e91;
-}
-.discoversec1links {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 35vw;
-}
-.Filterbtn button {
-  width: 8.4vw;
-  height: 3.5vw;
-  background: #f2994a;
-  border-radius: 90px;
-  font-size: 1.4vw;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  border: none;
-}
-.Filterbtn button span img {
-  width: 1.4vw;
-  height: 1.4vw;
-}
-.discoversec1con {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 90%;
-}
-.discoversec1parent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.discoverdivider {
-  width: 90%;
-  height: 0.1vw;
-  background-color: #353945;
-  margin-top: 1.5vw;
-}
-.discoverdividerwrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.selectlabeldiscover {
-  font-size: 1vw;
-  color: white;
-  padding-left: 0.6vw;
-}
-.discoversec2con {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 90%;
-}
-.discoversec2parent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.discoverlinkcontent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.dactive {
-  font-size: 1.1vw;
-  color: white;
-  background-color: #353945;
-  padding: 0.7vw;
-  border-radius: 100px;
-}
-.discoversec2parent {
-  margin-top: 2vw;
-}
-@media only screen and (max-width: 600px) {
-  .discoversec1con {
-    flex-direction: column !important;
+.discoverContainer {
+  padding: 100px;
+
+  @media screen and (max-width: 600px) {
+    padding: 10px;
   }
-  .discovercon {
-    margin-top: 8vw;
+
+  h1 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.01em;
+    color: #fcfcfd;
+    margin-bottom: 80px;
+
+    @media screen and (max-width: 600px) {
+      margin-bottom: 40px;
+    }
   }
-  .Filterbtn button {
-    margin-top: 2vw;
+  .customInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 8px 8px 8px;
+    gap: 18px;
+    border: 2px solid #353945;
+    border-radius: 12px;
+    box-sizing: border-box;
+    width: 100%;
+
+    input {
+      background-color: transparent;
+      outline: none;
+      border: none;
+      color: #fcfcfc;
+    }
   }
-  .dactive {
-    font-size: 2vw;
-    padding: 2vw;
+  .active {
+    background: #353945;
+    border-radius: 100px;
+    padding: 6px 12px;
   }
-  .dtablink {
-    font-size: 2vw;
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media screen and (max-width: 1024px) {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: auto auto;
+
+      .navs {
+        order: 99;
+      }
+    }
+    @media screen and (max-width: 800px) {
+      grid-template-columns: auto auto;
+    }
+    @media screen and (max-width: 600px) {
+      grid-template-columns: auto;
+    }
+
+    .navs {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      .navItem {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+        color: #777e91;
+        cursor: pointer;
+      }
+    }
+
+    .filterBtn {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 24px;
+      gap: 12px;
+      background: #f2994a;
+      border-radius: 90px;
+      color: #fcfcfd;
+      font-size: 16px;
+      cursor: pointer;
+    }
   }
-  .discoversec1links {
-    width: 80vw;
+  hr {
+    color: #353945;
+    border: 1px solid #353945;
   }
-  .Filterbtn button {
-    width: 20vw;
-    height: 7vw;
-    font-size: 2vw;
-  }
-  .Filterbtn button span img {
-    width: 3vw;
-    height: 3vw;
-  }
-  .discoversec2con {
-    flex-direction: column;
-  }
-  .selectlabeldiscover {
-    font-size: 2.5vw;
-    padding-left: 2vw;
+  .filters {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 32px;
+    margin-bottom: 32px;
+
+    @media screen and (max-width: 1024px) {
+      display: grid;
+      grid-template-columns: auto auto auto;
+    }
+    @media screen and (max-width: 800px) {
+      display: grid;
+      grid-template-columns: auto auto;
+    }
+    @media screen and (max-width: 600px) {
+      display: grid;
+      grid-template-columns: auto;
+    }
+
+    .filter {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 12px;
+      color: #b1b5c4;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 12px;
+      width: 100%;
+
+      .eth {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: -12px;
+      }
+    }
   }
 }
+
+// .discoverheading h1 {
+//   font-size: 2.9vw;
+//   color: white;
+//   font-weight: 500;
+//   padding-left: 4vw;
+// }
+// .dtablink {
+//   font-size: 1.1vw;
+//   color: #777e91;
+// }
+// .discoversec1links {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   width: 35vw;
+// }
+// .Filterbtn button {
+//   width: 8.4vw;
+//   height: 3.5vw;
+//   background: #f2994a;
+//   border-radius: 90px;
+//   font-size: 1.4vw;
+//   color: white;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-evenly;
+//   border: none;
+// }
+// .Filterbtn button span img {
+//   width: 1.4vw;
+//   height: 1.4vw;
+// }
+// .discoversec1con {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   width: 90%;
+// }
+// .discoversec1parent {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+// .discoverdivider {
+//   width: 90%;
+//   height: 0.1vw;
+//   background-color: #353945;
+//   margin-top: 1.5vw;
+// }
+// .discoverdividerwrapper {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+// .selectlabeldiscover {
+//   font-size: 1vw;
+//   color: white;
+//   padding-left: 0.6vw;
+// }
+// .discoversec2con {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   width: 90%;
+// }
+// .discoversec2parent {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+// .discoverlinkcontent {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   flex-direction: column;
+// }
+// .dactive {
+//   font-size: 1.1vw;
+//   color: white;
+//   background-color: #353945;
+//   padding: 0.7vw;
+//   border-radius: 100px;
+// }
+// .discoversec2parent {
+//   margin-top: 2vw;
+// }
+// @media only screen and (max-width: 600px) {
+//   .discoversec1con {
+//     flex-direction: column !important;
+//   }
+//   .discovercon {
+//     margin-top: 8vw;
+//   }
+//   .Filterbtn button {
+//     margin-top: 2vw;
+//   }
+//   .dactive {
+//     font-size: 2vw;
+//     padding: 2vw;
+//   }
+//   .dtablink {
+//     font-size: 2vw;
+//   }
+//   .discoversec1links {
+//     width: 80vw;
+//   }
+//   .Filterbtn button {
+//     width: 20vw;
+//     height: 7vw;
+//     font-size: 2vw;
+//   }
+//   .Filterbtn button span img {
+//     width: 3vw;
+//     height: 3vw;
+//   }
+//   .discoversec2con {
+//     flex-direction: column;
+//   }
+//   .selectlabeldiscover {
+//     font-size: 2.5vw;
+//     padding-left: 2vw;
+//   }
+// }

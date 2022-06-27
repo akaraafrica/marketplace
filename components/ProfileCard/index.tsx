@@ -1,35 +1,39 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
-import "./index.module.scss";
+import styles from "./index.module.scss";
 
 function ProfileCard(props: any) {
   return (
     <div>
-      <div className="previewcardcontentcon">
-        <div className="previewcardimg">
+      <div className={styles.previewcardcontentcon}>
+        <div className={styles.previewcardimg}>
           <img alt="product image" src={props.ProductImg} />
         </div>
-        <div className="previewcardname">
-          <p>{props.Name}</p>
-          <div className="previewcardprice">
-            <p>{props.Price}</p>
+        <div className={styles.previewcardnamebox}>
+          <span>{props.Name}</span>
+          <div className={styles.previewcardprice}>
+            <span>{props.Price}</span>
           </div>
         </div>
-        <div className="previewstockcon">
-          <img alt="avatar" src={props.Avatar} />
-          <p>{props.Stock}</p>
+        <div className={styles.previewstockcon}>
+          <div className={styles.avatars}>
+            <img alt="avatar" src={props.Avatar} />
+            <img alt="avatar" src={props.Avatar} />
+            <img alt="avatar" src={props.Avatar} />
+          </div>
+          <span>{props.Stock}</span>
         </div>
-        <div className="previewdivider"></div>
-        <div className="bidsec">
-          <div className="bidsec1">
+        <hr />
+        <div className={styles.bidsec}>
+          <div className={styles.bidsec1}>
             <img alt="bid icon" src={`/assets/bidicon.svg`} />
-            <p>
-              Highest bid <span>{props.HighestBid}</span>
-            </p>
+            <span>
+              Highest bid <span> {props.HighestBid}</span>
+            </span>
           </div>
           <div className="bidsec2">
-            <p>New bid 🔥</p>
+            <span>New bid</span>
           </div>
         </div>
       </div>
