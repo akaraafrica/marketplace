@@ -2,6 +2,15 @@
   display: grid;
   grid-template-columns: auto auto auto auto;
   gap: 32px;
+  // overflow-y: scroll;
+  // height: 125vh;
+  // -webkit-overflow-scrolling: touch;
+  // -ms-overflow-style: none;
+  // scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: auto auto auto;

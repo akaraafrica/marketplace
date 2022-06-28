@@ -1,75 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import ProfileCard from "../ProfileCard/index";
 import styles from "./index.module.scss";
 
-function Video() {
+function Video({ products }: any) {
+  const initial = products.slice(0, 8);
+  const [items, setItems] = useState([...initial]);
+
+  const fetchMoreData = () => {
+    // a fake async api call like which sends
+    // 20 more records in 1.5 secs
+    let start = items.length;
+    let end = items.length + 8;
+    setTimeout(() => {
+      setItems(items.concat(products.slice(start, end)));
+    }, 1500);
+  };
+
   return (
-    <div className={styles.allitems}>
-      <ProfileCard
-        ProductImg={`/assets/productimg1.png`}
-        Name="Amazing digital art"
-        Price="2.45 ETH"
-        Stock="3 in stock"
-        Avatar={`/assets/auctionAvatar.png`}
-        HighestBid="0.001 ETH"
-      />
-      <ProfileCard
-        ProductImg={`/assets/productimg2.png`}
-        Name="Amazing digital art"
-        Price="2.45 ETH"
-        Stock="3 in stock"
-        Avatar={`/assets/auctionAvatar.png`}
-        HighestBid="0.001 ETH"
-      />
-      <ProfileCard
-        ProductImg={`/assets/productimg3.png`}
-        Name="Amazing digital art"
-        Price="2.45 ETH"
-        Stock="3 in stock"
-        Avatar={`/assets/auctionAvatar.png`}
-        HighestBid="0.001 ETH"
-      />
-      <ProfileCard
-        ProductImg={`/assets/productimg4.png`}
-        Name="Amazing digital art"
-        Price="2.45 ETH"
-        Stock="3 in stock"
-        Avatar={`/assets/auctionAvatar.png`}
-        HighestBid="0.001 ETH"
-      />
-      <ProfileCard
-        ProductImg={`/assets/productimg5.png`}
-        Name="Amazing digital art"
-        Price="2.45 ETH"
-        Stock="3 in stock"
-        Avatar={`/assets/auctionAvatar.png`}
-        HighestBid="0.001 ETH"
-      />
-      <ProfileCard
-        ProductImg={`/assets/productimg6.png`}
-        Name="Amazing digital art"
-        Price="2.45 ETH"
-        Stock="3 in stock"
-        Avatar={`/assets/auctionAvatar.png`}
-        HighestBid="0.001 ETH"
-      />
-      <ProfileCard
-        ProductImg={`/assets/productimg7.png`}
-        Name="Amazing digital art"
-        Price="2.45 ETH"
-        Stock="3 in stock"
-        Avatar={`/assets/auctionAvatar.png`}
-        HighestBid="0.001 ETH"
-      />
-      <ProfileCard
-        ProductImg={`/assets/productimg8.png`}
-        Name="Amazing digital art"
-        Price="2.45 ETH"
-        Stock="3 in stock"
-        Avatar={`/assets/auctionAvatar.png`}
-        HighestBid="0.001 ETH"
-      />
-    </div>
+    <InfiniteScroll
+      dataLength={items.length}
+      next={fetchMoreData}
+      hasMore={true}
+      loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
+    >
+      <div className={styles.allitems}>
+        {items.map((item) => (
+          <ProfileCard
+            key={item.id}
+            ProductImg={`${item.image}`}
+            Name={item.title}
+            Price={item.price}
+            Stock={item.stock}
+            Avatar={`${item.biddersimg}`}
+            HighestBid={item.highestbid}
+          />
+        ))}
+      </div>
+    </InfiniteScroll>
   );
 }
 export default Video;

@@ -24,7 +24,7 @@ import ListingSubCardDynamic from "../components/ListingSubCard/ListingSubCardDy
 import UpdateFromCreatorsShow from "../components/UpdateFromCreators/UpdateFromCreatorsShow";
 import { Box, Typography } from "@mui/material";
 
-const Home = () => {
+const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
 
   const settings = {
@@ -137,7 +137,7 @@ const Home = () => {
           </Swiper>
         </div>
       </div>
-      <Discover />
+      <Discover items={props.items} />
       <div className={styles.discoverdividercon}></div>
       <SubscribeModal />
       <HowItWorks />
@@ -145,5 +145,17 @@ const Home = () => {
     </>
   );
 };
+
+import fsPromises from "fs/promises";
+import path from "path";
+export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), "data.json");
+  const jsonData = await fsPromises.readFile(filePath);
+  const objectData = JSON.parse(jsonData.toString());
+
+  return {
+    props: objectData,
+  };
+}
 
 export default Home;
