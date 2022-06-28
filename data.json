@@ -1,0 +1,220 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg1.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 2,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg2.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 3,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg3.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 4,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg4.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 5,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg5.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 6,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg6.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 7,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg7.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 8,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg8.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 9,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg1.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 10,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg2.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 11,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg3.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 12,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg4.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 13,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg5.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 14,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg6.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 15,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg7.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 16,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg8.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 17,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg1.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 18,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg2.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 19,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg3.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 20,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg4.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 21,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg5.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 22,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg6.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 23,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg7.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    },
+    {
+      "id": 24,
+      "title": "Amazing digital art",
+      "price": "2.45 ETH",
+      "stock": "3 in stock",
+      "highestbid": "0.001 ETH",
+      "image": "/assets/productimg8.png",
+      "biddersimg": "/assets/auctionAvatar.png"
+    }
+  ]
+}

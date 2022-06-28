@@ -24,7 +24,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ placeholder }) => {
   );
 };
 
-function Discover() {
+function Discover({ items }: any) {
   const [open, setOpen] = React.useState(0);
   return (
     <div className={styles.discoverContainer}>
@@ -100,12 +100,12 @@ function Discover() {
         </div>
       </div>
       <div className={styles.discoverCont}>
-        {open === 0 && <AllItems />}
-        {open === 1 && <Art />}
-        {open === 2 && <Game />}
-        {open === 3 && <Photography />}
-        {open === 4 && <Music />}
-        {open === 5 && <Video />}
+        {open === 0 && <AllItems products={items} />}
+        {open === 1 && <Art products={items} />}
+        {open === 2 && <Game products={items} />}
+        {open === 3 && <Photography products={items} />}
+        {open === 4 && <Music products={items} />}
+        {open === 5 && <Video products={items} />}
       </div>
       {/* <div className={styles.discover}>
         <div className={styles.discoverheading}>

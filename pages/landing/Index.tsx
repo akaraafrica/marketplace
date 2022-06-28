@@ -21,7 +21,7 @@ import SwiperCore, { Pagination, Autoplay } from "swiper";
 import ListingSubCardDynamic from "../../components/ListingSubCard/ListingSubCardDynamic";
 import UpdateFromCreatorsShow from "../../components/UpdateFromCreators/UpdateFromCreatorsShow";
 
-const LandingPage = () => {
+const LandingPage = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
 
   const settings = {
@@ -113,7 +113,7 @@ const LandingPage = () => {
           </Swiper>
         </div>
       </div>
-      <Discover />
+      <Discover items={props.items} />
       <div className={styles.discoverdividercon}></div>
       <SubscribeModal />
       <HowItWorks />
@@ -121,5 +121,16 @@ const LandingPage = () => {
     </div>
   );
 };
+import fsPromises from "fs/promises";
+import path from "path";
+export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), "data.json");
+  const jsonData = await fsPromises.readFile(filePath);
+  const objectData = JSON.parse(jsonData.toString());
+
+  return {
+    props: objectData,
+  };
+}
 
 export default LandingPage;
