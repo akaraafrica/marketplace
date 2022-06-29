@@ -20,6 +20,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import ListingSubCardDynamic from "../../components/ListingSubCard/ListingSubCardDynamic";
 import UpdateFromCreatorsShow from "../../components/UpdateFromCreators/UpdateFromCreatorsShow";
+import Discovery from "../../ds/discovery.ds";
 
 const LandingPage = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -121,15 +122,12 @@ const LandingPage = (props: any) => {
     </div>
   );
 };
-import fsPromises from "fs/promises";
-import path from "path";
+
 export async function getStaticProps() {
-  const filePath = path.join(process.cwd(), "data.json");
-  const jsonData = await fsPromises.readFile(filePath);
-  const objectData = JSON.parse(jsonData.toString());
+  let data = await Discovery.getData();
 
   return {
-    props: objectData,
+    props: data,
   };
 }
 
