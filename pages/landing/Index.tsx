@@ -123,7 +123,7 @@ const LandingPage = (props: any) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   let data = await Discovery.getData();
 
   return {
