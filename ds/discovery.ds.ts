@@ -1,12 +1,11 @@
 import data from "../data.json";
 
 class Discovery {
-    constructor(){
-    }
+  constructor() {}
 
-    async getData() {
-        return data;
-    }
+  async getData() {
+    return data;
+  }
 }
 
 export default new Discovery();
