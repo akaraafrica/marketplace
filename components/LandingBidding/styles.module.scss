@@ -2,12 +2,13 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  justify-content: space-around;
-  margin-top: 5vw;
+  // justify-content: space-between;
+  // margin-top: 5vw;
+  gap: 128px;
 }
 .plyr {
-  width: 40vw !important;
-  height: 50vw !important;
+  width: auto !important;
+  height: 800px !important;
 }
 .plyr__controls__item:hover,
 .plyr__control:hover {
@@ -142,11 +143,10 @@
   color: #777e90;
 }
 .bidBtn {
-  color: black;
+  color: #fcfcfd;
   background-color: #f2994a;
   width: 100%;
-  height: 2.8vw;
-  font-size: 1.1vw;
+  padding: 16px 24px;
   border: none;
   border-radius: 2vw;
   margin-top: 2vw;
@@ -162,13 +162,14 @@
   margin-top: 1vw;
 }
 @media only screen and (max-width: 600px) {
-  #videoSec {
+  .videoSec {
     flex-direction: column;
     align-items: center;
-    margin-top: 10vw;
+    gap: 70px;
+    // margin-top: 10vw;
   }
   .plyr {
-    width: 80vw !important;
+    width: 100% !important;
     height: 100vw !important;
   }
 }

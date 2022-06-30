@@ -23,8 +23,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 8px 8px 8px;
-    gap: 18px;
+    padding: 8px;
+    gap: 18px 0;
     border: 2px solid #353945;
     border-radius: 12px;
     box-sizing: border-box;
@@ -50,17 +50,19 @@
     @media screen and (max-width: 1024px) {
       display: grid;
       gap: 20px;
-      grid-template-columns: auto auto;
-
-      .navs {
-        order: 99;
-      }
+      grid-template-columns: 1fr;
     }
     @media screen and (max-width: 800px) {
-      grid-template-columns: auto auto;
+      grid-template-columns: 1fr;
     }
     @media screen and (max-width: 600px) {
-      grid-template-columns: auto;
+      gap: 20px 0;
+      grid-template-columns: 1fr;
+    }
+    @media screen and (max-width: 400px) {
+      .navs {
+        flex-wrap: wrap;
+      }
     }
 
     .navs {
@@ -106,15 +108,15 @@
 
     @media screen and (max-width: 1024px) {
       display: grid;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: 1fr 1fr 1fr;
     }
     @media screen and (max-width: 800px) {
       display: grid;
-      grid-template-columns: auto auto;
+      grid-template-columns: 1fr 1fr;
     }
     @media screen and (max-width: 600px) {
       display: grid;
-      grid-template-columns: auto;
+      grid-template-columns: 1fr;
     }
 
     .filter {
@@ -139,127 +141,3 @@
     }
   }
 }
-
-// .discoverheading h1 {
-//   font-size: 2.9vw;
-//   color: white;
-//   font-weight: 500;
-//   padding-left: 4vw;
-// }
-// .dtablink {
-//   font-size: 1.1vw;
-//   color: #777e91;
-// }
-// .discoversec1links {
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   width: 35vw;
-// }
-// .Filterbtn button {
-//   width: 8.4vw;
-//   height: 3.5vw;
-//   background: #f2994a;
-//   border-radius: 90px;
-//   font-size: 1.4vw;
-//   color: white;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-evenly;
-//   border: none;
-// }
-// .Filterbtn button span img {
-//   width: 1.4vw;
-//   height: 1.4vw;
-// }
-// .discoversec1con {
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   width: 90%;
-// }
-// .discoversec1parent {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
-// .discoverdivider {
-//   width: 90%;
-//   height: 0.1vw;
-//   background-color: #353945;
-//   margin-top: 1.5vw;
-// }
-// .discoverdividerwrapper {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
-// .selectlabeldiscover {
-//   font-size: 1vw;
-//   color: white;
-//   padding-left: 0.6vw;
-// }
-// .discoversec2con {
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   width: 90%;
-// }
-// .discoversec2parent {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
-// .discoverlinkcontent {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   flex-direction: column;
-// }
-// .dactive {
-//   font-size: 1.1vw;
-//   color: white;
-//   background-color: #353945;
-//   padding: 0.7vw;
-//   border-radius: 100px;
-// }
-// .discoversec2parent {
-//   margin-top: 2vw;
-// }
-// @media only screen and (max-width: 600px) {
-//   .discoversec1con {
-//     flex-direction: column !important;
-//   }
-//   .discovercon {
-//     margin-top: 8vw;
-//   }
-//   .Filterbtn button {
-//     margin-top: 2vw;
-//   }
-//   .dactive {
-//     font-size: 2vw;
-//     padding: 2vw;
-//   }
-//   .dtablink {
-//     font-size: 2vw;
-//   }
-//   .discoversec1links {
-//     width: 80vw;
-//   }
-//   .Filterbtn button {
-//     width: 20vw;
-//     height: 7vw;
-//     font-size: 2vw;
-//   }
-//   .Filterbtn button span img {
-//     width: 3vw;
-//     height: 3vw;
-//   }
-//   .discoversec2con {
-//     flex-direction: column;
-//   }
-//   .selectlabeldiscover {
-//     font-size: 2.5vw;
-//     padding-left: 2vw;
-//   }
-// }

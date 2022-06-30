@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./styles.module.scss";
+import Lottie from "react-lottie-player";
+import lottieJson from "../../lotties/json-background.json";
 
 const LandingMain = () => {
   return (
@@ -13,6 +15,21 @@ const LandingMain = () => {
         African NFTs
       </span>
       <button className={styles.landingBtn}>Start your search</button>
+      <div className={styles.lottieBg}>
+        <Lottie
+          loop
+          animationData={lottieJson}
+          play
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            zIndex: -1,
+            left: 0,
+            right: 0,
+          }}
+        />
+      </div>
     </div>
   );
 };

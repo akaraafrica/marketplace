@@ -53,39 +53,9 @@ const Home = (props: any) => {
             }}
           />
         </div>
-        <LandingMain />
       </div>
-      <LandingBidding />
-      <div className={styles.listingcardparent}>
-        <Box sx={{ borderRadius: "5px" }}>
-          <ListingMainCard />
-        </Box>
+      <LandingMainSection />
 
-        <div className={styles.listingsubcardparent}>
-          <ListingSubCardDynamic />
-          {/* <ListingSubCard /> */}
-          {/* <ListingSubCard />
-          <ListingSubCard /> */}
-        </div>
-
-        <div className={styles.updatefromcreatorheading}>
-          <p className={styles.updatefromcreatorheading}>
-            Latest upload from creators 🔥
-          </p>
-          <UpdateFromCreatorsShow />
-          {/* <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators /> */}
-          <div className={styles.discovermore}>
-            <button>
-              Discover more
-              <span>
-                <img alt="right arrow" src={`/assets/rightArrow.svg`} />
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
       <SellersSec />
       <Hotitems />
       <div className={styles.hotcollectioncardparent}>
@@ -148,6 +118,7 @@ const Home = (props: any) => {
 
 import fsPromises from "fs/promises";
 import path from "path";
+import LandingMainSection from "../components/LandingMainSection";
 export async function getStaticProps() {
   const filePath = path.join(process.cwd(), "data.json");
   const jsonData = await fsPromises.readFile(filePath);
