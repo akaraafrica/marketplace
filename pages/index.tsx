@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import lottieJson from "../lotties/json-background.json";
 import Footer from "../components/Footer";
@@ -23,6 +23,8 @@ import SwiperCore, { Pagination, Autoplay } from "swiper";
 import ListingSubCardDynamic from "../components/ListingSubCard/ListingSubCardDynamic";
 import UpdateFromCreatorsShow from "../components/UpdateFromCreators/UpdateFromCreatorsShow";
 import { Box, Typography } from "@mui/material";
+import Discovery from "../ds/discovery.ds";
+import LandingMainSection from "../components/LandingMainSection";
 
 const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -116,16 +118,11 @@ const Home = (props: any) => {
   );
 };
 
-import fsPromises from "fs/promises";
-import path from "path";
-import LandingMainSection from "../components/LandingMainSection";
-export async function getStaticProps() {
-  const filePath = path.join(process.cwd(), "data.json");
-  const jsonData = await fsPromises.readFile(filePath);
-  const objectData = JSON.parse(jsonData.toString());
+export async function getServerSideProps() {
+  let data = await Discovery.getData();
 
   return {
-    props: objectData,
+    props: data,
   };
 }
 
