@@ -21,6 +21,7 @@
   font-size: 1.2vw;
   color: white;
   font-weight: 500;
+  margin-bottom: -10%;
 }
 .updatefromcreatorsec2 p {
   font-size: 1vw;
@@ -30,9 +31,12 @@
   color: #777e91;
 }
 .updatefromcreatorsec2 {
-  line-height: 0.5vw;
+  // line-height: 0.5vw;
   margin-top: -0.3vw;
   margin-left: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .updatefromcreateor {
   display: flex;
@@ -47,6 +51,15 @@
 .avatar {
   border-radius: 50% !important;
   object-fit: contain;
+  height: 60px;
+  width: 60px;
+  border: 1px solid #fff;
+  padding: 2px;
+}
+.show {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 @media only screen and (max-width: 600px) {
   .updatefromcreatorsec1 {
@@ -79,9 +92,16 @@
     height: 2.5vw;
   }
   .updatefromcreateor {
-    margin-bottom: 2vh;
-    margin-left: 2vw;
-    width: 120px;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-right: 150px;
+    display: flex;
+    flex-wrap: wrap;
     // overflow-y: scroll;
+  }
+}
+@media screen and (min-width: 620) and (max-width) {
+  .updatefromcreateor {
+    width: 100vw;
   }
 }

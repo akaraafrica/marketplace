@@ -14,6 +14,7 @@ import { setUser } from "../../store/reducers/userSlice";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -22,19 +23,23 @@ const Index = () => {
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    setError("");
     const pattern =
       /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
     const result = pattern.test(state.email);
     // console.log(state);
     try {
-      if (!state.email || !state.password) {
-        return toast.error("Email or password field is empty");
+      if (!state.email) {
+        return setError("Email field is empty");
+      }
+      if (!state.password) {
+        return setError("Password field is empty");
       }
       if (!result) {
-        return toast.error("Invalid email, check email and try again");
+        return setError("Invalid email, check email and try again");
       }
       if (state.password.length < 6) {
-        return toast.error("Password must have six (6) characters");
+        return setError("Password must have six (6) characters");
       }
       const res = await axios.post("/api/user/login", {
         ...state,
@@ -49,16 +54,14 @@ const Index = () => {
       // console.log(res);
     } catch (error: any) {
       if (error.response.status === 401) {
-        return toast.error(error.response.data.message);
+        return setError(error.response.data.message);
       }
       if (error.response.status === 400) {
-        return toast.error("Bad Request, try again.");
+        return setError(error.response.data.message);
       }
       if (error.response.status === 500) {
-        return toast.error("Server error, something went wrong.");
+        return setError("Server error, please try again later");
       }
-      // return toast.error("There was an error, try again.");
-      // console.log(error);
     }
   };
 
@@ -67,6 +70,7 @@ const Index = () => {
       <div className={styles.login}>
         <h6 className={styles.title}>Login</h6>
         <p className={styles.text}>Log in with your email address</p>
+        {error !== "" && <span className={styles.error}>{error}</span>}
         <div className={styles.inputs}>
           <OnboardingInput
             onChange={handleChange}

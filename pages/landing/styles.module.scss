@@ -1,52 +1,46 @@
 .animationBack {
   background-image: url("/assets/71699-background.gif");
   background-size: 50vw 30vw;
-  /* height: 30vw; */
   background-position-y: -5vw;
 }
 .updatefromcreatorheading {
-  font-size: 1vw;
+  font-size: 12px;
   color: #777e90;
+  max-height: 60%;
 }
 .updatefromcreatorparent {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-direction: column;
-  // height: 30vw;
-  border-left: 2px solid #353945;
-  padding-left: 2vw;
+  padding: 10px;
 }
 .discovermore button {
   width: 150px;
   height: 40px;
   border-radius: 90px;
   border: 2px solid #777e91;
-  font-size: 1.1vw;
-  display: flex;
+  font-size: 10px;
   align-items: center;
-  justify-content: space-evenly;
   background-color: transparent;
   color: white;
+  margin-top: 50px;
 }
 .discovermore button span img {
-  width: 1.1vw;
-  height: 1.1vw;
+  width: 10px;
+  height: 5px;
 }
 .listingsubcardparent {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   flex-direction: column;
-  height: 40vw;
-  padding: 0px 0px 20px 0px;
+  gap: 20px;
 }
 .listingcardparent {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  margin-top: 6vw;
-  padding: 2px;
+  display: grid;
+  grid-template-columns: 2fr 1.8fr 1fr;
+  margin-top: 170px;
+  height: 700px;
+  margin-bottom: 50px;
+  padding: 10px;
+  gap: 20px;
+  width: 100%;
+  padding: 30px;
 }
 .hotcollectioncardparent h2 {
   font-size: 2.4vw;
@@ -61,9 +55,17 @@
 }
 .hotcollectioncardparent {
   width: 100%;
-  padding-top: 2vw;
-  padding-bottom: 2vw;
+  padding-top: 20px;
+  padding-bottom: 20px;
   background: #23262f;
+}
+.updateformholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px;
+  height: 50%;
+  border-left: 1px solid #353945;
 }
 .discoverdividercon {
   width: 100%;
@@ -75,22 +77,25 @@
     display: none;
   }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .listingcardparent {
     flex-direction: column;
-    margin-top: 10vw;
-    margin-left: 10vw;
+    margin-top: 118px;
+    // align-items: center;
+    padding: 20px;
+    width: 100%;
+    height: 900px;
+    margin-bottom: 50px;
+    grid-template-columns: 1fr;
   }
   .listingsubcardparent {
-    min-height: 400px;
-    margin-top: 4vw;
     display: none;
   }
   .updatefromcreatorparent {
     border: none;
-    height: 400px;
-    margin-top: 20px;
-    margin-bottom: -240px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   .hotcollectioncardcontainer {
     flex-direction: column;
@@ -99,7 +104,9 @@
     display: none;
   }
   .updatefromcreatorheading {
-    font-size: 18px;
+    font-size: 12px;
+    text-align: left;
+    margin-top: -20px;
   }
   .discovermore button {
     // width: 30vw;
@@ -109,15 +116,17 @@
   .updateformholder {
     display: flex;
     width: 100vw;
-    justify-content: flex-start;
+    flex-direction: row;
     overflow-x: scroll;
-    margin-top: -300px;
-    padding: 5px;
+    justify-content: flex-start;
   }
 }
 
-@media only screen and (max-width: 1200px) {
-  .listingsubcardparent {
-    height: 400px;
+@media only screen and (min-width: 1400px) {
+  .listingcardparent {
+    display: grid;
+    grid-template-columns: 2fr 1.8fr 1fr;
+    width: 100%;
+    gap: 30px;
   }
 }

@@ -26,6 +26,16 @@
 }
 .headerSec2Links {
   padding-right: 6vw;
+
+  li {
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #777e91;
+  }
 }
 .headerSec3SearchInput {
   width: 18vw;

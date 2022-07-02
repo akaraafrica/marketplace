@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
 import lottieJson from "../lotties/json-background.json";
 import Footer from "../components/Footer";
@@ -10,7 +10,6 @@ import LandingMain from "../components/LandingMain";
 import SellersSec from "../components/SellersSec";
 import styles from "./landing/styles.module.scss";
 import ListingMainCard from "../components/ListingMainCard/index";
-import ListingSubCard from "../components/ListingSubCard/index";
 import UpdateFromCreators from "../components/UpdateFromCreators/index";
 import Hotitems from "../components/HotItems";
 import Discover from "../components/DiscoverSec/index";
@@ -21,8 +20,13 @@ import HotCollectionMobile from "../components/HotCollectionMobile/index";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
+import ListingSubCardDynamic from "../components/ListingSubCard/ListingSubCardDynamic";
+import UpdateFromCreatorsShow from "../components/UpdateFromCreators/UpdateFromCreatorsShow";
+import { Box, Typography } from "@mui/material";
+import Discovery from "../ds/discovery.ds";
+import LandingMainSection from "../components/LandingMainSection";
 
-const Home = () => {
+const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
 
   const settings = {
@@ -51,36 +55,9 @@ const Home = () => {
             }}
           />
         </div>
-        <LandingMain />
       </div>
-      <LandingBidding />
-      <div className={styles.listingcardparent}>
-        <ListingMainCard />
-        <div className={styles.listingsubcardparent}>
-          <ListingSubCard />
-          <ListingSubCard />
-          <ListingSubCard />
-        </div>
-        <div className={styles.updatefromcreatorparent}>
-          <p className={styles.updatefromcreatorheading}>
-            Latest upload from creators 🔥
-          </p>
-          <div className={styles.updateformholder}>
-            <UpdateFromCreators />
-            <UpdateFromCreators />
-            <UpdateFromCreators />
-            <UpdateFromCreators />
-          </div>
-          <div className={styles.discovermore}>
-            <button>
-              Discover more
-              <span>
-                <img alt="right arrow" src={`/assets/rightArrow.svg`} />
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
+      <LandingMainSection />
+
       <SellersSec />
       <Hotitems />
       <div className={styles.hotcollectioncardparent}>
@@ -132,7 +109,7 @@ const Home = () => {
           </Swiper>
         </div>
       </div>
-      <Discover />
+      <Discover items={props.items} />
       <div className={styles.discoverdividercon}></div>
       <SubscribeModal />
       <HowItWorks />
@@ -140,5 +117,13 @@ const Home = () => {
     </>
   );
 };
+
+export async function getServerSideProps() {
+  let data = await Discovery.getData();
+
+  return {
+    props: data,
+  };
+}
 
 export default Home;
