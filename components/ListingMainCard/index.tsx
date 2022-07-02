@@ -14,8 +14,180 @@ function ListingMainCard() {
     avatar: "/assets/Avator.svg",
   };
   return (
-    <>
-      <div
+    <div className={styles.root}>
+      <div className={styles.left}>
+        <NextImage
+          src={data.image}
+          width="100%"
+          height="446px"
+          className={styles.image}
+        />
+        <div className={styles.leftBottom}>
+          <div className={styles.avatarName}>
+            <NextImage
+              className={styles.avatar}
+              src="/assets/auctionAvatar.png"
+              width="48px"
+              height="48px"
+            />
+            <div className={styles.name}>
+              <span className={styles.title}>The future of ETH®</span>
+              <span className={styles.stock}>18 in stock</span>
+            </div>
+          </div>
+          <div className={styles.high}>
+            <span className={styles.highest}>Highest bid</span>
+            <span className={styles.highEth}>1.125 ETH</span>
+          </div>
+        </div>
+      </div>
+      <div className={styles.center}>
+        <div className={styles.cards}>
+          <NextImage
+            className={styles.cardImg}
+            src="/assets/productimg4.png"
+            width="160px"
+            height="148px"
+          />
+          <div className={styles.cardDetails}>
+            <span className={styles.cardName}>ETH never dies</span>
+            <div className={styles.centerDiv}>
+              <NextImage
+                className={styles.centerDivImg}
+                src="/assets/auctionAvatar.png"
+                width="24px"
+                height="24px"
+              />
+              <span>0.27 ETH</span>
+            </div>
+            <button>Place a bid</button>
+          </div>
+        </div>
+        <div className={styles.cards}>
+          <NextImage
+            className={styles.cardImg}
+            src="/assets/productimg1.png"
+            width="160px"
+            height="148px"
+          />
+          <div className={styles.cardDetails}>
+            <span className={styles.cardName}>Future coming soon</span>
+            <div className={styles.centerDiv}>
+              <NextImage
+                className={styles.centerDivImg}
+                src="/assets/auctionAvatar.png"
+                width="24px"
+                height="24px"
+              />
+              <span>0.27 ETH</span>
+            </div>
+            <button>Place a bid</button>
+          </div>
+        </div>
+        <div className={styles.cards}>
+          <NextImage
+            className={styles.cardImg}
+            src="/assets/productimg7.png"
+            width="160px"
+            height="148px"
+          />
+          <div className={styles.cardDetails}>
+            <span className={styles.cardName}>
+              Elon Musk silver coin 3d print
+            </span>
+            <div className={styles.centerDiv}>
+              <NextImage
+                className={styles.centerDivImg}
+                src="/assets/auctionAvatar.png"
+                width="24px"
+                height="24px"
+              />
+              <span>0.27 ETH</span>
+            </div>
+            <button>Place a bid</button>
+          </div>
+        </div>
+      </div>
+      <div className={styles.right}>
+        <hr />
+        <div className={styles.rightContainer}>
+          <h5>Latest upload from creators 🔥</h5>
+          <div className={styles.creator}>
+            <div className={styles.creatorImgDiv}>
+              <p>2</p>
+              <NextImage
+                className={styles.creatorImg}
+                src="/assets/auctionAvatar.png"
+                width="56px"
+                height="56px"
+              />
+            </div>
+            <div className={styles.creatorNameDiv}>
+              <span className={styles.name}>Payton Haris</span>
+              <span className={styles.eth}>
+                2.456 <span>ETH</span>
+              </span>
+            </div>
+          </div>
+          <hr />
+          <div className={styles.creator}>
+            <div className={styles.creatorImgDiv}>
+              <p>2</p>
+              <NextImage
+                className={styles.creatorImg}
+                src="/assets/auctionAvatar.png"
+                width="56px"
+                height="56px"
+              />
+            </div>
+            <div className={styles.creatorNameDiv}>
+              <span className={styles.name}>Payton Haris</span>
+              <span className={styles.eth}>
+                2.456 <span>ETH</span>
+              </span>
+            </div>
+          </div>
+          <hr />
+          <div className={styles.creator}>
+            <div className={styles.creatorImgDiv}>
+              <p>2</p>
+              <NextImage
+                className={styles.creatorImg}
+                src="/assets/auctionAvatar.png"
+                width="56px"
+                height="56px"
+              />
+            </div>
+            <div className={styles.creatorNameDiv}>
+              <span className={styles.name}>Payton Haris</span>
+              <span className={styles.eth}>
+                2.456 <span>ETH</span>
+              </span>
+            </div>
+          </div>
+          <hr />
+          <div className={styles.creator}>
+            <div className={styles.creatorImgDiv}>
+              <p>2</p>
+              <NextImage
+                className={styles.creatorImg}
+                src="/assets/auctionAvatar.png"
+                width="56px"
+                height="56px"
+              />
+            </div>
+            <div className={styles.creatorNameDiv}>
+              <span className={styles.name}>Payton Haris</span>
+              <span className={styles.eth}>
+                2.456 <span>ETH</span>
+              </span>
+            </div>
+          </div>
+          <div className={styles.btn}>Discover more </div>
+        </div>
+      </div>
+
+      {/* <div
         className={styles.listingmaincardsec1}
         style={{
           backgroundImage: `url(${data.image})`,
@@ -37,7 +209,7 @@ function ListingMainCard() {
       >
         <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
           <div>
-            <NextImage src={`${data.avatar}`} height={80} width={60} />
+            <NextImage src={`${data.avatar}`} height={80} width='100%' />
           </div>
           <Box
             sx={{
@@ -89,8 +261,8 @@ function ListingMainCard() {
             {data.bid}
           </Typography>
         </Box>
-      </Box>
-    </>
+      </Box> */}
+    </div>
   );
 }
 export default ListingMainCard;

@@ -1,0 +1,14 @@
+.root {
+  padding: 100px;
+
+  .bottom {
+    margin-top: 100px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .root {
+    padding: 100px 10px;
+  }
+}

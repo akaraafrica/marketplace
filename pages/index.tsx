@@ -24,6 +24,7 @@ import ListingSubCardDynamic from "../components/ListingSubCard/ListingSubCardDy
 import UpdateFromCreatorsShow from "../components/UpdateFromCreators/UpdateFromCreatorsShow";
 import { Box, Typography } from "@mui/material";
 import Discovery from "../ds/discovery.ds";
+import LandingMainSection from "../components/LandingMainSection";
 
 const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
@@ -54,39 +55,9 @@ const Home = (props: any) => {
             }}
           />
         </div>
-        <LandingMain />
       </div>
-      <LandingBidding />
-      <div className={styles.listingcardparent}>
-        <Box sx={{ borderRadius: "5px" }}>
-          <ListingMainCard />
-        </Box>
+      <LandingMainSection />
 
-        <div className={styles.listingsubcardparent}>
-          <ListingSubCardDynamic />
-          {/* <ListingSubCard /> */}
-          {/* <ListingSubCard />
-          <ListingSubCard /> */}
-        </div>
-
-        <div className={styles.updatefromcreatorheading}>
-          <p className={styles.updatefromcreatorheading}>
-            Latest upload from creators 🔥
-          </p>
-          <UpdateFromCreatorsShow />
-          {/* <UpdateFromCreators />
-          <UpdateFromCreators />
-          <UpdateFromCreators /> */}
-          <div className={styles.discovermore}>
-            <button>
-              Discover more
-              <span>
-                <img alt="right arrow" src={`/assets/rightArrow.svg`} />
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
       <SellersSec />
       <Hotitems />
       <div className={styles.hotcollectioncardparent}>
