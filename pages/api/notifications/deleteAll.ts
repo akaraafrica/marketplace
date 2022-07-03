@@ -12,7 +12,7 @@ const handler = async (
   if (req.method === "DELETE") {
     await prisma.user.update({
       where: {
-        address: auth?.user,
+        walletAddress: auth?.user,
       },
       data: {
         notifications: {

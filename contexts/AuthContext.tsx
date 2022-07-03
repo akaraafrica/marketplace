@@ -17,7 +17,7 @@ type SignInCredential = {
 type AuthContextData = {
   signIn: (credentials: SignInCredential) => Promise<void>;
   signOut: () => void;
-  user: User;
+  user: User | undefined;
   isAuthenticated: boolean;
 };
 
@@ -99,7 +99,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser({ email, permissions, roles });
 
-      api.defaults.headers["Authorization"] = `Bearer ${token}`;
+      api.defaults.headers.head["Authorization"] = `Bearer ${token}`;
 
       Router.push("/dashboard");
     } catch (err) {
@@ -108,8 +108,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
+    // (user &&
+    //   (
     <AuthContext.Provider value={{ signIn, signOut, user, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
+    //   )
+    // )
   );
 }

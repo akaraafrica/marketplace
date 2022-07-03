@@ -23,7 +23,7 @@ export default async function ForgotPassword(
 
       const payload = {
         email: checkuser.email,
-        adress: checkuser.address,
+        adress: checkuser.walletAddress,
       };
       const token = await jwt.sign(payload, secret, { expiresIn: "30m" });
       const link = `${process.env.NEXT_BASE_URL}/password-reset/${payload.email}/${token}`;

@@ -36,7 +36,7 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
         password,
         myUser ? myUser.password : ""
       );
-      const address = myUser.address;
+      const address = myUser.walletAddress;
       if (compare) {
         const token = jwt.sign({ address }, secret, { expiresIn: "2d" });
         res

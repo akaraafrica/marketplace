@@ -13,7 +13,7 @@ type WithSSRAuthOptions = {
   roles: string[];
 };
 
-export function withSSRAuth<P>(
+export function withSSRAuth<P extends { [key: string]: any }>(
   fn: GetServerSideProps<P>,
   options?: WithSSRAuthOptions
 ) {
@@ -64,6 +64,9 @@ export function withSSRAuth<P>(
           },
         };
       }
+      return {
+        notFound: true,
+      };
     }
   };
 }
