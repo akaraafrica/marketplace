@@ -2,6 +2,9 @@
   "name": "marketplace",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -59,6 +62,7 @@
     "husky": "^8.0.0",
     "prettier": "^2.6.2",
     "prisma": "^3.14.0",
+    "ts-node": "^10.8.1",
     "typescript": "4.6.4"
   }
 }

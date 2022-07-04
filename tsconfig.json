@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/api/bio.ts",
-    "store/reducers/userSlice.js"
+    "store/reducers/userSlice.js",
+    "prisma/seed.js"
   ],
   "exclude": ["node_modules"]
 }
