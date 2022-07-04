@@ -1,3 +1,10 @@
+
+## Database commands
+
+```npx prisma db seed
+```
+
+>>>>>>> Stashed changes
 ## Getting Started
 
 First, run the development server:

@@ -49,10 +49,13 @@ const Index = () => {
         localStorage.setItem("user", res.data.accessToken);
         dispatch(setUser(res.data));
         router.push("/");
+      } else {
+        toast.error(res.statusText);
       }
 
       // console.log(res);
     } catch (error: any) {
+      console.log(error)
       if (error.response.status === 401) {
         return setError(error.response.data.message);
       }
