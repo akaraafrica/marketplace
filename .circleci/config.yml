@@ -5,12 +5,12 @@ workflows:
   heroku_deploy:
     jobs:
       - build
-      - heroku/deploy-via-git:
-          requires:
-            - build
-          filters:
-            branches:
-              only: main
+      # - heroku/deploy-via-git:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: main
 jobs:
   build:
     working_directory: ~/repo
