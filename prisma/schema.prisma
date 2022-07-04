@@ -55,6 +55,7 @@ model User {
   walletAddress String         @unique
   email         String         @unique
   password      String
+  rating        Int?
   profileId     Int?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt
@@ -62,7 +63,6 @@ model User {
   collections   Collection[]
   items         Item[]
   profile       Profile?
-  rating        Int?
   notifications Notification[]
   bids          Bid[]
 }
@@ -73,7 +73,7 @@ model Collection {
   typeId           String         @unique
   collectiontypeId Int
   items            String[]
-  description      String
+  description      String         @db.VarChar(250)
   owners           User[]
   created          DateTime       @default(now())
   upated           DateTime       @updatedAt
@@ -111,12 +111,12 @@ model CollectionRating {
 model Profile {
   name        String
   avatar      String
-  dob         String
-  userId      Int    @unique
-  id          String @id @default(uuid())
+  dob         DateTime
+  userId      Int         @unique
+  id          String      @id @default(uuid())
   phoneNumber String
-  bio         String
-  user        User   @relation(fields: [userId], references: [id])
+  bio         String      @db.VarChar(250)
+  user        User        @relation(fields: [userId], references: [id])
 }
 
 model Notification {
