@@ -2,6 +2,7 @@ import React, { createContext, ReactNode, useEffect, useState } from "react";
 import Router from "next/router";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { api } from "../services/apiClient";
+import { AxiosResponse } from "axios";
 
 type User = {
   email: string;
@@ -67,7 +68,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (token) {
       api
         .get("/me")
-        .then((response) => {
+        .then((response: AxiosResponse) => {
           const { email, permissions, roles } = response.data;
 
           setUser({ email, permissions, roles });
@@ -108,12 +109,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    // (user &&
-    //   (
     <AuthContext.Provider value={{ signIn, signOut, user, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
-    //   )
-    // )
   );
 }
