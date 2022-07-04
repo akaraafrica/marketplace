@@ -119,12 +119,12 @@ const Home = (props: any) => {
 };
 
 export async function getServerSideProps() {
-  let data  = {}
+  let data = {};
 
   try {
     data = await Discovery.getData();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 
   return {

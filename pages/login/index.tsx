@@ -55,7 +55,7 @@ const Index = () => {
 
       // console.log(res);
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       if (error.response.status === 401) {
         return setError(error.response.data.message);
       }
