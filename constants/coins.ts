@@ -1,0 +1,25 @@
+import { SupportedChainId } from "./chains";
+
+export const CHAIN_TO_WETH_ADDRESS = {
+  [SupportedChainId.MAINNET]: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+  [SupportedChainId.ROPSTEN]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+  [SupportedChainId.RINKEBY]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+  [SupportedChainId.KOVAN]: "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
+  [SupportedChainId.GOERLI]: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
+};
+
+export const CHAIN_TO_USDC_ADDRESS = {
+  [SupportedChainId.MAINNET]: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  [SupportedChainId.ROPSTEN]: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+  [SupportedChainId.RINKEBY]: "0xeb8f08a975ab53e34d8a0330e0d34de942c95926",
+  [SupportedChainId.KOVAN]: "0xdcfab8057d08634279f8201b55d311c2a67897d2",
+  [SupportedChainId.GOERLI]: "0x2f3a40a3db8a7e3d09b0adfefbce4f6f81927557",
+};
+
+export const CHAIN_TO_DAI_ADDRESS = {
+  [SupportedChainId.MAINNET]: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+  [SupportedChainId.ROPSTEN]: "0xad6d458402f60fd3bd25163575031acdce07538d",
+  [SupportedChainId.RINKEBY]: "0x95b58a6bff3d14b7db2f5cb5f0ad413dc2940658",
+  [SupportedChainId.KOVAN]: "0xc4375b7de8af5a38a93548eb8453a498222c4ff2",
+  [SupportedChainId.GOERLI]: "0x73967c6a0904aa032c103b4104747e88c566b1a2",
+};

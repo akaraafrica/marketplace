@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Profile" ALTER COLUMN "dob" SET DATA TYPE TEXT,
-ADD CONSTRAINT "Profile_pkey" PRIMARY KEY ("id");

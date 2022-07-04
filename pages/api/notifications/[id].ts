@@ -40,7 +40,7 @@ const handler = async (
         error: new Error("Notification does not exist"),
       });
     }
-    if (item.userId !== auth?.user) {
+    if (item.userId.toString() !== auth?.user) {
       return res.status(401).json({
         error: new Error("Requête non autorisée !"),
       });

@@ -2,6 +2,9 @@
   "name": "marketplace",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -24,11 +27,17 @@
     "@reduxjs/toolkit": "^1.8.2",
     "@sendgrid/mail": "^7.7.0",
     "@types/sendgrid": "^4.3.0",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/network-connector": "^6.2.9",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
+    "ethers": "^5.6.9",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "next": "12.1.6",
     "next-redux-wrapper": "^7.0.5",
+    "nookies": "^2.5.2",
     "plyr-react": "4.0.0-alpha.5",
     "react": "18.1.0",
     "react-dom": "18.1.0",
@@ -42,7 +51,8 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "sass": "^1.52.1",
-    "swiper": "^8.2.4"
+    "swiper": "^8.2.4",
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -57,6 +67,7 @@
     "husky": "^8.0.0",
     "prettier": "^2.6.2",
     "prisma": "^3.14.0",
+    "ts-node": "^10.8.1",
     "typescript": "4.6.4"
   }
 }

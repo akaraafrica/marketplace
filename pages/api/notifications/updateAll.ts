@@ -11,7 +11,7 @@ const handler = async (
   if (req.method === "PUT") {
     await prisma.user.update({
       where: {
-        address: req.body.address,
+        walletAddress: req.body.address,
       },
       data: {
         notifications: {
