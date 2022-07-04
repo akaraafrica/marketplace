@@ -5,11 +5,16 @@
   "prisma": {
     "seed": "node prisma/seed.js"
   },
+  "pre-commit": [
+    "format",
+    "lint",
+    "build"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "prepare": "husky install",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
