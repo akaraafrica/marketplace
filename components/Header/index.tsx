@@ -8,10 +8,16 @@ import styles from "./index.module.scss";
 import NotificationModal from "../NotificationModal/index";
 import ProfileModal from "../ProfileModal/index";
 import MobileHeader from "../MobileHeader/index";
+import NewNotificationModal from "../NewNotificationModal";
+import NewProfileModal from "../NewProfileModal";
+import { IoMenuSharp, IoClose } from "react-icons/io5";
+import NextImage from "../../utils/helpers/NextImage";
+import CustomSelect from "../CustomSelect";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
+  const [mobile, setMobile] = React.useState(false);
   const { account, active, activate } = useWeb3React();
   const router = useRouter();
 
@@ -23,10 +29,36 @@ function Header() {
   return (
     <div>
       <div className={styles.headerCon}>
-        <div className={styles.mobileheadercon}>
+        {/* <div className={styles.mobileheadercon}>
           <div className={styles.mobileHeaderupper}>
             <img alt="logo" src={`/assets/Logo.png`} />
             <MobileHeader />
+          </div>
+        </div> */}
+        <div className={styles.mobile}>
+          <div className={styles.mobileTop}>
+            <NextImage
+              alt="logo"
+              src="/assets/Logo.png"
+              width="70px"
+              height="30px"
+            />
+            {mobile ? (
+              <IoClose onClick={() => setMobile(false)} size={40} />
+            ) : (
+              <IoMenuSharp onClick={() => setMobile(true)} size={40} />
+            )}
+          </div>
+          <div>
+            <CustomSelect placeholder="Search" />
+          </div>
+          <div className={mobile ? styles.mobileContent : styles.contentNone}>
+            <span>Marketplace</span>
+            <span>How it works</span>
+            <span>Notifications</span>
+            <span>Profile</span>
+            <button>Upload</button>
+            <span>Logout</span>
           </div>
         </div>
         <div className={styles.Header}>
@@ -36,7 +68,7 @@ function Header() {
           <div className={styles.headerSec2Links}>
             <ul>
               <li>Marketplace</li>
-              <li>How it works</li>
+              <li onClick={() => router.push("/#howitworks")}>How it works</li>
             </ul>
           </div>
           <div className={styles.headerSec3SearchInput}>
@@ -46,11 +78,18 @@ function Header() {
           <div
             className={styles.headerSec4Notification}
             onClick={() => {
-              setNotificationOpen(!notificationOpen);
+              !active && !account
+                ? router.push("/login")
+                : setNotificationOpen(!notificationOpen);
               setProfileOpen(false);
             }}
           >
             <div className={styles.activeNotification}></div>
+            {notificationOpen && (
+              <div className={styles.notification}>
+                <NewNotificationModal />
+              </div>
+            )}
           </div>
           <div className={styles.headerSec5Btns}>
             <button>Upload</button>
@@ -66,19 +105,22 @@ function Header() {
                 <p>
                   7.00698 <span>ETH</span>
                 </p>
+                {profileOpen && (
+                  <div className={styles.profile}>
+                    <NewProfileModal />
+                  </div>
+                )}
               </div>
             ) : (
-              <div style={{ margin: `0 10px` }} onClick={login}>
-                Login
+              <div className={styles.auth}>
+                <span onClick={login}>Login</span>/
+                <span onClick={() => router.push("/signup")}>Signup</span>
               </div>
             )}
           </div>
         </div>
       </div>
-      <div className={styles.modals}>
-        {notificationOpen && <NotificationModal />}
-        {profileOpen && <ProfileModal />}
-      </div>
+      <div className={styles.modals}></div>
     </div>
   );
 }

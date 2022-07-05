@@ -1,0 +1,19 @@
+.customInput {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  gap: 18px 0;
+  border: 2px solid #353945;
+  border-radius: 12px;
+  box-sizing: border-box;
+  width: 100%;
+
+  input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #fcfcfc;
+  }
+}
