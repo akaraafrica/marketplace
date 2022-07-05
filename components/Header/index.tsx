@@ -78,7 +78,7 @@ function Header() {
           <div
             className={styles.headerSec4Notification}
             onClick={() => {
-              active && account
+              !active && !account
                 ? router.push("/login")
                 : setNotificationOpen(!notificationOpen);
               setProfileOpen(false);
@@ -93,7 +93,7 @@ function Header() {
           </div>
           <div className={styles.headerSec5Btns}>
             <button>Upload</button>
-            {!active && !account ? (
+            {active && account ? (
               <div
                 className={styles.balanceSec}
                 onClick={() => {
