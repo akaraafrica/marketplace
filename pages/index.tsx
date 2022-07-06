@@ -28,6 +28,7 @@ import LandingMainSection from "../components/LandingMainSection";
 
 const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
+  console.log(props);
 
   const settings = {
     arrows: false,
@@ -119,10 +120,11 @@ const Home = (props: any) => {
 };
 
 export async function getServerSideProps() {
-  let data = {};
+  let data: any = {};
 
   try {
     data = await Discovery.getData();
+    console.log(data);
   } catch (error) {
     console.log(error);
   }

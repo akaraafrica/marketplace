@@ -1,10 +1,13 @@
-import data from "../data.json";
+import axios from "axios";
 
 class Discovery {
   constructor() {}
 
   async getData() {
-    return data;
+    const res = await axios(`${process.env.NEXT_BASE_URL}api/items`, {
+      method: "GET",
+    });
+    return res.data.data;
   }
 }
 
