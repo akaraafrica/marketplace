@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React, { useState } from "react";
+import Link from "next/link";
 import styles from "./index.module.scss";
 import { AiOutlineTwitter, AiOutlineGoogle } from "react-icons/ai";
 import { TiSocialFacebook } from "react-icons/ti";
@@ -10,7 +11,9 @@ const OnboardingSideBar = () => {
 
   return (
     <div className={styles.sideBar}>
-      <img className={styles.image} src={`/assets/Logo.png`} alt="logo" />
+      <Link href={`/`}>
+        <img className={styles.image} src={`/assets/Logo.png`} alt="logo" />
+      </Link>
       <div className={styles.leftCenter}>
         <h6>
           Buy and Own{" "}

@@ -4,13 +4,16 @@ import verifyToken from "../../../utils/middlewares/verifyToken";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
-    const userNotifications = await prisma.notification.findMany({
+    const user = await prisma.user.findFirst({
       where: {
-        userId: req.body.address,
+        walletAddress: req.body.address,
+      },
+      include: {
+        notifications: true,
       },
     });
 
-    res.status(200).json({ data: userNotifications });
+    res.status(200).json({ data: user?.notifications });
   }
   if (req.method === "POST") {
     await prisma.notification.create({

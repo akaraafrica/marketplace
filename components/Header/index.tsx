@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
-import { injected } from "../../connectors";
 import styles from "./index.module.scss";
 import NotificationModal from "../NotificationModal/index";
 import ProfileModal from "../ProfileModal/index";
@@ -13,25 +12,23 @@ function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const { account, active, activate } = useWeb3React();
-  const router = useRouter();
-
-  async function login() {
-    await activate(injected);
-    router.push("/login");
-  }
 
   return (
     <div>
       <div className={styles.headerCon}>
         <div className={styles.mobileheadercon}>
           <div className={styles.mobileHeaderupper}>
-            <img alt="logo" src={`/assets/Logo.png`} />
+            <Link href={`/`}>
+              <img alt="logo" src={`/assets/Logo.png`} />
+            </Link>
             <MobileHeader />
           </div>
         </div>
         <div className={styles.Header}>
           <div className={styles.headerSec1Logo}>
-            <img alt="logo" src={`/assets/Logo.png`} />
+            <Link href={`/`}>
+              <img alt="logo" src={`/assets/Logo.png`} />
+            </Link>
           </div>
           <div className={styles.headerSec2Links}>
             <ul>
@@ -68,9 +65,9 @@ function Header() {
                 </p>
               </div>
             ) : (
-              <div style={{ margin: `0 10px` }} onClick={login}>
+              <Link href={`/login`} style={{ margin: `0 10px` }}>
                 Login
-              </div>
+              </Link>
             )}
           </div>
         </div>

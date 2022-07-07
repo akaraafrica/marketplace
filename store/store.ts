@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./userSlice";
+import userReducer from "./reducers/userSlice";
 // import disciplineReducer from "./slice/disciplineVisibilitySlice";
 
 const store = configureStore({
