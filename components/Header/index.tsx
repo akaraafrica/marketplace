@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
+import { useRouter } from "next/router";
 import styles from "./index.module.scss";
 import NotificationModal from "../NotificationModal/index";
 import ProfileModal from "../ProfileModal/index";
@@ -11,7 +12,7 @@ import NewNotificationModal from "../NewNotificationModal";
 import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
 import { MdNotificationsNone } from "react-icons/md";
-import NextImage from "../../utils/helpers/NextImage";
+import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
 
 function Header() {
@@ -19,6 +20,7 @@ function Header() {
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [mobile, setMobile] = React.useState(false);
   const { account, active, activate } = useWeb3React();
+  const router = useRouter();
 
   return (
     <div className={styles.headerCon}>
@@ -107,8 +109,12 @@ function Header() {
             </div>
           ) : (
             <div className={styles.auth}>
-              <span onClick={login}>Login</span>/
-              <span onClick={() => router.push("/signup")}>Signup</span>
+              <Link href={`/`}>
+                <span>Login</span>/
+              </Link>
+              <Link href={`/signup`}>
+                <span>Signup</span>
+              </Link>
             </div>
           )}
         </div>

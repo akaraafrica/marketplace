@@ -3,10 +3,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
-
   if (req.method === "GET") {
     const address = req.query.address as string;
-    if (!address) return res.status(404)
+    if (!address) return res.status(404);
     try {
       const user = await prisma.user.findFirst({
         where: {

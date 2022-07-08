@@ -1,6 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-// TODO: convert this to NextImage when given the chance
-
 import Link from "next/link";
 import React from "react";
 import styles from "./index.module.scss";
@@ -18,8 +16,8 @@ function NotificationModal() {
       </div> */}
       <div className={styles.notificationModal}>
         <div className={styles.notificationModalHead}>
+          <h1>Notification</h1>
           <Link href={`/notifications`}>
-            <h1>Notification</h1>
             <button>See all</button>
           </Link>
         </div>

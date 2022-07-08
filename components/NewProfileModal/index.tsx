@@ -1,5 +1,5 @@
 import React from "react";
-import NextImage from "../../utils/helpers/NextImage";
+import NextImage from "../../components/Image";
 import styles from "./index.module.scss";
 
 const Index = () => {
