@@ -69,12 +69,12 @@ const Item = () => {
   );
 };
 
-export async function getStaticProps() {
-  return {
-    props: {
-      protected: true,
-    },
-  };
-}
+// export async function getStaticProps() {
+//   return {
+//     props: {
+//       protected: true,
+//     },
+//   };
+// }
 
 export default Item;
