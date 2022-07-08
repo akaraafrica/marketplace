@@ -4,7 +4,6 @@ import styles from "./styles.module.scss";
 const BidCard = () => {
   return (
     <div>
-      {" "}
       <div className={styles.bidSec}>
         <span className={styles.auctionHeading}>The Odogu Collection</span>
         <div className={styles.profileInfoCardCon}>
@@ -12,7 +11,7 @@ const BidCard = () => {
             <Avatar
               src={`/assets/auctionAvatar.png`}
               alt="creator-photo"
-              style={{ width: "2.5vw", height: "2.5vw" }}
+              // style={{ width: "2.5vw", height: "2.5vw" }}
               className={styles.profileInfoAvatar}
             />
             <span className={styles.profileInfo}>
@@ -24,7 +23,7 @@ const BidCard = () => {
             <Avatar
               src={`/assets/user.png`}
               alt="creator-photo"
-              style={{ width: "2.5vw", height: "2.5vw" }}
+              // style={{ width: "2.5vw", height: "2.5vw" }}
               className={styles.profileInfoAvatar}
             />
             <span className={styles.profileInfo}>

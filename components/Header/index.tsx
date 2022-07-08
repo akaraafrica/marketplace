@@ -11,6 +11,7 @@ import MobileHeader from "../MobileHeader/index";
 import NewNotificationModal from "../NewNotificationModal";
 import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
+import { MdNotificationsNone } from "react-icons/md";
 import NextImage from "../../utils/helpers/NextImage";
 import CustomSelect from "../CustomSelect";
 
@@ -27,41 +28,97 @@ function Header() {
   }
 
   return (
-    <div>
-      <div className={styles.headerCon}>
-        {/* <div className={styles.mobileheadercon}>
-          <div className={styles.mobileHeaderupper}>
-            <img alt="logo" src={`/assets/Logo.png`} />
-            <MobileHeader />
+    <div className={styles.headerCon}>
+      <div className={styles.mobile}>
+        <div className={styles.mobileTop}>
+          <NextImage
+            alt="logo"
+            src="/assets/Logo.png"
+            width="70px"
+            height="30px"
+          />
+          {mobile ? (
+            <IoClose onClick={() => setMobile(false)} size={40} />
+          ) : (
+            <IoMenuSharp onClick={() => setMobile(true)} size={40} />
+          )}
+        </div>
+        <div>
+          <CustomSelect placeholder="Search" />
+        </div>
+        <div className={mobile ? styles.mobileContent : styles.contentNone}>
+          <span>Marketplace</span>
+          <span>How it works</span>
+          <span>Notifications</span>
+          <span>Profile</span>
+          <button>Upload</button>
+          <span>Logout</span>
+        </div>
+      </div>
+      <div className={styles.header}>
+        <div className={styles.left}>
+          <img alt="logo" src={`/assets/Logo.png`} />
+          <hr />
+          <ul>
+            <li>Marketplace</li>
+            <li>How it works</li>
+          </ul>
+        </div>
+        <div className={styles.right}>
+          <div className={styles.search}>
+            <input type="text" placeholder="Search" />
+            <img alt="search icon" src={`/assets/searchIcon.svg`} />
           </div>
-        </div> */}
-        <div className={styles.mobile}>
-          <div className={styles.mobileTop}>
-            <NextImage
-              alt="logo"
-              src="/assets/Logo.png"
-              width="70px"
-              height="30px"
-            />
-            {mobile ? (
-              <IoClose onClick={() => setMobile(false)} size={40} />
-            ) : (
-              <IoMenuSharp onClick={() => setMobile(true)} size={40} />
+          <div
+            className={styles.notification}
+            onClick={() => {
+              active && account
+                ? router.push("/login")
+                : setNotificationOpen(!notificationOpen);
+              setProfileOpen(false);
+            }}
+          >
+            <div className={styles.active}></div>
+            <MdNotificationsNone size={40} />
+            {notificationOpen && (
+              <div className={styles.dialog}>
+                <NewNotificationModal />
+              </div>
             )}
           </div>
-          <div>
-            <CustomSelect placeholder="Search" />
-          </div>
-          <div className={mobile ? styles.mobileContent : styles.contentNone}>
-            <span>Marketplace</span>
-            <span>How it works</span>
-            <span>Notifications</span>
-            <span>Profile</span>
-            <button>Upload</button>
-            <span>Logout</span>
-          </div>
+          <button
+            type="button"
+            className={active && account ? styles.btnLight : styles.btn}
+          >
+            Upload
+          </button>
+          {!active && !account ? (
+            <div
+              className={styles.balanceSec}
+              onClick={() => {
+                setProfileOpen(!profileOpen);
+                setNotificationOpen(false);
+              }}
+            >
+              <img alt="avatar" src={`/assets/Avator.svg`} />
+              <div className={styles.amt}>
+                7.00698 <span>ETH</span>
+              </div>
+              {profileOpen && (
+                <div className={styles.profile}>
+                  <NewProfileModal />
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className={styles.auth}>
+              <span onClick={login}>Login</span>/
+              <span onClick={() => router.push("/signup")}>Signup</span>
+            </div>
+          )}
         </div>
-        <div className={styles.Header}>
+      </div>
+      {/* <div className={styles.Header}>
           <div className={styles.headerSec1Logo}>
             <img alt="logo" src={`/assets/Logo.png`} />
           </div>
@@ -118,9 +175,7 @@ function Header() {
               </div>
             )}
           </div>
-        </div>
-      </div>
-      <div className={styles.modals}></div>
+        </div> */}
     </div>
   );
 }
