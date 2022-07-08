@@ -6,7 +6,7 @@ import styles from "./index.module.scss";
 
 function HowitWorks() {
   return (
-    <div className={styles.howitworkscon}>
+    <div id="howitworks" className={styles.howitworkscon}>
       <h1 className={styles.howitworksheading}>How it works</h1>
       <div className={styles.howitworksseccontent}>
         <div className={styles.howitworksseccontentsec1}>

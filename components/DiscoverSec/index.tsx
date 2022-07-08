@@ -27,7 +27,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ placeholder }) => {
 function Discover({ items }: any) {
   const [open, setOpen] = React.useState(0);
   return (
-    <div className={styles.discoverContainer}>
+    <div className={styles.root}>
       <h1>Discover</h1>
       <div className={styles.navbar}>
         <div className={styles.recent}>

@@ -6,13 +6,13 @@ import styles from "./index.module.scss";
 function ProfileModal() {
   return (
     <div className={styles.profilemodalcon}>
-      <div className={styles.tooltipiconcon}>
+      {/* <div className={styles.tooltipiconcon}>
         <img
           alt="tool tip icon"
           className={styles.tooltipicon}
           src={`/assets/toolTipIcon.svg`}
         />
-      </div>
+      </div> */}
       <div className={styles.profilemodal}>
         <div className={styles.profilemodalhead}>
           <h1>Sarah Shaibu</h1>
@@ -26,8 +26,8 @@ function ProfileModal() {
             <img alt="balance card image" src={`/assets/balancecardimg.svg`} />
           </div>
           <div className={styles.balancecardsec2}>
-            <p>Balance</p>
-            <h1>4.689 ETH</h1>
+            <span className={styles.bal}>Balance</span>
+            <span className={styles.amt}>4.689 ETH</span>
           </div>
         </div>
         <div className={styles.profilemodallistcon}>
