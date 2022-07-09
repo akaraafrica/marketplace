@@ -4,13 +4,13 @@ import ProfileCard from "../ProfileCard";
 
 function Gallery() {
   return (
-    <div className={styles.Gallery}>
+    <div className={styles.gallery}>
       <ProfileCard
         ProductImg={`/assets/productimg.png`}
         Name="Amazing digital art"
         Price="2.45 ETH"
         Stock="3 in stock"
-        Avatar={`/assets/avatars.png`}
+        Avatar={`/assets/auctionAvatar.png`}
         HighestBid="0.001 ETH"
       />
       <ProfileCard
@@ -18,7 +18,7 @@ function Gallery() {
         Name="Amazing digital art"
         Price="2.45 ETH"
         Stock="3 in stock"
-        Avatar={`/assets/avatars.png`}
+        Avatar={`/assets/auctionAvatar.png`}
         HighestBid="0.001 ETH"
       />
       <ProfileCard
@@ -26,7 +26,7 @@ function Gallery() {
         Name="Amazing digital art"
         Price="2.45 ETH"
         Stock="3 in stock"
-        Avatar={`/assets/avatars.png`}
+        Avatar={`/assets/auctionAvatar.png`}
         HighestBid="0.001 ETH"
       />
       <ProfileCard
@@ -34,7 +34,7 @@ function Gallery() {
         Name="Amazing digital art"
         Price="2.45 ETH"
         Stock="3 in stock"
-        Avatar={`/assets/avatars.png`}
+        Avatar={`/assets/auctionAvatar.png`}
         HighestBid="0.001 ETH"
       />
       <ProfileCard
@@ -42,7 +42,7 @@ function Gallery() {
         Name="Amazing digital art"
         Price="2.45 ETH"
         Stock="3 in stock"
-        Avatar={`/assets/avatars.png`}
+        Avatar={`/assets/auctionAvatar.png`}
         HighestBid="0.001 ETH"
       />
       <ProfileCard
@@ -50,7 +50,7 @@ function Gallery() {
         Name="Amazing digital art"
         Price="2.45 ETH"
         Stock="3 in stock"
-        Avatar={`/assets/avatars.png`}
+        Avatar={`/assets/auctionAvatar.png`}
         HighestBid="0.001 ETH"
       />
     </div>

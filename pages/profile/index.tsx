@@ -8,114 +8,116 @@ import Collections from "../../components/Collections/index";
 import Favourites from "../../components/Favourites/index";
 import Following from "../../components/Following/index";
 import Footer from "../../components/Footer/index";
+import Layout from "../../components/Layout";
+import NextImage from "../../utils/helpers/NextImage";
+import { AiTwotoneEdit } from "react-icons/ai";
+import { TbWorld, TbBrandTwitter, TbBrandInstagram } from "react-icons/tb";
+import { IoShareOutline } from "react-icons/io5";
+import { IoIosMore } from "react-icons/io";
+import { RiFacebookCircleLine } from "react-icons/ri";
 
 const ProfilePage = () => {
   const [open, setOpen] = React.useState(0);
   // document.body.style = "background: black;";
   return (
-    <div>
-      <Header />
-      <div className={styles.profilepagesec1con}>
-        <div className={styles.profilepagesec1}>
+    <Layout>
+      <div className={styles.root}>
+        <div
+          className={styles.top}
+          style={{ backgroundImage: `url(/assets/profilebg.png)` }}
+        >
           <button>
-            Edit profile
-            <span>
-              <img alt="edit icon" src={`/assets/editicon.svg`} />
-            </span>
+            Edit profile <AiTwotoneEdit size={15} />
           </button>
         </div>
-      </div>
-      <div className={styles.profilepagesec2parent}>
-        <div className={styles.profilepagesec2con}>
-          <div className={styles.profilepagecard}>
-            <div className={styles.profilecardimg}>
-              <img alt="profile photo" src={`/assets/profilephoto.png`} />
-            </div>
-            <div className={styles.profilecardname}>
-              <h4>Sarah Shaibu</h4>
-              <div className={styles.profileid}>
-                <p>0xc4c16a645...b21a</p>
-                <img alt="" src={`/assets/copyicon.svg`} />
+        <div className={styles.bottom}>
+          <div className={styles.left}>
+            <div className={styles.leftTop}>
+              <NextImage
+                className={styles.image2}
+                src="/assets/profileFoto.png"
+                width="160px"
+                height="160px"
+              />
+              <span className={styles.name}>Sarah Shaibu</span>
+              <div className={styles.wallet2}>
+                <span>0xc4c16ab5ac7d...b21a</span>
+                <NextImage
+                  width="20px"
+                  height="20px"
+                  src="/assets/copyicon.svg"
+                />
               </div>
-            </div>
-            <div className={styles.profilecarddesc}>
-              <p>
+              <span className={styles.desc}>
                 A wholesome farm owner in Abuja. Upcoming gallery solo show in
                 Lagos
-              </p>
+              </span>
+              <span className={styles.web}>
+                <TbWorld /> https://ui8.net
+              </span>
             </div>
-            <div className={styles.profilecardwebsitelink}>
-              <img alt="" src={`/assets/webicon.svg`} />
-              <p>https://ui8.net</p>
+            <div className={styles.leftCenter}>
+              <button className={styles.btn}>Follow</button>
+              <span className={styles.icon}>
+                <IoShareOutline />
+              </span>
+              <span className={styles.icon}>
+                <IoIosMore />
+              </span>
             </div>
-            <div className={styles.profilecardbtns}>
-              <button className={styles.followbtn}>Follow</button>
-              <button className={styles.iconbtn}>
-                <span>
-                  <img alt="" src={`/assets/upload.svg`} />
-                </span>
-              </button>
-              <button className={styles.iconbtn}>
-                <span>
-                  <img alt="" src={`/assets/dots.svg`} />
-                </span>
-              </button>
+            <div className={styles.social}>
+              <TbBrandTwitter size={25} color="#777E91" />
+              <TbBrandInstagram size={25} color="#777E91" />
+              <RiFacebookCircleLine size={25} color="#777E91" />
             </div>
-            <div className={styles.profilecardsocialicons}>
-              <img alt="" src={`/assets/twittericonone.svg`} />
-              <img alt="" src={`/assets/instagramiconone.svg`} />
-              <img alt="" src={`/assets/facebookiconone.svg`} />
-            </div>
-            <div className={styles.profilecarddivider}></div>
-            <div className={styles.membersince}>
-              <p>Member since Mar 15, 2021</p>
-            </div>
+            <hr />
+            <span className={styles.date}>Member since Mar 15, 2021</span>
           </div>
-          <div className={styles.profilepagesec2headparent}>
-            <div className={styles.profilepagesec2con}>
-              <div className={styles.profilepagesec2head}>
-                <div className={styles.headlinks}>
-                  <ul>
-                    <li
-                      className={open === 0 ? styles.active : styles.tablink}
-                      onClick={() => setOpen(0)}
-                    >
-                      Gallery
-                    </li>
-                    <li
-                      className={open === 1 ? styles.active : styles.tablink}
-                      onClick={() => setOpen(1)}
-                    >
-                      Collections
-                    </li>
-                    <li
-                      className={open === 2 ? styles.active : styles.tablink}
-                      onClick={() => setOpen(2)}
-                    >
-                      Favourites
-                    </li>
-                    <li
-                      className={open === 3 ? styles.active : styles.tablink}
-                      onClick={() => setOpen(3)}
-                    >
-                      Following
-                    </li>
-                  </ul>
-                </div>
-                <div className={styles.uploaditembtn}>
-                  <button>Upload Item</button>
-                </div>
-              </div>
+          <div className={styles.right}>
+            <div className={styles.nav}>
+              <span
+                onClick={() => setOpen(0)}
+                className={`${styles.navItem} ${
+                  open === 0 ? styles.active : ""
+                }`}
+              >
+                Gallery
+              </span>
+              <span
+                onClick={() => setOpen(1)}
+                className={`${styles.navItem} ${
+                  open === 1 ? styles.active : ""
+                }`}
+              >
+                Collections
+              </span>
+              <span
+                onClick={() => setOpen(2)}
+                className={`${styles.navItem} ${
+                  open === 2 ? styles.active : ""
+                }`}
+              >
+                Favourites
+              </span>
+              <span
+                onClick={() => setOpen(3)}
+                className={`${styles.navItem} ${
+                  open === 3 ? styles.active : ""
+                }`}
+              >
+                Following
+              </span>
             </div>
-            {open === 1 && <Collections />}
-            {open === 2 && <Favourites />}
-            {open === 0 && <Gallery />}
-            {open === 3 && <Following />}
+            <div>
+              {open === 0 && <Gallery />}
+              {open === 1 && <Collections />}
+              {open === 2 && <Favourites />}
+              {open === 3 && <Following />}
+            </div>
           </div>
         </div>
       </div>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 export default ProfilePage;

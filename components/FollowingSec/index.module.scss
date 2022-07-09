@@ -37,17 +37,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 34vw;
+  // width: 34vw;
+  gap: 20px;
 }
 .followingsec {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #353945;
-  height: 10vw;
-  width: 70vw;
+  height: 200px;
+  gap: 100px;
+
+  // width: 70vw;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 640px) {
   .followingsec {
     width: 80vw !important;
     height: 20vw !important;
