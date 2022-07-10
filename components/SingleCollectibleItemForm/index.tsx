@@ -3,19 +3,26 @@
 import React from "react";
 import styles from "./index.module.scss";
 import Switch from "@mui/material/Switch";
+import SwitchComponent from "../SwitchComponent";
+import ProfileCard from "../ProfileCard";
 
 function SingleCollectibleItem() {
   const label = { inputProps: { "aria-label": "Switch demo" } };
+
   return (
     <div className={styles.sciCon}>
       <div className={styles.sci}>
         <div className={styles.scihead}>
-          <h1>Create single collectible item</h1>
+          <h1>
+            Add single collectible <span>to collection</span>
+          </h1>
         </div>
         <div className={styles.sciuploadseccon}>
           <div className={styles.uploadsechead}>
-            <h4>Upload file</h4>
-            <p>Drag or choose your file to upload</p>
+            <span className={styles.upload}>Upload file</span>
+            <span className={styles.drag}>
+              Drag or choose your file to upload
+            </span>
           </div>
           <div className={styles.sciuploadbox}>
             <img alt="upload icon" src={`/assets/uploadicon.svg`} />
@@ -40,7 +47,7 @@ function SingleCollectibleItem() {
           </div>
           <div className={styles.itemdetailsforminput}>
             <label>BLOCKCHAIN</label>
-            <select>
+            <select defaultChecked={true}>
               <option selected disabled>
                 Blockchain
               </option>
@@ -72,7 +79,7 @@ function SingleCollectibleItem() {
               <h4>Put on sale</h4>
               <p>You’ll receive bids on this item</p>
             </div>
-            <Switch {...label} />
+            <SwitchComponent sx={{ m: 1, width: "56px" }} defaultChecked />
           </div>
           <div className={styles.putonscalebtnsec}>
             <button>
@@ -89,32 +96,15 @@ function SingleCollectibleItem() {
         <div className={styles.previewheading}>
           <h1>Preview</h1>
         </div>
-        <div className={styles.previewcardcontentcon}>
-          <div className={styles.previewcardimg}>
-            <img alt="product image" src={`/assets/productimg.png`} />
-          </div>
-          <div className={styles.previewcardname}>
-            <p>Black Golden Tiger</p>
-            <div className={styles.previewcardprice}>
-              <p>2.45 ETH</p>
-            </div>
-          </div>
-          <div className={styles.previewstockcon}>
-            <img alt="avatars" src={`/assets/avatars.png`} />
-            <p>3 in stock</p>
-          </div>
-          <div className={styles.previewdivider}></div>
-          <div className={styles.bidsec}>
-            <div className={styles.bidsec1}>
-              <img alt="bid icon" src={`/assets/bidicon.svg`} />
-              <p>
-                Highest bid <span>0.001 ETH</span>
-              </p>
-            </div>
-            <div className={styles.bidsec2}>
-              <p>New bid 🔥</p>
-            </div>
-          </div>
+        <div className={styles.previewcontent}>
+          <ProfileCard
+            ProductImg={`/assets/productimg.png`}
+            Name="Amazing digital art"
+            Price="2.45 ETH"
+            Stock="3 in stock"
+            Avatar={`/assets/auctionAvatar.png`}
+            HighestBid="0.001 ETH"
+          />
           <div className={styles.clearsec}>
             <img alt="close icon" src={`/assets/closeicon.svg`} />
             <p>Clear all</p>

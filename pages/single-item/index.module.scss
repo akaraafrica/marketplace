@@ -1,6 +1,53 @@
 .footercon {
   margin-top: 10vw;
 }
+.breadcrumbWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 15%;
+  gap: 10px;
+  background: #000;
+  border-bottom: 1px solid #353945;
+  border-top: 1px solid #353945;
+}
+.backButton {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 5px;
+  height: 40px;
+  border: 2px solid #353945;
+  border-radius: 90px;
+  cursor: pointer;
+  @media (max-width: 800px) {
+    display: none;
+  }
+
+  .backText {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #fcfcfd;
+  }
+}
+.breadcrumb {
+  display: flex;
+  gap: 40px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #777e91;
+  cursor: pointer;
+}
 @media only screen and (max-width: 600px) {
   .sciCon {
     flex-direction: column;
