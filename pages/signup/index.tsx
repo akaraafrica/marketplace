@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.module.scss";
 import OnboardingLayout from "../../components/OnboardingLayout";
 import OnboardingInput from "../../components/OnboardingInput";
@@ -7,6 +7,8 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useWeb3React } from "@web3-react/core";
+import { injected } from "../../connectors";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import VerifyEmail from "../../components/VerifyEmail";
@@ -17,8 +19,14 @@ const Index = () => {
   const [verify, setVerify] = useState(false);
   const router = useRouter();
 
-  // create random strings for the wallet address
-  const address = state.email + Date.now();
+  const { account, active, activate } = useWeb3React();
+
+  useEffect(() => {
+    if (!account) {
+      activate(injected);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,6 +35,11 @@ const Index = () => {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setError("");
+    if (!account) {
+      toast.info("Please connect with metamask to login");
+      return;
+    }
+
     const pattern =
       /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
     const result = pattern.test(state.email);
@@ -48,7 +61,7 @@ const Index = () => {
       }
 
       const res = await axios.post("/api/user/signup", {
-        address: address,
+        address: account,
         email: state.email,
         password: state.password,
       });
@@ -61,15 +74,12 @@ const Index = () => {
       }
       console.log(res);
     } catch (error: any) {
-      if (error.response.status === 401) {
+      if (error.response.status === 401)
         return setError(error.response.data.message);
-      }
-      if (error.response.status === 409) {
+      if (error.response.status === 409)
         return setError(error.response.data.message);
-      }
-      if (error.response.status === 500) {
+      if (error.response.status === 500)
         return setError("Server error, please try again later");
-      }
     }
   };
 

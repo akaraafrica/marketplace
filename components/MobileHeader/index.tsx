@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import ProfileModal from "../ProfileModal/index";
 import NotificationModal from "../NotificationModal/index";
+import NextImage from "../Image";
 
 export default function SwipeableTemporaryDrawer() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
@@ -31,7 +32,12 @@ export default function SwipeableTemporaryDrawer() {
     >
       <div className={styles.mobileheadercontent}>
         <div className={styles.mobileHeaderupper}>
-          <img alt="logo" src={`/assets/Logo.png`} />
+          <NextImage
+            width={100}
+            height={100}
+            alt="logo"
+            src={`/assets/Logo.png`}
+          />
           <button onClick={toggleDrawer(anchor, false)}>
             <CloseIcon style={{ height: "10vw", width: "10vw" }} />
           </button>

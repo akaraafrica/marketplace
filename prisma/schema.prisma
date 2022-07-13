@@ -24,8 +24,8 @@ model Item {
   publishedAt DateTime?
   updated     DateTime  @updatedAt
   rating      Int?
-  bids        Bid[]
   owner       User      @relation(fields: [ownerId], references: [id])
+  bids        Bid[]
 }
 
 model Bid {
@@ -34,9 +34,9 @@ model Bid {
   createdDate DateTime @default(now())
   updatedDate DateTime @updatedAt
   itemId      Int
-  item        Item     @relation(fields: [itemId], references: [id])
   bidderId    Int
   bidder      User     @relation(fields: [bidderId], references: [id])
+  item        Item     @relation(fields: [itemId], references: [id])
 }
 
 model CollectionType {
@@ -60,11 +60,11 @@ model User {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt
   verified      Boolean        @default(false)
-  collections   Collection[]
-  items         Item[]
-  profile       Profile?
-  notifications Notification[]
   bids          Bid[]
+  items         Item[]
+  notifications Notification[]
+  profile       Profile?
+  collections   Collection[]
 }
 
 model Collection {
@@ -74,7 +74,6 @@ model Collection {
   collectiontypeId Int
   items            String[]
   description      String         @db.VarChar(250)
-  owners           User[]
   created          DateTime       @default(now())
   upated           DateTime       @updatedAt
   authorId         Int
@@ -82,6 +81,7 @@ model Collection {
   videos           String[]
   rating           Int?
   type             CollectionType @relation(fields: [collectiontypeId], references: [id])
+  owners           User[]
 }
 
 model ItemRating {
@@ -112,21 +112,21 @@ model Profile {
   name        String
   avatar      String
   dob         DateTime
-  userId      Int         @unique
-  id          String      @id @default(uuid())
+  userId      Int      @unique
+  id          String   @id @default(uuid())
   phoneNumber String
-  bio         String      @db.VarChar(250)
-  user        User        @relation(fields: [userId], references: [id])
+  bio         String   @db.VarChar(250)
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model Notification {
   id      String   @id @default(uuid())
-  user    User     @relation(fields: [userId], references: [id])
   userId  Int
   title   String
   content String
   status  Boolean
   created DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id])
 }
 
 enum Gender {

@@ -3,7 +3,7 @@
 
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import NextImage from "../../utils/helpers/NextImage";
+import NextImage from "../../components/Image";
 import styles from "./index.module.scss";
 
 function ListingMainCard() {
@@ -21,6 +21,7 @@ function ListingMainCard() {
           width="100%"
           height="446px"
           className={styles.image}
+          alt="product"
         />
         <div className={styles.leftBottom}>
           <div className={styles.avatarName}>
@@ -29,6 +30,7 @@ function ListingMainCard() {
               src="/assets/auctionAvatar.png"
               width="48px"
               height="48px"
+              alt="avatar"
             />
             <div className={styles.name}>
               <span className={styles.title}>The future of ETH®</span>
@@ -48,6 +50,7 @@ function ListingMainCard() {
             src="/assets/productimg4.png"
             width="160px"
             height="148px"
+            alt="product"
           />
           <div className={styles.cardDetails}>
             <span className={styles.cardName}>ETH never dies</span>
@@ -57,6 +60,7 @@ function ListingMainCard() {
                 src="/assets/auctionAvatar.png"
                 width="24px"
                 height="24px"
+                alt="avatar"
               />
               <span>0.27 ETH</span>
             </div>
@@ -69,6 +73,7 @@ function ListingMainCard() {
             src="/assets/productimg1.png"
             width="160px"
             height="148px"
+            alt="avatar"
           />
           <div className={styles.cardDetails}>
             <span className={styles.cardName}>Future coming soon</span>
@@ -78,6 +83,7 @@ function ListingMainCard() {
                 src="/assets/auctionAvatar.png"
                 width="24px"
                 height="24px"
+                alt="avatar"
               />
               <span>0.27 ETH</span>
             </div>
@@ -90,6 +96,7 @@ function ListingMainCard() {
             src="/assets/productimg7.png"
             width="160px"
             height="148px"
+            alt="avatar"
           />
           <div className={styles.cardDetails}>
             <span className={styles.cardName}>
@@ -101,6 +108,7 @@ function ListingMainCard() {
                 src="/assets/auctionAvatar.png"
                 width="24px"
                 height="24px"
+                alt="avatar"
               />
               <span>0.27 ETH</span>
             </div>
@@ -120,6 +128,7 @@ function ListingMainCard() {
                 src="/assets/auctionAvatar.png"
                 width="56px"
                 height="56px"
+                alt="avatar"
               />
             </div>
             <div className={styles.creatorNameDiv}>
@@ -138,6 +147,7 @@ function ListingMainCard() {
                 src="/assets/auctionAvatar.png"
                 width="56px"
                 height="56px"
+                alt="avatar"
               />
             </div>
             <div className={styles.creatorNameDiv}>
@@ -156,6 +166,7 @@ function ListingMainCard() {
                 src="/assets/auctionAvatar.png"
                 width="56px"
                 height="56px"
+                alt="avatar"
               />
             </div>
             <div className={styles.creatorNameDiv}>
@@ -174,6 +185,7 @@ function ListingMainCard() {
                 src="/assets/auctionAvatar.png"
                 width="56px"
                 height="56px"
+                alt="avatar"
               />
             </div>
             <div className={styles.creatorNameDiv}>

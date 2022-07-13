@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
 import React from "react";
-import NextImage from "../../utils/helpers/NextImage";
+import Link from "next/link";
+import NextImage from "../../components/Image";
 import styles from "./index.module.scss";
 
 const Item = () => {
@@ -25,12 +25,13 @@ const Item = () => {
 };
 
 const Index = () => {
-  const router = useRouter();
   return (
     <div className={styles.root}>
       <div className={styles.top}>
         <div>Notifications</div>
-        <span onClick={() => router.push("/notifications")}>See all</span>
+        <Link href={`/notifications`}>
+          <span>See all</span>
+        </Link>
       </div>
       <div className={styles.body}>
         <Item />
