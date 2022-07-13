@@ -108,7 +108,7 @@ const ProfilePage = () => {
                 Following
               </span>
             </div>
-            <div>
+            <div className={styles.sections}>
               {open === 0 && <Gallery />}
               {open === 1 && <Collections />}
               {open === 2 && <Favourites />}
