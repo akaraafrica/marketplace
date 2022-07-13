@@ -1,22 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { IUser } from '../../models';
-import type { RootState } from "./store";
+import { IUser, initialState } from "../../types/user.interface";
+import type { RootState } from "../store";
 
 const today = new Date();
 const date =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-
-// Define the initial state using that type
-const initialState: any = {
-  id: 0,
-  name: "",
-  address: "",
-  cover: "",
-  avatar: "",
-  joined: date,
-  portfolio: [],
-  isVerified: false,
-};
 
 export const userSlice = createSlice({
   name: "user",
@@ -24,7 +12,8 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
-    set: (state, action: PayloadAction<any>) => {
+    set: (state: any, action: PayloadAction<any>) => {
+      console.log(state);
       return action.payload;
     },
   },

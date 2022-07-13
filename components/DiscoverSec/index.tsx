@@ -58,7 +58,7 @@ function Discover({ items }: any) {
   };
 
   return (
-    <div className={styles.discoverContainer}>
+    <div className={styles.root}>
       <h1>Discover</h1>
       <div className={styles.navbar}>
         <div className={styles.recent}>

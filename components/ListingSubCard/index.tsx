@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
-import NextImage from "../../utils/helpers/NextImage";
+import NextImage from "../Image";
 import styles from "./index.module.scss";
 
 interface DT {
@@ -16,12 +16,12 @@ interface DT {
 function ListingSubCard({ image, avatar, value, number, title }: DT) {
   return (
     <div className={styles.cont}>
-      <NextImage src={image} height="180px" width="180px" />
+      <NextImage src={image} height={180} width={180} alt="item" />
 
       <div className={styles.rightcard}>
         <Typography sx={{ color: "white" }}> {title}</Typography>
         <div className={styles.first}>
-          <NextImage src={avatar} height={60} width={40} />
+          <NextImage src={avatar} height={60} width={40} alt="avatar" />
           <Typography
             sx={{
               color: "green",
