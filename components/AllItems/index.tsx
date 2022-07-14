@@ -4,8 +4,8 @@ import ProfileCard from "../ProfileCard/index";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function AllItems({ products }: any) {
-  const initial = products.slice(0, 8);
-  const [items, setItems] = useState([...initial]);
+  const initial = products ? [...products?.slice(0, 8)] : [];
+  const [items, setItems] = useState(initial);
 
   const fetchMoreData = () => {
     // a fake async api call like which sends
@@ -13,7 +13,7 @@ function AllItems({ products }: any) {
     let start = items.length;
     let end = items.length + 8;
     setTimeout(() => {
-      setItems(items.concat(products.slice(start, end)));
+      if (products) setItems(items.concat(products.slice(start, end)));
     }, 1500);
   };
 
