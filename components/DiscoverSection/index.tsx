@@ -4,13 +4,9 @@ import React, { useState } from "react";
 import styles from "./index.module.scss";
 import DiscoverSelect from "../DiscoverSelect/index";
 import ProgressBar from "../ProgressBar/index";
-import AllItems from "../AllItems/index";
-import Art from "../Art/index";
-import Game from "../Game/index";
-import Photography from "../Photography/index";
-import Music from "../Music/index";
-import Video from "../Video/index";
+import DiscoveryItems from "../DiscoveryItems/index";
 import { IoChevronDownCircleOutline } from "react-icons/io5";
+import { Filter } from "../../ds/discovery.ds";
 
 interface CustomSelectProps {
   placeholder: string;
@@ -30,7 +26,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
 function Discover({ items }: any) {
   console.log(items);
-  const [open, setOpen] = React.useState(0);
+  const [open, setOpen] = useState(Filter.All);
   const [filter, setFilter] = useState("");
   const [data, setData] = useState(items);
 
@@ -143,12 +139,7 @@ function Discover({ items }: any) {
         </div>
       </div>
       <div className={styles.discoverCont}>
-        {open === 0 && <AllItems products={data} />}
-        {open === 1 && <Art products={data} />}
-        {open === 2 && <Game products={data} />}
-        {open === 3 && <Photography products={data} />}
-        {open === 4 && <Music products={data} />}
-        {open === 5 && <Video products={data} />}
+        <DiscoveryItems filterBy={open} products={data} />
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-// TODO: convert this to NextImage when given the chance
 import React from "react";
 import Lottie from "react-lottie-player";
 import lottieJson from "../lotties/json-background.json";
@@ -13,7 +12,7 @@ import HowItWorks from "../components/HowItWorks/index";
 import HotCollectionMobile from "../components/HotCollectionMobile/index";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
-import Discovery from "../ds/discovery.ds";
+import Discovery, { Filter } from "../ds/discovery.ds";
 import LandingMainSection from "../components/LandingMainSection";
 import Layout from "../components/Layout";
 
@@ -110,7 +109,7 @@ const Home = (props: any) => {
 };
 
 export async function getServerSideProps() {
-  let data = await Discovery.getData();
+  let data = await Discovery.getData(Filter.All);
 
   return {
     props: {

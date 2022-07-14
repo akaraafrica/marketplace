@@ -16,10 +16,10 @@ const Item = () => {
   const router = useRouter();
   const [notification, setNotification] = useState<NotificationProps>();
 
-  const user = useSelector((state: any) => state.userSlice.user);
+  const user = useSelector((state: any) => state.userSlice?.user);
 
-  const address = user.user.address;
-  const token = user.accessToken;
+  const address = user?.walletAddress;
+  const token = user?.accessToken;
   const { id } = router.query;
 
   useEffect(() => {
