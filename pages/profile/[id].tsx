@@ -15,8 +15,9 @@ import { TbWorld, TbBrandTwitter, TbBrandInstagram } from "react-icons/tb";
 import { IoShareOutline } from "react-icons/io5";
 import { IoIosMore } from "react-icons/io";
 import { RiFacebookCircleLine } from "react-icons/ri";
+import Profile from "../../ds/profile.ds";
 
-const ProfilePage = () => {
+const ProfilePage = (props: any) => {
   const [open, setOpen] = React.useState(0);
   // document.body.style = "background: black;";
   return (
@@ -121,4 +122,17 @@ const ProfilePage = () => {
   );
 };
 
+export async function getServerSideProps() {
+  let data = {};
+
+  try {
+    data = await Profile.getData();
+  } catch (error) {
+    console.log(error);
+  }
+
+  return {
+    props: data,
+  };
+}
 export default ProfilePage;
