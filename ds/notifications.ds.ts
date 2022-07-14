@@ -7,7 +7,7 @@ interface CreateNotificationData {
   userId: string;
 }
 
-const baseUrl = `/api/notifications`;
+const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/notifications`;
 
 class Notifications {
   constructor() {}
