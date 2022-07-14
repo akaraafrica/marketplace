@@ -55,6 +55,7 @@ model User {
   walletAddress String         @unique
   email         String         @unique
   password      String
+  verified      Boolean        @default(false)
   profileId     Int?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt
@@ -109,7 +110,6 @@ model CollectionRating {
 model Profile {
   name        String
   rating      Int?
-  verified    Boolean   @default(false)
   avatar      String
   dob         DateTime
   userId      Int       @unique
