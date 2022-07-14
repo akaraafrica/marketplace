@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
-import { Badge, Box } from "@mui/material";
-import NextImage from "../../utils/helpers/NextImage";
+import { Badge } from "@mui/material";
+import NextImage from "../../components/Image";
 interface DT {
   badgecontent: number;
   name: string;
@@ -26,6 +26,7 @@ function UpdateFromCreators({ badgecontent, name, value, avatar }: DT) {
             height={30}
             width={30}
             className={styles.avatar}
+            alt="avatar"
           />
         </Badge>
         {/* </div> */}

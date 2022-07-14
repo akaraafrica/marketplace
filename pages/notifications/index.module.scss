@@ -59,6 +59,25 @@
     @media (max-width: 800px) {
       padding: 80px 40px;
     }
+    .noteTitle {
+      text-align: center;
+
+      h3 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 48px;
+        letter-spacing: -0.02em;
+        color: #fcfcfd;
+        @media (max-width: 800px) {
+          font-size: 32px;
+        }
+      }
+    }
+    .body {
+      p {
+        color: #f1f1f1;
+      }
+    }
     .top {
       display: flex;
       justify-content: space-between;

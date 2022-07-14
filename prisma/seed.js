@@ -6,10 +6,12 @@ const client = new PrismaClient();
 async function seed() {
   try {
     await client.item.deleteMany();
-    console.log("Deleted records in item table");
-
     await client.user.deleteMany();
+    await client.profile.deleteMany();
+
+    console.log("Deleted records in item table");
     console.log("Deleted records user table");
+    console.log("Deleted records profile table");
 
     const users = await Promise.all(
       data.users.map(async (user) => {
@@ -17,6 +19,15 @@ async function seed() {
       })
     );
     console.log("users here is ", users);
+
+    const profiles = await Promise.all(
+      data.profiles.map(async (profile, i) => {
+        return await client.profile.create({
+          data: { ...profile, userId: users[i].id },
+        });
+      })
+    );
+    console.log("profiles here is ", profiles);
 
     let j = 0;
     await Promise.all(

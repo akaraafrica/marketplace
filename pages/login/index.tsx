@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import OnboardingLayout from "../../components/OnboardingLayout";
 import OnboardingInput from "../../components/OnboardingInput";
@@ -9,45 +9,57 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../store/reducers/userSlice";
+import { useAppDispatch } from "../../hooks/app";
+import { set as setUser } from "../../store/reducers/userSlice";
+import { useWeb3React } from "@web3-react/core";
+import { injected } from "../../connectors";
+import { UserDs } from "../../ds";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { account, active, activate } = useWeb3React();
+
+  useEffect(() => {
+    if (!active) activate(injected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
+
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setError("");
+    if (!account) {
+      toast.info("Please connect with metamask to login");
+      return;
+    }
+
     const pattern =
       /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
     const result = pattern.test(state.email);
-    // console.log(state);
+
     try {
-      if (!state.email) {
-        return setError("Email field is empty");
-      }
-      if (!state.password) {
-        return setError("Password field is empty");
-      }
-      if (!result) {
-        return setError("Invalid email, check email and try again");
-      }
-      if (state.password.length < 6) {
+      if (!state.email) return setError("Email field is empty");
+      if (!state.password) return setError("Password field is empty");
+      if (!result) return setError("Invalid email, check email and try again");
+      if (state.password.length < 6)
         return setError("Password must have six (6) characters");
-      }
+
       const res = await axios.post("/api/user/login", {
         ...state,
       });
       if (res.status === 200) {
         toast.success("Welcome to Akara, Login successful.");
-        localStorage.setItem("user", res.data.accessToken);
-        dispatch(setUser(res.data));
+        localStorage.setItem("address", res.data.user.walletAddress);
+
+        const savedUser = await UserDs.fetch(account);
+        dispatch(setUser(savedUser.value));
+
         router.push("/");
       } else {
         toast.error(res.statusText);
@@ -56,15 +68,12 @@ const Index = () => {
       // console.log(res);
     } catch (error: any) {
       console.log(error);
-      if (error.response.status === 401) {
+      if (error.response.status === 401)
         return setError(error.response.data.message);
-      }
-      if (error.response.status === 400) {
+      if (error.response.status === 400)
         return setError(error.response.data.message);
-      }
-      if (error.response.status === 500) {
+      if (error.response.status === 500)
         return setError("Server error, please try again later");
-      }
     }
   };
 

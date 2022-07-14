@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
-import { injected } from "../../connectors";
+import { useRouter } from "next/router";
 import styles from "./index.module.scss";
 import NotificationModal from "../NotificationModal/index";
 import ProfileModal from "../ProfileModal/index";
@@ -12,7 +12,7 @@ import NewNotificationModal from "../NewNotificationModal";
 import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
 import { MdNotificationsNone } from "react-icons/md";
-import NextImage from "../../utils/helpers/NextImage";
+import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
 
 function Header() {
@@ -22,21 +22,18 @@ function Header() {
   const { account, active, activate } = useWeb3React();
   const router = useRouter();
 
-  async function login() {
-    await activate(injected);
-    router.push("/login");
-  }
-
   return (
     <div className={styles.headerCon}>
       <div className={styles.mobile}>
         <div className={styles.mobileTop}>
-          <NextImage
-            alt="logo"
-            src="/assets/Logo.png"
-            width="70px"
-            height="30px"
-          />
+          <Link href={`/`}>
+            <NextImage
+              alt="logo"
+              src="/assets/Logo.png"
+              width="70px"
+              height="30px"
+            />
+          </Link>
           {mobile ? (
             <IoClose onClick={() => setMobile(false)} size={40} />
           ) : (
@@ -112,15 +109,21 @@ function Header() {
             </div>
           ) : (
             <div className={styles.auth}>
-              <span onClick={login}>Login</span>/
-              <span onClick={() => router.push("/signup")}>Signup</span>
+              <Link href={`/`}>
+                <span>Login</span>/
+              </Link>
+              <Link href={`/signup`}>
+                <span>Signup</span>
+              </Link>
             </div>
           )}
         </div>
       </div>
       {/* <div className={styles.Header}>
           <div className={styles.headerSec1Logo}>
-            <img alt="logo" src={`/assets/Logo.png`} />
+            <Link href={`/`}>
+              <img alt="logo" src={`/assets/Logo.png`} />
+            </Link>
           </div>
           <div className={styles.headerSec2Links}>
             <ul>

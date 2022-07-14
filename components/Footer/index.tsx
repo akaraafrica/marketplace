@@ -2,6 +2,7 @@
 // TODO: convert this to NextImage when given the chance
 
 import React from "react";
+import NextImage from "../Image";
 import styles from "./index.module.scss";
 
 function Footer() {
@@ -9,7 +10,7 @@ function Footer() {
     <div className={styles.footercon}>
       <div className={styles.footer}>
         <div className={styles.footersec1}>
-          <img src="/assets/Logo.png" alt="" />
+          <NextImage width={100} height={100} src="/assets/Logo.png" alt="" />
           <div className={styles.footersec1text}>
             <p>Copyright © 2020 Akara Marketplace</p>
             <p>All rights reserved</p>
