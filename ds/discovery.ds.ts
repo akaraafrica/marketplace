@@ -6,11 +6,14 @@ class Discovery {
 
   async getData() {
     try {
-      const res = await axios.get(baseUrl,{});
-      console.log("we have res data here ====================+>>>>>>>>>>>>>>>. ", res.data)
+      const res = await axios.get(baseUrl, {});
+      console.log(
+        "we have res data here ====================+>>>>>>>>>>>>>>>. ",
+        res.data
+      );
       return res.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }

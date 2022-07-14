@@ -13,7 +13,7 @@ function AllItems({ products }: any) {
     let start = items.length;
     let end = items.length + 8;
     setTimeout(() => {
-      if(products)setItems(items.concat(products.slice(start, end)));
+      if (products) setItems(items.concat(products.slice(start, end)));
     }, 1500);
   };
 
