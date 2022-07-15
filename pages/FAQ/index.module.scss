@@ -1,0 +1,128 @@
+.container {
+  margin: auto;
+  max-width: 70rem;
+  padding-left: 1rem;
+}
+.FAQHeading {
+  margin-top: 3rem;
+  color: white;
+  max-width: 38rem;
+  h4 {
+    color: #6b7181;
+    margin: 0;
+    font-size: small;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  h1 {
+    color: white;
+    font-size: calc(1.7rem + 1vw);
+    margin: 0;
+    font-weight: 700;
+  }
+  p {
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+  span {
+    color: #F2994A;
+  }
+}
+.secondSection {
+  margin-top: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  ul {
+    padding: 0;
+    width: fit-content;
+  }
+  li {
+    list-style: none;
+    color: #6b7181;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    font-weight: 600;
+    padding: 10px 0;
+  }
+  .active {
+    color: white;
+  }
+}
+.FAQ {
+  details {
+    width:calc(8rem + 50vw); 
+    border-top: 2px #3d4047 solid;
+    padding: 10px 0;
+    position: relative;
+  }
+  details[open] summary ~ * {
+    animation: open 0.1s ease-in-out;
+  }
+
+  @keyframes open {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details summary {
+    padding: 1rem 0;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 300;
+    list-style: none;
+    color: white;
+    font-weight: 400;
+  }
+
+  details summary:after {
+    content: url(/assets/arrowdown.svg);
+    color: #6b7181;
+    position: absolute;
+    font-size: 1.3rem;
+    line-height: 0;
+    margin-top: 0.75rem;
+    right: 10px;
+    font-weight: 900;
+    transform-origin: center;
+    transition: 200ms linear;
+  }
+
+  details[open] summary:after {
+    transform: rotate(180deg);
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  details p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin: 0 0 1rem;
+    padding-top: 1rem;
+    color: #777E91;
+
+  }
+  button {
+    margin-top: 10px;
+    cursor: pointer;
+    padding: 9px;
+    background-color: black;
+    color: white;
+    letter-spacing: 1px;
+    font-weight: 400;
+    border: 3px solid #353945;
+    border-radius: 20px;
+  }
+}
