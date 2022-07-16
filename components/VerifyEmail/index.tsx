@@ -1,5 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
-// TODO: convert this to NextImage when given the chance
+import NextImage from "../Image";
 import styles from "./index.module.scss";
 
 interface Verify {
@@ -10,7 +9,7 @@ interface Verify {
 const Index: React.FC<Verify> = ({ title, text }) => {
   return (
     <div className={styles.root}>
-      <img
+      <NextImage
         className={styles.image}
         src="/assets/checkmail.png"
         alt="verify email"

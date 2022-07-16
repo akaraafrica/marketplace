@@ -1,37 +1,67 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.scss";
 import DiscoverSelect from "../DiscoverSelect/index";
 import ProgressBar from "../ProgressBar/index";
-import AllItems from "../AllItems/index";
-import Art from "../Art/index";
-import Game from "../Game/index";
-import Photography from "../Photography/index";
-import Music from "../Music/index";
-import Video from "../Video/index";
+import DiscoveryItems from "../DiscoveryItems/index";
 import { IoChevronDownCircleOutline } from "react-icons/io5";
+import { Filter } from "../../ds/discovery.ds";
 
 interface CustomSelectProps {
   placeholder: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-const CustomSelect: React.FC<CustomSelectProps> = ({ placeholder }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({
+  placeholder,
+  onChange,
+}) => {
   return (
     <div className={styles.customInput}>
-      <input type="text" placeholder={placeholder} />
+      <input type="text" placeholder={placeholder} onChange={onChange} />
       <IoChevronDownCircleOutline size={20} />
     </div>
   );
 };
 
 function Discover({ items }: any) {
-  const [open, setOpen] = React.useState(0);
+  console.log(items);
+  const [open, setOpen] = useState(Filter.All);
+  const [filter, setFilter] = useState("");
+  const [data, setData] = useState(items);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    param: string
+  ) => {
+    let newData;
+
+    switch (param) {
+      case "RECENT":
+        break;
+      case "PRICE":
+        newData = items.filter((item: any) => item.price <= filter);
+        setData(newData);
+        break;
+      case "LIKES":
+        break;
+      case "CREATORS":
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <div className={styles.root}>
       <h1>Discover</h1>
       <div className={styles.navbar}>
         <div className={styles.recent}>
-          <CustomSelect placeholder="Recently added" />
+          <CustomSelect
+            placeholder="Recently added"
+            onChange={(e) => handleChange(e, "RECENT")}
+          />
         </div>
         <div className={styles.navs}>
           <span
@@ -80,15 +110,24 @@ function Discover({ items }: any) {
       <div className={styles.filters}>
         <div className={styles.filter}>
           <span>PRICE</span>
-          <CustomSelect placeholder="Highest price" />
+          <CustomSelect
+            placeholder="Highest price"
+            onChange={(e) => handleChange(e, "PRICE")}
+          />
         </div>
         <div className={styles.filter}>
           <span>LIKES</span>
-          <CustomSelect placeholder="Most liked" />
+          <CustomSelect
+            placeholder="Most liked"
+            onChange={(e) => handleChange(e, "LIKES")}
+          />
         </div>
         <div className={styles.filter}>
           <span>CREATOR</span>
-          <CustomSelect placeholder="Verified only" />
+          <CustomSelect
+            placeholder="Verified only"
+            onChange={(e) => handleChange(e, "CREATORS")}
+          />
         </div>
         <div className={styles.filter}>
           <span>PRICE RANGE</span>
@@ -100,12 +139,7 @@ function Discover({ items }: any) {
         </div>
       </div>
       <div className={styles.discoverCont}>
-        {open === 0 && <AllItems products={items} />}
-        {open === 1 && <Art products={items} />}
-        {open === 2 && <Game products={items} />}
-        {open === 3 && <Photography products={items} />}
-        {open === 4 && <Music products={items} />}
-        {open === 5 && <Video products={items} />}
+        <DiscoveryItems filterBy={open} products={data} />
       </div>
     </div>
   );

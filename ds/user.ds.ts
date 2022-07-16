@@ -1,7 +1,7 @@
 import axios from "axios";
 import Router from "next/router";
 
-const baseUrl = `/api/user`;
+const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/user`;
 
 class User {
   constructor() {}
