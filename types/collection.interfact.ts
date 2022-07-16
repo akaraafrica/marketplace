@@ -13,7 +13,7 @@ export interface ICollectionType {
 export interface ICollection {
   id: number | string;
   title: string;
-  typeId: string;
+  tokenId: string;
   collectionTypeId: number;
   items: IItem[];
   description: string;
