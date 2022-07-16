@@ -2,37 +2,33 @@
   "profiles": [
     {
       "name": "Jessica Parker",
-      "verified": true,
       "rating": 0,
       "avatar": "/assets/auctionAvatar.png",
-      "dob": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias",
+      "dob": "2022-01-20T12:01:30.543Z",
       "phoneNumber": "+1607826283",
       "bio": "I'm a cool person that likes NFTs"
     },
     {
       "name": "Donna Shinny",
-      "verified": true,
       "rating": 0,
       "avatar": "/assets/auctionAvatar.png",
-      "dob": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias",
+      "dob": "2022-01-20T12:01:30.543Z",
       "phoneNumber": "+1202728678",
       "bio": "I am a good person trading in NFTs and music and stuff"
     },
     {
       "name": "Harvey Specter",
-      "verified": true,
       "rating": 0,
       "avatar": "/assets/auctionAvatar.png",
-      "dob": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias",
+      "dob": "2022-01-20T12:01:30.543Z",
       "phoneNumber": "+19090728729",
       "bio": "NFTs can be used for anything I like how thery work. ANother story to make things difficult to just be a short memo"
     },
     {
       "name": "Scotty Banks",
-      "verified": true,
       "rating": 0,
       "avatar": "/assets/auctionAvatar.png",
-      "dob": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias",
+      "dob": "2022-01-20T12:01:30.543Z",
       "phoneNumber": "+13036828729",
       "bio": "How about solution resolution smart contracts with juries and shit"
     }

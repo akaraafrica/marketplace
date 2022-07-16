@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./index.module.scss";
 import FollowingSec from "../FollowingSec";
 
-function Following() {
+function Following({ items }: any) {
   return (
     <div className={styles.Favourites}>
       <FollowingSec

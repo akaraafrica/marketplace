@@ -9,17 +9,22 @@ import Favourites from "../../components/Favourites/index";
 import Following from "../../components/Following/index";
 import Footer from "../../components/Footer/index";
 import Layout from "../../components/Layout";
-import NextImage from "../../utils/helpers/NextImage";
+import NextImage from "next/image";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { TbWorld, TbBrandTwitter, TbBrandInstagram } from "react-icons/tb";
 import { IoShareOutline } from "react-icons/io5";
 import { IoIosMore } from "react-icons/io";
 import { RiFacebookCircleLine } from "react-icons/ri";
-import Profile from "../../ds/profile.ds";
+import { DiscoveryDs, ProfileDs } from "../../ds";
+import { GetServerSideProps } from "next";
+import getNiceDate from "../../utils/helpers/dateFormatter";
+import { Filter } from "../../ds/discovery.ds";
+import profileDs from "../../ds/profile.ds";
 
 const ProfilePage = (props: any) => {
   const [open, setOpen] = React.useState(0);
   // document.body.style = "background: black;";
+  console.log(props);
   return (
     <Layout>
       <div className={styles.root}>
@@ -40,19 +45,16 @@ const ProfilePage = (props: any) => {
                 width="160px"
                 height="160px"
               />
-              <span className={styles.name}>Sarah Shaibu</span>
+              <span className={styles.name}>{props.profile.profile.name}</span>
               <div className={styles.wallet2}>
-                <span>0xc4c16ab5ac7d...b21a</span>
+                <span>{props.profile.walletAddress}</span>
                 <NextImage
                   width="20px"
                   height="20px"
                   src="/assets/copyicon.svg"
                 />
               </div>
-              <span className={styles.desc}>
-                A wholesome farm owner in Abuja. Upcoming gallery solo show in
-                Lagos
-              </span>
+              <span className={styles.desc}>{props.profile.profile.bio}</span>
               <span className={styles.web}>
                 <TbWorld /> https://ui8.net
               </span>
@@ -72,7 +74,9 @@ const ProfilePage = (props: any) => {
               <RiFacebookCircleLine size={25} color="#777E91" />
             </div>
             <hr />
-            <span className={styles.date}>Member since Mar 15, 2021</span>
+            <span className={styles.date}>
+              Member since {getNiceDate(props.profile.createdAt)}
+            </span>
           </div>
           <div className={styles.right}>
             <div className={styles.nav}>
@@ -110,10 +114,10 @@ const ProfilePage = (props: any) => {
               </span>
             </div>
             <div className={styles.sections}>
-              {open === 0 && <Gallery />}
-              {open === 1 && <Collections />}
-              {open === 2 && <Favourites />}
-              {open === 3 && <Following />}
+              {open === 0 && <Gallery items={props.discover} />}
+              {open === 1 && <Collections items={props.discover} />}
+              {open === 2 && <Favourites items={props.discover} />}
+              {open === 3 && <Following items={props.discover} />}
             </div>
           </div>
         </div>
@@ -122,17 +126,22 @@ const ProfilePage = (props: any) => {
   );
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let data = {};
-
+  const { id }: any = ctx.params;
   try {
-    data = await Profile.getData();
+    const [profile, discover] = await Promise.all([
+      ProfileDs.fetch(id),
+      DiscoveryDs.getData(Filter.All),
+    ]);
+
+    data = { profile, discover };
   } catch (error) {
     console.log(error);
   }
 
   return {
-    props: data,
+    props: JSON.parse(JSON.stringify(data)),
   };
-}
+};
 export default ProfilePage;

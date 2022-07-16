@@ -9,34 +9,34 @@ datasource db {
 }
 
 model Item {
-  id            Int       @id @default(autoincrement())
-  ownerId       Int
-  tokenId       String    @unique
-  title         String
-  description   String    @db.VarChar(250)
-  images        String[]
-  video         String
-  acceptedBid   Float
-  createdAt     DateTime  @default(now())
-  openForBid    Boolean
-  price         Float
-  published     Boolean
-  publishedAt   DateTime?
-  updatedAt     DateTime  @updatedAt
-  rating        Int?
-  owner         User      @relation(fields: [ownerId], references: [id])
-  bids          Bid[]
+  id          Int       @id @default(autoincrement())
+  ownerId     Int
+  tokenId     String    @unique
+  title       String
+  description String    @db.VarChar(250)
+  images      String[]
+  video       String
+  acceptedBid Float
+  createdAt   DateTime  @default(now())
+  openForBid  Boolean
+  price       Float
+  published   Boolean
+  publishedAt DateTime?
+  updatedAt   DateTime  @updatedAt
+  rating      Int?
+  owner       User      @relation(fields: [ownerId], references: [id])
+  bids        Bid[]
 }
 
 model Bid {
-  id          Int         @id @default(autoincrement())
-  amount      Float
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  itemId      Int
-  bidderId    Int
-  bidder      User        @relation(fields: [bidderId], references: [id])
-  item        Item        @relation(fields: [itemId], references: [id])
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  itemId    Int
+  bidderId  Int
+  bidder    User     @relation(fields: [bidderId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id])
 }
 
 model CollectionType {
@@ -56,7 +56,7 @@ model User {
   email         String         @unique
   password      String
   verified      Boolean        @default(false)
-  profileId     Int?
+  profileId     String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt
   bids          Bid[]
@@ -64,6 +64,8 @@ model User {
   notifications Notification[]
   profile       Profile?
   collections   Collection[]
+  followedBy User[]  @relation("UserFollows")
+  following  User[]  @relation("UserFollows")
 }
 
 model Collection {
@@ -84,27 +86,27 @@ model Collection {
 }
 
 model ItemRating {
-  id          Int         @id @default(autoincrement())
-  itemId      Int
-  raterId     Int
-  createdAt   DateTime    @default(now())
-  upatedAt    DateTime    @updatedAt
+  id        Int      @id @default(autoincrement())
+  itemId    Int
+  raterId   Int
+  createdAt DateTime @default(now())
+  upatedAt  DateTime @updatedAt
 }
 
 model UserRating {
-  id          Int         @id @default(autoincrement())
-  userId      Int
-  raterId     Int
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  raterId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model CollectionRating {
-  id           Int        @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   collectionId Int
   raterId      Int
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Profile {
@@ -112,21 +114,21 @@ model Profile {
   rating      Int?
   avatar      String
   dob         DateTime
-  userId      Int       @unique
-  id          String    @id @default(uuid())
+  userId      Int      @unique
+  id          String   @id @default(uuid())
   phoneNumber String
-  bio         String    @db.VarChar(250)
-  user        User      @relation(fields: [userId], references: [id])
+  bio         String   @db.VarChar(250)
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model Notification {
-  id          String    @id @default(uuid())
-  userId      Int
-  title       String
-  content     String
-  status      Boolean
-  createdAt   DateTime  @default(now())
-  user        User      @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  userId    Int
+  title     String
+  content   String
+  status    Boolean
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 enum Gender {

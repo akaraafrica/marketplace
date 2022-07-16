@@ -8,7 +8,7 @@ export const enum Filter {
   Music = 4,
   Video = 5,
 }
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/items`;
+const baseUrl = `${process.env.NEXT_BASE_URL!}/api/items`;
 class Discovery {
   constructor() {}
 
