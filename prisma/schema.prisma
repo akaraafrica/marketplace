@@ -9,26 +9,26 @@ datasource db {
 }
 
 model Item {
-  id              Int           @id @default(autoincrement())
-  ownerId         Int
-  collectionId    Int?
-  tokenId         String        @unique
-  title           String
-  description     String        @db.VarChar(250)
-  images          String[]
-  video           String
-  acceptedBid     Float
-  createdAt       DateTime      @default(now())
-  openForBid      Boolean
-  price           Float
-  published       Boolean
-  publishedAt     DateTime?
-  updatedAt       DateTime      @updatedAt
-  rating          Int?
-  owner           User          @relation(fields: [ownerId], references: [id])
-  bids            Bid[]
-  collection      Collection?   @relation(fields: [collectionId], references: [id])
-  ratings         ItemRating[]
+  id           Int          @id @default(autoincrement())
+  ownerId      Int
+  tokenId      String       @unique
+  title        String
+  description  String       @db.VarChar(250)
+  images       String[]
+  video        String
+  acceptedBid  Float
+  createdAt    DateTime     @default(now())
+  openForBid   Boolean
+  price        Float
+  published    Boolean
+  publishedAt  DateTime?
+  updatedAt    DateTime     @updatedAt
+  rating       Int?
+  collectionId Int?
+  collection   Collection?  @relation(fields: [collectionId], references: [id])
+  owner        User         @relation(fields: [ownerId], references: [id])
+  bids         Bid[]
+  ratings      ItemRating[]
 }
 
 model Bid {
@@ -43,109 +43,109 @@ model Bid {
 }
 
 model CollectionType {
-  id                Int          @id @default(autoincrement())
-  name              String       @unique
-  minContributors   Int
-  maxContributors   Int
-  minItems          Int
-  maxItems          Int
-  typeId            String       @unique @default(uuid())
-  collections       Collection[]
+  id              Int          @id @default(autoincrement())
+  name            String       @unique
+  minItems        Int
+  maxItems        Int
+  typeId          String       @unique @default(uuid())
+  maxContributors Int
+  minContributors Int
+  collections     Collection[]
 }
 
 model User {
-  id                  Int                   @id @default(autoincrement())
-  walletAddress       String                @unique
-  email               String                @unique
-  password            String
-  verified            Boolean               @default(false)
-  profileId           Int?
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime?             @updatedAt
-  bids                Bid[]
-  items               Item[]
-  notifications       Notification[]
-  profile             Profile?
-  contributions       UserCollection[]
-  collections         Collection[]
-  ratingsGiven        Rating[]
-  ratingsRecieved     UserRating[]
-  followers           UserFollower[]        @relation(name: "follower")
-  following           UserFollower[]        @relation(name: "following")
+  id              Int              @id @default(autoincrement())
+  walletAddress   String           @unique
+  email           String           @unique
+  password        String
+  verified        Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?        @updatedAt
+  profileId       Int?
+  bids            Bid[]
+  collections     Collection[]
+  items           Item[]
+  notifications   Notification[]
+  profile         Profile?
+  ratingsGiven    Rating[]
+  contributions   UserCollection[]
+  followers       UserFollower[]   @relation("follower")
+  following       UserFollower[]   @relation("following")
+  ratingsRecieved UserRating[]
 }
 
 model Collection {
-  id                Int               @id @default(autoincrement())
-  title             String
-  tokenId           String            @unique
-  collectionTypeId  Int
-  description       String            @db.VarChar(250)
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime?         @updatedAt
-  authorId          Int
-  images            String[]
-  videos            String[]
-  type              CollectionType    @relation(fields: [collectionTypeId], references: [id])
-  author            User              @relation(fields: [authorId], references: [id])
-  contributors      UserCollection[]
-  items             Item[]
-  ratings           CollectionRating[]
+  id               Int                @id @default(autoincrement())
+  title            String
+  description      String             @db.VarChar(250)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime?          @updatedAt
+  authorId         Int
+  images           String[]
+  videos           String[]
+  collectionTypeId Int
+  tokenId          String             @unique
+  author           User               @relation(fields: [authorId], references: [id])
+  type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
+  ratings          CollectionRating[]
+  items            Item[]
+  contributors     UserCollection[]
 }
 
 model UserCollection {
-  id            Int             @id @default(autoincrement())
-  collectionId  Int
-  userId        Int
-  updatedAt     DateTime        @updatedAt
-  collection    Collection      @relation(fields: [collectionId], references: [id])
-  user          User            @relation(fields: [userId], references: [id])
+  id           Int        @id @default(autoincrement())
+  collectionId Int
+  userId       Int
+  updatedAt    DateTime   @updatedAt
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
 }
 
 model UserFollower {
-  id            Int             @id @default(autoincrement())
-  followerId    Int
-  followingId   Int
-  updatedAt     DateTime        @updatedAt
-  follower      User            @relation(name: "follower", fields: [followerId], references: [id])
-  following     User            @relation(name: "following", fields: [followingId], references: [id])
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+  updatedAt   DateTime @updatedAt
+  follower    User     @relation("follower", fields: [followerId], references: [id])
+  following   User     @relation("following", fields: [followingId], references: [id])
 }
 
 model ItemRating {
-  id          Int           @id @default(autoincrement())
-  itemId      Int
-  ratingId    Int
-  upatedAt    DateTime      @updatedAt
-  item        Item          @relation(fields: [itemId], references: [id])
-  rating      Rating        @relation(fields: [ratingId], references: [id])
+  id       Int      @id @default(autoincrement())
+  itemId   Int
+  upatedAt DateTime @updatedAt
+  ratingId Int
+  item     Item     @relation(fields: [itemId], references: [id])
+  rating   Rating   @relation(fields: [ratingId], references: [id])
 }
 
 model UserRating {
-  id            Int         @id @default(autoincrement())
-  userId        Int
-  ratingId      Int
-  updatedAt     DateTime    @updatedAt
-  user          User        @relation(fields: [userId], references: [id])
-  rating        Rating      @relation(fields: [ratingId], references: [id])
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  updatedAt DateTime @updatedAt
+  ratingId  Int
+  rating    Rating   @relation(fields: [ratingId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model CollectionRating {
-  id            Int           @id @default(autoincrement())
-  collectionId  Int
-  ratingId      Int
-  updatedAt     DateTime      @updatedAt
-  collection    Collection    @relation(fields: [collectionId], references: [id])
-  rating        Rating        @relation(fields: [ratingId], references: [id])
+  id           Int        @id @default(autoincrement())
+  collectionId Int
+  updatedAt    DateTime   @updatedAt
+  ratingId     Int
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  rating       Rating     @relation(fields: [ratingId], references: [id])
 }
 
 model Rating {
-  id                  Int                 @id @default(autoincrement())
-  rating              Int
-  raterId             Int
-  createdAt           DateTime            @default(now())
-  rater               User                @relation(fields: [raterId], references: [id])
-  collectionRatings   CollectionRating[]
-  userRatings         UserRating[]
-  itemRatings         ItemRating[]
+  id                Int                @id @default(autoincrement())
+  rating            Int
+  raterId           Int
+  createdAt         DateTime           @default(now())
+  rater             User               @relation(fields: [raterId], references: [id])
+  collectionRatings CollectionRating[]
+  itemRatings       ItemRating[]
+  userRatings       UserRating[]
 }
 
 model Profile {
@@ -156,8 +156,8 @@ model Profile {
   userId      Int       @unique
   id          String    @id @default(uuid())
   phoneNumber String
-  bio         String   @db.VarChar(250)
-  user        User     @relation(fields: [userId], references: [id])
+  bio         String    @db.VarChar(250)
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model Notification {

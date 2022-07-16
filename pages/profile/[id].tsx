@@ -15,11 +15,9 @@ import { TbWorld, TbBrandTwitter, TbBrandInstagram } from "react-icons/tb";
 import { IoShareOutline } from "react-icons/io5";
 import { IoIosMore } from "react-icons/io";
 import { RiFacebookCircleLine } from "react-icons/ri";
-import { DiscoveryDs, ProfileDs } from "../../ds";
+import { ProfileDs } from "../../ds";
 import { GetServerSideProps } from "next";
 import getNiceDate from "../../utils/helpers/dateFormatter";
-import { Filter } from "../../ds/discovery.ds";
-import profileDs from "../../ds/profile.ds";
 
 const ProfilePage = (props: any) => {
   const [open, setOpen] = React.useState(0);
@@ -41,11 +39,11 @@ const ProfilePage = (props: any) => {
             <div className={styles.leftTop}>
               <NextImage
                 className={styles.image2}
-                src="/assets/profileFoto.png"
+                src={props.profile.profile.avatar}
                 width="160px"
                 height="160px"
               />
-              <span className={styles.name}>{props.profile.profile.name}</span>
+              <span className={styles.name}>{props.profile.name}</span>
               <div className={styles.wallet2}>
                 <span>{props.profile.walletAddress}</span>
                 <NextImage
@@ -114,10 +112,10 @@ const ProfilePage = (props: any) => {
               </span>
             </div>
             <div className={styles.sections}>
-              {open === 0 && <Gallery items={props.discover} />}
-              {open === 1 && <Collections items={props.discover} />}
-              {open === 2 && <Favourites items={props.discover} />}
-              {open === 3 && <Following items={props.discover} />}
+              {open === 0 && <Gallery items={props.profile.items} />}
+              {open === 1 && <Collections items={props.profile.items} />}
+              {open === 2 && <Favourites items={props.profile.items} />}
+              {open === 3 && <Following items={props.profile} />}
             </div>
           </div>
         </div>
@@ -130,12 +128,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let data = {};
   const { id }: any = ctx.params;
   try {
-    const [profile, discover] = await Promise.all([
-      ProfileDs.fetch(id),
-      DiscoveryDs.getData(Filter.All),
-    ]);
+    const [profile] = await Promise.all([ProfileDs.fetch(id)]);
 
-    data = { profile, discover };
+    data = { profile };
   } catch (error) {
     console.log(error);
   }

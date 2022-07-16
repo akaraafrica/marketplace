@@ -12,7 +12,7 @@ function Collections({ items }: any) {
           Name={item.title}
           Price={item.price}
           Stock="3 in stock"
-          Avatar={item.owner.profile.avatar}
+          Avatar={item.images[0]}
           HighestBid="0.001 ETH"
         />
       ))}

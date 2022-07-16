@@ -13,7 +13,7 @@ function ProfileCard(props: any) {
         <div className={styles.previewcardnamebox}>
           <span>{props.Name}</span>
           <div className={styles.previewcardprice}>
-            <span>{props.Price}</span>
+            <span>{props.Price} ETH</span>
           </div>
         </div>
         <div className={styles.previewstockcon}>

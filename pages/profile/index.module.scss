@@ -103,6 +103,7 @@
         .wallet2 {
           display: flex;
           align-items: center;
+          justify-content: center;
           gap: 10px;
           margin-bottom: 10px;
 
@@ -114,7 +115,8 @@
             color: #fcfcfd;
             white-space: nowrap;
             overflow: hidden;
-            width: min-content;
+            width: 80%;
+            text-align: center;
             text-overflow: ellipsis;
           }
         }

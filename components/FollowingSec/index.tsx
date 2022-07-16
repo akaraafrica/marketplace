@@ -16,9 +16,12 @@ function FollowingSec(props: any) {
           </div>
         </div>
         <div className={styles.followingsec2con}>
-          {props.followerItems.slice(0, 3).map((item: any, index: number) => (
-            <img key={index} alt="follower image " src={props.FollowerImage} />
-          ))}
+          {/* {props.followerItems.slice(0, 3).map((item: any, index: number) => ( */}
+          <img alt="follower image " src={props.FollowerImage} />
+          <img alt="follower image " src={props.FollowerImage} />
+          <img alt="follower image " src={props.FollowerImage} />
+          <img alt="follower image " src={props.FollowerImage} />
+          {/* ))} */}
         </div>
       </div>
     </div>

@@ -13,6 +13,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           include: {
             profile: true,
+            collections: true,
+            items: true,
           },
         });
         return res.status(200).json(users);
