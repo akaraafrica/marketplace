@@ -1,38 +1,118 @@
 {
+  "collectionTypes": [
+    {
+      "name": "Funding",
+      "minContributors": 0,
+      "maxContributors": 10,
+      "minItems": 0,
+      "maxItems": 10,
+      "typeId": "7824h723b328928yh89yhuih897897"
+    },
+    {
+      "name": "Escrow",
+      "minContributors": 0,
+      "maxContributors": 10,
+      "minItems": 0,
+      "maxItems": 10,
+      "typeId": "782320000b328928yh89yhuih897897"
+    }
+  ],
+  "collections": [
+    {
+      "title": "Odogwu Collection",
+      "tokenId": "78234782323gjwihwafh98asdfuja8sauj112",
+      "description": "a badass collection depicting igbo culture",
+      "images": [
+        "/assets/listingcardimg.png",
+        "/assets/listingsubcardimg.png",
+        "/assets/listingsubcardimg.png"
+      ],
+      "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+    },
+    {
+      "title": "Freedom Collection",
+      "tokenId": "782347628003gjwihwafh98asdfuja8sauj112",
+      "description": "a badass collection depicting igbo culture",
+      "images": [
+        "/assets/listingcardimg.png",
+        "/assets/listingsubcardimg.png",
+        "/assets/listingsubcardimg.png"
+      ],
+      "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+    },
+    {
+      "title": "Fund Raising Collection",
+      "tokenId": "1114782323gjwihwafh98asdfuja8sauj112",
+      "description": "a badass collection depicting igbo culture",
+      "images": [
+        "/assets/listingcardimg.png",
+        "/assets/listingsubcardimg.png",
+        "/assets/listingsubcardimg.png"
+      ],
+      "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+    },
+    {
+      "title": "Photos Collection",
+      "tokenId": "78009992323gjwihwafh98asdfuja8sauj112",
+      "description": "a badass collection depicting igbo culture",
+      "images": ["/assets/listingcardimg.png", "/assets/listingsubcardimg.png"],
+      "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+    }
+  ],
+  "ratings": [
+    {
+      "rating": 2
+    },
+    {
+      "rating": 3
+    },
+    {
+      "rating": 5
+    },
+    {
+      "rating": 5
+    },
+    {
+      "rating": 2
+    },
+    {
+      "rating": 3
+    },
+    {
+      "rating": 1
+    },
+    {
+      "rating": 5
+    }
+  ],
+  "collectionRatings": [],
+  "itemRatings": [],
   "profiles": [
     {
       "name": "Jessica Parker",
-      "verified": true,
       "rating": 0,
       "avatar": "/assets/auctionAvatar.png",
-      "dob": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias",
       "phoneNumber": "+1607826283",
       "bio": "I'm a cool person that likes NFTs"
     },
     {
       "name": "Donna Shinny",
-      "verified": true,
       "rating": 0,
       "avatar": "/assets/auctionAvatar.png",
-      "dob": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias",
       "phoneNumber": "+1202728678",
       "bio": "I am a good person trading in NFTs and music and stuff"
     },
     {
       "name": "Harvey Specter",
-      "verified": true,
       "rating": 0,
       "avatar": "/assets/auctionAvatar.png",
-      "dob": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias",
       "phoneNumber": "+19090728729",
       "bio": "NFTs can be used for anything I like how thery work. ANother story to make things difficult to just be a short memo"
     },
     {
       "name": "Scotty Banks",
-      "verified": true,
       "rating": 0,
       "avatar": "/assets/auctionAvatar.png",
-      "dob": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias",
       "phoneNumber": "+13036828729",
       "bio": "How about solution resolution smart contracts with juries and shit"
     }
@@ -41,21 +121,25 @@
     {
       "email": "samuelnnj@gmail.com",
       "password": "akara12345",
+      "verified": true,
       "walletAddress": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias"
     },
     {
       "email": "adaorajiaku@gmail.com",
       "password": "akara12345",
+      "verified": false,
       "walletAddress": "7fahdf9a3434535iaf09asfhadf9s8dfadfi134143123as"
     },
     {
       "email": "bolajokoadah@gmail.com",
       "password": "akara12345",
+      "verified": true,
       "walletAddress": "7fahdf9a3434535iaf23542fq4r3adf9s8dfad98908fias"
     },
     {
       "email": "ada@mbizi.org",
       "password": "akara12345",
+      "verified": false,
       "walletAddress": "7fahdf9a343453564356addfasfhadf9s85476467adfias"
     }
   ],
