@@ -33,13 +33,24 @@
     border-radius: 12px;
     box-sizing: border-box;
     width: 100%;
-
-    input {
-      background-color: transparent;
-      outline: none;
+    select {
+      appearance: none;
       border: none;
-      color: #fcfcfc;
+      margin: 0;
+      width: 100%;
+      outline: none;
+      padding: 3px;
+      font-size: 1.1rem;
+      color: white;
+      background-color: #000;
     }
+
+    // input {
+    //   background-color: transparent;
+    //   outline: none;
+    //   border: none;
+    //   color: #fcfcfc;
+    // }
   }
   .active {
     background: #353945;

@@ -11,14 +11,20 @@ import { Filter } from "../../ds/discovery.ds";
 interface CustomSelectProps {
   placeholder: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  options: string[];
 }
 const CustomSelect: React.FC<CustomSelectProps> = ({
   placeholder,
   onChange,
+  options,
 }) => {
   return (
     <div className={styles.customInput}>
-      <input type="text" placeholder={placeholder} onChange={onChange} />
+      <select value={placeholder}>
+        {options.map((option) => {
+          return <option id={option}>{option}</option>;
+        })}
+      </select>
       <IoChevronDownCircleOutline size={20} />
     </div>
   );
@@ -61,6 +67,7 @@ function Discover({ items }: any) {
           <CustomSelect
             placeholder="Recently added"
             onChange={(e) => handleChange(e, "RECENT")}
+            options={["Recently added", "First added"]}
           />
         </div>
         <div className={styles.navs}>
@@ -113,6 +120,7 @@ function Discover({ items }: any) {
           <CustomSelect
             placeholder="Highest price"
             onChange={(e) => handleChange(e, "PRICE")}
+            options={["Highest price", "Lowest price"]}
           />
         </div>
         <div className={styles.filter}>
@@ -120,6 +128,7 @@ function Discover({ items }: any) {
           <CustomSelect
             placeholder="Most liked"
             onChange={(e) => handleChange(e, "LIKES")}
+            options={["Most liked", "Least liked"]}
           />
         </div>
         <div className={styles.filter}>
@@ -127,6 +136,7 @@ function Discover({ items }: any) {
           <CustomSelect
             placeholder="Verified only"
             onChange={(e) => handleChange(e, "CREATORS")}
+            options={["Verified only", "Non verified only"]}
           />
         </div>
         <div className={styles.filter}>

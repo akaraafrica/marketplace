@@ -15,7 +15,8 @@ function DiscoveryItems({ products, filterBy }: properties) {
 
   const fetchMoreData = async () => {
     let data = await Discovery.getData(filterBy);
-    setItems(data);
+
+    // setItems(data);
   };
 
   return (
