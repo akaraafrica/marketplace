@@ -4,8 +4,9 @@ import ProfileCard from "../ProfileCard/index";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function AllItems({ products }: any) {
-  const initial = products.slice(0, 8);
-  const [items, setItems] = useState([...initial]);
+  // const initial = products.slice(0, 8);
+  const [items, setItems] = useState(products);
+  // console.log(products)
 
   const fetchMoreData = () => {
     // a fake async api call like which sends
@@ -25,15 +26,15 @@ function AllItems({ products }: any) {
       loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
     >
       <div className={styles.allitems}>
-        {items.map((item) => (
+        {items.map((item: any) => (
           <div key={item.id} className={styles.container}>
             <ProfileCard
-              ProductImg={`${item.image}`}
+              ProductImg={`${item.images[0]}`}
               Name={item.title}
-              Price={item.price}
-              Stock={item.stock}
-              Avatar={`${item.biddersimg}`}
-              HighestBid={item.highestbid}
+              Price={`${item.price} ETH`}
+              Stock={"3 in stck"}
+              Avatar={`${item.images[0]}`}
+              HighestBid={"0.01"}
             />
           </div>
         ))}

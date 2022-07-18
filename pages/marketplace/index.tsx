@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { IoChevronDownCircleOutline } from "react-icons/io5";
 import AllItems2 from "../../components/AllItems2";
@@ -15,18 +15,51 @@ import { MdCancel } from "react-icons/md";
 
 interface CustomSelectProps {
   placeholder: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-const CustomSelect: React.FC<CustomSelectProps> = ({ placeholder }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({
+  placeholder,
+  onChange,
+}) => {
   return (
     <div className={styles.customInput}>
-      <input type="text" placeholder={placeholder} />
+      <input type="text" placeholder={placeholder} onChange={onChange} />
       <IoChevronDownCircleOutline size={20} />
     </div>
   );
 };
 
 const Index = (props: any) => {
-  const [open, setOpen] = React.useState(0);
+  const [open, setOpen] = useState(Filter.All);
+  const [data, setData] = useState(props.data);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    param: string
+  ) => {
+    let newData;
+
+    switch (param) {
+      case "RECENT":
+        break;
+      case "PRICE":
+        let newData = props.data.filter(
+          (item: any) => Number(item.price) <= Number(e.target.value)
+        );
+        console.log(e.target.value);
+        console.log(newData);
+        setData(newData);
+        break;
+      case "LIKES":
+        break;
+      case "CREATORS":
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <Layout>
       <div className={styles.root}>
@@ -39,11 +72,16 @@ const Index = (props: any) => {
         <hr />
         <div className={styles.content}>
           <div className={styles.left}>
-            <CustomSelect placeholder="Recently added" />
+            <CustomSelect
+              onChange={(e) => handleChange(e, "RECENT")}
+              placeholder="Recently added"
+            />
             <div className={styles.filters}>
               <div className={styles.filter}>
                 <span>PRICE RANGE</span>
-                <ProgressBar />
+                <ProgressBar
+                // onChange={(e: { target: { value: any; }; }) => data.filter((item: any) => item.price === e.target.value)}
+                />
                 <div className={styles.eth}>
                   <span>0.01 ETH</span>
                   <span>10 ETH</span>
@@ -52,15 +90,24 @@ const Index = (props: any) => {
               <hr />
               <div className={styles.filter}>
                 <span>LIKES</span>
-                <CustomSelect placeholder="Most liked" />
+                <CustomSelect
+                  onChange={(e) => handleChange(e, "LIKES")}
+                  placeholder="Most liked"
+                />
               </div>
               <div className={styles.filter}>
                 <span>CREATOR</span>
-                <CustomSelect placeholder="Verified only" />
+                <CustomSelect
+                  onChange={(e) => handleChange(e, "CREATORS")}
+                  placeholder="Verified only"
+                />
               </div>
               <div className={styles.filter}>
                 <span>PRICE</span>
-                <CustomSelect placeholder="Highest price" />
+                <CustomSelect
+                  onChange={(e) => handleChange(e, "PRICE")}
+                  placeholder="Highest price"
+                />
               </div>
               <hr />
               <div className={styles.reset}>
@@ -121,12 +168,12 @@ const Index = (props: any) => {
               </span>
             </div>
             <div>
-              {open === 0 && <AllItems2 products={props.items} />}
-              {open === 1 && <Art2 products={props.items} />}
-              {open === 2 && <Game2 products={props.items} />}
-              {open === 3 && <Photography2 products={props.items} />}
-              {open === 4 && <Music2 products={props.items} />}
-              {open === 5 && <Video2 products={props.items} />}
+              {open === 0 && <AllItems2 products={data} />}
+              {open === 1 && <Art2 products={data} />}
+              {open === 2 && <Game2 products={data} />}
+              {open === 3 && <Photography2 products={data} />}
+              {open === 4 && <Music2 products={data} />}
+              {open === 5 && <Video2 products={data} />}
             </div>
           </div>
         </div>
@@ -135,16 +182,12 @@ const Index = (props: any) => {
   );
 };
 export async function getServerSideProps() {
-  let data = {};
-
-  try {
-    data = await Discovery.getData(Filter.All);
-  } catch (error) {
-    console.log(error);
-  }
+  let data = await Discovery.getData(Filter.All);
 
   return {
-    props: data,
+    props: {
+      data,
+    },
   };
 }
 
