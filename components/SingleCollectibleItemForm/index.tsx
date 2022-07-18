@@ -6,6 +6,7 @@ import Switch from "@mui/material/Switch";
 import SwitchComponent from "../SwitchComponent";
 import ProfileCard from "../ProfileCard";
 import { useForm } from "react-hook-form";
+import ItemDs from "../../ds/item.ds";
 
 function SingleCollectibleItem() {
   const [foto, setFoto] = useState(null);
@@ -23,7 +24,7 @@ function SingleCollectibleItem() {
     if (foto) {
       data.images = [foto];
     }
-    console.log(data);
+    ItemDs.createData(data);
   };
 
   const target = useRef<HTMLInputElement>(null);

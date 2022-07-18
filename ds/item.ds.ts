@@ -4,7 +4,7 @@ const baseUrl = `${process.env.NEXT_BASE_URL!}/api/items`;
 class Item {
   constructor() {}
 
-  async creatData(data: any) {
+  async createData(data: any) {
     try {
       await axios.post(baseUrl, {
         data,
