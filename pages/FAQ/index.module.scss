@@ -25,7 +25,7 @@
     font-weight: 400;
   }
   span {
-    color: #F2994A;
+    color: #f2994a;
   }
 }
 .secondSection {
@@ -53,10 +53,15 @@
 }
 .FAQ {
   details {
-    width:calc(8rem + 50vw); 
+    width: calc(9rem + 50vw);
     border-top: 2px #3d4047 solid;
     padding: 10px 0;
+    margin-right: 1rem;
     position: relative;
+    @media screen and (max-width: 500px) {
+      width: calc(8rem + 50vw);
+      margin: auto;
+    }
   }
   details[open] summary ~ * {
     animation: open 0.1s ease-in-out;
@@ -111,8 +116,7 @@
     letter-spacing: 1px;
     margin: 0 0 1rem;
     padding-top: 1rem;
-    color: #777E91;
-
+    color: #777e91;
   }
   button {
     margin-top: 10px;

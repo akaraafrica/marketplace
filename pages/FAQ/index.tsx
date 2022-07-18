@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import styles from "./index.module.scss";
 
-const FAQ = (props:any) => {
+const FAQ = (props: any) => {
   return (
     <div>
       <Header />
@@ -35,12 +35,12 @@ const FAQ = (props:any) => {
               <summary>How does it work</summary>
               <p>
                 The Stacks series of products: Stacks: Landing Page Kit, Stacks:
-                Portfolio Kit, Stacks: eCommerce Kit. "Stacks is a
+                Portfolio Kit, Stacks: eCommerce Kit. &quot;Stacks is a
                 production-ready library of stackable content blocks built in
                 React Native. Mix-and-match dozens of responsive elements to
                 quickly configure your favorite landing page layouts or hit the
                 ground running with 10 pre-built templates, all in light or dark
-                mode."
+                mode.&quot;
               </p>
               <button>Learn more</button>
             </details>
@@ -90,6 +90,5 @@ const FAQ = (props:any) => {
     </div>
   );
 };
-
 
 export default FAQ;
