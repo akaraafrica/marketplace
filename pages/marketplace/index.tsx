@@ -10,7 +10,7 @@ import Photography2 from "../../components/Photography2";
 import ProgressBar from "../../components/ProgressBar";
 import Video2 from "../../components/Video2";
 import styles from "./index.module.scss";
-import Discovery from "../../ds/discovery.ds";
+import Discovery, { Filter } from "../../ds/discovery.ds";
 import { MdCancel } from "react-icons/md";
 
 interface CustomSelectProps {
@@ -138,7 +138,7 @@ export async function getServerSideProps() {
   let data = {};
 
   try {
-    data = await Discovery.getData();
+    data = await Discovery.getData(Filter.All);
   } catch (error) {
     console.log(error);
   }

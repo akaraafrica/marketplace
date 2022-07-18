@@ -1,20 +1,21 @@
 import React, { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.scss";
 import ProfileCard from "../ProfileCard/index";
-import InfiniteScroll from "react-infinite-scroll-component";
+import Discovery, { Filter } from "../../ds/discovery.ds";
 
-function AllItems({ products }: any) {
-  const initial = products.slice(0, 8);
-  const [items, setItems] = useState([...initial]);
+interface properties {
+  products: any;
+  filterBy: Filter;
+}
 
-  const fetchMoreData = () => {
-    // a fake async api call like which sends
-    // 20 more records in 1.5 secs
-    let start = items.length;
-    let end = items.length + 8;
-    setTimeout(() => {
-      setItems(items.concat(products.slice(start, end)));
-    }, 1500);
+function DiscoveryItems({ products, filterBy }: properties) {
+  const initial = products ? [...products?.slice(0, 8)] : [];
+  const [items, setItems] = useState(initial);
+
+  const fetchMoreData = async () => {
+    let data = await Discovery.getData(filterBy);
+    setItems(data);
   };
 
   return (
@@ -28,11 +29,11 @@ function AllItems({ products }: any) {
         {items.map((item) => (
           <ProfileCard
             key={item.id}
-            ProductImg={`${item.image}`}
+            ProductImg={`${item.images ?? item.images[0]}`}
             Name={item.title}
             Price={item.price}
             Stock={item.stock}
-            Avatar={`${item.biddersimg}`}
+            Avatar={`${item.owner?.profile?.avatar}`}
             HighestBid={item.highestbid}
           />
         ))}
@@ -40,4 +41,4 @@ function AllItems({ products }: any) {
     </InfiniteScroll>
   );
 }
-export default AllItems;
+export default DiscoveryItems;
