@@ -15,6 +15,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             profile: true,
             collections: true,
             items: true,
+            followers: true,
+            following: true,
           },
         });
         return res.status(200).json(users);

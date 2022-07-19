@@ -2,12 +2,6 @@
 // TODO: convert this to NextImage when given the chance
 import React from "react";
 import styles from "./index.module.scss";
-import Header from "../../components/Header";
-import Gallery from "../../components/Gallery/index";
-import Collections from "../../components/Collections/index";
-import Favourites from "../../components/Favourites/index";
-import Following from "../../components/Following/index";
-import Footer from "../../components/Footer/index";
 import Layout from "../../components/Layout";
 import NextImage from "next/image";
 import { AiTwotoneEdit } from "react-icons/ai";
@@ -18,10 +12,11 @@ import { RiFacebookCircleLine } from "react-icons/ri";
 import { ProfileDs } from "../../ds";
 import { GetServerSideProps } from "next";
 import getNiceDate from "../../utils/helpers/dateFormatter";
+import ProfileItem from "../../components/ProfileItem";
 
 const ProfilePage = (props: any) => {
   const [open, setOpen] = React.useState(0);
-  // document.body.style = "background: black;";
+
   console.log(props);
   return (
     <Layout>
@@ -112,10 +107,12 @@ const ProfilePage = (props: any) => {
               </span>
             </div>
             <div className={styles.sections}>
-              {open === 0 && <Gallery items={props.profile.items} />}
-              {open === 1 && <Collections items={props.profile.items} />}
-              {open === 2 && <Favourites items={props.profile.items} />}
-              {open === 3 && <Following items={props.profile} />}
+              <ProfileItem
+                items={props.profile.items}
+                open={open}
+                following={props.profile.following}
+                collections={props.profile.collections}
+              />
             </div>
           </div>
         </div>
