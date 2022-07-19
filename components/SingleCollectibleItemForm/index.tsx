@@ -14,6 +14,7 @@ function SingleCollectibleItem() {
     title: "",
     description: "",
     price: "",
+    stock: "",
   });
   const {
     register,
@@ -22,14 +23,27 @@ function SingleCollectibleItem() {
   } = useForm();
   const onSubmit = (data: any) => {
     if (foto) {
-      data.images = [foto];
+      data.image = foto;
     }
-    ItemDs.createData(data);
+    const address: string = localStorage.getItem("address")!;
+    const tokenid = "qwertyuiopkgfdsazxcvbnjwertyu";
+
+    // ItemDs.createData(data, '7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias', tokenid);
   };
 
   const target = useRef<HTMLInputElement>(null);
   const handleChange = (e: any) => {
     setFoto(e.target.files[0]);
+  };
+
+  const clearState = () => {
+    setFoto(null);
+    setState({
+      title: "",
+      description: "",
+      price: "",
+      stock: "",
+    });
   };
   return (
     <div className={styles.sciCon}>
@@ -71,7 +85,7 @@ function SingleCollectibleItem() {
               type="text"
               placeholder='e. g. "Redeemable Bitcoin Card with logo"'
               {...register("title", { required: true })}
-              name="title"
+              value={state.title}
               onChange={(e) =>
                 setState({ ...state, [e.target.name]: e.target.value })
               }
@@ -84,7 +98,7 @@ function SingleCollectibleItem() {
               type="text"
               placeholder='e. g. “After purchasing you will able to recived the logo...”"'
               {...register("description", { required: true })}
-              name="description"
+              value={state.description}
               onChange={(e) =>
                 setState({ ...state, [e.target.name]: e.target.value })
               }
@@ -113,16 +127,26 @@ function SingleCollectibleItem() {
               </select>
             </div>
             <div className={styles.itemdetailsforminput1}>
-              <label>GAS ESTIMATE</label>
-              <input type="number" placeholder="10" {...register("gas", {})} />
+              <label>IN STOCK</label>
+              <input
+                type="number"
+                placeholder="1"
+                {...register("stock", {})}
+                value={state.stock}
+                onChange={(e) =>
+                  setState({ ...state, [e.target.name]: e.target.value })
+                }
+              />
             </div>
             <div className={styles.itemdetailsforminput1}>
               <label>PRICE</label>
               <input
                 type="number"
                 placeholder="2.45 ETH"
+                min="0"
+                step="0.01"
                 {...register("price", { required: true })}
-                name="price"
+                value={state.price}
                 onChange={(e) =>
                   setState({ ...state, [e.target.name]: e.target.value })
                 }
@@ -178,7 +202,7 @@ function SingleCollectibleItem() {
               <img alt="avatar" src={`/assets/auctionAvatar.png`} />
               <img alt="avatar" src={`/assets/auctionAvatar.png`} />
             </div>
-            <div>3 in stock</div>
+            <div>{state.stock ? state.stock : "0"} in stock</div>
           </div>
           <hr />
           <div className={styles.bidsec}>
@@ -192,9 +216,9 @@ function SingleCollectibleItem() {
               <span>New bid</span>
             </div>
           </div>
-          <div className={styles.clearsec}>
+          <div className={styles.clearsec} onClick={() => clearState()}>
             <img alt="close icon" src={`/assets/closeicon.svg`} />
-            <p>Clear all</p>
+            <span>Clear all</span>
           </div>
         </div>
       </div>
