@@ -38,7 +38,7 @@ const Index = ({ items, open, following, collections }: ProfileItemProps) => {
               Stock={`${item.images.length} in stock`}
               Avatar={item.images[0]}
               HighestBid="0.001 ETH"
-              collections
+              collections={item.images}
             />
           ))}
         </div>

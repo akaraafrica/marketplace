@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
+import NextImage from "../Image";
 import styles from "./index.module.scss";
 
 function ProfileCard(props: any) {
@@ -10,19 +11,29 @@ function ProfileCard(props: any) {
         <div className={styles.previewcardimg}>
           <img alt="product image" src={props.ProductImg} />
         </div>
+        {props.collections && (
+          <div className={styles.collectionsimgs}>
+            {props.collections.map((item: string, index: number) => (
+              <NextImage
+                className={styles.image}
+                key={index}
+                src={item}
+                width="100%"
+                height="60px"
+              />
+            ))}
+          </div>
+        )}
         <div className={styles.previewcardnamebox}>
           <span>{props.Name}</span>
-          {props.collections ? (
-            <span>{props.Stock}</span>
-          ) : (
+          {!props.collections && (
             <div className={styles.previewcardprice}>
               <span>{props.Price} ETH</span>
             </div>
           )}
+          {props.collections && <span>{props.Stock}</span>}
         </div>
-        {props.collections ? (
-          ""
-        ) : (
+        {!props.collections && (
           <div className={styles.previewstockcon}>
             <div className={styles.avatars}>
               <img alt="avatar" src={props.Avatar} />
@@ -32,10 +43,9 @@ function ProfileCard(props: any) {
             <span>{props.Stock}</span>
           </div>
         )}
-        <hr />
-        {props.collections ? (
-          ""
-        ) : (
+        {!props.collections && <hr />}
+
+        {!props.collections && (
           <div className={styles.bidsec}>
             <div className={styles.bidsec1}>
               <img alt="bid icon" src={`/assets/bidicon.svg`} />
