@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = `${process.env.NEXT_BASE_URL!}api/user`;
+const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/user`;
 
 class Profile {
   constructor() {}
