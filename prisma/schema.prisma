@@ -11,6 +11,7 @@ datasource db {
 model Item {
   id           Int          @id @default(autoincrement())
   ownerId      Int
+  collectionId Int?
   tokenId      String       @unique
   title        String
   description  String       @db.VarChar(250)
@@ -23,12 +24,11 @@ model Item {
   published    Boolean
   publishedAt  DateTime?
   updatedAt    DateTime     @updatedAt
-  rating       Int?
-  collectionId Int?
   collection   Collection?  @relation(fields: [collectionId], references: [id])
   owner        User         @relation(fields: [ownerId], references: [id])
   bids         Bid[]
   ratings      ItemRating[]
+  Rating       Rating[]
 }
 
 model Bid {
@@ -45,11 +45,11 @@ model Bid {
 model CollectionType {
   id              Int          @id @default(autoincrement())
   name            String       @unique
+  minContributors Int
+  maxContributors Int
   minItems        Int
   maxItems        Int
   typeId          String       @unique @default(uuid())
-  maxContributors Int
-  minContributors Int
   collections     Collection[]
 }
 
@@ -59,9 +59,9 @@ model User {
   email           String           @unique
   password        String
   verified        Boolean          @default(false)
+  profileId       Int?
   createdAt       DateTime         @default(now())
   updatedAt       DateTime?        @updatedAt
-  profileId       Int?
   bids            Bid[]
   collections     Collection[]
   items           Item[]
@@ -77,14 +77,14 @@ model User {
 model Collection {
   id               Int                @id @default(autoincrement())
   title            String
+  tokenId          String             @unique
+  collectionTypeId Int
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime?          @updatedAt
   authorId         Int
   images           String[]
   videos           String[]
-  collectionTypeId Int
-  tokenId          String             @unique
   author           User               @relation(fields: [authorId], references: [id])
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
   ratings          CollectionRating[]
@@ -113,8 +113,8 @@ model UserFollower {
 model ItemRating {
   id       Int      @id @default(autoincrement())
   itemId   Int
-  upatedAt DateTime @updatedAt
   ratingId Int
+  upatedAt DateTime @updatedAt
   item     Item     @relation(fields: [itemId], references: [id])
   rating   Rating   @relation(fields: [ratingId], references: [id])
 }
@@ -122,8 +122,8 @@ model ItemRating {
 model UserRating {
   id        Int      @id @default(autoincrement())
   userId    Int
-  updatedAt DateTime @updatedAt
   ratingId  Int
+  updatedAt DateTime @updatedAt
   rating    Rating   @relation(fields: [ratingId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 }
@@ -131,8 +131,8 @@ model UserRating {
 model CollectionRating {
   id           Int        @id @default(autoincrement())
   collectionId Int
-  updatedAt    DateTime   @updatedAt
   ratingId     Int
+  updatedAt    DateTime   @updatedAt
   collection   Collection @relation(fields: [collectionId], references: [id])
   rating       Rating     @relation(fields: [ratingId], references: [id])
 }
@@ -141,7 +141,9 @@ model Rating {
   id                Int                @id @default(autoincrement())
   rating            Int
   raterId           Int
+  itemId            Int
   createdAt         DateTime           @default(now())
+  Item              Item               @relation(fields: [itemId], references: [id])
   rater             User               @relation(fields: [raterId], references: [id])
   collectionRatings CollectionRating[]
   itemRatings       ItemRating[]
