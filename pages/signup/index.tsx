@@ -9,8 +9,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import VerifyEmail from "../../components/VerifyEmail";
 
 const Index = () => {
@@ -135,19 +134,6 @@ const Index = () => {
           </p>
         </div>
       )}
-
-      <ToastContainer
-        position="top-center"
-        autoClose={7000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
     </OnboardingLayout>
   );
 };

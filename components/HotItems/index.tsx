@@ -45,7 +45,7 @@ function HotItems() {
       </div>
       <div className={styles.hotitemdesktopcon}>
         {/* <Slider { ...settings }> */}
-        <Swiper>
+        <Swiper style={{ zIndex: 0 }}>
           <SwiperSlide>
             <HotItemCard
               ProductImg={`/assets/productimg.png`}

@@ -80,7 +80,7 @@ const SellersSec = () => {
           </FormControl>
         </div>
       </div>
-      <Swiper>
+      <Swiper style={{ zIndex: 0 }}>
         <SwiperSlide>
           <SellersCard />
         </SwiperSlide>

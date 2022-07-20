@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import OnboardingSidebar from "../../components/OnboardingSidebar";
 
 interface Props {
@@ -23,6 +25,18 @@ const OnboardingLayout: React.FC<Props> = ({ children }) => {
       </div>
 
       <div className={styles.children}>{children}</div>
+      <ToastContainer
+        position="top-center"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 };

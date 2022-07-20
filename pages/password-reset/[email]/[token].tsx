@@ -3,8 +3,7 @@ import styles from "./index.module.scss";
 import OnboardingInput from "../../../components/OnboardingInput";
 import OnboardingLayout from "../../../components/OnboardingLayout";
 import OnboardingButton from "../../../components/OnboardingButton";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -79,18 +78,6 @@ const Index = () => {
         </div>
         <OnboardingButton onClick={handleSubmit} text="Reset Password" />
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={7000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
     </OnboardingLayout>
   );
 };

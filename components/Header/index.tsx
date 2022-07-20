@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
-import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
 import { useRouter } from "next/router";
 import styles from "./index.module.scss";
 // import NotificationModal from "../NotificationModal/index";
 // import ProfileModal from "../ProfileModal/index";
 // import MobileHeader from "../MobileHeader/index";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import NewNotificationModal from "../NewNotificationModal";
 import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
@@ -22,18 +23,26 @@ function Header() {
   const { account, active, activate } = useWeb3React();
   const router = useRouter();
 
+  function handleUpload() {
+    console.log(`uploading here active is :${active}  account is ${account}`);
+    if (account && active) router.push("/single-item");
+    else {
+      toast.info("You must be logged in to create an item.");
+    }
+  }
+
   return (
     <div className={styles.headerCon}>
       <div className={styles.mobile}>
         <div className={styles.mobileTop}>
-          <Link href={`/`}>
+          <a href={`/`}>
             <NextImage
               alt="logo"
               src="/assets/Logo.png"
               width="70px"
               height="30px"
             />
-          </Link>
+          </a>
           {mobile ? (
             <IoClose onClick={() => setMobile(false)} size={40} />
           ) : (
@@ -44,29 +53,29 @@ function Header() {
           <CustomSelect placeholder="Search" />
         </div>
         <div className={mobile ? styles.mobileContent : styles.contentNone}>
-          <Link href={`/marketplace`}>
+          <a href={`/marketplace`}>
             <span>Marketplace</span>
-          </Link>
+          </a>
           <span>How it works</span>
-          <Link href={`/notifications`}>
+          <a href={`/notifications`}>
             <span>Notifications</span>
-          </Link>
+          </a>
           <span>Profile</span>
-          <button>Upload</button>
+          <button onClick={() => handleUpload()}>Upload</button>
           <span>Logout</span>
         </div>
       </div>
       <div className={styles.header}>
         <div className={styles.left}>
-          <Link href={`/`}>
+          <a href={`/`}>
             <img alt="logo" src={`/assets/Logo.png`} />
-          </Link>
+          </a>
           <hr />
           <ul>
             <li>
-              <Link href={`/marketplace`}>
+              <a href={`/marketplace`}>
                 <span>Marketplace</span>
-              </Link>
+              </a>
             </li>
             <li>How it works</li>
           </ul>
@@ -96,6 +105,7 @@ function Header() {
           <button
             type="button"
             className={active && account ? styles.btnLight : styles.btn}
+            onClick={() => handleUpload()}
           >
             Upload
           </button>
@@ -119,17 +129,29 @@ function Header() {
             </div>
           ) : (
             <div className={styles.auth}>
-              <Link href="/login">
-                <span>Login</span>
-              </Link>
+              <a href={"/login"}>
+                <span>Login </span>
+              </a>
               /
-              <Link href={`/signup`}>
-                <span>Signup</span>
-              </Link>
+              <a href={`/signup`}>
+                <span> Signup</span>
+              </a>
             </div>
           )}
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }
