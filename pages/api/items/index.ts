@@ -37,6 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           acceptedBid: req.body.acceptedBid,
           openForBid: req.body.openForBid,
           owner: req.body.owner,
+          images: req.body.image,
           video: req.body.video,
         },
       });

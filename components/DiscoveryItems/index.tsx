@@ -15,6 +15,7 @@ function DiscoveryItems({ products, filterBy }: properties) {
   useEffect(() => {
     setItems(products);
   }, [products]);
+
   const fetchMoreData = async () => {
     let data = await Discovery.getData(filterBy);
     console.log({ data });
