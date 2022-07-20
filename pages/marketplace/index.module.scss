@@ -56,7 +56,13 @@
   .filters {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 25px;
+    margin: 0px auto;
+    width: 210px;
+
+    @media screen and (max-width: 600px) {
+      width: 300px;
+    }
 
     .reset {
       display: flex;
@@ -115,6 +121,9 @@
       border-radius: 50%;
       background-color: #f2994a;
       padding: 10px;
+      @media screen and (max-width: 600px) {
+        padding: 5px;
+      }
     }
   }
   .content {

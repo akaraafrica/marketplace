@@ -24,11 +24,11 @@ model Item {
   published       Boolean
   publishedAt     DateTime?
   updatedAt       DateTime      @updatedAt
-  rating          Int?
   owner           User          @relation(fields: [ownerId], references: [id])
   bids            Bid[]
   collection      Collection?   @relation(fields: [collectionId], references: [id])
   ratings         ItemRating[]
+  Rating          Rating[]
 }
 
 model Bid {
@@ -141,8 +141,10 @@ model Rating {
   id                  Int                 @id @default(autoincrement())
   rating              Int
   raterId             Int
+  itemId              Int
   createdAt           DateTime            @default(now())
   rater               User                @relation(fields: [raterId], references: [id])
+  Item                Item                @relation(fields: [itemId], references: [id])
   collectionRatings   CollectionRating[]
   userRatings         UserRating[]
   itemRatings         ItemRating[]

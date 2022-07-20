@@ -1,119 +1,101 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { IoChevronDownCircleOutline } from "react-icons/io5";
-import AllItems2 from "../../components/AllItems2";
-import Art2 from "../../components/Art2";
-import Game2 from "../../components/Game2";
 import Layout from "../../components/Layout";
-import Music2 from "../../components/Music2";
-import Photography2 from "../../components/Photography2";
 import ProgressBar from "../../components/ProgressBar";
-import Video2 from "../../components/Video2";
 import styles from "./index.module.scss";
 import Discovery, { Filter } from "../../ds/discovery.ds";
 import { MdCancel } from "react-icons/md";
+import DiscoveryItems from "../../components/DiscoveryItems";
+import {
+  handleChange,
+  handleResetFilter,
+  handleSliderChange,
+} from "../../components/DiscoverSection/utils";
+import CustomSelect from "../../components/CustomSelect";
 
-interface CustomSelectProps {
-  placeholder: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-const CustomSelect: React.FC<CustomSelectProps> = ({
-  placeholder,
-  onChange,
-}) => {
-  return (
-    <div className={styles.customInput}>
-      <input type="text" placeholder={placeholder} onChange={onChange} />
-      <IoChevronDownCircleOutline size={20} />
-    </div>
-  );
-};
-
-const Index = (props: any) => {
+const Index = ({ data: items }: any) => {
   const [open, setOpen] = useState(Filter.All);
-  const [data, setData] = useState(props.data);
+  const [data, setData] = useState(items);
+  const handleSearch = (e: any) => {
+    const value: string = e.target.value;
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    param: string
-  ) => {
-    let newData;
+    const newData = items.filter((item: any) => {
+      const words: string[] = item.title.toLocaleLowerCase().split(" ");
+      const isWord = words.find((word) => word === value.toLocaleLowerCase());
 
-    switch (param) {
-      case "RECENT":
-        break;
-      case "PRICE":
-        let newData = props.data.filter(
-          (item: any) => Number(item.price) <= Number(e.target.value)
-        );
-        console.log(e.target.value);
-        console.log(newData);
-        setData(newData);
-        break;
-      case "LIKES":
-        break;
-      case "CREATORS":
-        break;
-
-      default:
-        break;
+      if (isWord) {
+        return item;
+      }
+    });
+    setData([...newData]);
+    if (value === "") {
+      setData([...items]);
     }
   };
-
   return (
     <Layout>
       <div className={styles.root}>
         <div className={styles.top}>
-          <input type="text" placeholder="Search by keywords" />
+          <input
+            type="text"
+            placeholder="Search by keywords"
+            onChange={handleSearch}
+          />
           <button>
             <BiSearch size={20} color="white" />
           </button>
         </div>
         <hr />
         <div className={styles.content}>
-          <div className={styles.left}>
-            <CustomSelect
-              onChange={(e) => handleChange(e, "RECENT")}
-              placeholder="Recently added"
-            />
-            <div className={styles.filters}>
-              <div className={styles.filter}>
-                <span>PRICE RANGE</span>
-                <ProgressBar
-                // onChange={(e: { target: { value: any; }; }) => data.filter((item: any) => item.price === e.target.value)}
-                />
-                <div className={styles.eth}>
-                  <span>0.01 ETH</span>
-                  <span>10 ETH</span>
-                </div>
+          <div className={styles.filters}>
+            <div className={styles.filter}>
+              <span>PRICE RANGE</span>
+              <ProgressBar
+                onChange={(e) => handleSliderChange(e, setData, items)}
+              />
+              <div className={styles.eth}>
+                <span>0.01 ETH</span>
+                <span>10 ETH</span>
               </div>
-              <hr />
-              <div className={styles.filter}>
-                <span>LIKES</span>
-                <CustomSelect
-                  onChange={(e) => handleChange(e, "LIKES")}
-                  placeholder="Most liked"
-                />
-              </div>
-              <div className={styles.filter}>
-                <span>CREATOR</span>
-                <CustomSelect
-                  onChange={(e) => handleChange(e, "CREATORS")}
-                  placeholder="Verified only"
-                />
-              </div>
-              <div className={styles.filter}>
-                <span>PRICE</span>
-                <CustomSelect
-                  onChange={(e) => handleChange(e, "PRICE")}
-                  placeholder="Highest price"
-                />
-              </div>
-              <hr />
-              <div className={styles.reset}>
-                <MdCancel size={20} color="white" />
-                <span>Reset filter</span>
-              </div>
+            </div>{" "}
+            <div className={styles.recent}>
+              <CustomSelect
+                placeholder="Recently added"
+                onChange={(e) => handleChange(e, "RECENT", setData, data)}
+                options={["Recently added", "First added"]}
+              />
+            </div>
+            <div className={styles.filter}>
+              <span>PRICE</span>
+              <CustomSelect
+                placeholder="Highest price"
+                onChange={(e) => handleChange(e, "PRICE", setData, data)}
+                options={["Highest price", "Lowest price"]}
+              />
+            </div>
+            <div className={styles.filter}>
+              <span>LIKES</span>
+              <CustomSelect
+                placeholder="Most liked"
+                onChange={(e) => handleChange(e, "LIKES", setData, data)}
+                options={["Most liked", "Least liked"]}
+              />
+            </div>
+            <div className={styles.filter}>
+              <span>CREATOR</span>
+              <CustomSelect
+                placeholder="Verified only"
+                onChange={(e) => handleChange(e, "CREATORS", setData, data)}
+                options={["Verified only", "Non verified only"]}
+              />
+            </div>
+            <hr />
+            <div
+              className={styles.reset}
+              onClick={() => handleResetFilter(setData, items)}
+            >
+              <MdCancel size={20} color="white" />
+              <span>Reset filter</span>
             </div>
           </div>
           <div className={styles.right}>
@@ -168,12 +150,7 @@ const Index = (props: any) => {
               </span>
             </div>
             <div>
-              {open === 0 && <AllItems2 products={data} />}
-              {open === 1 && <Art2 products={data} />}
-              {open === 2 && <Game2 products={data} />}
-              {open === 3 && <Photography2 products={data} />}
-              {open === 4 && <Music2 products={data} />}
-              {open === 5 && <Video2 products={data} />}
+              <DiscoveryItems filterBy={open} products={data} />
             </div>
           </div>
         </div>
