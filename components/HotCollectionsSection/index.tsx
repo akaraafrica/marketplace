@@ -35,11 +35,12 @@ const Index = (props: any) => {
           disableOnInteraction: false,
         }}
       >
-        {props.collection.map((item: any) => (
-          <SwiperSlide key={item.id}>
-            <HotCollectionCard data={item} />
-          </SwiperSlide>
-        ))}
+        {props.collection &&
+          props.collection.map((item: any) => (
+            <SwiperSlide key={item.id}>
+              <HotCollectionCard data={item} />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </div>
   );

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 
+import Link from "next/link";
 import React from "react";
 import NextImage from "../Image";
 import styles from "./index.module.scss";
@@ -10,7 +11,9 @@ function Footer() {
     <div className={styles.footercon}>
       <div className={styles.footer}>
         <div className={styles.footersec1}>
-          <NextImage width={100} height={100} src="/assets/Logo.png" alt="" />
+          <Link href={`/`}>
+            <NextImage width={180} height={100} src="/assets/Logo.png" alt="" />
+          </Link>
           <div className={styles.footersec1text}>
             <p>Copyright © 2020 Akara Marketplace</p>
             <p>All rights reserved</p>

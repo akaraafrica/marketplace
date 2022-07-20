@@ -1,13 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
+import { useRouter } from "next/router";
 import React from "react";
 import NextImage from "../Image";
 import styles from "./index.module.scss";
 
 function ProfileCard(props: any) {
+  const router = useRouter();
+  const isMarketplace = router.pathname === "/marketplace";
   return (
     <div>
-      <div className={styles.previewcardcontentcon}>
+      <div
+        className={
+          isMarketplace ? styles.cardBackground : styles.previewcardcontentcon
+        }
+      >
         <div className={styles.previewcardimg}>
           <img alt="product image" src={props.ProductImg} />
         </div>

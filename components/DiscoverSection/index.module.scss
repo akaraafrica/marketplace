@@ -33,12 +33,16 @@
     border-radius: 12px;
     box-sizing: border-box;
     width: 100%;
-
-    input {
-      background-color: transparent;
-      outline: none;
+    select {
+      appearance: none;
       border: none;
-      color: #fcfcfc;
+      margin: 0;
+      width: 100%;
+      outline: none;
+      padding: 3px;
+      font-size: 1.1rem;
+      color: white;
+      background-color: #000;
     }
   }
   .active {
@@ -145,9 +149,3 @@
     }
   }
 }
-// @media screen and (min-width: 1400px) {
-//   .discoverContainer {
-//     width: 100%;
-//     padding: 100px 15vw;
-//   }
-// }

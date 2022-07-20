@@ -1,57 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import DiscoverSelect from "../DiscoverSelect/index";
 import ProgressBar from "../ProgressBar/index";
 import DiscoveryItems from "../DiscoveryItems/index";
-import { IoChevronDownCircleOutline } from "react-icons/io5";
 import { Filter } from "../../ds/discovery.ds";
-
-interface CustomSelectProps {
-  placeholder: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-const CustomSelect: React.FC<CustomSelectProps> = ({
-  placeholder,
-  onChange,
-}) => {
-  return (
-    <div className={styles.customInput}>
-      <input type="text" placeholder={placeholder} onChange={onChange} />
-      <IoChevronDownCircleOutline size={20} />
-    </div>
-  );
-};
+import CustomSelect from "../CustomSelect";
+import { handleChange, handleResetFilter, handleSliderChange } from "./utils";
 
 function Discover({ items }: any) {
-  console.log(items);
   const [open, setOpen] = useState(Filter.All);
-  const [filter, setFilter] = useState("");
   const [data, setData] = useState(items);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    param: string
-  ) => {
-    let newData;
-
-    switch (param) {
-      case "RECENT":
-        break;
-      case "PRICE":
-        newData = items.filter((item: any) => item.price <= filter);
-        setData(newData);
-        break;
-      case "LIKES":
-        break;
-      case "CREATORS":
-        break;
-
-      default:
-        break;
-    }
-  };
 
   return (
     <div className={styles.root}>
@@ -60,7 +19,8 @@ function Discover({ items }: any) {
         <div className={styles.recent}>
           <CustomSelect
             placeholder="Recently added"
-            onChange={(e) => handleChange(e, "RECENT")}
+            onChange={(e) => handleChange(e, "RECENT", setData, data)}
+            options={["Recently added", "First added"]}
           />
         </div>
         <div className={styles.navs}>
@@ -101,7 +61,10 @@ function Discover({ items }: any) {
             Video
           </span>
         </div>
-        <div className={styles.filterBtn}>
+        <div
+          className={styles.filterBtn}
+          onClick={() => handleResetFilter(setData, items)}
+        >
           <span>Filter</span>
           &#x2715;
         </div>
@@ -112,26 +75,31 @@ function Discover({ items }: any) {
           <span>PRICE</span>
           <CustomSelect
             placeholder="Highest price"
-            onChange={(e) => handleChange(e, "PRICE")}
+            onChange={(e) => handleChange(e, "PRICE", setData, data)}
+            options={["Highest price", "Lowest price"]}
           />
         </div>
         <div className={styles.filter}>
           <span>LIKES</span>
           <CustomSelect
             placeholder="Most liked"
-            onChange={(e) => handleChange(e, "LIKES")}
+            onChange={(e) => handleChange(e, "LIKES", setData, data)}
+            options={["Most liked", "Least liked"]}
           />
         </div>
         <div className={styles.filter}>
           <span>CREATOR</span>
           <CustomSelect
             placeholder="Verified only"
-            onChange={(e) => handleChange(e, "CREATORS")}
+            onChange={(e) => handleChange(e, "CREATORS", setData, data)}
+            options={["Verified only", "Non verified only"]}
           />
         </div>
         <div className={styles.filter}>
           <span>PRICE RANGE</span>
-          <ProgressBar />
+          <ProgressBar
+            onChange={(e) => handleSliderChange(e, setData, items)}
+          />
           <div className={styles.eth}>
             <span>0.01 ETH</span>
             <span>10 ETH</span>

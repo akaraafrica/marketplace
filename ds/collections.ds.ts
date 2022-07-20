@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = `${process.env.NEXT_BASE_URL!}/api/collections`;
+const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/collections`;
 
 class Collection {
   async getData() {

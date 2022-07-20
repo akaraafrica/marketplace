@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
 import { useRouter } from "next/router";
 import styles from "./index.module.scss";
-import NotificationModal from "../NotificationModal/index";
-import ProfileModal from "../ProfileModal/index";
-import MobileHeader from "../MobileHeader/index";
+// import NotificationModal from "../NotificationModal/index";
+// import ProfileModal from "../ProfileModal/index";
+// import MobileHeader from "../MobileHeader/index";
 import NewNotificationModal from "../NewNotificationModal";
 import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
@@ -44,9 +44,13 @@ function Header() {
           <CustomSelect placeholder="Search" />
         </div>
         <div className={mobile ? styles.mobileContent : styles.contentNone}>
-          <span>Marketplace</span>
+          <Link href={`/marketplace`}>
+            <span>Marketplace</span>
+          </Link>
           <span>How it works</span>
-          <span>Notifications</span>
+          <Link href={`/notifications`}>
+            <span>Notifications</span>
+          </Link>
           <span>Profile</span>
           <button>Upload</button>
           <span>Logout</span>
@@ -54,10 +58,16 @@ function Header() {
       </div>
       <div className={styles.header}>
         <div className={styles.left}>
-          <img alt="logo" src={`/assets/Logo.png`} />
+          <Link href={`/`}>
+            <img alt="logo" src={`/assets/Logo.png`} />
+          </Link>
           <hr />
           <ul>
-            <li>Marketplace</li>
+            <li>
+              <Link href={`/marketplace`}>
+                <span>Marketplace</span>
+              </Link>
+            </li>
             <li>How it works</li>
           </ul>
         </div>
