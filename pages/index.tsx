@@ -49,7 +49,7 @@ const Home = (props: any) => {
       <SellersSec />
       <Hotitems />
       <HotCollectionsSection collection={props.collection} />
-      <Discover items={props.data} />
+      <Discover items={props.discovery} />
       <div className={styles.discoverdividercon}></div>
       <SubscribeModal />
       <HowItWorks />

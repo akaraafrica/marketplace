@@ -8,11 +8,11 @@ export const sortItem = (
   if (compareValue === "ratings") {
     const itemsRating = data
       .map((item) => {
-        if (item.Rating.length) {
+        if (item.ratings.length) {
           const reducer = (accumulator: number, curr: number) =>
             accumulator + curr;
-          const { rating } = item.Rating.reduce(reducer);
-          let avgRating = rating / item.Rating.length;
+          const { rating } = item.ratings.reduce(reducer);
+          let avgRating = rating / item.ratings.length;
 
           return {
             ...item,

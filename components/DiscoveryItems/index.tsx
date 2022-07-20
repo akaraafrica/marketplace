@@ -22,7 +22,7 @@ function DiscoveryItems({ products, filterBy }: properties) {
 
   return (
     <InfiniteScroll
-      dataLength={items?.length}
+      dataLength={items?.length || 0}
       next={fetchMoreData}
       hasMore={true}
       loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
