@@ -10,7 +10,6 @@ interface properties {
 }
 
 function DiscoveryItems({ products, filterBy }: properties) {
-
   const initial = products ? [...products?.slice(0, 8)] : [];
   const [items, setItems] = useState(products);
   useEffect(() => {
