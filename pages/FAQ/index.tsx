@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -13,7 +14,10 @@ const FAQ = (props: any) => {
           <h1>Frequently asked questions</h1>
           <p>
             Join Akara community now to get free updates and also alot of
-            freebies are waiting for you or <span>Contant Support</span>
+            freebies are waiting for you or{" "}
+            <Link href="/contact">
+              <span>Contant Support</span>
+            </Link>
           </p>
         </section>
         <section className={styles.secondSection}>
