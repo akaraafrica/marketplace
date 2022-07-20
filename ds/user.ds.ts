@@ -14,12 +14,7 @@ class User {
     }
 
     try {
-      const response = await axios.get(`${baseUrl}/fetch`, {
-        params: {
-          address: walletAddress,
-        },
-      });
-      console.log("response data here is ", response.data);
+      const response = await axios.get(`${baseUrl}/${walletAddress}`);
       return response.data;
     } catch (error) {
       console.log(error);

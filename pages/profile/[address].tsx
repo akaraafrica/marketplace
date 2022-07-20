@@ -123,9 +123,9 @@ const ProfilePage = (props: any) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let data = {};
-  const { id }: any = ctx.params;
+  const { address }: any = ctx.params;
   try {
-    const [profile] = await Promise.all([ProfileDs.fetch(id)]);
+    const [profile] = await Promise.all([ProfileDs.fetch(address)]);
 
     data = { profile };
   } catch (error) {

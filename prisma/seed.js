@@ -6,12 +6,12 @@ const client = new PrismaClient();
 async function seed() {
   try {
     await client.userCollection.deleteMany();
-    await client.item.deleteMany();
     await client.profile.deleteMany();
     await client.collectionRating.deleteMany();
     await client.userRating.deleteMany();
     await client.itemRating.deleteMany();
     await client.rating.deleteMany();
+    await client.item.deleteMany();
     await client.collection.deleteMany();
     await client.collectionType.deleteMany();
     await client.user.deleteMany();
@@ -69,34 +69,6 @@ async function seed() {
       })
     );
 
-    let i = 0;
-    const ratings = await Promise.all(
-      data.ratings.map(async (rating) => {
-        i = i == users.length - 1 ? 0 : i + 1;
-        return await client.rating.create({
-          data: {
-            ...rating,
-            raterId: users[i].id,
-          },
-        });
-      })
-    );
-    console.log("ratings here is ", ratings);
-
-    let c = 0;
-    const collectionRatings = await Promise.all(
-      ratings.map(async (rating) => {
-        c = c == collections.length - 1 ? 0 : c + 1;
-        return await client.collectionRating.create({
-          data: {
-            collectionId: collections[c].id,
-            ratingId: rating.id,
-          },
-        });
-      })
-    );
-    console.log("collection ratings here is ", collectionRatings);
-
     let uc = 0;
     const userCollections = await Promise.all(
       collections.map(async (collection) => {
@@ -129,6 +101,23 @@ async function seed() {
       })
     );
 
+    let i = 0;
+    let s = 0;
+    const ratings = await Promise.all(
+      data.ratings.map(async (rating) => {
+        i = i == users.length - 1 ? 0 : i + 1;
+        s = s == items.length - 1 ? 0 : s + 1;
+        return await client.rating.create({
+          data: {
+            ...rating,
+            itemId: items[s].id,
+            raterId: users[i].id,
+          },
+        });
+      })
+    );
+    console.log("ratings here is ", ratings);
+
     let r = 0;
     const itemRatings = await Promise.all(
       ratings.map(async (rating) => {
@@ -142,6 +131,19 @@ async function seed() {
       })
     );
     console.log("item ratings here is ", itemRatings);
+    let c = 0;
+    const collectionRatings = await Promise.all(
+      ratings.map(async (rating) => {
+        c = c == collections.length - 1 ? 0 : c + 1;
+        return await client.collectionRating.create({
+          data: {
+            collectionId: collections[c].id,
+            ratingId: rating.id,
+          },
+        });
+      })
+    );
+    console.log("collection ratings here is ", collectionRatings);
   } catch (error) {
     console.log("error seeding database ", error);
   }

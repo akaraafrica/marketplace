@@ -1,69 +1,157 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React from "react";
+import React, { MutableRefObject, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import Switch from "@mui/material/Switch";
+import SwitchComponent from "../SwitchComponent";
+import ProfileCard from "../ProfileCard";
+import { useForm } from "react-hook-form";
+import ItemDs from "../../ds/item.ds";
 
 function SingleCollectibleItem() {
-  const label = { inputProps: { "aria-label": "Switch demo" } };
+  const [foto, setFoto] = useState(null);
+  const [state, setState] = useState({
+    title: "",
+    description: "",
+    price: "",
+    stock: "",
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data: any) => {
+    if (foto) {
+      data.image = foto;
+    }
+    const address: string = localStorage.getItem("address")!;
+    const tokenid = "qwertyuiopkgfdsazxcvbnjwertyu";
+
+    // ItemDs.createData(data, '7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias', tokenid);
+  };
+
+  const target = useRef<HTMLInputElement>(null);
+  const handleChange = (e: any) => {
+    setFoto(e.target.files[0]);
+  };
+
+  const clearState = () => {
+    setFoto(null);
+    setState({
+      title: "",
+      description: "",
+      price: "",
+      stock: "",
+    });
+  };
   return (
     <div className={styles.sciCon}>
       <div className={styles.sci}>
         <div className={styles.scihead}>
-          <h1>Create single collectible item</h1>
+          <h1>
+            Create single <span>collectible item</span>
+          </h1>
         </div>
         <div className={styles.sciuploadseccon}>
           <div className={styles.uploadsechead}>
-            <h4>Upload file</h4>
-            <p>Drag or choose your file to upload</p>
+            <span className={styles.upload}>Upload file</span>
+            <span className={styles.drag}>
+              Drag or choose your file to upload
+            </span>
           </div>
-          <div className={styles.sciuploadbox}>
+          <div
+            onClick={() => target.current?.click()}
+            className={styles.sciuploadbox}
+          >
             <img alt="upload icon" src={`/assets/uploadicon.svg`} />
             <p>PNG, GIF, WEBP, MP4 or MP3. Max 1Gb.</p>
           </div>
+          <input
+            style={{ display: "none" }}
+            type="file"
+            ref={target}
+            onChange={(e) => handleChange(e)}
+          />
         </div>
-        <div className={styles.itemdetailsformcon}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={styles.itemdetailsformcon}
+        >
           <h4>Item Details</h4>
           <div className={styles.itemdetailsforminput}>
             <label>ITEM NAME</label>
             <input
               type="text"
               placeholder='e. g. "Redeemable Bitcoin Card with logo"'
+              {...register("title", { required: true })}
+              value={state.title}
+              onChange={(e) =>
+                setState({ ...state, [e.target.name]: e.target.value })
+              }
             />
+            {errors.title && <span>This field is required</span>}
           </div>
           <div className={styles.itemdetailsforminput}>
             <label>Description</label>
             <input
               type="text"
               placeholder='e. g. “After purchasing you will able to recived the logo...”"'
+              {...register("description", { required: true })}
+              value={state.description}
+              onChange={(e) =>
+                setState({ ...state, [e.target.name]: e.target.value })
+              }
             />
+            {errors.description && <span>This field is required</span>}
           </div>
           <div className={styles.itemdetailsforminput}>
             <label>BLOCKCHAIN</label>
-            <select>
-              <option selected disabled>
-                Blockchain
-              </option>
-              <option>sample</option>
-              <option>sample</option>
+            <select
+              {...register("blockchain", { required: true })}
+              defaultValue="Ethereum"
+              defaultChecked={true}
+            >
+              <option>Ethereum</option>
+              <option>Bitcoin</option>
+              <option>Solana</option>
             </select>
           </div>
           <div className={styles.itemdetailformdropdownsCon}>
             <div className={styles.itemdetailsformdropdown}>
               <label>ROYALTIES</label>
-              <select>
+              <select {...register("royalties")}>
                 <option>10%</option>
-                <option>sample</option>
-                <option>sample</option>
+                <option>15%</option>
+                <option>20%</option>
               </select>
             </div>
             <div className={styles.itemdetailsforminput1}>
-              <label>GAS ESTIMATE</label>
-              <input type="text" placeholder="10" />
+              <label>IN STOCK</label>
+              <input
+                type="number"
+                placeholder="1"
+                {...register("stock", {})}
+                value={state.stock}
+                onChange={(e) =>
+                  setState({ ...state, [e.target.name]: e.target.value })
+                }
+              />
             </div>
             <div className={styles.itemdetailsforminput1}>
               <label>PRICE</label>
-              <input type="text" placeholder="2.45 ETH" />
+              <input
+                type="number"
+                placeholder="2.45 ETH"
+                min="0"
+                step="0.01"
+                {...register("price", { required: true })}
+                value={state.price}
+                onChange={(e) =>
+                  setState({ ...state, [e.target.name]: e.target.value })
+                }
+              />
+              {errors.price && <span>This field is required</span>}
             </div>
           </div>
           <div className={styles.divider}></div>
@@ -72,10 +160,13 @@ function SingleCollectibleItem() {
               <h4>Put on sale</h4>
               <p>You’ll receive bids on this item</p>
             </div>
-            <Switch {...label} />
+            <label className={styles.switch}>
+              <input type="checkbox" {...register("published", {})} />
+              <span className={`${styles.slider} ${styles.round}`}></span>
+            </label>
           </div>
           <div className={styles.putonscalebtnsec}>
-            <button>
+            <button type="submit">
               Create item
               <span>
                 <img src={`/assets/arrow.svg`} alt="" />
@@ -83,41 +174,51 @@ function SingleCollectibleItem() {
             </button>
             <p>Auto saving</p>
           </div>
-        </div>
+        </form>
       </div>
       <div className={styles.previewCard}>
         <div className={styles.previewheading}>
           <h1>Preview</h1>
         </div>
-        <div className={styles.previewcardcontentcon}>
-          <div className={styles.previewcardimg}>
-            <img alt="product image" src={`/assets/productimg.png`} />
-          </div>
-          <div className={styles.previewcardname}>
-            <p>Black Golden Tiger</p>
-            <div className={styles.previewcardprice}>
-              <p>2.45 ETH</p>
+        <div className={styles.previewcontent}>
+          <img
+            className={styles.previewimg}
+            src={
+              foto ? URL.createObjectURL(foto) : `/assets/placeholder-image.jpg`
+            }
+            alt="preview"
+          />
+          <div className={styles.previewdiv}>
+            <div className={styles.previewtitle}>
+              {state.title ? state.title : "Amazing digital art"}
             </div>
+            <span className={styles.previewprice}>
+              {state.price ? state.price : "0.00"} ETH
+            </span>
           </div>
-          <div className={styles.previewstockcon}>
-            <img alt="avatars" src={`/assets/avatars.png`} />
-            <p>3 in stock</p>
+          <div className={styles.previewdiv}>
+            <div className={styles.avatars}>
+              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
+              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
+              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
+            </div>
+            <div>{state.stock ? state.stock : "0"} in stock</div>
           </div>
-          <div className={styles.previewdivider}></div>
+          <hr />
           <div className={styles.bidsec}>
             <div className={styles.bidsec1}>
               <img alt="bid icon" src={`/assets/bidicon.svg`} />
-              <p>
-                Highest bid <span>0.001 ETH</span>
-              </p>
+              <span>
+                Highest bid <span>0.01</span>
+              </span>
             </div>
-            <div className={styles.bidsec2}>
-              <p>New bid 🔥</p>
+            <div className="bidsec2">
+              <span>New bid</span>
             </div>
           </div>
-          <div className={styles.clearsec}>
+          <div className={styles.clearsec} onClick={() => clearState()}>
             <img alt="close icon" src={`/assets/closeicon.svg`} />
-            <p>Clear all</p>
+            <span>Clear all</span>
           </div>
         </div>
       </div>

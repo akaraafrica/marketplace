@@ -53,7 +53,7 @@ const Index = () => {
       const res = await axios.post("/api/user/login", {
         ...state,
       });
-      if (res.status === 200) {
+      if (res && res.status === 200) {
         toast.success("Welcome to Akara, Login successful.");
         localStorage.setItem("address", res.data.user.walletAddress);
 

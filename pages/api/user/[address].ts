@@ -11,6 +11,13 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
         where: {
           walletAddress: address,
         },
+        include: {
+          profile: true,
+          collections: true,
+          items: true,
+          followers: true,
+          following: true,
+        },
       });
       return res.status(200).json(user);
     } catch (error) {
