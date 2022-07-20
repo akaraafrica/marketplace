@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.scss";
 import ProfileCard from "../ProfileCard/index";
@@ -11,22 +11,24 @@ interface properties {
 
 function DiscoveryItems({ products, filterBy }: properties) {
   const initial = products ? [...products?.slice(0, 8)] : [];
-  const [items, setItems] = useState(initial);
-
+  const [items, setItems] = useState(products);
+  useEffect(() => {
+    setItems(products);
+  }, [products]);
   const fetchMoreData = async () => {
     let data = await Discovery.getData(filterBy);
-    setItems(data);
+    console.log({ data });
   };
 
   return (
     <InfiniteScroll
-      dataLength={items.length}
+      dataLength={items?.length || 0}
       next={fetchMoreData}
       hasMore={true}
       loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
     >
       <div className={styles.allitems}>
-        {items.map((item) => (
+        {items?.map((item: any) => (
           <ProfileCard
             key={item.id}
             ProductImg={`${item.images ?? item.images[0]}`}
