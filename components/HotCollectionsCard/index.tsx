@@ -3,32 +3,39 @@ import styles from "./index.module.scss";
 import avatar from "/assets/Avator.svg";
 import NextImage from "../Image";
 
-function HotCollectionCard() {
+function HotCollectionCard(data: any) {
+  console.log(data);
   return (
-    <div className={styles.hotcollectioncardcon}>
-      <div className={styles.hotcollectionseccon}>
-        <div className={styles.hotcollectionsec1}></div>
-        <div className={styles.hotcollectionsec2con}>
-          <div className={styles.hotcollectionsec2}></div>
-          <div className={styles.hotcollectionsec2}></div>
-          <div className={styles.hotcollectionsec2}></div>
-        </div>
-        <div className={styles.hotcollectionsec3con}>
-          <h2>Awesome collection</h2>
-          <div className={styles.hotcollectionsec3contentcon}>
-            <div className={styles.artist}>
-              <NextImage
-                alt="Art"
-                src={"/assets/Avator.svg"}
-                width={6}
-                height={6}
-              ></NextImage>
-              <p>By Tyrese Littel</p>
-            </div>
-            <div className={styles.quantity}>
-              <p>28 items</p>
+    <div className={styles.root}>
+      <div className={styles.mainImgdiv}>
+        <NextImage
+          className={styles.mainImg}
+          src={data.data.images[0]}
+          layout="fill"
+        />
+      </div>
+      <div className={styles.imagesDiv}>
+        {data.data.images.map((image: string, index: number) => (
+          <div key={index} className={styles.images}>
+            <NextImage className={styles.subImg} src={image} layout="fill" />
+          </div>
+        ))}
+      </div>
+      <div className={styles.infoDiv}>
+        <h4>{data.data.title}</h4>
+        <div className={styles.bottom}>
+          <div className={styles.left}>
+            <NextImage
+              className={styles.image}
+              src={data.data.author.profile.avatar}
+              width="50px"
+              height="50px"
+            />
+            <div className={styles.owner}>
+              By {data.data.author.profile.name}
             </div>
           </div>
+          <span>{data.data.items.length} Items</span>
         </div>
       </div>
     </div>

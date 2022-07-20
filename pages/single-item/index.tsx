@@ -11,7 +11,7 @@ const SingleCollectibleItem = () => {
   const router = useRouter();
   return (
     <Layout>
-      <div className={styles.breadcrumbWrap}>
+      {/* <div className={styles.breadcrumbWrap}>
         <div onClick={() => router.push("/")} className={styles.backButton}>
           <BiArrowBack />
           <p className={styles.backText}>Back to collection</p>
@@ -21,7 +21,7 @@ const SingleCollectibleItem = () => {
           <span>&gt;</span>
           <span>Upload Item</span>
         </div>
-      </div>
+      </div> */}
       <SingleCollectibleItemForm />
     </Layout>
   );
