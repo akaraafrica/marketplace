@@ -1,259 +1,229 @@
-.profilepagesec1 {
-  background-image: url("/assets/profilebg.png");
-  background-size: 100% 100% cover;
+.root {
   width: 100%;
-  height: 24vw;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-}
-.profilepagesec1 button {
-  width: 9.8vw;
-  height: 2.9vw;
-  border: 2px solid #777e91;
-  border-radius: 90px;
-  background-color: transparent;
-  font-size: 1.17vw;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-right: 2vw;
-  margin-bottom: 3vw;
-}
-.profilepagesec1 button span img {
-  width: 1.17vw;
-  height: 1.17vw;
-}
-.profilepagecard {
-  width: 18vw;
-  height: 50vw;
-  border: 1px solid #353945;
-  background: #23262f;
-  border-radius: 16px;
-}
-.profilecardimg img {
-  width: 11.7vw;
-  height: 11.7vw;
-}
-.profilecardname h4 {
-  font-size: 1.7vw;
-  color: white;
-  font-weight: 500;
-}
-.profileid p {
-  font-size: 1.1vw;
-  color: white;
-}
-.profileid img {
-  width: 1.1vw;
-  height: 1.1vw;
-}
-.profileid {
-  display: flex;
-  align-items: center;
-  margin-top: -1vw;
-}
-.profilecardname {
-  line-height: 0vw;
-}
-.profilecarddesc p {
-  font-size: 1.1vw;
-  color: #777e91;
-  text-align: center;
-}
-.profilecardwebsitelink img {
-  width: 1.17vw;
-  height: 1.17vw;
-}
-.profilecardwebsitelink p {
-  font-size: 1.17vw;
-  color: white;
-}
-.profilecardwebsitelink {
-  display: flex;
-  align-items: center;
-}
-.followbtn {
-  width: 5.5vw;
-  height: 2.9vw;
-  background: #f2994a;
-  border-radius: 90px;
-  color: white;
-  font-size: 1vw;
-  border: none;
-}
-.iconbtn {
-  width: 2.9vw;
-  height: 2.9vw;
-  border-radius: 40px;
-  border: 2px solid #353945;
-  background-color: transparent;
-}
-.iconbtn span img {
-  width: 1.4vw;
-  height: 1.4vw;
-}
-.profilecardbtns {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
-}
-.profilecardsocialicons img {
-  width: 1.4vw;
-  height: 1.4vw;
-}
-.profilecardsocialicons {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 3vw;
-  width: 100%;
-}
-.profilecarddivider {
-  width: 14vw;
-  height: 0.1vw;
-  background: #353945;
-  margin-top: 3vw;
-}
-.membersince p {
-  font-size: 1vw;
-  color: #777e91;
-}
-.profilepagecard {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-}
-.tablink {
-  font-size: 1.1vw;
-  color: #777e91;
-  list-style-type: none;
-}
-.headlinks ul {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 28vw;
-}
-.uploaditembtn button {
-  width: 8.4vw;
-  height: 2.9vw;
-  background: #f2994a;
-  border-radius: 90px;
-  font-size: 1vw;
-  color: white;
-  border: none;
-}
-.profilepagesec2head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 58vw;
-}
-.profilepagesec2con {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  width: 100%;
-}
-.profilepagecard {
-  margin-top: -10vw;
-}
-.profilepagesec2parent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.active {
-  color: #f2994a;
-  font-size: 1.1vw;
-  list-style-type: none;
-}
-@media only screen and (max-width: 600px) {
-  .profilepagesec2con {
+
+  .top {
+    width: 100%;
+    height: 40vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding-bottom: 40px;
+    // padding-right: 40px;
+    @media (max-width: 640px) {
+      padding-top: 40px;
+      padding-bottom: unset;
+      align-items: flex-start;
+    }
+
+    button {
+      margin-right: 15%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 16px;
+      gap: 12px;
+      border: 2px solid #777e91;
+      border-radius: 90px;
+      background: transparent;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 16px;
+      text-align: right;
+      color: #fcfcfd;
+      cursor: pointer;
+    }
+  }
+  .bottom {
+    padding: 0px;
+    width: 100%;
+    display: flex;
+    gap: 70px;
+
+    @media (min-width: 1440px) {
+      width: 70%;
+      padding: 0px 15%;
+    }
+    @media (max-width: 640px) {
+      padding: 10px 0;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 20px;
+    }
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 10px;
+      gap: 48px;
+      background: #23262f;
+      border: 1px solid #353945;
+      box-shadow: 0px 40px 32px -24px rgba(15, 15, 15, 0.12);
+      border-radius: 16px;
+      margin-top: -150px;
+      width: auto;
+      height: 689px;
+      @media (max-width: 640px) {
+        width: 100%;
+        // margin-top: 20px;
+      }
+
+      .leftTop {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        width: 100%;
+
+        @media (max-width: 640px) {
+          width: 100%;
+          margin-top: -120px;
+        }
+
+        .image2 {
+          border-radius: 50%;
+          object-fit: cover;
+          margin-bottom: 30px;
+        }
+        .name {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 24px;
+          line-height: 32px;
+          color: #fcfcfd;
+        }
+        .wallet2 {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 10px;
+
+          span {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 16px;
+            color: #fcfcfd;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 80%;
+            text-align: center;
+            text-overflow: ellipsis;
+          }
+        }
+        .desc {
+          font-family: "Poppins";
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 20px;
+          text-align: center;
+          width: 186px;
+          height: 60px;
+          text-align: center;
+        }
+        .web {
+          font-family: "DM Sans";
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 16px;
+          color: #fcfcfd;
+          cursor: pointer;
+        }
+      }
+      .leftCenter {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .btn {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding: 12px 16px;
+          gap: 12px;
+          width: 76px;
+          height: 40px;
+          background: #f2994a;
+          color: #fcfcfd;
+          border-radius: 90px;
+          border: 1px solid #f2994a;
+          cursor: pointer;
+        }
+        .icon {
+          border: 2px solid #353945;
+          border-radius: 40px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          padding: 10px;
+          gap: 10px;
+          width: 24px;
+          height: 24px;
+          cursor: pointer;
+        }
+      }
+      .social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        cursor: pointer;
+      }
+      hr {
+        width: 100%;
+        height: 1px;
+        border: 1px solid #353945;
+        background: #353945;
+      }
+      .date {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 20px;
+        color: #777e91;
+      }
+    }
+  }
+  .right {
+    display: flex;
     flex-direction: column;
-    align-items: center !important;
-  }
-  .profilepagesec1 {
-    height: 50vw !important;
-  }
-  .profilepagesec1 button {
-    width: 18vw !important;
-    height: 6vw !important;
-    font-size: 2vw !important;
-  }
-  .profilepagesec1 button span img {
-    width: 2vw !important;
-    height: 2vw !important;
-  }
-  .profilepagecard {
-    width: 50vw !important;
-    height: 110vw !important;
-  }
-  .profilecardimg img {
-    width: 30vw !important;
-    height: 30vw !important;
-  }
-  .profilecardname h4 {
-    font-size: 5vw !important;
-  }
-  .profileid p {
-    font-size: 3vw !important;
-  }
-  .profileid img {
-    width: 3vw !important;
-    height: 3vw !important;
-  }
-  .profilecarddesc p {
-    font-size: 3.5vw !important;
-  }
-  .profileid {
-    margin-top: -3vw !important;
-  }
-  .profilecardwebsitelink p {
-    font-size: 3vw !important;
-  }
-  .profilecardwebsitelink img {
-    width: 3vw !important;
-    height: 3vw !important;
-  }
-  .followbtn {
-    width: 15vw !important;
-    height: 6vw !important;
-    font-size: 2.5vw !important;
-  }
-  .iconbtn {
-    width: 7vw !important;
-    height: 7vw !important;
-  }
-  .profilecardsocialicons img {
-    width: 6vw !important;
-    height: 6vw !important;
-  }
-  .profilecarddivider {
-    width: 40vw !important;
-  }
-  .membersince p {
-    font-size: 3vw !important;
-  }
-  .headlinks ul {
-    width: 40vw !important;
-  }
-  .profilepagesec2head {
-    width: 70vw !important;
-  }
-  .active {
-    font-size: 2vw !important;
-  }
-  .tablink {
-    font-size: 2vw !important;
-  }
-  .uploaditembtn button {
-    width: 15vw !important;
-    height: 5vw !important;
-    font-size: 2vw !important;
+    padding: 70px 0;
+    gap: 50px 0;
+    // width: 70%;
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+
+      span {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+        color: #777e91;
+        cursor: pointer;
+      }
+      .active {
+        color: #f2994a;
+      }
+    }
+    .sections {
+      width: 100%;
+    }
   }
 }

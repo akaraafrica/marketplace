@@ -5,24 +5,26 @@ import styles from "./index.module.scss";
 
 function FollowingSec(props: any) {
   return (
-    <div className={styles.followingseccon}>
-      <div className={styles.followingsec}>
-        <div className={styles.followingsec1con}>
-          <img alt="profile photo" src={props.ProfilePhoto} />
-          <div className={styles.followingsec1content}>
-            <h4>{props.Name}</h4>
-            <p>{props.Followers}</p>
-            <button>Unfollow</button>
-          </div>
-        </div>
-        <div className={styles.followingsec2con}>
-          <img alt="follower image " src={props.FollowerImage} />
-          <img alt="follower image " src={props.FollowerImage} />
-          <img alt="follower image " src={props.FollowerImage} />
-          <img alt="follower image " src={props.FollowerImage} />
+    // <div className={styles.followingseccon}>
+    <div className={styles.followingsec}>
+      <div className={styles.followingsec1con}>
+        <img alt="profile photo" src={props.ProfilePhoto} />
+        <div className={styles.followingsec1content}>
+          <h4>{props.Name}</h4>
+          <p>{props.Followers}</p>
+          <button>Unfollow</button>
         </div>
       </div>
+      <div className={styles.followingsec2con}>
+        {/* {props.followerItems.slice(0, 3).map((item: any, index: number) => ( */}
+        <img alt="follower image " src={props.FollowerImage} />
+        <img alt="follower image " src={props.FollowerImage} />
+        <img alt="follower image " src={props.FollowerImage} />
+        <img alt="follower image " src={props.FollowerImage} />
+        {/* ))} */}
+      </div>
     </div>
+    // </div>
   );
 }
 export default FollowingSec;
