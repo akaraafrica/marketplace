@@ -16,8 +16,9 @@ import ProfileItem from "../../components/ProfileItem";
 
 const ProfilePage = (props: any) => {
   const [open, setOpen] = React.useState(0);
-
-  console.log(props);
+  const { profile, walletAddress, createdAt, items, following, collections } =
+    props.profile;
+  console.log(props.profile);
   return (
     <Layout>
       <div className={styles.root}>
@@ -34,20 +35,26 @@ const ProfilePage = (props: any) => {
             <div className={styles.leftTop}>
               <NextImage
                 className={styles.image2}
-                src={props.profile.profile.avatar}
+                src={
+                  profile.avatar
+                    ? profile.avatar
+                    : "/assets/placeholder-image.jpg"
+                }
                 width="160px"
                 height="160px"
               />
-              <span className={styles.name}>{props.profile.name}</span>
+              <span className={styles.name}>
+                {profile.name && profile.name}
+              </span>
               <div className={styles.wallet2}>
-                <span>{props.profile.walletAddress}</span>
+                <span>{walletAddress && walletAddress}</span>
                 <NextImage
                   width="20px"
                   height="20px"
                   src="/assets/copyicon.svg"
                 />
               </div>
-              <span className={styles.desc}>{props.profile.profile.bio}</span>
+              <span className={styles.desc}>{profile.bio && profile.bio}</span>
               <span className={styles.web}>
                 <TbWorld /> https://ui8.net
               </span>
@@ -68,7 +75,7 @@ const ProfilePage = (props: any) => {
             </div>
             <hr />
             <span className={styles.date}>
-              Member since {getNiceDate(props.profile.createdAt)}
+              Member since {createdAt && getNiceDate(createdAt)}
             </span>
           </div>
           <div className={styles.right}>
@@ -108,10 +115,10 @@ const ProfilePage = (props: any) => {
             </div>
             <div className={styles.sections}>
               <ProfileItem
-                items={props.profile.items}
+                items={items}
                 open={open}
-                following={props.profile.following}
-                collections={props.profile.collections}
+                following={following}
+                collections={collections}
               />
             </div>
           </div>
@@ -122,18 +129,14 @@ const ProfilePage = (props: any) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  let data = {};
   const { address }: any = ctx.params;
-  try {
-    const [profile] = await Promise.all([ProfileDs.fetch(address)]);
 
-    data = { profile };
-  } catch (error) {
-    console.log(error);
-  }
+  const profile = await ProfileDs.fetch(address);
 
   return {
-    props: JSON.parse(JSON.stringify(data)),
+    props: {
+      profile,
+    },
   };
 };
 export default ProfilePage;

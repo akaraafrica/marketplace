@@ -19,6 +19,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           following: true,
         },
       });
+      console.log(user);
       return res.status(200).json(user);
     } catch (error) {
       console.log(error);

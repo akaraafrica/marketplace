@@ -69,8 +69,8 @@ model User {
   profile         Profile?
   ratingsGiven    Rating[]
   contributions   UserCollection[]
-  followers       UserFollower[]   @relation("follower")
-  following       UserFollower[]   @relation("following")
+  followers       UserFollower[]   
+  followings       UserFollower[]   
   ratingsRecieved UserRating[]
 }
 
@@ -102,12 +102,13 @@ model UserCollection {
 }
 
 model UserFollower {
-  id          Int      @id @default(autoincrement())
   followerId  Int
   followingId Int
   updatedAt   DateTime @updatedAt
   follower    User     @relation("follower", fields: [followerId], references: [id])
   following   User     @relation("following", fields: [followingId], references: [id])
+
+  @@id([followerId, followingId])
 }
 
 model ItemRating {
