@@ -7,7 +7,7 @@ const handler = async (
   res: NextApiResponse,
   auth?: { user: string }
 ) => {
-  const id: string = req.query.id as string;
+  const id: number = parseInt(req.query.id as string);
   if (req.method === "GET") {
     const data = await prisma.notification.findUnique({
       where: {

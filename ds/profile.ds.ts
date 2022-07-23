@@ -5,14 +5,14 @@ const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/user`;
 class Profile {
   constructor() {}
 
-  async fetch(address: number) {
+  async fetch(address: string) {
     try {
-      const res = await axios.get(`${baseUrl}/${address}`, {
-        method: "GET",
-      });
+      const res = await axios.get(`${baseUrl}/${address}`);
       console.log(res);
       return res.data;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 export default new Profile();
