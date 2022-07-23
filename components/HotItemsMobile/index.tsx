@@ -15,7 +15,7 @@ function HotItemsMobile() {
   };
   return (
     <div className="hotitemsmobilecon">
-      <Swiper>
+      <Swiper style={{ zIndex: 0 }}>
         <SwiperSlide>
           <HotItemCard
             ProductImg={`/assets/productimg.png`}

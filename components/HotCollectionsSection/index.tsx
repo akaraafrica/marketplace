@@ -11,6 +11,7 @@ const Index = (props: any) => {
     <div className={styles.root}>
       <h2>Hot collections</h2>
       <Swiper
+        style={{ zIndex: 0 }}
         breakpoints={{
           // when window width is >= 640px
           640: {

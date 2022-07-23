@@ -173,12 +173,13 @@
             font-size: 12px;
             line-height: 20px;
             color: #23262f;
-            z-index: 10;
+            z-index: 1;
           }
           .creatorImg {
             border-radius: 50%;
             width: 56px;
             height: 56px;
+            z-index: 0;
           }
         }
         .creatorNameDiv {

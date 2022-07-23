@@ -1,7 +1,7 @@
 .container {
   margin: auto;
   max-width: 70rem;
-  padding-left: 1rem;
+  padding-left: 1.5rem;
 }
 .FAQHeading {
   margin-top: 3rem;
@@ -26,26 +26,37 @@
   }
   span {
     color: #f2994a;
+    cursor: pointer;
   }
 }
 .secondSection {
   margin-top: 5rem;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
+  justify-content: space-around;
+  gap: 3rem;
+  @media screen and (max-width: 800px) {
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
   ul {
     padding: 0;
+    align-self: flex-start;
     width: fit-content;
   }
   li {
     list-style: none;
+    cursor: pointer;
+
     color: #6b7181;
     display: flex;
     gap: 10px;
     justify-content: center;
     font-weight: 600;
     padding: 10px 0;
+  }
+  li:hover {
+    color: white;
   }
   .active {
     color: white;

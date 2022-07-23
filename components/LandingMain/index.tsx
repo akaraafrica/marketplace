@@ -2,8 +2,11 @@ import React from "react";
 import styles from "./styles.module.scss";
 import Lottie from "react-lottie-player";
 import lottieJson from "../../lotties/json-background.json";
+import { useRouter } from "next/router";
 
 const LandingMain = () => {
+  const router = useRouter();
+
   return (
     <div className={styles.landingMain}>
       <span className={styles.subHead}>
@@ -14,7 +17,13 @@ const LandingMain = () => {
         <span className={styles.headColor}>Awesome </span>
         African NFTs
       </span>
-      <button className={styles.landingBtn}>Start your search</button>
+      <button
+        style={{ zIndex: 0 }}
+        className={styles.landingBtn}
+        onClick={() => router.push("/marketplace")}
+      >
+        Start your search
+      </button>
       <div className={styles.lottieBg}>
         <Lottie
           loop

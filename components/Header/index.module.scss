@@ -4,7 +4,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: fixed;
+  z-index: 10;
+
+  a {
+    text-decoration: none;
+    color: #777e90;
+    :visited {
+      color: #fcfcfd;
+    }
+  }
 
   .mobile {
     display: none;
@@ -83,7 +92,7 @@
     justify-content: space-between;
 
     @media screen and (min-width: 1440px) {
-      padding: 20px 15%;
+      padding: 3px 15%;
     }
     @media screen and (max-width: 1024px) {
       flex-direction: column;

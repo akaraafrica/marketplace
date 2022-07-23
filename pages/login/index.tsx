@@ -7,8 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useAppDispatch } from "../../hooks/app";
 import { set as setUser } from "../../store/reducers/userSlice";
 import { useWeb3React } from "@web3-react/core";
@@ -126,18 +125,6 @@ const Index = () => {
           </span>
         </p>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={7000}
-        hideProgressBar={true}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
     </OnboardingLayout>
   );
 };
