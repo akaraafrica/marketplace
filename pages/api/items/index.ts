@@ -39,6 +39,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           owner: req.body.owner,
           images: req.body.image,
           video: req.body.video,
+          updatedAt: Date.now().toString(),
         },
       });
       res.status(201).json({ message: "Item created" });

@@ -1,7 +1,9 @@
 ## Database commands
 
-```npx prisma init
+make sure you have the latest db
 
+```run
+npx prisma db pull
 ```
 
 ```npx prisma generate

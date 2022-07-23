@@ -132,6 +132,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { address }: any = ctx.params;
 
   const profile = await ProfileDs.fetch(address);
+  if (!profile) return { notFound: true };
 
   return {
     props: {
