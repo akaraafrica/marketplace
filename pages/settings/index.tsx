@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/Header/index";
 import SettingsForm from "../../components/SettingsForm/index";
 import Footer from "../../components/Footer/index";
+import withAuth from "../../HOC/withAuth";
 
 const Settings = () => {
   //  document.body.style = 'background: black;';
@@ -13,4 +14,4 @@ const Settings = () => {
     </div>
   );
 };
-export default Settings;
+export default withAuth(Settings);
