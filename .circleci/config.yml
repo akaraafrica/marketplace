@@ -34,9 +34,9 @@ jobs:
       - run:
           name: Run Prettier test
           command: npm run check-format
-      - run:
-          name: Run Prisma db setup
-          command: npx prisma db pull && npx prisma generate
+      # - run:
+      #     name: Run Prisma db setup
+      #     command: npx prisma db pull && npx prisma generate
       - run:
           name: Run build test
           command: npm run test-all
