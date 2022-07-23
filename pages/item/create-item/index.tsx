@@ -1,10 +1,8 @@
 import React from "react";
 import styles from "./index.module.scss";
-import Header from "../../components/Header/index";
-import SingleCollectibleItemForm from "../../components/SingleCollectibleItemForm";
-import Footer from "../../components/Footer/index";
-import Layout from "../../components/Layout";
-import { BiArrowBack } from "react-icons/bi";
+import SingleCollectibleItemForm from "../../../components/SingleItemForm";
+import Layout from "../../../components/Layout";
+// import { BiArrowBack } from "react-icons/bi";
 import { useRouter } from "next/router";
 
 const SingleCollectibleItem = () => {

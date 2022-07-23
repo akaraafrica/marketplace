@@ -14,7 +14,7 @@ function SingleCollectibleItem() {
     title: "",
     description: "",
     price: "",
-    stock: "",
+    gas: "",
   });
   const {
     register,
@@ -42,7 +42,7 @@ function SingleCollectibleItem() {
       title: "",
       description: "",
       price: "",
-      stock: "",
+      gas: "",
     });
   };
   return (
@@ -50,7 +50,7 @@ function SingleCollectibleItem() {
       <div className={styles.sci}>
         <div className={styles.scihead}>
           <h1>
-            Create single <span>collectible item</span>
+            Create <span>single item</span>
           </h1>
         </div>
         <div className={styles.sciuploadseccon}>
@@ -127,12 +127,12 @@ function SingleCollectibleItem() {
               </select>
             </div>
             <div className={styles.itemdetailsforminput1}>
-              <label>IN STOCK</label>
+              <label>GAS ESTIMATE</label>
               <input
                 type="number"
                 placeholder="1"
-                {...register("stock", {})}
-                value={state.stock}
+                {...register("gas", {})}
+                value={state.gas}
                 onChange={(e) =>
                   setState({ ...state, [e.target.name]: e.target.value })
                 }
@@ -172,7 +172,7 @@ function SingleCollectibleItem() {
                 <img src={`/assets/arrow.svg`} alt="" />
               </span>
             </button>
-            <p>Auto saving</p>
+            {/* <p>Auto saving</p> */}
           </div>
         </form>
       </div>
@@ -196,20 +196,20 @@ function SingleCollectibleItem() {
               {state.price ? state.price : "0.00"} ETH
             </span>
           </div>
-          <div className={styles.previewdiv}>
+          {/* <div className={styles.previewdiv}>
             <div className={styles.avatars}>
               <img alt="avatar" src={`/assets/auctionAvatar.png`} />
               <img alt="avatar" src={`/assets/auctionAvatar.png`} />
               <img alt="avatar" src={`/assets/auctionAvatar.png`} />
             </div>
             <div>{state.stock ? state.stock : "0"} in stock</div>
-          </div>
+          </div> */}
           <hr />
           <div className={styles.bidsec}>
             <div className={styles.bidsec1}>
               <img alt="bid icon" src={`/assets/bidicon.svg`} />
               <span>
-                Highest bid <span>0.01</span>
+                Highest bid <span>0.00</span>
               </span>
             </div>
             <div className="bidsec2">
