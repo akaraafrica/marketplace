@@ -94,9 +94,9 @@ model Notification {
   title     String
   content   String
   status    Boolean
-  createdAt DateTime  @default(now())
-  id        Int       @id @default(autoincrement())
-  user      User?     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Profile {
