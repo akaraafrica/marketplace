@@ -100,15 +100,22 @@ model Notification {
 }
 
 model Profile {
-  name        String
+  name        String?
   rating      Int?
-  avatar      String
+  avatar      String?
   dob         DateTime?
   userId      Int       @unique
   id          Int       @id @default(autoincrement())
-  phoneNumber String
-  bio         String    @db.VarChar(250)
+  phoneNumber String?
+  bio         String?    @db.VarChar(250)
   user        User      @relation(fields: [userId], references: [id])
+  website     String?
+  twitter     String?
+  facebook    String?
+  instagram   String?
+  itemMaxOffer Float?
+  itemMinOffer Float?
+  turnOnNotify Boolean?
 }
 
 model Rating {

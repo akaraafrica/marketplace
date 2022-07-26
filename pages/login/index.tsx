@@ -55,6 +55,7 @@ const Index = () => {
       if (res && res.status === 200) {
         toast.success("Welcome to Akara, Login successful.");
         localStorage.setItem("address", res.data.user.walletAddress);
+        localStorage.setItem("accessToken", res.data.accessToken);
 
         const savedUser = await UserDs.fetch(account);
         dispatch(setUser(savedUser.value));

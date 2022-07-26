@@ -11,37 +11,36 @@ const handler = async (
 
   if (req.method === "PUT") {
     try {
-      await prisma.profile.upsert({
+      await prisma.user.update({
         where: {
-          userId: 7,
+          walletAddress: address,
         },
-        update: {
-          name: req.body.name,
-          bio: req.body.bio,
-          dob: req.body.dob,
-          avatar: req.body.avatar,
-          phoneNumber: req.body.phoneNumber,
-          user: req.body.user,
-          // twitter: req.body.twitter,
-          // facebook: req.body.facebook,
-          // instagram: req.body.instagram,
-          // itemMinOffer: req.body.itemMinOffer,
-          // itemMaxOffer: req.body.itemMaxOffer
-        },
-        create: {
-          userId: 7,
-          name: req.body.name,
-          bio: req.body.bio,
-          dob: req.body.dob,
-          avatar: req.body.avatar,
-          phoneNumber: req.body.phoneNumber,
-          user: req.body.user,
+        data: {
+          profile: {
+            update: {
+              name: req.body.name,
+              bio: req.body.bio,
+              phoneNumber: req.body.phoneNumber,
+              dob: req.body.dob,
+              rating: req.body.rating,
+              avatar: req.body.avatar,
+              website: req.body.website,
+              twitter: req.body.twitter,
+              facebook: req.body.facebook,
+              instagram: req.body.instagram,
+              itemMaxOffer: req.body.itemMaxOffer,
+              itemMinOffer: req.body.itemMinOffer,
+              turnOnNotify: req.body.turnOnNotify,
+            },
+          },
         },
       });
-      res.status(200).json({ message: "Updated successfully" });
-    } catch (error) {
+      // console.log('body', req.body)
+      return res.status(201).json({ message: "Updated successfully" });
+    } catch (error: any) {
       console.log(error);
+      return res.status(400).json({ message: error.response.data });
     }
   }
 };
-export default handler;
+export default verifyToken(handler);

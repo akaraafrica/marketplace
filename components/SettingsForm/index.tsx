@@ -12,7 +12,7 @@ function SettingsForm() {
   const [state, setState] = useState({
     name: "",
     bio: "",
-    customUrl: "",
+    phoneNumber: "",
     website: "",
     twitter: "",
     facebook: "",
@@ -33,23 +33,11 @@ function SettingsForm() {
     // if (foto) {
     //   data.avatar = foto;
     // }
-    const address: string = "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias";
-    // localStorage.getItem("address")!;
-    const accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoicXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm1tbmJ2Y3h6bGtqaGdmZHNhcG9pdXl0cmV3cSIsImlhdCI6MTY1ODgwNzczNSwiZXhwIjoxNjU4OTgwNTM1fQ.J9731BLJy-rVx-TbT3CkmSQxLI1oBHJr1IPZeSuXewc";
-    const user = {
-      id: 7,
-      walletAddress: "qwertyuiopasdfghjklzxcvbnmmnbvcxzlkjhgfdsapoiuytrewq",
-      email: "samynajdev@gmail.com",
-      password: "$2a$10$Or7.gEdfE4murYsBj4Rd/uxkeciv1im9OTctZOrmmGB1llIP4jf/2",
-      verified: false,
-      profileId: null,
-      createdAt: "2022-07-26T03:55:34.208Z",
-      updatedAt: "2022-07-26T03:55:34.210Z",
-    };
-    ProfileDs.updateData(data, address, accessToken, user);
 
-    console.log("data", data);
+    const address: string = localStorage.getItem("address")!;
+    const accessToken: string = localStorage.getItem("accessToken")!;
+
+    ProfileDs.updateData(data, address, accessToken);
   };
 
   const target = useRef<HTMLInputElement>(null);
@@ -62,7 +50,7 @@ function SettingsForm() {
     setState({
       name: "",
       bio: "",
-      customUrl: "",
+      phoneNumber: "",
       website: "",
       twitter: "",
       facebook: "",
@@ -121,17 +109,29 @@ function SettingsForm() {
                   <div className={styles.itemsettingforminput}>
                     <label>MIN OFFER</label>
                     <input
-                      type="text"
+                      type="number"
+                      min="0"
+                      step="0.01"
                       placeholder='Minimum Offer"'
                       {...register("itemMinOffer", {})}
+                      value={state.itemMinOffer}
+                      onChange={(e) =>
+                        setState({ ...state, [e.target.name]: e.target.value })
+                      }
                     />
                   </div>
                   <div className={styles.itemsettingforminput}>
                     <label>MAX OFFER</label>
                     <input
-                      type="text"
+                      type="number"
+                      min="0"
+                      step="0.01"
                       placeholder='Maximum Offer"'
                       {...register("itemMaxOffer", {})}
+                      value={state.itemMaxOffer}
+                      onChange={(e) =>
+                        setState({ ...state, [e.target.name]: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -142,7 +142,7 @@ function SettingsForm() {
                   <p>This will unmute all notifications</p>
                 </div>
                 <label className={styles.switch}>
-                  <input type="checkbox" {...register("notifications", {})} />
+                  <input type="checkbox" {...register("turnOnNotify", {})} />
                   <span className={`${styles.slider} ${styles.round}`}></span>
                 </label>
               </div>
@@ -157,14 +157,22 @@ function SettingsForm() {
                       type="text"
                       placeholder='Enter your display name"'
                       {...register("name", {})}
+                      value={state.name}
+                      onChange={(e) =>
+                        setState({ ...state, [e.target.name]: e.target.value })
+                      }
                     />
                   </div>
                   <div className={styles.itemsettingforminputsec2}>
-                    <label>Custom url</label>
+                    <label>Phone number</label>
                     <input
                       type="text"
-                      placeholder='ui8.net/Your custom URL"'
-                      {...register("customUrl", {})}
+                      placeholder="+2348010203040"
+                      {...register("phoneNumber", {})}
+                      value={state.phoneNumber}
+                      onChange={(e) =>
+                        setState({ ...state, [e.target.name]: e.target.value })
+                      }
                     />
                   </div>
                   <div className={styles.itemsettingforminputsec2}>
@@ -172,6 +180,10 @@ function SettingsForm() {
                     <textarea
                       placeholder='About yourselt in a few words"'
                       {...register("bio", {})}
+                      value={state.bio}
+                      onChange={(e) =>
+                        setState({ ...state, [e.target.name]: e.target.value })
+                      }
                     ></textarea>
                   </div>
                 </div>
@@ -184,6 +196,10 @@ function SettingsForm() {
                     type="text"
                     placeholder='Enter URL"'
                     {...register("website", {})}
+                    value={state.website}
+                    onChange={(e) =>
+                      setState({ ...state, [e.target.name]: e.target.value })
+                    }
                   />
                 </div>
                 <div className={styles.itemsettingforminputsec2twitter}>
@@ -193,6 +209,10 @@ function SettingsForm() {
                       type="text"
                       placeholder="@twitter username"
                       {...register("twitter", {})}
+                      value={state.twitter}
+                      onChange={(e) =>
+                        setState({ ...state, [e.target.name]: e.target.value })
+                      }
                     />
                     <button type="button">Verify account</button>
                   </div>
@@ -206,6 +226,13 @@ function SettingsForm() {
                           type="text"
                           placeholder="facebook url"
                           {...register("facebook", {})}
+                          value={state.facebook}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              [e.target.name]: e.target.value,
+                            })
+                          }
                         />
                         <button type="button">Verify account</button>
                       </div>
@@ -217,6 +244,13 @@ function SettingsForm() {
                           type="text"
                           placeholder="instagram username"
                           {...register("instagram", {})}
+                          value={state.instagram}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              [e.target.name]: e.target.value,
+                            })
+                          }
                         />
                         <button type="button">Verify account</button>
                       </div>

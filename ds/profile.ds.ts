@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/`;
+const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}api/`;
 
 class Profile {
   constructor() {}
@@ -15,19 +15,30 @@ class Profile {
     }
   }
 
-  async updateData(data: any, address: string, accessToken: string, user: any) {
+  async updateData(data: any, address: string, accessToken: string) {
     try {
-      const res = await axios.put(`${baseUrl}profile/${address}`, {
-        method: "PUT",
-        // headers: {
-        //   authorization: `Bearer ${accessToken}`,
-        // },
-        body: JSON.stringify({
-          address: address,
+      await axios.put(
+        `${baseUrl}profile/${address}`,
+        {
           name: data.name,
-          user: data.user,
-        }),
-      });
+          bio: data.bio,
+          phoneNumber: data.phoneNumber,
+          website: data.website,
+          twitter: data.twitter,
+          facebook: data.facebook,
+          instagram: data.instagram,
+          itemMinOffer: parseFloat(data.itemMinOffer),
+          itemMaxOffer: parseFloat(data.itemMaxOffer),
+          turnOnNotify: data.turnOnNotify,
+          address: address,
+        },
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       return data;
     } catch (error) {
       console.log(error);
