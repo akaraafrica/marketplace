@@ -19,6 +19,15 @@ class Item {
       console.log(error);
     }
   }
+
+  async getData() {
+    try {
+      const items = await axios.get(baseUrl);
+      return items.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default new Item();

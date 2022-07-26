@@ -5,8 +5,9 @@ import styles from "./index.module.scss";
 import Header from "../../components/Header";
 import HotItems from "../../components/HotItems/index";
 import Footer from "../../components/Footer/index";
+import { ItemDs } from "../../ds";
 
-function ContactPage() {
+function ContactPage(props: any) {
   // document.body.style = "background: black;";
   return (
     <div className={styles.contactpagecon}>
@@ -101,9 +102,18 @@ function ContactPage() {
           </div>
         </div>
       </div>
-      <HotItems />
+      <HotItems items={props.items} />
       <Footer />
     </div>
   );
+}
+export async function getServerSideProps() {
+  let [item] = await Promise.all([ItemDs.getData()]);
+
+  return {
+    props: {
+      item,
+    },
+  };
 }
 export default ContactPage;

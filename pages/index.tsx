@@ -4,7 +4,7 @@ import Lottie from "react-lottie-player";
 import lottieJson from "../lotties/json-background.json";
 import SellersSec from "../components/SellersSec";
 import styles from "./index.module.scss";
-import Hotitems from "../components/HotItems";
+import HotItems from "../components/HotItems";
 import Discover from "../components/DiscoverSection/index";
 import SubscribeModal from "../components/SubscribeModal/index";
 import HowItWorks from "../components/HowItWorks/index";
@@ -13,19 +13,10 @@ import { Filter } from "../ds/discovery.ds";
 import LandingMainSection from "../components/LandingMainSection";
 import Layout from "../components/Layout";
 import HotCollectionsSection from "../components/HotCollectionsSection";
-import { CollectionDs, DiscoveryDs } from "../ds/index";
+import { CollectionDs, DiscoveryDs, ItemDs } from "../ds/index";
 
 const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
-  console.log(props);
-
-  // const settings = {
-  //   arrows: false,
-  //   arrowsBlock: false,
-  //   shift: 10,
-  //   slidesPerRow: 3,
-  //   autoplay: true,
-  // };
 
   return (
     <Layout>
@@ -47,7 +38,7 @@ const Home = (props: any) => {
       </div>
       <LandingMainSection />
       <SellersSec />
-      <Hotitems />
+      <HotItems items={props.item} />
       <HotCollectionsSection collection={props.collection} />
       <Discover items={props.discovery} />
       <div className={styles.discoverdividercon}></div>
@@ -58,15 +49,17 @@ const Home = (props: any) => {
 };
 
 export async function getServerSideProps() {
-  let [discovery, collection] = await Promise.all([
+  let [discovery, collection, item] = await Promise.all([
     DiscoveryDs.getData(Filter.All),
     CollectionDs.getData(),
+    ItemDs.getData(),
   ]);
 
   return {
     props: {
       discovery,
       collection,
+      item,
     },
   };
 }

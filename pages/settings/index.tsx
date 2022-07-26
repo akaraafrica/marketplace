@@ -6,6 +6,7 @@ import Layout from "../../components/Layout";
 import { BiArrowBack } from "react-icons/bi";
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
+import withAuth from "../../HOC/withAuth";
 
 const Settings = () => {
   //  document.body.style = 'background: black;';
@@ -27,4 +28,4 @@ const Settings = () => {
     </Layout>
   );
 };
-export default Settings;
+export default withAuth(Settings);

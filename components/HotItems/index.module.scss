@@ -1,64 +1,65 @@
-.hotitemsbtn button {
-  width: 2.9vw;
-  height: 2.9vw;
-  border: 2px solid #353945;
-  border-radius: 40px;
-  background-color: transparent;
-}
-.hotitemsbtn button span img {
-  width: 1.02vw;
-  height: 0.65vw;
-}
-.hotitemssec1con h1 {
-  font-size: 2.9vw;
-  color: white;
-  font-weight: 500;
-}
-.hotitemssec1con {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 88%;
-}
-.hotitemssec1parent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.hotitemssec2con {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
-  margin-left: 3.5vw;
-}
-.hotitemscon {
-  margin-top: 8vw;
-}
-@media only screen and (min-width: 600px) {
-  .hotitemmobileparent {
-    display: none;
+.root {
+  width: 100%;
+  box-sizing: border-box;
+
+  .container {
+    width: 90%;
+    padding: 136px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    @media screen and (min-width: 1024px) {
+      width: 70%;
+      padding: 136px 15%;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h1 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 48px;
+        letter-spacing: -0.01em;
+        color: #fcfcfd;
+      }
+
+      .hotitemsbtn button {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #353945;
+        border-radius: 40px;
+        background-color: transparent;
+      }
+      .hotitemsbtn button span img {
+        width: 14px;
+        height: 9px;
+      }
+    }
   }
 }
-@media only screen and (max-width: 600px) {
-  .hotitemssec1con h1 {
-    font-size: 5.8vw;
-  }
-  .hotitemsbtn button {
-    width: 6vw;
-    height: 6vw;
-  }
-  .hotitemsbtn button span img {
-    width: 2.2vw;
-    height: 1.4vw;
-  }
-  .hotitemdesktopcon {
-    display: none;
+.swiper_container {
+  width: 100%;
+  // display: flex;
+  // justify-content: space-between;
+}
+
+@media screen and (min-width: 640px) {
+  .swiper_container {
+    width: 100%;
   }
 }
-@media only screen and (max-width: 249px) {
-  .hotitemsbtn button span img {
-    width: 2.4vw;
-    height: 2.4vw;
+
+@media screen and (min-width: 768px) {
+  .swiper_container {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 1260px) {
+  .swiper_container {
+    width: 100%;
   }
 }
