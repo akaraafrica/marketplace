@@ -61,7 +61,7 @@ model User {
   verified        Boolean          @default(false)
   profileId       Int?
   createdAt       DateTime         @default(now())
-  updatedAt       DateTime?        @updatedAt
+  updatedAt       DateTime         @updatedAt
   bids            Bid[]
   collections     Collection[]
   items           Item[]
@@ -81,7 +81,7 @@ model Collection {
   collectionTypeId Int
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
-  updatedAt        DateTime?          @updatedAt
+  updatedAt        DateTime           @updatedAt
   authorId         Int
   images           String[]
   videos           String[]
@@ -111,12 +111,12 @@ model UserFollower {
 }
 
 model ItemRating {
-  id       Int      @id @default(autoincrement())
-  itemId   Int
-  ratingId Int
-  upatedAt DateTime @updatedAt
-  item     Item     @relation(fields: [itemId], references: [id])
-  rating   Rating   @relation(fields: [ratingId], references: [id])
+  id        Int      @id @default(autoincrement())
+  itemId    Int
+  ratingId  Int
+  updatedAt DateTime
+  item      Item     @relation(fields: [itemId], references: [id])
+  rating    Rating   @relation(fields: [ratingId], references: [id])
 }
 
 model UserRating {
@@ -156,19 +156,19 @@ model Profile {
   avatar      String
   dob         DateTime?
   userId      Int       @unique
-  id          String    @id @default(uuid())
+  id          Int       @id @default(autoincrement())
   phoneNumber String
   bio         String    @db.VarChar(250)
   user        User      @relation(fields: [userId], references: [id])
 }
 
 model Notification {
-  id        String   @id @default(uuid())
   userId    Int
   title     String
   content   String
   status    Boolean
   createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [userId], references: [id])
 }
 
