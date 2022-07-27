@@ -19,7 +19,7 @@ const Index = ({ collection }: any) => {
       <main className={styles.main}>
         <section className={styles.sectionone}>
           <div className={styles.img}>
-            <Image src={select.images[0]} layout="fill" />
+            <Image alt={select.title} src={select.images[0]} layout="fill" />
             {width < 800 && <QuickButtons />}
           </div>
           <div className={styles.images}>
@@ -38,6 +38,7 @@ const Index = ({ collection }: any) => {
                     src={item.images[0]}
                     width={"100px"}
                     height={100}
+                    alt={item.title}
                     className={styles.image}
                   />
                 </SwiperSlide>

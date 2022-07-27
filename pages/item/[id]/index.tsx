@@ -29,7 +29,9 @@ const Index = ({ item }: any) => {
           </div>
 
           <div className={styles.img}>
-            {item?.images[0] && <Image src={item.images[0]} layout="fill" />}
+            {item?.images[0] && (
+              <Image alt={item.title} src={item.images[0]} layout="fill" />
+            )}
             {width < 800 && <QuickButtons />}
           </div>
         </section>
