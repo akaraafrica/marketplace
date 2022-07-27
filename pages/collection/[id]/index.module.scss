@@ -1,0 +1,125 @@
+$secondary-color: #f2994a;
+$white-color: #fff;
+$grey: #23262f;
+$grey2: #353945;
+$grey3: #777e90;
+$green: #45b26b;
+.main {
+  max-width: 60rem;
+
+  margin: auto;
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+  gap: 5vw;
+  @media only screen and (max-width: 780px) {
+    flex-wrap: wrap;
+  }
+}
+
+.sectionone {
+  position: relative;
+  width: fit-content;
+  .tags {
+    position: absolute;
+    top: 15px;
+    left: 30px;
+    display: flex;
+    gap: 5px;
+    @media only screen and (max-width: 780px) {
+      left: 80px;
+    }
+    span {
+      position: relative;
+      padding: 3px;
+      border-radius: 4px;
+      color: black;
+      z-index: 2;
+      background-color: $white-color;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    span:nth-child(2) {
+      background: $secondary-color;
+      color: $white-color;
+      font-weight: 600;
+    }
+  }
+  .img {
+    position: relative;
+    z-index: 1;
+    margin: auto;
+    width: calc(311px + 10vw);
+    height: calc(420px + 10vw);
+
+    img {
+      border-radius: 10px;
+    }
+  }
+}
+
+.sectiontwo {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  padding-top: 0;
+  position: relative;
+  min-width: 18rem;
+  max-width: 30rem;
+  .price {
+    h3 {
+      color: $white-color;
+      font-weight: 700;
+      font-size: 2.8rem;
+      display: flex;
+      line-height: 3rem;
+    }
+    span {
+      font-weight: 400;
+      color: $grey3;
+      font-size: 1rem;
+      margin: 20px 5px;
+      padding: 2px;
+    }
+
+    span:nth-child(2) {
+      color: $green;
+      border: 2px solid $green;
+      border-radius: 4px;
+    }
+    span:nth-child(3) {
+      border: 2px solid $grey2;
+      border-radius: 4px;
+    }
+  }
+  p {
+    color: $grey3;
+    margin-top: 2rem;
+    font-size: larger;
+    font-weight: 500;
+    span {
+      color: white;
+    }
+  }
+}
+
+.stats {
+  color: white;
+  display: flex;
+  margin-top: 1rem;
+  font-weight: 600;
+  gap: 1.5rem;
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.swiper_container {
+  margin-top: 1rem;
+  width: 100%;
+  .image {
+    border-radius: 10px;
+    cursor: pointer;
+  }
+}
