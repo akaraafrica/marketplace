@@ -7,6 +7,7 @@ import SwitchComponent from "../SwitchComponent";
 import ProfileCard from "../ProfileCard";
 import { useForm } from "react-hook-form";
 import ItemDs from "../../ds/item.ds";
+import UploadDs from "../../ds/upload.ds";
 
 function SingleCollectibleItem() {
   const [foto, setFoto] = useState(null);
@@ -21,7 +22,7 @@ function SingleCollectibleItem() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     if (foto) {
       data.image = foto;
     }
@@ -29,6 +30,9 @@ function SingleCollectibleItem() {
     const tokenid = "qwertyuiopkgfdsazxcvbnjwertyu";
 
     // ItemDs.createData(data, '7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias', tokenid);
+    //upload file
+    const upload = await UploadDs.uploadItem(foto)
+    console.log("uploaded")
   };
 
   const target = useRef<HTMLInputElement>(null);
