@@ -10,8 +10,11 @@ $grey2: #353945;
   width: fit-content;
   display: flex;
   justify-content: center;
-  gap: 15px;
   flex-direction: column;
+  gap: 15px;
+  span:hover {
+    cursor: pointer;
+  }
 }
 .main {
   position: absolute;
@@ -34,13 +37,19 @@ $grey2: #353945;
 .love {
   border: 1px $grey2 solid;
   border-radius: 50%;
-  padding: 5px;
+  padding: 8px;
   height: fit-content;
   display: flex;
   align-items: center;
+  @media only screen and (min-width: 800px) {
+    padding: 3px;
+    padding-top: 8px;
+    padding-left: 6px;
+  }
 }
+
 .close {
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 800px) {
     display: none;
   }
 }

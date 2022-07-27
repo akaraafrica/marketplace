@@ -4,7 +4,7 @@ import AcceptBid from "./AcceptBid";
 import PlaceBid from "./PlaceBid";
 import styles from "./Tags.module.scss";
 
-const TagComponent = () => {
+const InfoComponent = () => {
   return (
     <div className={styles.profileInfoCard}>
       <Avatar
@@ -31,38 +31,34 @@ export default function Tags({ isOwner }: any) {
         >
           Info
         </span>
-        <span
+        {/* <span
           onClick={() => setTag(1)}
           className={` ${tag === 1 ? styles.active : ""}`}
         >
           Owners
-        </span>
-        <span
+        </span> */}
+        {/* <span
           onClick={() => setTag(2)}
           className={` ${tag === 2 ? styles.active : ""}`}
         >
           History
-        </span>
-        <span
-          onClick={() => setTag(3)}
-          className={` ${tag === 3 ? styles.active : ""}`}
-        >
-          Bids
-        </span>
+        </span> */}
+        {isOwner && (
+          <span
+            onClick={() => setTag(3)}
+            className={` ${tag === 3 ? styles.active : ""}`}
+          >
+            Bids
+          </span>
+        )}
       </div>
-      {tag === 0 && <TagComponent />}
-      {tag === 3 && (
+      {tag === 0 && (
         <>
-          {isOwner ? (
-            <>
-              <AcceptBid />
-              <AcceptBid noview={true} />
-            </>
-          ) : (
-            <PlaceBid />
-          )}
+          <InfoComponent />
+          {isOwner ? <AcceptBid /> : <PlaceBid />}
         </>
       )}
+      {tag === 3 && isOwner && <AcceptBid noview={true} />}
     </>
   );
 }

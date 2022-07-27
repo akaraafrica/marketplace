@@ -6,10 +6,10 @@ $secondary-color: #f2994a;
 
 .main {
   display: flex;
-  width: 90%;
+  width: fit-content;
   border: $grey2 2px solid;
-  justify-content: space-between;
   border-radius: 20px;
+  gap: 1.5rem;
   padding: 3px 10px;
   span {
     color: $grey3;

@@ -21,11 +21,11 @@ $green: #45b26b;
   .tags {
     position: absolute;
     top: 15px;
-    left: 30px;
+    left: 20px;
     display: flex;
     gap: 5px;
     @media only screen and (max-width: 780px) {
-      left: 80px;
+      left: 20px;
     }
     span {
       position: relative;
@@ -78,12 +78,14 @@ $green: #45b26b;
       font-weight: 400;
       color: $grey3;
       font-size: 1rem;
+      text-align: center;
       margin: 20px 5px;
       padding: 2px;
     }
 
     span:nth-child(2) {
       color: $green;
+
       border: 2px solid $green;
       border-radius: 4px;
     }
@@ -112,5 +114,8 @@ $green: #45b26b;
   div {
     display: flex;
     flex-direction: column;
+  }
+  span {
+    text-align: center;
   }
 }

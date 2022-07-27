@@ -8,9 +8,15 @@ export default function QuickButtons({ desktop }: any) {
       </div>
       <Image src="/assets/singleItem/share.svg" width={40} height={40} />
       <div className={styles.love}>
-        <Image src="/assets/singleItem/love.svg" width={28} height={28} />
+        <Image src="/assets/singleItem/love.svg" width={25} height={25} />
       </div>
-      <Image src="/assets/singleItem/option.svg" width={40} height={30} />
+      <div className={styles.option}>
+        <Image
+          src="/assets/singleItem/option.svg"
+          width={38}
+          height={desktop ? 45 : 30}
+        />
+      </div>
     </div>
   );
 }

@@ -12,7 +12,8 @@ export default function AcceptBid({ noview }: any) {
         />
         <div>
           <h5>
-            Highest bid by <span>kohaku Tora</span>
+            {!noview && <>Highest bid by </>}
+            <span>Kohaku Tora</span>
           </h5>
           <h3>
             <span>1.46 ETH</span>
