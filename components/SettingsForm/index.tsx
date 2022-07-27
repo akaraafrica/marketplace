@@ -38,6 +38,7 @@ function SettingsForm() {
     const accessToken: string = localStorage.getItem("accessToken")!;
 
     ProfileDs.updateData(data, address, accessToken);
+    clearState();
   };
 
   const target = useRef<HTMLInputElement>(null);
