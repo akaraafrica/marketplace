@@ -25,6 +25,7 @@ function SettingsForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -33,11 +34,31 @@ function SettingsForm() {
     // if (foto) {
     //   data.avatar = foto;
     // }
+    const newData: any = {};
+    if (
+      !data.name &&
+      !data.bio &&
+      !data.phoneNumber &&
+      !data.website &&
+      !data.twitter &&
+      !data.facebook &&
+      !data.instagram &&
+      !data.itemMaxOffer &&
+      !data.itemMinOffer
+    ) {
+      return;
+    }
 
+    for (let key in data) {
+      if (data[key] !== "") {
+        newData[key] = data[key];
+      }
+    }
+    console.log(newData);
     const address: string = localStorage.getItem("address")!;
     const accessToken: string = localStorage.getItem("accessToken")!;
 
-    ProfileDs.updateData(data, address, accessToken);
+    ProfileDs.updateData(newData, address, accessToken);
     clearState();
   };
 
@@ -48,18 +69,7 @@ function SettingsForm() {
 
   const clearState = () => {
     setFoto(null);
-    setState({
-      name: "",
-      bio: "",
-      phoneNumber: "",
-      website: "",
-      twitter: "",
-      facebook: "",
-      instagram: "",
-      itemMinOffer: "",
-      itemMaxOffer: "",
-      turnOnNotify: false,
-    });
+    reset();
   };
   const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
