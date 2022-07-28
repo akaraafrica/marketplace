@@ -8,9 +8,9 @@ import HotCollectionCard from "../HotCollectionsCard";
 import { ICollection } from "../../types/collection.interface";
 
 interface properties {
-  collections: ICollection[]
+  collections: ICollection[];
 }
-const Index = ({collections}: properties) => {
+const Index = ({ collections }: properties) => {
   return (
     <div className={styles.root}>
       <h2>Hot collections</h2>

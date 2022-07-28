@@ -20,8 +20,9 @@ $green: #45b26b;
 .sectionone {
   position: relative;
   width: fit-content;
+  margin-bottom: 2rem;
   .tags {
-    // position: absolute;
+    position: absolute;
     top: 15px;
     left: 30px;
     display: flex;
@@ -127,7 +128,7 @@ $green: #45b26b;
   }
 }
 .swiper_container {
-  margin-top: 20rem;
+  margin-top: 1rem;
   width: 100%;
   .image {
     border-radius: 10px;

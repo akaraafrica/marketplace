@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import NextImage from "../Image";
 import styles from "./index.module.scss";
+import Link from "../Link";
 
 interface ItemCardProps {
   id: number;
@@ -27,7 +28,9 @@ function ItemCard(props: ItemCardProps) {
         }
       >
         <div className={styles.previewcardimg}>
-          <a href={`/item/${props.id}`}><img alt="product image" src={props.img} /></a>
+          <Link href={`/item/${props.id}`}>
+            <img alt="product image" src={props.img} />
+          </Link>
         </div>
         {props.collectionImages && (
           <div className={styles.collectionsimgs}>

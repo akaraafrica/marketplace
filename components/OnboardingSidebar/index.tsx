@@ -4,15 +4,16 @@ import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { AiOutlineTwitter, AiOutlineGoogle } from "react-icons/ai";
 import { TiSocialFacebook } from "react-icons/ti";
+import Link from "../Link";
 
 const OnboardingSideBar = () => {
   const [swipe, setSwipe] = useState(false);
 
   return (
     <div className={styles.sideBar}>
-      <a href={`/`}>
+      <Link href={`/`}>
         <img className={styles.image} src={`/assets/Logo.png`} alt="logo" />
-      </a>
+      </Link>
       <div className={styles.leftCenter}>
         <h6>
           Buy and Own{" "}

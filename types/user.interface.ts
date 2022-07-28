@@ -21,5 +21,5 @@ export const initialState: IUser = {
   walletAddress: "",
   joined: date,
   isVerified: false,
-  profile: profileInitialState
+  profile: profileInitialState,
 };

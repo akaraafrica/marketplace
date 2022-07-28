@@ -19,19 +19,19 @@ const handler = async (
           },
         },
         items: {
-            include: {
-                owner: {
-                    include: {
-                        profile: true,
-                    },
-                },
+          include: {
+            owner: {
+              include: {
+                profile: true,
+              },
             },
+          },
         },
         ratings: true,
       },
     });
     res.status(200).json({ data });
   }
-}
+};
 
 export default handler;

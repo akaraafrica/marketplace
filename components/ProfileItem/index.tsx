@@ -33,7 +33,7 @@ const Index = ({ items, open, following, collections }: ProfileItemProps) => {
       ) : open === 1 ? (
         <div className={styles.root}>
           {collections &&
-            collections.map((item: any, idx:number) => (
+            collections.map((item: any, idx: number) => (
               <ItemCard
                 key={idx}
                 id={item.id}

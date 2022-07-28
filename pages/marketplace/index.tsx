@@ -15,7 +15,7 @@ import CustomSelect from "../../components/CustomSelect";
 import { IItem } from "../../types/item.interface";
 
 interface properties {
-  items: IItem[]
+  items: IItem[];
 }
 const Index = ({ items }: properties) => {
   const [open, setOpen] = useState(Filter.All);
@@ -164,10 +164,10 @@ const Index = ({ items }: properties) => {
 };
 export async function getServerSideProps() {
   let data = await Discovery.getData(Filter.All);
-  
+  console.log("items here are ", data);
   return {
     props: {
-      data,
+      items: data,
     },
   };
 }

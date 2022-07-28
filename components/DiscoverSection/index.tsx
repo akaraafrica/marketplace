@@ -10,12 +10,12 @@ import { handleChange, handleResetFilter, handleSliderChange } from "./utils";
 import { IItem } from "../../types/item.interface";
 
 interface properties {
-  items: IItem[]
+  items: IItem[];
 }
 function Discover({ items }: properties) {
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState(items);
-  console.log("data fetched here in discovery is ", items)
+  console.log("data fetched here in discovery is ", items);
 
   return (
     <div className={styles.root}>

@@ -1,26 +1,37 @@
 import { Avatar } from "@mui/material";
 import { useState } from "react";
+import { IUser } from "../../types/user.interface";
 import AcceptBid from "./AcceptBid";
 import PlaceBid from "./PlaceBid";
 import styles from "./Tags.module.scss";
+import Link from "../Link";
 
-const InfoComponent = () => {
+interface infoProperties {
+  user: IUser;
+}
+const InfoComponent = ({ user }: infoProperties) => {
   return (
     <div className={styles.profileInfoCard}>
       <Avatar
-        src={`/assets/auctionAvatar.png`}
+        src={user.profile?.avatar}
         alt="creator-photo"
         sx={{ width: 50, height: 50 }}
       />
-      <div>
-        <span>Creator</span>
-        <span>Sarah Shaibu</span>
-      </div>
+      <Link href={`/profile/${user.id}`}>
+        <div>
+          <span>Creator</span>
+          <span>{user.profile?.name}</span>
+        </div>
+      </Link>
     </div>
   );
 };
 
-export default function Tags({ isOwner }: any) {
+interface tagProperties {
+  isOwner: boolean;
+  owner: IUser;
+}
+export default function Tags({ isOwner, owner }: tagProperties) {
   const [tag, setTag] = useState(0);
   return (
     <>
@@ -54,7 +65,7 @@ export default function Tags({ isOwner }: any) {
       </div>
       {tag === 0 && (
         <>
-          <InfoComponent />
+          <InfoComponent user={owner} />
           {isOwner ? <AcceptBid /> : <PlaceBid />}
         </>
       )}
