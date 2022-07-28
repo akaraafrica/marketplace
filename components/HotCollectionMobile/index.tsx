@@ -16,9 +16,9 @@ function HotCollectionMobile() {
   };
   return (
     <div className="hotcollectionmobilecon">
-      <Swiper style={{ zIndex: 0 }}>
+      {/* <Swiper style={{ zIndex: 0 }}>
         <SwiperSlide>
-          <HotCollectionCard />
+          <HotCollectionCard/>
         </SwiperSlide>
         <SwiperSlide>
           <HotCollectionCard />
@@ -44,7 +44,7 @@ function HotCollectionMobile() {
         <SwiperSlide>
           <HotCollectionCard />
         </SwiperSlide>
-      </Swiper>
+      </Swiper> */}
     </div>
   );
 }

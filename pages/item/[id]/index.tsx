@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import NextImage from "../../../components/Image";
 import Layout from "../../../components/Layout";
 import QuickButtons from "../../../components/SingleItems/QuickButtons";
 import Tags from "../../../components/SingleItems/Tags";
@@ -24,13 +24,14 @@ const Index = ({ item }: any) => {
       <main className={styles.main}>
         <section className={styles.sectionone}>
           <div className={styles.tags}>
+            {/* TODO: change to item category */}
             <span>ART</span>
             {isComingSoon && <span>coming soon</span>}
           </div>
 
           <div className={styles.img}>
             {item?.images[0] && (
-              <Image alt={item.title} src={item.images[0]} layout="fill" />
+              <NextImage alt={item.title} src={item.images[0]} layout="fill" />
             )}
             {width < 800 && <QuickButtons />}
           </div>
@@ -59,11 +60,8 @@ const Index = ({ item }: any) => {
               <span>{item?.ratings?.length || 0}</span>
             </div>
           </div>
-          <p>
-            This NFT Card will give you Access to Special Airdrops. To learn
-            more about UI8 please visit
-          </p>
-          <Tags isOwner={isOwner} />
+          <p>{item.description}</p>
+          <Tags isOwner={isOwner} owner={item.owner} />
           {width > 800 && <QuickButtons desktop={true} />}
         </section>
       </main>
