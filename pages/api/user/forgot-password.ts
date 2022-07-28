@@ -33,7 +33,7 @@ export default async function ForgotPassword(
         from: "info@mbizi.org",
         templateId: "d-903bdb62e29f4f3a9b0f504ed8c0aefa",
         email: userEmail,
-        resetLink: link,
+        link: link,
         subject: "Password Reset for Akara4Africa Account",
       };
 
