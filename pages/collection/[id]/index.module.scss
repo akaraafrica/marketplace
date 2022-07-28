@@ -21,7 +21,7 @@ $green: #45b26b;
   position: relative;
   width: fit-content;
   .tags {
-    position: absolute;
+    // position: absolute;
     top: 15px;
     left: 30px;
     display: flex;
@@ -127,7 +127,7 @@ $green: #45b26b;
   }
 }
 .swiper_container {
-  margin-top: 1rem;
+  margin-top: 20rem;
   width: 100%;
   .image {
     border-radius: 10px;

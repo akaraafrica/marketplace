@@ -39,7 +39,7 @@ const Home = (props: any) => {
       <LandingMainSection />
       <SellersSec />
       <HotItems items={props.item} />
-      <HotCollectionsSection collection={props.collection} />
+      <HotCollectionsSection collections={props.collection} />
       <Discover items={props.discovery} />
       <div className={styles.discoverdividercon}></div>
       <SubscribeModal />
@@ -51,7 +51,7 @@ const Home = (props: any) => {
 export async function getServerSideProps() {
   let [discovery, collection, item] = await Promise.all([
     DiscoveryDs.getData(Filter.All),
-    CollectionDs.getData(),
+    CollectionDs.getCollections(),
     ItemDs.getData(),
   ]);
 

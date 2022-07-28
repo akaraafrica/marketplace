@@ -12,8 +12,12 @@ import {
   handleSliderChange,
 } from "../../components/DiscoverSection/utils";
 import CustomSelect from "../../components/CustomSelect";
+import { IItem } from "../../types/item.interface";
 
-const Index = ({ data: items }: any) => {
+interface properties {
+  items: IItem[]
+}
+const Index = ({ items }: properties) => {
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState(items);
   const handleSearch = (e: any) => {
@@ -150,7 +154,7 @@ const Index = ({ data: items }: any) => {
               </span>
             </div>
             <div>
-              <DiscoveryItems filterBy={open} products={data} />
+              <DiscoveryItems filterBy={open} initialItems={data} />
             </div>
           </div>
         </div>
@@ -160,7 +164,7 @@ const Index = ({ data: items }: any) => {
 };
 export async function getServerSideProps() {
   let data = await Discovery.getData(Filter.All);
-
+  
   return {
     props: {
       data,

@@ -11,7 +11,7 @@ export interface ICollectionType {
   typeId: string;
 }
 export interface ICollection {
-  id: number | string;
+  id: number;
   title: string;
   tokenId: string;
   collectionTypeId: number;
@@ -22,7 +22,7 @@ export interface ICollection {
   author: IUser;
   images: string[];
   videos: string[];
-  rating: number;
+  ratings: any[];
   type: ICollectionType;
   owners: IUser[];
 }

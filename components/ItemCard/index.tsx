@@ -1,13 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-// TODO: convert this to NextImage when given the chance
 import { useRouter } from "next/router";
 import React from "react";
 import NextImage from "../Image";
 import styles from "./index.module.scss";
 
-function ProfileCard(props: any) {
+interface ItemCardProps {
+  id: number;
+  img: string;
+  name: string;
+  price: number;
+  stock: string;
+  ownerAvatar: string;
+  highestBid: string;
+  collectionImages?: string[];
+}
+
+function ItemCard(props: ItemCardProps) {
   const router = useRouter();
   const isMarketplace = router.pathname === "/marketplace";
+
   return (
     <div>
       <div
@@ -16,11 +27,11 @@ function ProfileCard(props: any) {
         }
       >
         <div className={styles.previewcardimg}>
-          <img alt="product image" src={props.ProductImg} />
+          <a href={`/item/${props.id}`}><img alt="product image" src={props.img} /></a>
         </div>
-        {props.collections && (
+        {props.collectionImages && (
           <div className={styles.collectionsimgs}>
-            {props.collections.map((item: string, index: number) => (
+            {props.collectionImages.map((item: string, index: number) => (
               <NextImage
                 className={styles.image}
                 key={index}
@@ -32,32 +43,32 @@ function ProfileCard(props: any) {
           </div>
         )}
         <div className={styles.previewcardnamebox}>
-          <span>{props.Name}</span>
-          {!props.collections && (
+          <span>{props.name}</span>
+          {!props.collectionImages && (
             <div className={styles.previewcardprice}>
-              <span>{props.Price} ETH</span>
+              <span>{props.price} ETH</span>
             </div>
           )}
-          {props.collections && <span>{props.Stock}</span>}
+          {props.collectionImages && <span>{props.stock}</span>}
         </div>
-        {!props.collections && (
+        {!props.collectionImages && (
           <div className={styles.previewstockcon}>
             <div className={styles.avatars}>
-              <img alt="avatar" src={props.Avatar} />
-              <img alt="avatar" src={props.Avatar} />
-              <img alt="avatar" src={props.Avatar} />
+              <img alt="avatar" src={props.ownerAvatar} />
+              <img alt="avatar" src={props.ownerAvatar} />
+              <img alt="avatar" src={props.ownerAvatar} />
             </div>
-            <span>{props.Stock}</span>
+            <span>{props.stock}</span>
           </div>
         )}
-        {!props.collections && <hr />}
+        {!props.collectionImages && <hr />}
 
-        {!props.collections && (
+        {!props.collectionImages && (
           <div className={styles.bidsec}>
             <div className={styles.bidsec1}>
               <img alt="bid icon" src={`/assets/bidicon.svg`} />
               <span>
-                Highest bid <span> {props.HighestBid}</span>
+                Highest bid <span> {props.highestBid}</span>
               </span>
             </div>
             <div className="bidsec2">
@@ -69,4 +80,4 @@ function ProfileCard(props: any) {
     </div>
   );
 }
-export default ProfileCard;
+export default ItemCard;

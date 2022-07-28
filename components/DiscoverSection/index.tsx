@@ -7,10 +7,15 @@ import DiscoveryItems from "../DiscoveryItems/index";
 import { Filter } from "../../ds/discovery.ds";
 import CustomSelect from "../CustomSelect";
 import { handleChange, handleResetFilter, handleSliderChange } from "./utils";
+import { IItem } from "../../types/item.interface";
 
-function Discover({ items }: any) {
+interface properties {
+  items: IItem[]
+}
+function Discover({ items }: properties) {
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState(items);
+  console.log("data fetched here in discovery is ", items)
 
   return (
     <div className={styles.root}>
@@ -107,7 +112,7 @@ function Discover({ items }: any) {
         </div>
       </div>
       <div className={styles.discoverCont}>
-        <DiscoveryItems filterBy={open} products={data} />
+        <DiscoveryItems filterBy={open} initialItems={data} />
       </div>
     </div>
   );

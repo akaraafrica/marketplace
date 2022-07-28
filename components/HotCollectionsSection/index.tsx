@@ -5,8 +5,12 @@ import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import HotCollectionCard from "../HotCollectionsCard";
+import { ICollection } from "../../types/collection.interface";
 
-const Index = (props: any) => {
+interface properties {
+  collections: ICollection[]
+}
+const Index = ({collections}: properties) => {
   return (
     <div className={styles.root}>
       <h2>Hot collections</h2>
@@ -36,10 +40,10 @@ const Index = (props: any) => {
           disableOnInteraction: false,
         }}
       >
-        {props.collection &&
-          props.collection.map((item: any) => (
-            <SwiperSlide key={item.id}>
-              <HotCollectionCard data={item} />
+        {collections &&
+          collections.map((c: ICollection, idx) => (
+            <SwiperSlide key={idx}>
+              <HotCollectionCard collection={c} />
             </SwiperSlide>
           ))}
       </Swiper>
