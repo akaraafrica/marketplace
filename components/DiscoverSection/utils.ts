@@ -5,7 +5,7 @@ export const sortItem = (
   compareValue: string | number
 ) => {
   let newData;
-  if (!data || data.length === 0) return;
+  if (!data || data.length === 0) return [];
 
   if (compareValue === "ratings") {
     const itemsRating = data
