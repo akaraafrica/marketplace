@@ -26,6 +26,7 @@ function SettingsForm() {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -71,6 +72,8 @@ function SettingsForm() {
     setFoto(null);
     reset();
   };
+
+  const inputValue = getValues();
   const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
     <div className={styles.settingformcon}>
@@ -125,10 +128,7 @@ function SettingsForm() {
                       step="0.01"
                       placeholder='Minimum Offer"'
                       {...register("itemMinOffer", {})}
-                      value={state.itemMinOffer}
-                      onChange={(e) =>
-                        setState({ ...state, [e.target.name]: e.target.value })
-                      }
+                      value={inputValue.itemMinOffer}
                     />
                   </div>
                   <div className={styles.itemsettingforminput}>
@@ -139,10 +139,7 @@ function SettingsForm() {
                       step="0.01"
                       placeholder='Maximum Offer"'
                       {...register("itemMaxOffer", {})}
-                      value={state.itemMaxOffer}
-                      onChange={(e) =>
-                        setState({ ...state, [e.target.name]: e.target.value })
-                      }
+                      value={inputValue.itemMaxOffer}
                     />
                   </div>
                 </div>
@@ -168,10 +165,7 @@ function SettingsForm() {
                       type="text"
                       placeholder='Enter your display name"'
                       {...register("name", {})}
-                      value={state.name}
-                      onChange={(e) =>
-                        setState({ ...state, [e.target.name]: e.target.value })
-                      }
+                      value={inputValue.name}
                     />
                   </div>
                   <div className={styles.itemsettingforminputsec2}>
@@ -180,10 +174,7 @@ function SettingsForm() {
                       type="text"
                       placeholder="+2348010203040"
                       {...register("phoneNumber", {})}
-                      value={state.phoneNumber}
-                      onChange={(e) =>
-                        setState({ ...state, [e.target.name]: e.target.value })
-                      }
+                      value={inputValue.phoneNumber}
                     />
                   </div>
                   <div className={styles.itemsettingforminputsec2}>
@@ -191,10 +182,7 @@ function SettingsForm() {
                     <textarea
                       placeholder='About yourselt in a few words"'
                       {...register("bio", {})}
-                      value={state.bio}
-                      onChange={(e) =>
-                        setState({ ...state, [e.target.name]: e.target.value })
-                      }
+                      value={inputValue.bio}
                     ></textarea>
                   </div>
                 </div>
@@ -207,10 +195,7 @@ function SettingsForm() {
                     type="text"
                     placeholder='Enter URL"'
                     {...register("website", {})}
-                    value={state.website}
-                    onChange={(e) =>
-                      setState({ ...state, [e.target.name]: e.target.value })
-                    }
+                    value={inputValue.website}
                   />
                 </div>
                 <div className={styles.itemsettingforminputsec2twitter}>
@@ -220,10 +205,7 @@ function SettingsForm() {
                       type="text"
                       placeholder="@twitter username"
                       {...register("twitter", {})}
-                      value={state.twitter}
-                      onChange={(e) =>
-                        setState({ ...state, [e.target.name]: e.target.value })
-                      }
+                      value={inputValue.twitter}
                     />
                     <button type="button">Verify account</button>
                   </div>
@@ -237,13 +219,7 @@ function SettingsForm() {
                           type="text"
                           placeholder="facebook url"
                           {...register("facebook", {})}
-                          value={state.facebook}
-                          onChange={(e) =>
-                            setState({
-                              ...state,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
+                          value={inputValue.facebook}
                         />
                         <button type="button">Verify account</button>
                       </div>
@@ -255,13 +231,7 @@ function SettingsForm() {
                           type="text"
                           placeholder="instagram username"
                           {...register("instagram", {})}
-                          value={state.instagram}
-                          onChange={(e) =>
-                            setState({
-                              ...state,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
+                          value={inputValue.instagram}
                         />
                         <button type="button">Verify account</button>
                       </div>
