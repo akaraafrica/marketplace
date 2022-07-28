@@ -31,10 +31,10 @@ export default async function ForgotPassword(
       const emailData = {
         to: userEmail,
         from: "info@mbizi.org",
-        templateId: "d-1fbec631dc1248fc9b79e51299b0917f",
+        templateId: "d-903bdb62e29f4f3a9b0f504ed8c0aefa",
         email: userEmail,
-        link: link,
-        subject: "Reset Password",
+        resetLink: link,
+        subject: "Password Reset for Akara4Africa Account",
       };
 
       console.log(link);

@@ -75,7 +75,7 @@ export default async function Signup(
           name: userEmail,
           email: userEmail,
           link: link,
-          subject: userEmail,
+          subject: "👋 Please confirm your email",
         };
 
         Sendmail(Emaildata);
