@@ -26,15 +26,15 @@ export default async function ForgotPassword(
         adress: checkuser.walletAddress,
       };
       const token = await jwt.sign(payload, secret, { expiresIn: "30m" });
-      const link = `${process.env.NEXT_BASE_URL}/password-reset/${payload.email}/${token}`;
+      const link = `${process.env.NEXT_PUBLIC_DOMAIN}password-reset/${payload.email}/${token}`;
 
       const emailData = {
         to: userEmail,
         from: "info@mbizi.org",
-        templateId: "d-1fbec631dc1248fc9b79e51299b0917f",
+        templateId: "d-903bdb62e29f4f3a9b0f504ed8c0aefa",
         email: userEmail,
         link: link,
-        subject: "Reset Password",
+        subject: "Password Reset for Akara4Africa Account",
       };
 
       console.log(link);

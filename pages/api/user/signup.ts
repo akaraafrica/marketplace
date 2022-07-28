@@ -66,7 +66,7 @@ export default async function Signup(
         const token = jwt.sign({ user: address }, secret, {
           expiresIn: "2d",
         });
-        link = `${process.env.NEXT_BASE_URL}/api/user/activate/${userEmail}/${token}`;
+        link = `${process.env.NEXT_PUBLIC_DOMAIN}api/user/activate/${userEmail}/${token}`;
         // console.log("Secret:", token);
 
         const Emaildata = {
@@ -76,7 +76,7 @@ export default async function Signup(
           name: userEmail,
           email: userEmail,
           link: link,
-          subject: userEmail,
+          subject: "👋 Please confirm your email",
         };
 
         Sendmail(Emaildata);
