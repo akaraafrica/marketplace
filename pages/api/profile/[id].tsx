@@ -7,13 +7,13 @@ const handler = async (
   res: NextApiResponse,
   auth?: { user: string }
 ) => {
-  const address = req.query.address as string;
+  const id = parseInt(req.query.id as string);
 
   if (req.method === "PUT") {
     try {
       await prisma.user.update({
         where: {
-          walletAddress: address,
+          id: id,
         },
         data: {
           profile: {

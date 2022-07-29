@@ -5,7 +5,7 @@ const date =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
 export interface IUser {
-  id: number | string;
+  id: number;
   walletAddress: string;
   email: string;
   accessToken: string;

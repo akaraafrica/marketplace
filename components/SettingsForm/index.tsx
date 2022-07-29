@@ -43,10 +43,10 @@ function SettingsForm() {
       }
     }
     console.log(newData);
-    const address: string = localStorage.getItem("address")!;
+    const id: number = parseInt(localStorage.getItem("id")!);
     const accessToken: string = localStorage.getItem("accessToken")!;
 
-    ProfileDs.updateData(newData, address, accessToken);
+    ProfileDs.updateData(newData, id, accessToken);
     clearState();
   };
 

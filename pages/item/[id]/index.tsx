@@ -6,18 +6,19 @@ import QuickButtons from "../../../components/SingleItems/QuickButtons";
 import Tags from "../../../components/SingleItems/Tags";
 import { ItemDs } from "../../../ds";
 import useWindowSize from "../../../hooks/useWindowSize";
+import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
 
-const Index = ({ item }: any) => {
+const Index = (item: IItem) => {
   const width = useWindowSize().width!;
-  const [address, setAddrress] = useState<null | string>(null);
+  const [id, setId] = useState<null | number>(null);
   useEffect(() => {
-    const address = localStorage.getItem("address");
-    address && setAddrress(address);
+    const id = parseInt(localStorage.getItem("id") || "");
+    id && setId(id);
   }, []);
   const isComingSoon = item?.openForBid;
 
-  const isOwner = item.owner.walletAddress === address;
+  const isOwner = item.owner.id === id;
 
   return (
     <Layout>

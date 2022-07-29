@@ -15,10 +15,10 @@ class Profile {
     }
   }
 
-  async updateData(data: any, address: string, accessToken: string) {
+  async updateData(data: any, id: number, accessToken: string) {
     try {
       await axios.put(
-        `${baseUrl}profile/${address}`,
+        `${baseUrl}profile/${id}`,
         {
           name: data.name,
           bio: data.bio,
@@ -30,7 +30,7 @@ class Profile {
           itemMinOffer: parseFloat(data.itemMinOffer),
           itemMaxOffer: parseFloat(data.itemMaxOffer),
           turnOnNotify: data.turnOnNotify,
-          address: address,
+          id: id,
         },
         {
           method: "PUT",
