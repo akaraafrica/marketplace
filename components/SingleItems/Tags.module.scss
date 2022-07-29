@@ -1,0 +1,43 @@
+$grey: #23262f;
+$grey2: #23262f;
+$grey3: #777e90;
+$greylight: #e6e8ec;
+$secondary-color: #f2994a;
+
+.main {
+  display: flex;
+  width: fit-content;
+  border: $grey2 2px solid;
+  border-radius: 20px;
+  gap: 1.5rem;
+  padding: 3px 10px;
+  span {
+    color: $grey3;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  span:hover {
+    color: white;
+  }
+  .active {
+    background-color: $greylight;
+    border-radius: 12px;
+    color: $grey;
+    padding: 0 10px;
+  }
+}
+
+.profileInfoCard {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  span {
+    display: block;
+    font-size: 1.1rem;
+    color: $grey3;
+  }
+  span:nth-child(2) {
+    color: white;
+  }
+}

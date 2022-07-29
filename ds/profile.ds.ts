@@ -5,9 +5,9 @@ const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}api/`;
 class Profile {
   constructor() {}
 
-  async fetch(address: string) {
+  async fetch(id: number) {
     try {
-      const res = await axios.get(`${baseUrl}/${address}`);
+      const res = await axios.get(`${baseUrl}/${id}`);
       console.log(res);
       return res.data;
     } catch (error) {

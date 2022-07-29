@@ -58,6 +58,7 @@ const Index = () => {
         localStorage.setItem("accessToken", res.data.accessToken);
 
         const savedUser = await UserDs.fetch(account);
+
         dispatch(setUser(savedUser.value));
 
         router.push("/");
@@ -68,12 +69,12 @@ const Index = () => {
       // console.log(res);
     } catch (error: any) {
       console.log(error);
-      if (error.response.status === 401)
-        return setError(error.response.data.message);
-      if (error.response.status === 400)
-        return setError(error.response.data.message);
-      if (error.response.status === 500)
-        return setError("Server error, please try again later");
+      // if (error.response.status === 401)
+      //   return setError(error.response.data.message);
+      // if (error.response.status === 400)
+      //   return setError(error.response.data.message);
+      // if (error.response.status === 500)
+      //   return setError("Server error, please try again later");
     }
   };
 

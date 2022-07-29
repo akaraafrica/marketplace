@@ -1,0 +1,78 @@
+$grey: #23262f;
+$grey2: #23262f;
+$grey3: #777e90;
+$greylight: #e6e8ec;
+$secondary-color: #f2994a;
+
+.acceptbid {
+  padding: 4rem 2rem;
+  background: $grey2;
+  border-radius: 15px;
+  border: 1px solid $grey2;
+  margin-top: 3rem;
+  min-width: 14rem;
+  max-width: 100%;
+  @media only screen and (max-width: 400px) {
+    width: 14rem;
+  }
+  @media only screen and (min-width: 1100px) {
+    width: 100%;
+  }
+  h3 {
+    color: $grey3;
+    line-height: 0;
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    display: flex;
+    gap: 13px;
+    @media only screen and (max-width: 500px) {
+      display: flex;
+      gap: 3rem;
+      flex-direction: column;
+    }
+  }
+  h5 {
+    color: $grey3;
+    line-height: 0;
+    font-weight: 600;
+    font-size: 1.2rem;
+    @media only screen and (max-width: 500px) {
+      display: flex;
+      gap: 2rem;
+      flex-direction: column;
+    }
+  }
+  span {
+    color: white;
+  }
+  section {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .button {
+    margin-top: 2rem;
+    display: flex;
+    @media only screen and (max-width: 400px) {
+      flex-wrap: wrap;
+    }
+    button {
+      color: white;
+      background: $grey2;
+      border: 3px solid#353945;
+      border-radius: 30px;
+      padding: 18px 45px;
+      cursor: pointer;
+      margin: auto;
+      font-weight: 700;
+      font-size: 1rem;
+      white-space: nowrap;
+      width: 100%;
+    }
+    .accept {
+      background: $secondary-color;
+    }
+  }
+}
