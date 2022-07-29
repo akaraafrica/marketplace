@@ -9,24 +9,11 @@ import { ProfileDs } from "../../ds";
 function SettingsForm() {
   const [show, setshow] = useState(false);
   const [foto, setFoto] = useState(null);
-  const [state, setState] = useState({
-    name: "",
-    bio: "",
-    phoneNumber: "",
-    website: "",
-    twitter: "",
-    facebook: "",
-    instagram: "",
-    itemMinOffer: "",
-    itemMaxOffer: "",
-    turnOnNotify: false,
-  });
 
   const {
     register,
     handleSubmit,
     reset,
-    getValues,
     formState: { errors },
   } = useForm();
 
@@ -73,8 +60,6 @@ function SettingsForm() {
     reset();
   };
 
-  const inputValue = getValues();
-  const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
     <div className={styles.settingformcon}>
       <div className={styles.settingform}>
@@ -128,7 +113,6 @@ function SettingsForm() {
                       step="0.01"
                       placeholder='Minimum Offer"'
                       {...register("itemMinOffer", {})}
-                      value={inputValue.itemMinOffer}
                     />
                   </div>
                   <div className={styles.itemsettingforminput}>
@@ -139,7 +123,6 @@ function SettingsForm() {
                       step="0.01"
                       placeholder='Maximum Offer"'
                       {...register("itemMaxOffer", {})}
-                      value={inputValue.itemMaxOffer}
                     />
                   </div>
                 </div>
@@ -165,7 +148,6 @@ function SettingsForm() {
                       type="text"
                       placeholder='Enter your display name"'
                       {...register("name", {})}
-                      value={inputValue.name}
                     />
                   </div>
                   <div className={styles.itemsettingforminputsec2}>
@@ -174,7 +156,6 @@ function SettingsForm() {
                       type="text"
                       placeholder="+2348010203040"
                       {...register("phoneNumber", {})}
-                      value={inputValue.phoneNumber}
                     />
                   </div>
                   <div className={styles.itemsettingforminputsec2}>
@@ -182,7 +163,6 @@ function SettingsForm() {
                     <textarea
                       placeholder='About yourselt in a few words"'
                       {...register("bio", {})}
-                      value={inputValue.bio}
                     ></textarea>
                   </div>
                 </div>
@@ -195,7 +175,6 @@ function SettingsForm() {
                     type="text"
                     placeholder='Enter URL"'
                     {...register("website", {})}
-                    value={inputValue.website}
                   />
                 </div>
                 <div className={styles.itemsettingforminputsec2twitter}>
@@ -205,7 +184,6 @@ function SettingsForm() {
                       type="text"
                       placeholder="@twitter username"
                       {...register("twitter", {})}
-                      value={inputValue.twitter}
                     />
                     <button type="button">Verify account</button>
                   </div>
@@ -219,7 +197,6 @@ function SettingsForm() {
                           type="text"
                           placeholder="facebook url"
                           {...register("facebook", {})}
-                          value={inputValue.facebook}
                         />
                         <button type="button">Verify account</button>
                       </div>
@@ -231,7 +208,6 @@ function SettingsForm() {
                           type="text"
                           placeholder="instagram username"
                           {...register("instagram", {})}
-                          value={inputValue.instagram}
                         />
                         <button type="button">Verify account</button>
                       </div>
