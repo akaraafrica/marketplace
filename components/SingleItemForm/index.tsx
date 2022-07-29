@@ -26,9 +26,9 @@ function SingleCollectibleItem() {
       data.image = foto;
     }
     const address: string = localStorage.getItem("address")!;
-    const tokenid = "qwertyuiopkgfdsazxcvbnjwertyu";
+    const accessToken: string = localStorage.getItem("accessToken")!;
 
-    // ItemDs.createData(data, '7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias', tokenid);
+    // ItemDs.createData(data, address, accessToken);
   };
 
   const target = useRef<HTMLInputElement>(null);

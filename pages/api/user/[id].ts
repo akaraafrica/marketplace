@@ -16,8 +16,8 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           profile: true,
           collections: true,
           items: true,
-          userFollowers: true,
-          userFollowing: true,
+          // userFollowers: true,
+          // userFollowing: true,
         },
       });
       console.log(user);

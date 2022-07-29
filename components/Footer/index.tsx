@@ -11,7 +11,14 @@ function Footer() {
       <div className={styles.footer}>
         <div className={styles.footersec1}>
           <Link href={`/`}>
-            <NextImage width={180} height={100} src="/assets/Logo.png" alt="" />
+            <div>
+              <NextImage
+                width="100px"
+                height="30px"
+                src="/assets/Logo.png"
+                alt=""
+              />
+            </div>
           </Link>
           <div className={styles.footersec1text}>
             <p>Copyright © 2020 Akara Marketplace</p>
