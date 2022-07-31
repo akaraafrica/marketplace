@@ -16,6 +16,7 @@ import { MdNotificationsNone } from "react-icons/md";
 import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
 import { useUser } from "../../contexts/UserContext";
+import Link from "../Link";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
@@ -37,14 +38,14 @@ function Header() {
     <div className={styles.headerCon}>
       <div className={styles.mobile}>
         <div className={styles.mobileTop}>
-          <a href={`/`}>
+          <Link href={`/`}>
             <NextImage
               alt="logo"
               src="/assets/Logo.png"
               width="70px"
               height="30px"
             />
-          </a>
+          </Link>
           {mobile ? (
             <IoClose onClick={() => setMobile(false)} size={40} />
           ) : (
@@ -55,13 +56,13 @@ function Header() {
           <CustomSelect placeholder="Search" />
         </div>
         <div className={mobile ? styles.mobileContent : styles.contentNone}>
-          <a href={`/marketplace`}>
+          <Link href={`/marketplace`}>
             <span>Marketplace</span>
-          </a>
+          </Link>
           <span>How it works</span>
-          <a href={`/notifications`}>
+          <Link href={`/notifications`}>
             <span>Notifications</span>
-          </a>
+          </Link>
           <span>Profile</span>
           <button onClick={() => handleUpload()}>Upload</button>
           <span>Logout</span>
@@ -69,15 +70,15 @@ function Header() {
       </div>
       <div className={styles.header}>
         <div className={styles.left}>
-          <a href={`/`}>
+          <Link href={`/`}>
             <img alt="logo" src={`/assets/Logo.png`} />
-          </a>
+          </Link>
           <hr />
           <ul>
             <li>
-              <a href={`/marketplace`}>
+              <Link href={`/marketplace`}>
                 <span>Marketplace</span>
-              </a>
+              </Link>
             </li>
             <li>How it works</li>
           </ul>
@@ -131,13 +132,13 @@ function Header() {
             </div>
           ) : (
             <div className={styles.auth}>
-              <a href={"/login"}>
+              <Link href={"/login"}>
                 <span>Login </span>
-              </a>
+              </Link>
               /
-              <a href={`/signup`}>
+              <Link href={`/signup`}>
                 <span> Signup</span>
-              </a>
+              </Link>
             </div>
           )}
         </div>

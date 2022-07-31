@@ -9,25 +9,27 @@ datasource db {
 }
 
 model Bid {
-  id        Int         @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   amount    Float
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   itemId    Int
   bidderId  Int
-  user      User        @relation(fields: [bidderId], references: [id])
-  item      Item        @relation(fields: [itemId], references: [id])
+  user      User     @relation(fields: [bidderId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id])
 }
+
 model Purchase {
-  id        Int         @id @default(autoincrement())
-  amount    Float
-  createdAt DateTime    @default(now())
-  transactionId          String             @unique
-  purchaserId  Int
-  itemId    Int
-  user      User        @relation(fields: [purchaserId], references: [id])
-  item      Item        @relation(fields: [itemId], references: [id])
+  id            Int      @id @default(autoincrement())
+  amount        Float
+  createdAt     DateTime @default(now())
+  transactionId String   @unique
+  purchaserId   Int
+  itemId        Int
+  item          Item     @relation(fields: [itemId], references: [id])
+  user          User     @relation(fields: [purchaserId], references: [id])
 }
+
 model Collection {
   id               Int                @id @default(autoincrement())
   title            String
@@ -86,18 +88,17 @@ model Item {
   owner        User         @relation(fields: [ownerId], references: [id])
   bids         Bid[]
   itemRatings  ItemRating[]
+  purchases    Purchase[]
   ratings      Rating[]
-  purchases       Purchase[]
-
 }
 
 model ItemRating {
-  id        Int         @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   itemId    Int
   ratingId  Int
-  updatedAt DateTime    @updatedAt
-  item      Item        @relation(fields: [itemId], references: [id])
-  rating    Rating      @relation(fields: [ratingId], references: [id])
+  updatedAt DateTime @updatedAt
+  item      Item     @relation(fields: [itemId], references: [id])
+  rating    Rating   @relation(fields: [ratingId], references: [id])
 }
 
 model Notification {
@@ -145,11 +146,11 @@ model User {
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   bids            Bid[]
-  purchases       Purchase[]
   collections     Collection[]
   items           Item[]
   notifications   Notification[]
   profile         Profile?
+  purchases       Purchase[]
   ratings         Rating[]
   userCollections UserCollection[]
   userFollowers   UserFollower[]   @relation("userFollowers")
@@ -158,30 +159,30 @@ model User {
 }
 
 model UserCollection {
-  id           Int          @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   collectionId Int
   userId       Int
-  updatedAt    DateTime     @updatedAt
-  collection   Collection   @relation(fields: [collectionId], references: [id])
-  user         User         @relation(fields: [userId], references: [id])
+  updatedAt    DateTime   @updatedAt
+  collection   Collection @relation(fields: [collectionId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
 }
 
 model UserFollower {
-  id            Int         @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   followerId    Int
   followingId   Int
-  updatedAt     DateTime    @updatedAt
-  userFollower  User        @relation("userFollowers", fields: [followerId], references: [id])
-  userFollowing User        @relation("userFollowing", fields: [followingId], references: [id])
+  updatedAt     DateTime @updatedAt
+  userFollower  User     @relation("userFollowers", fields: [followerId], references: [id])
+  userFollowing User     @relation("userFollowing", fields: [followingId], references: [id])
 }
 
 model UserRating {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   userId    Int
   ratingId  Int
-  updatedAt DateTime  @updatedAt
-  rating    Rating    @relation(fields: [ratingId], references: [id])
-  user      User      @relation(fields: [userId], references: [id])
+  updatedAt DateTime @updatedAt
+  rating    Rating   @relation(fields: [ratingId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 enum EntityType {

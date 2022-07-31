@@ -2,11 +2,7 @@
 // TODO: convert this to NextImage when given the chance
 import React, { MutableRefObject, useRef, useState } from "react";
 import styles from "./index.module.scss";
-import Switch from "@mui/material/Switch";
-import SwitchComponent from "../SwitchComponent";
-import ProfileCard from "../ProfileCard";
 import { useForm } from "react-hook-form";
-import ItemDs from "../../ds/item.ds";
 
 function SingleCollectibleItem() {
   const [foto, setFoto] = useState(null);
@@ -26,9 +22,9 @@ function SingleCollectibleItem() {
       data.image = foto;
     }
     const address: string = localStorage.getItem("address")!;
-    const tokenid = "qwertyuiopkgfdsazxcvbnjwertyu";
+    const accessToken: string = localStorage.getItem("accessToken")!;
 
-    // ItemDs.createData(data, '7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias', tokenid);
+    // ItemDs.createData(data, address, accessToken);
   };
 
   const target = useRef<HTMLInputElement>(null);

@@ -1,10 +1,19 @@
+.settingform {
+  margin-top: 150px;
+}
 .settingformheading h1 {
-  font-size: 3.5vw;
-  color: white;
-  font-weight: 500;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.02em;
+  color: #fcfcfd;
 }
 .settingformheading p {
-  font-size: 1.1vw;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
   color: #777e91;
 }
 .settingformheading p span {
@@ -46,6 +55,9 @@
   justify-content: space-between;
   width: 25vw;
 }
+.itemsetting {
+  margin-top: 55px;
+}
 .itemsetting h4 {
   font-size: 1.1vw;
   color: white;
@@ -83,6 +95,11 @@
   justify-content: space-between;
   width: 27vw;
 }
+.turnonnotification {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
 .turnonnotificationtext h4 {
   font-size: 1.1vw;
   color: white;
@@ -95,6 +112,67 @@
 .turnonnotificationtext {
   line-height: 0.5vw;
   margin-top: 4vw;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #f2994a;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #f2994a;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 .settingformsec1content1 h4 {
   font-size: 1.1vw;
@@ -270,6 +348,18 @@
   padding-right: 13vw;
 }
 @media only screen and (max-width: 600px) {
+  .settingform {
+    margin-top: 50px;
+  }
+  .settingformheading h1 {
+    font-size: 2.5em;
+  }
+  .settingformheading {
+    line-height: 1.5vw;
+    margin-left: 0vw;
+    margin-top: 0vw;
+    padding: 4vw;
+  }
   .settingformcontentcon {
     flex-direction: column;
     align-items: center !important;
@@ -296,9 +386,9 @@
     height: 6vw !important;
     font-size: 3vw !important;
   }
-  .itemsetting h4 {
-    font-size: 4vw !important;
-  }
+  // .itemsetting h4 {
+  //   font-size: 4vw !important;
+  // }
   .itemsettingforminput label {
     font-size: 2vw !important;
   }
@@ -398,14 +488,43 @@
   .clearsecone p {
     font-size: 3vw !important;
   }
-  .settingformheading h1 {
-    font-size: 6vw !important;
-  }
-  .settingformheading p {
-    font-size: 3vw !important;
-  }
-  .settingformheading {
-    margin-left: 5vw !important;
-    line-height: 3vw !important;
-  }
+  // .settingformheading h1 {
+  //   font-size: 6vw !important;
+  // }
+  // .settingformheading p {
+  //   font-size: 3vw !important;
+  // }
+  // .settingformheading {
+  //   margin-left: 0vw !important;
+  //   line-height: 3vw !important;
+  // }
+}
+.socialmedias {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: ease-in-out;
+  -webkit-transition: ease-in-out;
+  -moz-transition: ease-in-out;
+  -ms-transition: ease-in-out;
+  -o-transition: ease-in-out;
+}
+.hidesocials {
+  display: none;
+  transition: ease-in-out;
+  -webkit-transition: ease-in-out;
+  -moz-transition: ease-in-out;
+  -ms-transition: ease-in-out;
+  -o-transition: ease-in-out;
+}
+.pic {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.settingformcontentcon {
+  margin-bottom: 100px;
 }

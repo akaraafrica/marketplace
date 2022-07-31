@@ -1,29 +1,39 @@
 import { GetServerSideProps } from "next";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import NextImage from "../../../components/Image";
 import Layout from "../../../components/Layout";
 import QuickButtons from "../../../components/SingleItems/QuickButtons";
 import Tags from "../../../components/SingleItems/Tags";
 import { ItemDs } from "../../../ds";
 import useWindowSize from "../../../hooks/useWindowSize";
+import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
 
-const Index = ({ item }: any) => {
+const Index = ({ item }: { item: IItem }) => {
   const width = useWindowSize().width!;
+
+  const [id, setId] = useState<null | number>(null);
+  useEffect(() => {
+    const id = parseInt(localStorage.getItem("id") || "");
+    id && setId(id);
+  }, []);
   const isComingSoon = item?.openForBid;
+
+  const isOwner = item?.owner?.id === 221;
 
   return (
     <Layout>
       <main className={styles.main}>
         <section className={styles.sectionone}>
           <div className={styles.tags}>
+            {/* TODO: change to item category */}
             <span>ART</span>
             {isComingSoon && <span>coming soon</span>}
           </div>
 
           <div className={styles.img}>
             {item?.images[0] && (
-              <Image alt={item.title} src={item.images[0]} layout="fill" />
+              <NextImage alt={item.title} src={item.images[0]} layout="fill" />
             )}
             {width < 800 && <QuickButtons />}
           </div>
@@ -56,6 +66,7 @@ const Index = ({ item }: any) => {
             This NFT Card will give you Access to Special Airdrops. To learn
             more about UI8 please visit
           </p>
+          <p>{item.description}</p>
           <Tags item={item} />
           {width > 800 && <QuickButtons desktop={true} />}
         </section>

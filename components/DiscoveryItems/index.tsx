@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.scss";
-import ProfileCard from "../ProfileCard/index";
+import ItemCard from "../ItemCard/index";
 import Discovery, { Filter } from "../../ds/discovery.ds";
-import Link from "next/link";
+import { IItem } from "../../types/item.interface";
 
 interface properties {
-  products: any;
+  initialItems: IItem[];
   filterBy: Filter;
 }
 
-function DiscoveryItems({ products, filterBy }: properties) {
-  const initial = products ? [...products?.slice(0, 8)] : [];
-  const [items, setItems] = useState(products);
+function DiscoveryItems({ initialItems, filterBy }: properties) {
+  const initial = initialItems ? [...initialItems?.slice(0, 8)] : [];
+  const [items, setItems] = useState(initialItems);
   useEffect(() => {
-    setItems(products);
-  }, [products]);
+    setItems(initialItems);
+  }, [initialItems]);
 
   const fetchMoreData = async () => {
     let data = await Discovery.getData(filterBy);
@@ -30,20 +30,17 @@ function DiscoveryItems({ products, filterBy }: properties) {
       loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
     >
       <div className={styles.allitems}>
-        {items?.map((item: any) => (
-          <Link key={item.id} href={`item/${item.id}`} passHref>
-            <a>
-              <ProfileCard
-                key={item.id}
-                ProductImg={`${item.images ?? item.images[0]}`}
-                Name={item.title}
-                Price={item.price}
-                Stock={item.stock}
-                Avatar={`${item.owner?.profile?.avatar}`}
-                HighestBid={item.highestbid}
-              />
-            </a>
-          </Link>
+        {items?.map((item: any, idx) => (
+          <ItemCard
+            key={idx}
+            id={item.id}
+            img={`${item.images ?? item.images[0]}`}
+            name={item.title}
+            price={item.price}
+            stock={item.stock}
+            ownerAvatar={`${item.owner?.profile?.avatar}`}
+            highestBid={item.highestbid}
+          />
         ))}
       </div>
     </InfiniteScroll>

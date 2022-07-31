@@ -8,8 +8,9 @@ import { useState } from "react";
 import PlaceBidDialog from "./PlaceBidDialog";
 import PurchaseDialog from "./PurchaseDialog";
 import SuccessDialog from "./SuccessDialog";
+import { IItem } from "../../types/item.interface";
 
-export default function PlaceBid({ item }: any) {
+export default function PlaceBid({ item }: { item: IItem }) {
   const router = useRouter();
   const [openPlaceBidDialog, setOpenPlaceBidDialog] = useState(false);
   const [openPurchaseDialog, setOpenPurchaseDialog] = useState(false);

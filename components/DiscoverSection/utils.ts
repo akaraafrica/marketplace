@@ -5,6 +5,8 @@ export const sortItem = (
   compareValue: string | number
 ) => {
   let newData;
+  if (!data || data.length === 0) return [];
+
   if (compareValue === "ratings") {
     const itemsRating = data
       .map((item) => {
@@ -50,12 +52,15 @@ export const sortItem = (
       ));
   return newData;
 };
+
 export const handleChange = (
   e: React.ChangeEvent<HTMLSelectElement>,
   param: string,
   setData: any,
   data: any
 ) => {
+  if (!data || data.length === 0) return;
+
   let value = e?.target?.value;
   let newData;
 
@@ -86,6 +91,7 @@ export const handleResetFilter = (setData: any, items: any) => {
   setData([...items]);
 };
 export const handleSliderChange = (e: any, setData: any, items: any) => {
+  if (!items || items.length === 0) return;
   const value = e.target.value;
 
   const newData = items.filter((item: any) => Math.floor(item.price) <= value);
