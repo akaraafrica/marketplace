@@ -10,14 +10,7 @@ import styles from "./index.module.scss";
 
 const Index = ({ item }: any) => {
   const width = useWindowSize().width!;
-  const [address, setAddrress] = useState<null | string>(null);
-  useEffect(() => {
-    const address = localStorage.getItem("address");
-    address && setAddrress(address);
-  }, []);
   const isComingSoon = item?.openForBid;
-
-  const isOwner = item.owner.walletAddress === address;
 
   return (
     <Layout>
@@ -63,7 +56,7 @@ const Index = ({ item }: any) => {
             This NFT Card will give you Access to Special Airdrops. To learn
             more about UI8 please visit
           </p>
-          <Tags isOwner={isOwner} />
+          <Tags item={item} />
           {width > 800 && <QuickButtons desktop={true} />}
         </section>
       </main>

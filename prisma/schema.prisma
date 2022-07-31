@@ -18,7 +18,16 @@ model Bid {
   user      User        @relation(fields: [bidderId], references: [id])
   item      Item        @relation(fields: [itemId], references: [id])
 }
-
+model Purchase {
+  id        Int         @id @default(autoincrement())
+  amount    Float
+  createdAt DateTime    @default(now())
+  transactionId          String             @unique
+  purchaserId  Int
+  itemId    Int
+  user      User        @relation(fields: [purchaserId], references: [id])
+  item      Item        @relation(fields: [itemId], references: [id])
+}
 model Collection {
   id               Int                @id @default(autoincrement())
   title            String
@@ -78,6 +87,8 @@ model Item {
   bids         Bid[]
   itemRatings  ItemRating[]
   ratings      Rating[]
+  purchases       Purchase[]
+
 }
 
 model ItemRating {
@@ -134,6 +145,7 @@ model User {
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   bids            Bid[]
+  purchases       Purchase[]
   collections     Collection[]
   items           Item[]
   notifications   Notification[]

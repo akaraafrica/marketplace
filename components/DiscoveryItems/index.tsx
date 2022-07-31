@@ -3,6 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.scss";
 import ProfileCard from "../ProfileCard/index";
 import Discovery, { Filter } from "../../ds/discovery.ds";
+import Link from "next/link";
 
 interface properties {
   products: any;
@@ -30,15 +31,19 @@ function DiscoveryItems({ products, filterBy }: properties) {
     >
       <div className={styles.allitems}>
         {items?.map((item: any) => (
-          <ProfileCard
-            key={item.id}
-            ProductImg={`${item.images ?? item.images[0]}`}
-            Name={item.title}
-            Price={item.price}
-            Stock={item.stock}
-            Avatar={`${item.owner?.profile?.avatar}`}
-            HighestBid={item.highestbid}
-          />
+          <Link key={item.id} href={`item/${item.id}`} passHref>
+            <a>
+              <ProfileCard
+                key={item.id}
+                ProductImg={`${item.images ?? item.images[0]}`}
+                Name={item.title}
+                Price={item.price}
+                Stock={item.stock}
+                Avatar={`${item.owner?.profile?.avatar}`}
+                HighestBid={item.highestbid}
+              />
+            </a>
+          </Link>
         ))}
       </div>
     </InfiniteScroll>

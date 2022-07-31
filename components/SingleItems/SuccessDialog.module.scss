@@ -1,0 +1,70 @@
+$dialogbackground: #141416;
+$error: #ef466f;
+$error2: rgba(239, 70, 111, 0.08);
+$blue: #3772ff;
+$blu2: linear-gradient(0deg, #1b3e91, #1b3e91),
+  linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
+$green: #45b26b;
+$grey: #23262f;
+$grey2: #23262f;
+$grey3: #777e90;
+$greylight: #e6e8ec;
+$secondary-color: #f2994a;
+
+.success {
+  h2 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  p {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 400;
+    width: 20rem;
+    margin: auto;
+
+    span {
+      text-decoration: underline;
+      letter-spacing: 2px;
+    }
+  }
+
+  section {
+    margin: 1rem;
+    width: 23rem;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid $grey2;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px;
+    }
+
+    .status {
+      span {
+        color: $grey3;
+      }
+    }
+
+    .processing {
+      color: $secondary-color;
+    }
+  }
+
+  .time {
+    text-align: center;
+  }
+
+  .social {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}

@@ -18,6 +18,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           items: true,
           userFollowers: true,
           userFollowing: true,
+          bids: true,
         },
       });
       console.log(user);

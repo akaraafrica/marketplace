@@ -1,26 +1,34 @@
 import { Avatar } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AcceptBid from "./AcceptBid";
 import PlaceBid from "./PlaceBid";
 import styles from "./Tags.module.scss";
 
-const InfoComponent = () => {
+const InfoComponent = ({ profile }: any) => {
   return (
     <div className={styles.profileInfoCard}>
       <Avatar
-        src={`/assets/auctionAvatar.png`}
+        src={profile.avatar}
         alt="creator-photo"
         sx={{ width: 50, height: 50 }}
       />
       <div>
         <span>Creator</span>
-        <span>Sarah Shaibu</span>
+        <span>{profile?.name}</span>
       </div>
     </div>
   );
 };
 
-export default function Tags({ isOwner }: any) {
+export default function Tags({ item }: any) {
+  const [address, setAddrress] = useState<null | string>(null);
+  useEffect(() => {
+    const address = localStorage.getItem("address");
+    address && setAddrress(address);
+  }, []);
+
+  const isOwner = item.owner.walletAddress === address;
+
   const [tag, setTag] = useState(0);
   return (
     <>
@@ -54,8 +62,8 @@ export default function Tags({ isOwner }: any) {
       </div>
       {tag === 0 && (
         <>
-          <InfoComponent />
-          {isOwner ? <AcceptBid /> : <PlaceBid />}
+          <InfoComponent profile={item?.owner?.profile || ""} />
+          {isOwner ? <AcceptBid /> : <PlaceBid item={item} />}
         </>
       )}
       {tag === 3 && isOwner && <AcceptBid noview={true} />}

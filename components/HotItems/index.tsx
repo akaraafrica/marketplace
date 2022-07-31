@@ -11,7 +11,6 @@ import "swiper/css/navigation";
 import swiperClass from "swiper/types/swiper-class";
 
 function HotItems({ items }: any) {
-  console.log(items);
   const [data, setData] = useState([...items]);
 
   const [swiperRef, setSwiperRef] = useState<swiperClass>();
