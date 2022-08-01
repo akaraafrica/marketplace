@@ -1,20 +1,23 @@
 @use "../../styles/colors" as *;
 
 .acceptbid {
-  padding: 4rem 2rem;
-  background: $grey2;
-  border-radius: 15px;
-  border: 1px solid $grey2;
-  margin-top: 3rem;
-  min-width: 14rem;
-  max-width: 100%;
-
   @media only screen and (max-width: 400px) {
     width: 14rem;
   }
 
   @media only screen and (min-width: 1100px) {
     width: 100%;
+  }
+
+  .section {
+    padding: 4rem 2rem;
+    background: $grey2;
+    border-radius: 15px;
+    border: 1px solid $grey2;
+    margin-top: 3rem;
+    min-width: 14rem;
+    max-width: 100%;
+    // margin-top: 2rem;
   }
 
   h3 {

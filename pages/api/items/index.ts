@@ -12,7 +12,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               profile: true,
             },
           },
-          bids: true,
+          bids: {
+            include: {
+              user: true,
+            },
+          },
           ratings: {
             select: {
               rating: true,

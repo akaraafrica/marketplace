@@ -40,14 +40,16 @@ function HotCollectionCard(props: properties) {
         <div className={styles.bottom}>
           <Link href={`/profile/${author.id}`}>
             <div className={styles.left}>
-              <NextImage
-                className={styles.image}
-                src={author.profile.avatar && author.profile.avatar}
-                width="50px"
-                height="50px"
-              />
+              {author?.profile?.avatar && (
+                <NextImage
+                  className={styles.image}
+                  src={author.profile.avatar}
+                  width="50px"
+                  height="50px"
+                />
+              )}
               <div className={styles.owner}>
-                By {author.profile.name && author.profile.name}
+                By {author?.profile?.name && author.profile.name}
               </div>
             </div>
           </Link>

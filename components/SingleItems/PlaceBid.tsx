@@ -9,6 +9,7 @@ import PlaceBidDialog from "./PlaceBidDialog";
 import PurchaseDialog from "./PurchaseDialog";
 import SuccessDialog from "./SuccessDialog";
 import { IItem } from "../../types/item.interface";
+import { randStr } from "../../utils/helpers/randomStr";
 
 export default function PlaceBid({ item }: { item: IItem }) {
   const router = useRouter();
@@ -35,31 +36,26 @@ export default function PlaceBid({ item }: { item: IItem }) {
       amount,
     };
     try {
+      console.log(data);
+
       const res = BidDs.postData("placeBid", data);
       toast.success("Bid Placed Successfully");
       handleBidClose();
       setAmount(0);
       setTimeout(() => {
-        router.push("/");
+        router.reload();
       }, 3000);
     } catch (error) {
       toast.error("Error Placing Bid");
     }
   };
   const handlePurchaseNow = async () => {
-    console.log("dsd");
-
-    function randStr(len: any, chars = "abc123") {
-      let s = "";
-      while (len--) s += chars[Math.floor(Math.random() * chars.length)];
-      return s;
-    }
     try {
       const data = {
         itemId: item.id,
         amount: item.price,
         transactionId: randStr(20),
-        purchaserId: user?.id,
+        userId: user?.id,
       };
       const res = await BidDs.postData("purchase", data);
       setTimeout(() => {
@@ -79,7 +75,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
           open={openPlaceBidDialog}
           handleClose={handleBidClose}
           setAmount={setAmount}
-          amount={item.price}
+          amount={amount}
           handlePlaceBid={handlePlaceBid}
         />
       )}
