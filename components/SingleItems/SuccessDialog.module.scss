@@ -1,15 +1,4 @@
-$dialogbackground: #141416;
-$error: #ef466f;
-$error2: rgba(239, 70, 111, 0.08);
-$blue: #3772ff;
-$blu2: linear-gradient(0deg, #1b3e91, #1b3e91),
-  linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
-$green: #45b26b;
-$grey: #23262f;
-$grey2: #23262f;
-$grey3: #777e90;
-$greylight: #e6e8ec;
-$secondary-color: #f2994a;
+@use "../../styles/colors" as *;
 
 .success {
   h2 {

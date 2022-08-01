@@ -1,5 +1,4 @@
-$grey: #23262f;
-$grey2: #353945;
+@use "../../styles/colors" as *;
 
 .horizontal {
   position: absolute;
@@ -12,10 +11,12 @@ $grey2: #353945;
   justify-content: center;
   flex-direction: column;
   gap: 15px;
+
   span:hover {
     cursor: pointer;
   }
 }
+
 .main {
   position: absolute;
   margin: auto;
@@ -29,6 +30,7 @@ $grey2: #353945;
   display: flex;
   justify-content: center;
   gap: 15px;
+
   span:hover {
     cursor: pointer;
   }
@@ -41,6 +43,7 @@ $grey2: #353945;
   height: fit-content;
   display: flex;
   align-items: center;
+
   @media only screen and (min-width: 800px) {
     padding: 2px;
     padding-top: 8px;
