@@ -36,9 +36,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
       amount,
     };
     try {
-      console.log(data);
-
-      const res = BidDs.postData("placeBid", data);
+      await BidDs.postData("placeBid", data);
       toast.success("Bid Placed Successfully");
       handleBidClose();
       setAmount(0);
@@ -57,14 +55,13 @@ export default function PlaceBid({ item }: { item: IItem }) {
         transactionId: randStr(20),
         userId: user?.id,
       };
-      const res = await BidDs.postData("purchase", data);
-      setTimeout(() => {
-        router.reload();
-      }, 3000);
+      await BidDs.postData("purchase", data);
+      setOpenSuccessDialog(true);
+      handlePurchaseClose();
+      router.reload();
     } catch (error) {
       toast.error("purchasing Bid");
     }
-    setOpenSuccessDialog(true);
   };
 
   const itemUserBid = user?.bids?.filter((x) => x.itemId === item.id);

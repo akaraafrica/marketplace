@@ -32,7 +32,11 @@ export default async function profile(
         },
       });
 
-      await prisma.$transaction([updateItemOwner, createPurchase]);
+      const transaction = await prisma.$transaction([
+        deleteBids,
+        updateItemOwner,
+        createPurchase,
+      ]);
       res.status(200).json("successful");
     } catch (error) {
       console.log(error);

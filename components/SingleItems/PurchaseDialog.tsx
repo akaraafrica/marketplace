@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dialog from "../global/Dialog";
 import styles from "./PurchaseDialog.module.scss";
 
