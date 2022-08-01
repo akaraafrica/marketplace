@@ -1,25 +1,23 @@
 import { GetServerSideProps } from "next";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import NextImage from "../../../components/Image";
 import Layout from "../../../components/Layout";
 import QuickButtons from "../../../components/SingleItems/QuickButtons";
 import Tags from "../../../components/SingleItems/Tags";
-import { ItemDs } from "../../../ds";
+import { useUser } from "../../../contexts/UserContext";
+import { ItemDs, UserDs } from "../../../ds";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { IItem } from "../../../types/item.interface";
+import { IUser } from "../../../types/user.interface";
+import { getUserSSR } from "../../../utils/auth/getUserSSR";
 import styles from "./index.module.scss";
 
-const Index = ({ item }: { item: IItem }) => {
+const Index = ({ item, user }: { item: IItem; user: IUser }) => {
+  useUser()?.setUser(user);
+
   const width = useWindowSize().width!;
 
-  const [id, setId] = useState<null | number>(null);
-  useEffect(() => {
-    const id = parseInt(localStorage.getItem("id") || "");
-    id && setId(id);
-  }, []);
   const isComingSoon = item?.openForBid;
-
-  const isOwner = item?.owner?.id === 221;
 
   return (
     <Layout>
@@ -79,7 +77,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const itemId = ctx.params?.id;
   let [Item] = await Promise.all([ItemDs.getData()]);
   let item = Item.find((i: any) => i.id == Number(itemId));
-  console.log(item);
+
+  const user = await getUserSSR(ctx);
 
   if (!item) {
     return {
@@ -89,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       item,
+      user,
     },
   };
 };

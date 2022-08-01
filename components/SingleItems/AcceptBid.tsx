@@ -1,7 +1,14 @@
 import { Avatar } from "@mui/material";
+import { IItem } from "../../types/item.interface";
 import styles from "./AcceptBid.module.scss";
 
-export default function AcceptBid({ noview }: any) {
+export default function AcceptBid({
+  noview,
+  item,
+}: {
+  noview?: boolean;
+  item: IItem;
+}) {
   return (
     <div className={styles.acceptbid}>
       <section className={styles.top}>

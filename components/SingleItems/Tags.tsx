@@ -6,6 +6,7 @@ import PlaceBid from "./PlaceBid";
 import styles from "./Tags.module.scss";
 import Link from "../Link";
 import { IItem } from "../../types/item.interface";
+import { useUser } from "../../contexts/UserContext";
 
 interface infoProperties {
   user: IUser;
@@ -29,12 +30,8 @@ const InfoComponent = ({ user }: infoProperties) => {
 };
 
 export default function Tags({ item }: { item: IItem }) {
-  const isOwner = item?.owner?.id === 221;
-  const [address, setAddrress] = useState<null | string>(null);
-  useEffect(() => {
-    const address = localStorage.getItem("address");
-    address && setAddrress(address);
-  }, []);
+  const user = useUser()?.user;
+  const isOwner = item?.owner?.id === user?.id;
 
   const [tag, setTag] = useState(0);
   return (
@@ -70,10 +67,10 @@ export default function Tags({ item }: { item: IItem }) {
       {tag === 0 && (
         <>
           <InfoComponent user={item.owner} />
-          {isOwner ? <AcceptBid /> : <PlaceBid item={item} />}
+          {isOwner ? <AcceptBid item={item} /> : <PlaceBid item={item} />}
         </>
       )}
-      {tag === 3 && isOwner && <AcceptBid noview={true} />}
+      {tag === 3 && isOwner && <AcceptBid noview={true} item={item} />}
     </>
   );
 }

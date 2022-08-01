@@ -1,3 +1,4 @@
+import { IBid } from "./bid.interface";
 import { IProfile, profileInitialState } from "./profile.interface";
 
 const today = new Date();
@@ -12,6 +13,7 @@ export interface IUser {
   joined: string;
   isVerified: boolean;
   profile: IProfile;
+  bids: IBid[];
 }
 
 export const initialState: IUser = {
@@ -22,4 +24,5 @@ export const initialState: IUser = {
   joined: date,
   isVerified: false,
   profile: profileInitialState,
+  bids: [],
 };

@@ -13,6 +13,7 @@ import { set as setUser } from "../../store/reducers/userSlice";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
 import { UserDs } from "../../ds";
+import { setCookie } from "nookies";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
@@ -57,6 +58,11 @@ const Index = () => {
         localStorage.setItem("id", res.data.user.id);
         localStorage.setItem("address", res.data.user.walletAddress);
         localStorage.setItem("accessToken", res.data.accessToken);
+
+        setCookie(null, "address", res.data.user.walletAddress, {
+          maxAge: 60 * 60 * 24 * 30, // 30 days
+          // path: "/",
+        });
 
         const savedUser = await UserDs.fetch(account);
 

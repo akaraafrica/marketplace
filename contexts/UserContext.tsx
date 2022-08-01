@@ -6,31 +6,21 @@ import React, {
   useEffect,
 } from "react";
 import { UserDs } from "../ds";
+import { IUser } from "../types/user.interface";
 
 type props = {
   children: ReactNode;
 };
-export type AuthUser = {
-  email: string;
-  id: number;
-  walletAddress: string;
-  collections: any[];
-  items: any[];
-  userFollowers: any[];
-  userFollowering: any[];
-  bids: any[];
-  verified: boolean;
-};
 
 type userContext = {
-  user: AuthUser | null;
-  setUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
+  user: IUser | null;
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 };
 
 const UserContext = createContext<userContext | null>(null);
 
 function UserProvider({ children }: props) {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
   useEffect(() => {
     const address = localStorage.getItem("address");
     if (address) {
