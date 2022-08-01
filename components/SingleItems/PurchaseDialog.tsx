@@ -31,8 +31,8 @@ export default function PurchaseDialog({
           <main className={styles.main}>
             <div>
               <p>
-                You are about to purchase <strong>COINZ </strong>
-                from <strong>Ul8</strong>
+                You are about to purchase <strong>{item.title} </strong>
+                from <strong> {item?.owner?.walletAddress?.slice(0, 6)}</strong>
               </p>
             </div>
             <div className={styles.price}>

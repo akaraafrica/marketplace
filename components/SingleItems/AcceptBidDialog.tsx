@@ -35,8 +35,8 @@ export default function AcceptBidDialog({
                 height={50}
               />
               <p>
-                You are about to purchase <strong>COINZ </strong>
-                from <strong>Ul8</strong>
+                You are about to purchase <strong>{item.title} </strong>
+                from <strong> {item?.owner?.walletAddress?.slice(0, 6)}</strong>
               </p>
             </div>
             <div className={styles.price}>

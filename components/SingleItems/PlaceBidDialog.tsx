@@ -7,6 +7,7 @@ export default function PlaceBidDialog({
   open,
   handleClose,
   amount,
+  item,
   setAmount,
   handlePlaceBid,
 }: any) {
@@ -18,6 +19,8 @@ export default function PlaceBidDialog({
     setAmount(value);
     setBalance(balanceValue - value);
   };
+  console.log(item);
+
   return (
     <>
       <Dialog
@@ -28,8 +31,8 @@ export default function PlaceBidDialog({
         {!followSteps ? (
           <main className={styles.main}>
             <p>
-              You are about to place a bid for <strong>COINZ </strong>
-              from <strong>Ul8</strong>
+              You are about to purchase <strong>{item.title} </strong>
+              from <strong> {item?.owner?.walletAddress?.slice(0, 6)}</strong>
             </p>
 
             <h3>Your bid</h3>
