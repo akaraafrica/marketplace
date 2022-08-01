@@ -35,20 +35,18 @@ export default function PlaceBid({ item }: { item: IItem }) {
       amount,
     };
     try {
-      const res = BidDs.postData("placeBid", data);
+      await BidDs.postData("placeBid", data);
       toast.success("Bid Placed Successfully");
       handleBidClose();
       setAmount(0);
       setTimeout(() => {
-        router.push("/");
+        router.reload();
       }, 3000);
     } catch (error) {
       toast.error("Error Placing Bid");
     }
   };
   const handlePurchaseNow = async () => {
-    console.log("dsd");
-
     function randStr(len: any, chars = "abc123") {
       let s = "";
       while (len--) s += chars[Math.floor(Math.random() * chars.length)];
@@ -61,14 +59,13 @@ export default function PlaceBid({ item }: { item: IItem }) {
         transactionId: randStr(20),
         purchaserId: user?.id,
       };
-      const res = await BidDs.postData("purchase", data);
-      setTimeout(() => {
-        router.reload();
-      }, 3000);
+      await BidDs.postData("purchase", data);
+      setOpenSuccessDialog(true);
+      handlePurchaseClose();
+      router.reload();
     } catch (error) {
       toast.error("purchasing Bid");
     }
-    setOpenSuccessDialog(true);
   };
 
   const itemUserBid = user?.bids?.filter((x) => x.itemId === item.id);
@@ -79,7 +76,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
           open={openPlaceBidDialog}
           handleClose={handleBidClose}
           setAmount={setAmount}
-          amount={item.price}
+          amount={amount}
           handlePlaceBid={handlePlaceBid}
         />
       )}

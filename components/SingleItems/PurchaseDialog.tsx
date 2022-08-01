@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dialog from "../global/Dialog";
 import styles from "./PurchaseDialog.module.scss";
 
@@ -80,7 +80,6 @@ export default function PurchaseDialog({
         ) : (
           <Steps
             handlePurchaseNow={handlePurchaseNow}
-            handleClose={handleClose}
             isVerified={isVerified}
           />
         )}
@@ -89,11 +88,10 @@ export default function PurchaseDialog({
   );
 }
 
-export const Steps = ({ handlePurchaseNow, handleClose, isVerified }: any) => {
-  setTimeout(() => {
+export const Steps = ({ handlePurchaseNow, isVerified }: any) => {
+  useEffect(() => {
     handlePurchaseNow();
-    handleClose();
-  }, 3000);
+  }, []);
 
   return (
     <div className={styles.followsteps}>

@@ -7,9 +7,7 @@ export default async function profile(
 ) {
   if (req.method === "POST") {
     try {
-      console.log(req.body);
-
-      const data = await prisma.purchase.create({
+      const createPurchase = prisma.purchase.create({
         data: {
           amount: Number(req.body.amount),
           purchaserId: req.body.purchaserId,
@@ -17,7 +15,7 @@ export default async function profile(
           itemId: req.body.itemId,
         },
       });
-      await prisma.item.update({
+      const updateItemOwner = prisma.item.update({
         where: {
           id: req.body.itemId,
         },
@@ -28,9 +26,18 @@ export default async function profile(
           updatedAt: new Date(),
         },
       });
+      const deleteBids = prisma.bid.deleteMany({
+        where: {
+          itemId: req.body.itemId,
+        },
+      });
 
-      res.status(200).json(data);
-      console.log(data);
+      const transaction = await prisma.$transaction([
+        deleteBids,
+        updateItemOwner,
+        createPurchase,
+      ]);
+      res.status(200).json("successful");
     } catch (error) {
       console.log(error);
       res.json({

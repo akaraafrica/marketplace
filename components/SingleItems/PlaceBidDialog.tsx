@@ -83,6 +83,7 @@ export const StepSection = ({
   step,
   loading,
   onClick,
+  disabled,
 }: any) => {
   return (
     <section>
@@ -107,7 +108,11 @@ export const StepSection = ({
           <p>{text}</p>
         </div>
       </div>
-      <button onClick={onClick} className={loading ? styles.loading : ""}>
+      <button
+        onClick={onClick}
+        disabled={disabled}
+        className={loading ? styles.loading : ""}
+      >
         <span>
           {loading ? (
             <Image
@@ -135,6 +140,11 @@ export const Steps = ({ handlePlaceBid }: any) => {
     approve: false,
     signature: false,
   });
+  const [disable, setDisable] = useState({
+    deposit: false,
+    approve: true,
+    signature: true,
+  });
   const handleDeposit = () => {
     setLoading({
       ...loading,
@@ -148,6 +158,10 @@ export const Steps = ({ handlePlaceBid }: any) => {
       setStep({
         ...step,
         deposit: true,
+      });
+      setDisable({
+        ...disable,
+        approve: false,
       });
     }, 2000);
   };
@@ -164,6 +178,10 @@ export const Steps = ({ handlePlaceBid }: any) => {
       setStep({
         ...step,
         approve: true,
+      });
+      setDisable({
+        ...disable,
+        signature: false,
       });
     }, 2000);
   };
@@ -190,6 +208,7 @@ export const Steps = ({ handlePlaceBid }: any) => {
         heading="Deposit ETH"
         text="Send transaction with your wallet"
         step={step.deposit}
+        disabled={disable.deposit}
         img="deposit.svg"
         loading={loading.deposit}
         onClick={handleDeposit}
@@ -199,6 +218,7 @@ export const Steps = ({ handlePlaceBid }: any) => {
         heading="Approve"
         text="Checking balance and approving"
         step={step.approve}
+        disabled={disable.approve}
         loading={loading.approve}
         onClick={handleApprove}
       />
@@ -208,6 +228,7 @@ export const Steps = ({ handlePlaceBid }: any) => {
         text="Create a signature to place a bid"
         step={step.signature}
         loading={loading.signature}
+        disabled={disable.signature}
         onClick={handleSignature}
       />
     </div>
