@@ -70,6 +70,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         .get("/me")
         .then((response: AxiosResponse) => {
           const { email, permissions, roles } = response.data;
+          console.log({ "response.data": response.data });
 
           setUser({ email, permissions, roles });
         })

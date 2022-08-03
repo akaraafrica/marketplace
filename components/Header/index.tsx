@@ -15,6 +15,7 @@ import { IoMenuSharp, IoClose } from "react-icons/io5";
 import { MdNotificationsNone } from "react-icons/md";
 import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
+import { useUser } from "../../contexts/UserContext";
 import Link from "../Link";
 
 function Header() {
@@ -23,6 +24,7 @@ function Header() {
   const [mobile, setMobile] = React.useState(false);
   const { account, active, activate } = useWeb3React();
   const router = useRouter();
+  const user = useUser()?.user;
 
   function handleUpload() {
     console.log(`uploading here active is :${active}  account is ${account}`);
@@ -110,7 +112,7 @@ function Header() {
           >
             Upload
           </button>
-          {active && account ? (
+          {user ? (
             <div
               className={styles.balanceSec}
               onClick={() => {

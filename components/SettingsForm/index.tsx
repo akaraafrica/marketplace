@@ -2,7 +2,6 @@
 // TODO: convert this to NextImage when given the chance
 import React, { useRef, useState } from "react";
 import styles from "./index.module.scss";
-import Switch from "@mui/material/Switch";
 import { useForm } from "react-hook-form";
 import { ProfileDs } from "../../ds";
 

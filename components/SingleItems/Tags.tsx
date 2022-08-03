@@ -1,10 +1,12 @@
 import { Avatar } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IUser } from "../../types/user.interface";
 import AcceptBid from "./AcceptBid";
 import PlaceBid from "./PlaceBid";
 import styles from "./Tags.module.scss";
 import Link from "../Link";
+import { IItem } from "../../types/item.interface";
+import { useUser } from "../../contexts/UserContext";
 
 interface infoProperties {
   user: IUser;
@@ -27,11 +29,10 @@ const InfoComponent = ({ user }: infoProperties) => {
   );
 };
 
-interface tagProperties {
-  isOwner: boolean;
-  owner: IUser;
-}
-export default function Tags({ isOwner, owner }: tagProperties) {
+export default function Tags({ item }: { item: IItem }) {
+  const user = useUser()?.user;
+  const isOwner = item?.owner?.id === user?.id;
+
   const [tag, setTag] = useState(0);
   return (
     <>
@@ -65,11 +66,11 @@ export default function Tags({ isOwner, owner }: tagProperties) {
       </div>
       {tag === 0 && (
         <>
-          <InfoComponent user={owner} />
-          {isOwner ? <AcceptBid /> : <PlaceBid />}
+          <InfoComponent user={item.owner} />
+          {isOwner ? <AcceptBid item={item} /> : <PlaceBid item={item} />}
         </>
       )}
-      {tag === 3 && isOwner && <AcceptBid noview={true} />}
+      {tag === 3 && isOwner && <AcceptBid noview={true} item={item} />}
     </>
   );
 }

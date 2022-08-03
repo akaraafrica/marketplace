@@ -14,7 +14,6 @@ interface properties {
 }
 
 function HotItems({ items }: properties) {
-  console.log(items);
   const [data, setData] = useState([...items]);
 
   const [swiperRef, setSwiperRef] = useState<swiperClass>();

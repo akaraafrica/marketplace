@@ -2,11 +2,7 @@
 // TODO: convert this to NextImage when given the chance
 import React, { MutableRefObject, useRef, useState } from "react";
 import styles from "./index.module.scss";
-import Switch from "@mui/material/Switch";
-import SwitchComponent from "../SwitchComponent";
-import ItemCard from "../ItemCard";
 import { useForm } from "react-hook-form";
-import ItemDs from "../../ds/item.ds";
 
 function SingleCollectibleItem() {
   const [foto, setFoto] = useState(null);

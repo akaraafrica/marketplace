@@ -1,0 +1,44 @@
+$dialogbackground: #141416;
+$error: #ef466f;
+$blue: #3772ff;
+$green: #45b26b;
+$grey: #23262f;
+$grey2: #23262f;
+$grey3: #777e90;
+$greylight: #e6e8ec;
+$secondary-color: #f2994a;
+
+.background {
+  background: $dialogbackground;
+  width: 24rem;
+  height: fit-content;
+  padding: 1.5rem 1.2rem;
+  box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12);
+  border-radius: 20px;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  .bidheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    img {
+      cursor: pointer;
+    }
+
+    h1 {
+      color: white;
+      font-size: 1.7rem;
+      line-height: 0px;
+      font-weight: 600;
+    }
+  }
+}

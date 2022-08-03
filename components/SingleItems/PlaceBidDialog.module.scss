@@ -1,0 +1,151 @@
+@use "../../styles/colors" as *;
+
+.main {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  input {
+    width: 24rem;
+    height: 1rem;
+    font-size: 1rem;
+    background-color: $dialogbackground;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid $grey3;
+    color: white;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  p {
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    align-self: flex-start;
+    margin: 0;
+    margin-top: 1rem;
+
+    strong {
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
+  }
+
+  h3 {
+    color: white;
+    font-size: 1.3rem;
+    margin: 1rem 0;
+    align-self: flex-start;
+    font-weight: 600;
+  }
+
+  section {
+    div {
+      display: flex;
+      justify-content: space-between;
+      width: 23.5rem;
+      margin-top: 10px;
+      margin-right: 10px;
+
+      span {
+        color: $grey3;
+        font-weight: 400;
+      }
+
+      strong {
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.bidinput {
+  position: relative;
+  color: white;
+
+  strong {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-weight: 400;
+  }
+}
+
+.button {
+  margin-top: 2rem;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  button {
+    color: white;
+    background: $grey2;
+    border: 0;
+    border-radius: 30px;
+    padding: 12px 45px;
+    cursor: pointer;
+    margin: auto;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    width: 23rem;
+  }
+
+  .accept {
+    background: $secondary-color;
+  }
+}
+
+.followsteps {
+  width: 100%;
+
+  .top {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+
+    h4 {
+      margin: 0;
+      color: white;
+      font-size: 1rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
+  button {
+    color: white;
+    background: $secondary-color;
+    border: 0;
+    border-radius: 30px;
+    padding: 12px 0px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 700;
+    font-size: 1rem;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .loading {
+    background: $blu2;
+  }
+}

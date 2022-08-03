@@ -1,29 +1,23 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useUser } from "../contexts/UserContext";
 import { UserDs } from "../ds";
 /* eslint-disable react/display-name */
 export default function withAuth(WrappedComponent: any) {
   return function (props: any) {
     const Router = useRouter();
-    const [verified, setVerified] = useState(false);
-
+    const [verified, setVerified] = useState<boolean | null>(null);
+    const user = useUser()?.user;
     useEffect(() => {
-      const address = localStorage.getItem("address");
-      if (!address) {
-        Router.replace("/login");
+      if (user) {
+        setVerified(true);
       } else {
-        const checkUser = async () => {
-          try {
-            await UserDs.fetch(address);
-            setVerified(true);
-          } catch (error) {
-            localStorage.removeItem("address");
-            Router.replace("/login");
-          }
-        };
-        checkUser();
+        setVerified(false);
       }
-    }, [Router]);
+    }, [user]);
+    if (verified === false) {
+      Router.replace("/login");
+    }
 
     if (verified) {
       return <WrappedComponent {...props} />;
