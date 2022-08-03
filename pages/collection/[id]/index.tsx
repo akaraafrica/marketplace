@@ -28,7 +28,7 @@ const Index = ({ collection }: properties) => {
               src={selectedItem ? selectedItem.images[0] : collection.images[0]}
               layout="fill"
             />
-            {width < 800 && <QuickButtons />}
+            {width < 800 && <QuickButtons collection={collection} />}
           </div>
           {collection.items && collection.items?.length > 0 && (
             <div className={styles.images}>
@@ -93,7 +93,9 @@ const Index = ({ collection }: properties) => {
           </div>
           <p>{collection.description}</p>
 
-          {width > 800 && <QuickButtons desktop={true} />}
+          {width > 800 && (
+            <QuickButtons desktop={true} collection={collection} />
+          )}
           <section>
             {selectedItem && (
               <>

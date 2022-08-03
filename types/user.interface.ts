@@ -1,4 +1,5 @@
 import { IBid } from "./bid.interface";
+import { ILike } from "./like.interface";
 import { IProfile, profileInitialState } from "./profile.interface";
 
 const today = new Date();
@@ -14,6 +15,7 @@ export interface IUser {
   isVerified: boolean;
   profile: IProfile;
   bids: IBid[];
+  likes: ILike[];
 }
 
 export const initialState: IUser = {
@@ -25,4 +27,5 @@ export const initialState: IUser = {
   isVerified: false,
   profile: profileInitialState,
   bids: [],
+  likes: [],
 };
