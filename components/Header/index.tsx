@@ -27,8 +27,7 @@ function Header() {
   const user = useUser()?.user;
 
   function handleUpload() {
-    console.log(`uploading here active is :${active}  account is ${account}`);
-    if (account && active) router.push("/single-item");
+    if (user) router.push("/item/create-item");
     else {
       toast.info("You must be logged in to create an item.");
     }
