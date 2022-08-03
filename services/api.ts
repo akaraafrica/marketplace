@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
 import { parseCookies, setCookie } from "nookies";
+import { TbChevronDownLeft } from "react-icons/tb";
 import { signOut } from "../contexts/AuthContext";
 import { AuthTokenError } from "./errors/AuthTokenError";
 
@@ -13,7 +14,7 @@ export function setupAPIClient(ctx = undefined): AxiosInstance {
   let cookies = parseCookies(ctx);
 
   const api = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.NEXT_PUBLIC_DOMAIN!,
     headers: {
       Authorization: `Bearer ${cookies["nextauth.token"]}`,
     },
@@ -36,7 +37,7 @@ export function setupAPIClient(ctx = undefined): AxiosInstance {
             isRefreshing = true;
 
             api
-              .post("/refresh", {
+              .post("/user/refresh", {
                 refreshToken,
               })
               .then((response) => {
@@ -64,12 +65,15 @@ export function setupAPIClient(ctx = undefined): AxiosInstance {
                 failedRequestQueue = [];
               })
               .catch((err) => {
+                console.log("ap ierror here ", err)
                 failedRequestQueue.forEach((request) => request.onFailure(err));
                 failedRequestQueue = [];
 
                 if (typeof window !== "undefined") {
+                  console.log("window undefined")
                   signOut();
                 } else {
+                  console.log("other token error")
                   return Promise.reject(new AuthTokenError());
                 }
               })
@@ -81,7 +85,7 @@ export function setupAPIClient(ctx = undefined): AxiosInstance {
           return new Promise((resolve, reject) => {
             failedRequestQueue.push({
               onSuccess: (token: string) => {
-                // originalConfig.headers["Authorization"] = `Bearer ${token}`;
+                //originalConfig.headers["Authorization"] = `Bearer ${token}`;
                 //    originalConfig.headers ["Authorization"] = `Bearer ${token}`;
 
                 resolve(api(originalConfig));

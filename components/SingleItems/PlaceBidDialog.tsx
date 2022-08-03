@@ -1,7 +1,9 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import Dialog from "../global/Dialog";
 import styles from "./PlaceBidDialog.module.scss";
+import { useUser } from "../../contexts/UserContext";
 
 export default function PlaceBidDialog({
   open,
@@ -13,6 +15,13 @@ export default function PlaceBidDialog({
   const [followSteps, setFollowSteps] = useState(false);
   const balanceValue = 10;
   const [balance, setBalance] = useState(balanceValue);
+  const user = useUser()?.user;
+  const router = useRouter();
+
+  const startSteps = () => {
+    if (user)setFollowSteps(true)
+    else router.push('/login')
+  }
   const handleChange = (e: any) => {
     const value = Number(e.target.value);
     setAmount(value);
@@ -61,7 +70,7 @@ export default function PlaceBidDialog({
               <button
                 className={styles.accept}
                 disabled={amount <= 0 || balance < 0}
-                onClick={() => setFollowSteps(true)}
+                onClick={() => startSteps()}
               >
                 Place Bid
               </button>

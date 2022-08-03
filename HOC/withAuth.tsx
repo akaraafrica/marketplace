@@ -15,14 +15,8 @@ export default function withAuth(WrappedComponent: any) {
         setVerified(false);
       }
     }, [user]);
-    if (verified === false) {
-      Router.replace("/login");
-    }
 
-    if (verified) {
-      return <WrappedComponent {...props} />;
-    } else {
-      return null;
-    }
+    if (verified) return <WrappedComponent {...props} />;
+    else  Router.replace("/login");
   };
 }

@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/bundle";
 import "./_app.css";
 import type { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react"
 import { ethers } from "ethers";
 import { Provider } from "react-redux";
 import store from "../store/store";

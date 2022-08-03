@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
 import NextImage from "../Image";
-import { IItem } from "../../types/item.interface";
-import { IUser } from "../../types/user.interface";
 import { ICollection } from "../../types/collection.interface";
 import Link from "../Link";
 interface properties {
@@ -40,14 +38,15 @@ function HotCollectionCard(props: properties) {
         <div className={styles.bottom}>
           <Link href={`/profile/${author.id}`}>
             <div className={styles.left}>
+              {author.profile?.avatar &&
               <NextImage
                 className={styles.image}
-                src={author.profile.avatar && author.profile.avatar}
+                src={author.profile.avatar}
                 width="50px"
                 height="50px"
-              />
+              />}
               <div className={styles.owner}>
-                By {author.profile.name && author.profile.name}
+                By {author.profile?.name}
               </div>
             </div>
           </Link>

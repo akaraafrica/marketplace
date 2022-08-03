@@ -15,7 +15,6 @@ interface properties {
 function Discover({ items }: properties) {
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState(items);
-  console.log("data fetched here in discovery is ", items);
 
   return (
     <div className={styles.root}>

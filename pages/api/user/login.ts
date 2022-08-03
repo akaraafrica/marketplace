@@ -47,10 +47,11 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
       }
     }
   } catch (error: any) {
+    console.log('error here ', error)
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       return res.status(500).send(ParsePrismaError(error));
     }
-    return res.json({
+    return res.status(500).json({
       message: error.message,
     });
   }

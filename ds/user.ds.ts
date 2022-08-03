@@ -1,5 +1,4 @@
 import axios from "axios";
-import Router from "next/router";
 
 const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/user`;
 
@@ -8,9 +7,8 @@ class User {
 
   async fetch(walletAddress: string) {
     if (!walletAddress) {
-      console.log("account is ", walletAddress);
-      Router.replace("/login");
-      return;
+      console.log("walletAddress is ", walletAddress);
+      return null;
     }
 
     try {

@@ -67,7 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (token) {
       api
-        .get("/me")
+        .get("/user/me")
         .then((response: AxiosResponse) => {
           const { email, permissions, roles } = response.data;
           console.log({ "response.data": response.data });
@@ -86,7 +86,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email,
         password,
       });
-
+      console.log("we got here , response is ", response)
       const { token, refreshToken, permissions, roles } = response.data;
 
       setCookie(undefined, "nextauth.token", token, {
@@ -103,7 +103,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers.head["Authorization"] = `Bearer ${token}`;
 
-      Router.push("/dashboard");
+      Router.push("/");
     } catch (err) {
       console.log(err);
     }

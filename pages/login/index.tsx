@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styles from "./index.module.scss";
 import OnboardingLayout from "../../components/OnboardingLayout";
 import OnboardingInput from "../../components/OnboardingInput";
@@ -14,6 +14,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
 import { UserDs } from "../../ds";
 import { setCookie } from "nookies";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
@@ -21,6 +22,7 @@ const Index = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { account, active, activate } = useWeb3React();
+  const { user, isAuthenticated, signIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (!active) activate(injected);
@@ -50,28 +52,32 @@ const Index = () => {
       if (state.password.length < 6)
         return setError("Password must have six (6) characters");
 
-      const res = await axios.post("/api/user/login", {
-        ...state,
-      });
-      if (res && res.status === 200) {
-        toast.success("Welcome to Akara, Login successful.");
-        localStorage.setItem("id", res.data.user.id);
-        localStorage.setItem("address", res.data.user.walletAddress);
-        localStorage.setItem("accessToken", res.data.accessToken);
 
-        setCookie(null, "address", res.data.user.walletAddress, {
-          maxAge: 60 * 60 * 24 * 30, // 30 days
-          // path: "/",
-        });
+      const newSignin = await signIn({email: state.email, password: state.password})
+      console.log("new signin result here ", newSignin)
 
-        const savedUser = await UserDs.fetch(account);
+      // const res = await axios.post("/api/user/login", {
+      //   ...state,
+      // });
+      // if (res && res.status === 200) {
+      //   toast.success("Welcome to Akara, Login successful.");
+      //   localStorage.setItem("id", res.data.user.id);
+      //   localStorage.setItem("address", res.data.user.walletAddress);
+      //   localStorage.setItem("accessToken", res.data.accessToken);
 
-        dispatch(setUser(savedUser.value));
+      //   setCookie(null, "address", res.data.user.walletAddress, {
+      //     maxAge: 60 * 60 * 24 * 30, // 30 days
+      //     // path: "/",
+      //   });
 
-        router.push("/");
-      } else {
-        toast.error(res.statusText);
-      }
+      //   const savedUser = await UserDs.fetch(account);
+
+      //   dispatch(setUser(savedUser.value));
+
+      //   router.push("/");
+      // } else {
+      //   toast.error(res.statusText);
+      // }
 
       // console.log(res);
     } catch (error: any) {
