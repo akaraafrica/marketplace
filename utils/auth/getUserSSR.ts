@@ -10,13 +10,5 @@ export const getUserSSR = async (
   const address = cookies["address"];
   const user = await UserDs.fetch(address);
 
-  if (!address || !user) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
   return user;
 };

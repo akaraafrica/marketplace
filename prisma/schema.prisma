@@ -24,10 +24,10 @@ model Purchase {
   amount        Float
   createdAt     DateTime @default(now())
   transactionId String   @unique
-  purchaserId   Int
+   userId   Int
   itemId        Int
   item          Item     @relation(fields: [itemId], references: [id])
-  user          User     @relation(fields: [purchaserId], references: [id])
+  user          User     @relation(fields: [userId], references: [id])
 }
 
 model Collection {

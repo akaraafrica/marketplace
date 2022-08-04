@@ -9,6 +9,7 @@ import PlaceBidDialog from "./PlaceBidDialog";
 import PurchaseDialog from "./PurchaseDialog";
 import SuccessDialog from "./SuccessDialog";
 import { IItem } from "../../types/item.interface";
+import { randStr } from "../../utils/helpers/randomStr";
 
 export default function PlaceBid({ item }: { item: IItem }) {
   const router = useRouter();
@@ -47,17 +48,12 @@ export default function PlaceBid({ item }: { item: IItem }) {
     }
   };
   const handlePurchaseNow = async () => {
-    function randStr(len: any, chars = "abc123") {
-      let s = "";
-      while (len--) s += chars[Math.floor(Math.random() * chars.length)];
-      return s;
-    }
     try {
       const data = {
         itemId: item.id,
         amount: item.price,
         transactionId: randStr(20),
-        purchaserId: user?.id,
+        userId: user?.id,
       };
       await BidDs.postData("purchase", data);
       setOpenSuccessDialog(true);
@@ -76,6 +72,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
           open={openPlaceBidDialog}
           handleClose={handleBidClose}
           setAmount={setAmount}
+          item={item}
           amount={amount}
           handlePlaceBid={handlePlaceBid}
         />
