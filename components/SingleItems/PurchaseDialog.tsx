@@ -16,6 +16,9 @@ export default function PurchaseDialog({
 
   const handlePurchase = () => {
     setFollowSteps(true);
+    setTimeout(() => {
+      handlePurchaseNow();
+    }, 3000);
   };
   return (
     <>
@@ -28,8 +31,8 @@ export default function PurchaseDialog({
           <main className={styles.main}>
             <div>
               <p>
-                You are about to purchase <strong>COINZ </strong>
-                from <strong>Ul8</strong>
+                You are about to purchase <strong>{item.title} </strong>
+                from <strong> {item?.owner?.walletAddress?.slice(0, 6)}</strong>
               </p>
             </div>
             <div className={styles.price}>
@@ -78,48 +81,39 @@ export default function PurchaseDialog({
             </section>
           </main>
         ) : (
-          <Steps
-            handlePurchaseNow={handlePurchaseNow}
-            isVerified={isVerified}
-          />
+          <div className={styles.followsteps}>
+            <section>
+              <div className={styles.top}>
+                <CircularProgress
+                  variant="indeterminate"
+                  size={40}
+                  thickness={4}
+                />
+                <div>
+                  <h4>Purchasing</h4>
+                  <p>Sending transaction with your wallet</p>
+                </div>
+              </div>
+              {!isVerified && (
+                <section className={styles.notverified}>
+                  <Image
+                    alt="deposit"
+                    src={`/assets/singleItem/alert.svg`}
+                    width={50}
+                    height={50}
+                  />
+                  <div>
+                    <h4>This creator is not verified</h4>
+                    <p>Purchase this item at your own risk</p>
+                  </div>
+                </section>
+              )}
+
+              <button>I understand, continue</button>
+            </section>
+          </div>
         )}
       </Dialog>
     </>
   );
 }
-
-export const Steps = ({ handlePurchaseNow, isVerified }: any) => {
-  useEffect(() => {
-    handlePurchaseNow();
-  }, []);
-
-  return (
-    <div className={styles.followsteps}>
-      <section>
-        <div className={styles.top}>
-          <CircularProgress variant="indeterminate" size={40} thickness={4} />
-          <div>
-            <h4>Purchasing</h4>
-            <p>Sending transaction with your wallet</p>
-          </div>
-        </div>
-        {!isVerified && (
-          <section className={styles.notverified}>
-            <Image
-              alt="deposit"
-              src={`/assets/singleItem/alert.svg`}
-              width={50}
-              height={50}
-            />
-            <div>
-              <h4>This creator is not verified</h4>
-              <p>Purchase this item at your own risk</p>
-            </div>
-          </section>
-        )}
-
-        <button>I understand, continue</button>
-      </section>
-    </div>
-  );
-};

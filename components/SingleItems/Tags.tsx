@@ -67,10 +67,14 @@ export default function Tags({ item }: { item: IItem }) {
       {tag === 0 && (
         <>
           <InfoComponent user={item.owner} />
-          {isOwner ? <AcceptBid item={item} /> : <PlaceBid item={item} />}
+          {isOwner ? (
+            <AcceptBid item={item} setTag={setTag} />
+          ) : (
+            <PlaceBid item={item} />
+          )}
         </>
       )}
-      {tag === 3 && isOwner && <AcceptBid noview={true} item={item} />}
+      {tag === 3 && isOwner && <AcceptBid viewall={true} item={item} />}
     </>
   );
 }

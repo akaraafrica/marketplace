@@ -79,7 +79,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let item = Item.find((i: any) => i.id == Number(itemId));
 
   const user = await getUserSSR(ctx);
+  console.log(user);
 
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
   if (!item) {
     return {
       notFound: true,
