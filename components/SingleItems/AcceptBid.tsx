@@ -1,13 +1,13 @@
 import { Avatar } from "@mui/material";
-import { Router, useRouter } from "next/router";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useRouter } from "next/router";
+import { Dispatch, SetStateAction, useState, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
-import { useUser } from "../../contexts/UserContext";
-import { BidDs } from "../../ds";
 import { IItem } from "../../types/item.interface";
 import { randStr } from "../../utils/helpers/randomStr";
 import styles from "./AcceptBid.module.scss";
 import AcceptBidDialog from "./AcceptBidDialog";
+import { BidDs } from "../../ds";
 
 export default function AcceptBid({
   viewall,
@@ -19,7 +19,7 @@ export default function AcceptBid({
   setTag?: Dispatch<SetStateAction<number>>;
 }) {
   const highestBid = item.bids[0];
-  const user = useUser()?.user;
+  const { user, isAuthenticated, signOut } = useContext(AuthContext);
   const router = useRouter();
   const handleAcceptBid = async () => {
     const data = {

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import styles from "./index.module.scss";
 // import NotificationModal from "../NotificationModal/index";
@@ -8,23 +8,23 @@ import styles from "./index.module.scss";
 // import MobileHeader from "../MobileHeader/index";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../../contexts/AuthContext";
 import NewNotificationModal from "../NewNotificationModal";
 import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
 import { MdNotificationsNone } from "react-icons/md";
 import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
-import { useUser } from "../../contexts/UserContext";
 import Link from "../Link";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [mobile, setMobile] = React.useState(false);
-  // const { account, active, activate } = useWeb3React();
   const router = useRouter();
-  const user = useUser()?.user;
+  const { user, isAuthenticated, signOut } = useContext(AuthContext);
 
+  console.log("header user is ", isAuthenticated);
   function handleUpload() {
     if (user) router.push("/item/create-item");
     else {
@@ -133,7 +133,7 @@ function Header() {
               <Link href={"/login"}>
                 <span>Login </span>
               </Link>
-              /
+              |
               <Link href={`/signup`}>
                 <span> Signup</span>
               </Link>

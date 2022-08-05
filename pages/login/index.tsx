@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styles from "./index.module.scss";
 import OnboardingLayout from "../../components/OnboardingLayout";
 import OnboardingInput from "../../components/OnboardingInput";
 import OnboardingButton from "../../components/OnboardingButton";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../hooks/app";
@@ -13,7 +12,7 @@ import { set as setUser } from "../../store/reducers/userSlice";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
 import { UserDs } from "../../ds";
-import { setCookie } from "nookies";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
@@ -21,6 +20,7 @@ const Index = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { account, active, activate } = useWeb3React();
+  const { user, isAuthenticated, signIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (!active) activate(injected);
@@ -42,46 +42,21 @@ const Index = () => {
     const pattern =
       /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
     const result = pattern.test(state.email);
+    if (!state.email) return setError("Email field is empty");
+    if (!state.password) return setError("Password field is empty");
+    if (!result) return setError("Invalid email, check email and try again");
+    if (state.password.length < 6)
+      return setError("Password must have six (6) characters");
 
     try {
-      if (!state.email) return setError("Email field is empty");
-      if (!state.password) return setError("Password field is empty");
-      if (!result) return setError("Invalid email, check email and try again");
-      if (state.password.length < 6)
-        return setError("Password must have six (6) characters");
-
-      const res = await axios.post("/api/user/login", {
-        ...state,
+      const res = await signIn({
+        email: state.email,
+        password: state.password,
       });
-      if (res && res.status === 200) {
-        toast.success("Welcome to Akara, Login successful.");
-        localStorage.setItem("id", res.data.user.id);
-        localStorage.setItem("address", res.data.user.walletAddress);
-        localStorage.setItem("accessToken", res.data.accessToken);
-
-        setCookie(null, "address", res.data.user.walletAddress, {
-          maxAge: 60 * 60 * 24 * 30, // 30 days
-          // path: "/",
-        });
-
-        const savedUser = await UserDs.fetch(account);
-
-        dispatch(setUser(savedUser.value));
-
-        router.push("/");
-      } else {
-        toast.error(res.statusText);
-      }
-
-      // console.log(res);
+      toast.success("Welcome to Akara, Login successful.");
+      console.log("new signin result here ", res);
     } catch (error: any) {
-      console.log(error);
-      // if (error.response.status === 401)
-      //   return setError(error.response.data.message);
-      // if (error.response.status === 400)
-      //   return setError(error.response.data.message);
-      // if (error.response.status === 500)
-      //   return setError("Server error, please try again later");
+      toast.error(error.error.message);
     }
   };
 

@@ -129,9 +129,9 @@ const Index = ({ collection }: properties) => {
                   <NextImage
                     className={styles.image}
                     src={
-                      selectedItem
-                        ? selectedItem.owner.profile.avatar
-                        : collection.author.profile.avatar
+                      (selectedItem
+                        ? selectedItem.owner?.profile?.avatar
+                        : collection?.author?.profile?.avatar) || ""
                     }
                     width="50px"
                     height="50px"
@@ -139,8 +139,8 @@ const Index = ({ collection }: properties) => {
                   <div className={styles.owner}>
                     By{" "}
                     {selectedItem
-                      ? selectedItem.owner.profile.name
-                      : collection.author.profile.name}
+                      ? selectedItem.owner?.profile?.name
+                      : collection?.author?.profile?.name}
                   </div>
                 </div>
               </a>

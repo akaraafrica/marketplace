@@ -23,6 +23,7 @@ function UserProvider({ children }: props) {
   const [user, setUser] = useState<IUser | null>(null);
   useEffect(() => {
     const address = localStorage.getItem("address");
+    console.log("address item is ", address);
     if (address) {
       UserDs.fetch(address).then((user) => setUser(user));
     }

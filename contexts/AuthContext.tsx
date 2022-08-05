@@ -1,14 +1,11 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import Router from "next/router";
-import { setCookie, parseCookies, destroyCookie } from "nookies";
+import { useWeb3React } from "@web3-react/core";
+import { getCookies, setCookies, removeCookies } from "cookies-next";
 import { api } from "../services/apiClient";
 import { AxiosResponse } from "axios";
-
-type User = {
-  email: string;
-  permissions: string[];
-  roles: string[];
-};
+import { IUser } from "../types/user.interface";
+import { UserDs } from "../ds";
 
 type SignInCredential = {
   email: string;
@@ -18,7 +15,7 @@ type SignInCredential = {
 type AuthContextData = {
   signIn: (credentials: SignInCredential) => Promise<void>;
   signOut: () => void;
-  user: User | undefined;
+  user: IUser | undefined;
   isAuthenticated: boolean;
 };
 
@@ -31,16 +28,12 @@ export const AuthContext = createContext({} as AuthContextData);
 let authChannel: BroadcastChannel;
 
 export function signOut() {
-  destroyCookie(undefined, "nextauth.token");
-  destroyCookie(undefined, "nextauth.refreshToken");
-
   authChannel.postMessage("signOut");
-
-  Router.push("/");
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<IUser>();
+  const { account, active, activate } = useWeb3React();
 
   const isAuthenticated = !!user;
 
@@ -51,7 +44,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       switch (message.data) {
         case "signOut":
           {
-            signOut();
+            // signOut();
+            removeCookies("nextauth.token");
+            removeCookies("nextauth.refreshToken");
+            removeCookies("address");
+            localStorage.clear();
+            Router.push("/");
           }
           break;
 
@@ -63,16 +61,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   useEffect(() => {
-    const { "nextauth.token": token } = parseCookies();
-
-    if (token) {
+    const id = localStorage.getItem("id");
+    const { "nextauth.token": token } = getCookies();
+    console.log("trying to get token ", id);
+    if (id) {
+      console.log("we have token please ", token);
       api
-        .get("/me")
+        .get(`/user/${id}`)
         .then((response: AxiosResponse) => {
-          const { email, permissions, roles } = response.data;
-          console.log({ "response.data": response.data });
+          const { email, walletAddress, id } = response.data;
+          console.log({ "response.data from user": response.data });
 
-          setUser({ email, permissions, roles });
+          setUser(response.data);
         })
         .catch(() => {
           signOut();
@@ -87,25 +87,38 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       });
 
-      const { token, refreshToken, permissions, roles } = response.data;
+      if (response.status == 400) return response.error;
 
-      setCookie(undefined, "nextauth.token", token, {
+      const { accessToken, user, refreshToken } = response.data;
+
+      setCookies("nextauth.token", accessToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
 
-      setCookie(undefined, "nextauth.refreshToken", refreshToken, {
+      setCookies("nextauth.refreshToken", refreshToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
 
-      setUser({ email, permissions, roles });
+      setCookies("address", user.walletAddress, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        // path: "/",
+      });
 
-      api.defaults.headers.head["Authorization"] = `Bearer ${token}`;
+      localStorage.setItem("id", user.id);
+      localStorage.setItem("address", user.walletAddress);
+      localStorage.setItem("accessToken", accessToken);
 
-      Router.push("/dashboard");
-    } catch (err) {
+      const savedUser = await UserDs.fetch(account || "");
+      setUser(savedUser);
+
+      api.defaults.headers.head["Authorization"] = `Bearer ${accessToken}`;
+
+      Router.push("/");
+    } catch (err: any) {
       console.log(err);
+      throw err;
     }
   }
 

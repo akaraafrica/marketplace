@@ -191,8 +191,8 @@ model UserRating {
 model Like {
   id           Int         @id @default(autoincrement())
   itemId       Int?
-  collectionId Int?
   userId       Int?
+  collectionId Int?
   Collection   Collection? @relation(fields: [collectionId], references: [id])
   Item         Item?       @relation(fields: [itemId], references: [id])
   User         User?       @relation(fields: [userId], references: [id])

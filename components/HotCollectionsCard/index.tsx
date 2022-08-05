@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
 import NextImage from "../Image";
-import { IItem } from "../../types/item.interface";
-import { IUser } from "../../types/user.interface";
 import { ICollection } from "../../types/collection.interface";
 import Link from "../Link";
 interface properties {

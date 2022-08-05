@@ -1,10 +1,10 @@
-import { Avatar, Backdrop } from "@mui/material";
-import { useUser } from "../../contexts/UserContext";
+import { useState, useContext } from "react";
+import { useRouter } from "next/router";
+import { AuthContext } from "../../contexts/AuthContext";
+import { Avatar } from "@mui/material";
 import { BidDs } from "../../ds";
 import styles from "./PlaceBid.module.scss";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import PlaceBidDialog from "./PlaceBidDialog";
 import PurchaseDialog from "./PurchaseDialog";
 import SuccessDialog from "./SuccessDialog";
@@ -17,6 +17,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
   const [openPurchaseDialog, setOpenPurchaseDialog] = useState(false);
   const [openSucceesDialog, setOpenSuccessDialog] = useState(false);
   const [amount, setAmount] = useState(0);
+  const { user, isAuthenticated, signOut } = useContext(AuthContext);
 
   const handleBidClose = () => {
     setOpenPlaceBidDialog(false);
@@ -27,7 +28,6 @@ export default function PlaceBid({ item }: { item: IItem }) {
   const handleSuccessClose = () => {
     setOpenSuccessDialog(false);
   };
-  const user = useUser()?.user;
 
   const handlePlaceBid = async () => {
     const data = {

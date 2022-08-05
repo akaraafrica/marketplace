@@ -10,12 +10,12 @@ export interface IUser {
   id: number;
   walletAddress: string;
   email: string;
-  accessToken: string;
-  joined: string;
-  isVerified: boolean;
-  profile: IProfile;
-  bids: IBid[];
-  likes: ILike[];
+  accessToken?: string;
+  joined?: string;
+  isVerified?: boolean;
+  profile?: IProfile;
+  bids?: IBid[];
+  likes?: ILike[];
 }
 
 export const initialState: IUser = {

@@ -1,12 +1,12 @@
 import { Avatar } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
 import { IUser } from "../../types/user.interface";
+import { AuthContext } from "../../contexts/AuthContext";
 import AcceptBid from "./AcceptBid";
 import PlaceBid from "./PlaceBid";
 import styles from "./Tags.module.scss";
 import Link from "../Link";
 import { IItem } from "../../types/item.interface";
-import { useUser } from "../../contexts/UserContext";
 
 interface infoProperties {
   user: IUser;
@@ -30,7 +30,7 @@ const InfoComponent = ({ user }: infoProperties) => {
 };
 
 export default function Tags({ item }: { item: IItem }) {
-  const user = useUser()?.user;
+  const { user } = useContext(AuthContext);
   const isOwner = item?.owner?.id === user?.id;
 
   const [tag, setTag] = useState(0);
