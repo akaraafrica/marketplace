@@ -1,6 +1,18 @@
 import Image from "next/image";
 import styles from "./QuickButtons.module.scss";
+import {
+  FacebookIcon,
+  RedditIcon,
+  TelegramIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
+import { useState } from "react";
 export default function QuickButtons({ desktop }: any) {
+  const [showSocial, setShowSocial] = useState(false);
+  const handleShare = () => {
+    setShowSocial(!showSocial);
+  };
   return (
     <div className={desktop ? styles.horizontal : styles.main}>
       <div className={styles.close}>
@@ -11,12 +23,25 @@ export default function QuickButtons({ desktop }: any) {
           height={40}
         />
       </div>
-      <Image
-        alt="share"
-        src="/assets/singleItem/share.svg"
-        width={40}
-        height={40}
-      />
+      <div className={styles.share}>
+        {showSocial && (
+          <section>
+            <FacebookIcon size={32} round />
+            <TwitterIcon size={32} round />
+            <WhatsappIcon size={32} round />
+            <TelegramIcon size={32} round />
+            <RedditIcon size={32} round />
+          </section>
+        )}
+
+        <Image
+          alt="share"
+          src="/assets/singleItem/share.svg"
+          width={40}
+          onClick={handleShare}
+          height={40}
+        />
+      </div>
       <div className={styles.love}>
         <Image
           alt="love"
