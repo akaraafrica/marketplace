@@ -45,6 +45,7 @@ model Collection {
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
   ratings          CollectionRating[]
   items            Item[]
+  likes            Like[]
   userCollections  UserCollection[]
 }
 
@@ -88,6 +89,7 @@ model Item {
   owner        User         @relation(fields: [ownerId], references: [id])
   bids         Bid[]
   itemRatings  ItemRating[]
+  likes        Like[]
   purchases    Purchase[]
   ratings      Rating[]
 }
@@ -148,6 +150,7 @@ model User {
   bids            Bid[]
   collections     Collection[]
   items           Item[]
+  likes           Like[]
   notifications   Notification[]
   profile         Profile?
   purchases       Purchase?
@@ -183,6 +186,16 @@ model UserRating {
   updatedAt DateTime @updatedAt
   rating    Rating   @relation(fields: [ratingId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Like {
+  id           Int         @id @default(autoincrement())
+  itemId       Int?
+  collectionId Int?
+  userId       Int?
+  Collection   Collection? @relation(fields: [collectionId], references: [id])
+  Item         Item?       @relation(fields: [itemId], references: [id])
+  User         User?       @relation(fields: [userId], references: [id])
 }
 
 enum EntityType {

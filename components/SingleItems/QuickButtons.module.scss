@@ -44,6 +44,10 @@
   display: flex;
   align-items: center;
 
+  svg {
+    cursor: pointer;
+  }
+
   @media only screen and (min-width: 800px) {
     padding: 2px;
     padding-top: 8px;

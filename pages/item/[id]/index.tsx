@@ -33,7 +33,7 @@ const Index = ({ item, user }: { item: IItem; user: IUser }) => {
             {item?.images[0] && (
               <NextImage alt={item.title} src={item.images[0]} layout="fill" />
             )}
-            {width < 800 && <QuickButtons />}
+            {width < 800 && <QuickButtons item={item} />}
           </div>
         </section>
         <section className={styles.sectiontwo}>
@@ -66,7 +66,7 @@ const Index = ({ item, user }: { item: IItem; user: IUser }) => {
           </p>
           <p>{item.description}</p>
           <Tags item={item} />
-          {width > 800 && <QuickButtons desktop={true} />}
+          {width > 800 && <QuickButtons desktop={true} item={item} />}
         </section>
       </main>
     </Layout>
