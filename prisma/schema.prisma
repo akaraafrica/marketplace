@@ -45,7 +45,7 @@ model Collection {
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
   ratings          CollectionRating[]
   items            Item[]
-  Like             Like[]
+  likes            Like[]
   userCollections  UserCollection[]
 }
 
@@ -89,7 +89,7 @@ model Item {
   owner        User         @relation(fields: [ownerId], references: [id])
   bids         Bid[]
   itemRatings  ItemRating[]
-  Like         Like[]
+  likes        Like[]
   purchases    Purchase[]
   ratings      Rating[]
 }
@@ -150,7 +150,7 @@ model User {
   bids            Bid[]
   collections     Collection[]
   items           Item[]
-  Like            Like[]
+  likes           Like[]
   notifications   Notification[]
   profile         Profile?
   purchases       Purchase?
