@@ -24,8 +24,8 @@ model Purchase {
   amount        Float
   createdAt     DateTime @default(now())
   transactionId String   @unique
-   userId   Int
   itemId        Int
+  userId        Int      @unique
   item          Item     @relation(fields: [itemId], references: [id])
   user          User     @relation(fields: [userId], references: [id])
 }
@@ -150,7 +150,7 @@ model User {
   items           Item[]
   notifications   Notification[]
   profile         Profile?
-  purchases       Purchase[]
+  purchases       Purchase?
   ratings         Rating[]
   userCollections UserCollection[]
   userFollowers   UserFollower[]   @relation("userFollowers")
