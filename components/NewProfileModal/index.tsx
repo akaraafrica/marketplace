@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import NextImage from "../../components/Image";
+import { IUser } from "../../types/user.interface";
+import Link from "../Link";
 import styles from "./index.module.scss";
 
 const Index = () => {
+  const { user, isAuthenticated, signOut } = useContext(AuthContext);
+
   return (
     <div className={styles.root}>
       <span className={styles.name}>Sarah Shaibu</span>
       <div className={styles.wallet}>
-        <span>0xc4c16ab5ac7d...b21a</span>
+        <span>{user?.walletAddress}</span>
         <NextImage width="30px" height="30px" src="/assets/copyicon.svg" />
       </div>
       <div className={styles.balCard}>
@@ -28,7 +33,9 @@ const Index = () => {
           alt="user icon"
           src="/assets/usericon.svg"
         />
-        <span>My Profile</span>
+        <Link href={`/profile/${user?.id}`}>
+          <span>My Profile</span>
+        </Link>
       </div>
       <div className={styles.line}></div>
       <div className={styles.list}>
@@ -38,7 +45,9 @@ const Index = () => {
           alt="user icon"
           src="/assets/collectionicon.svg"
         />
-        <span>My Collections</span>
+        <Link href={`/profile`}>
+          <span>My Collections</span>
+        </Link>
       </div>
       <div className={styles.line}></div>
       <div className={styles.list}>
@@ -48,7 +57,9 @@ const Index = () => {
           alt="user icon"
           src="/assets/settingsicon.svg"
         />
-        <span>Settings</span>
+        <Link href={`/settings`}>
+          <span>Settings</span>
+        </Link>
       </div>
       <div className={styles.line}></div>
       <div className={styles.list}>
@@ -58,7 +69,7 @@ const Index = () => {
           alt="user icon"
           src="/assets/logout.svg"
         />
-        <span>Logout</span>
+        <span onClick={() => signOut()}>Logout</span>
       </div>
     </div>
   );

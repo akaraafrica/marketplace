@@ -24,8 +24,8 @@ model Purchase {
   amount        Float
   createdAt     DateTime @default(now())
   transactionId String   @unique
-   userId   Int
   itemId        Int
+  userId        Int      @unique
   item          Item     @relation(fields: [itemId], references: [id])
   user          User     @relation(fields: [userId], references: [id])
 }
@@ -45,6 +45,7 @@ model Collection {
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
   ratings          CollectionRating[]
   items            Item[]
+  Like             Like[]
   userCollections  UserCollection[]
 }
 
@@ -88,6 +89,7 @@ model Item {
   owner        User         @relation(fields: [ownerId], references: [id])
   bids         Bid[]
   itemRatings  ItemRating[]
+  Like         Like[]
   purchases    Purchase[]
   ratings      Rating[]
 }
@@ -148,9 +150,10 @@ model User {
   bids            Bid[]
   collections     Collection[]
   items           Item[]
+  Like            Like[]
   notifications   Notification[]
   profile         Profile?
-  purchases       Purchase[]
+  purchases       Purchase?
   ratings         Rating[]
   userCollections UserCollection[]
   userFollowers   UserFollower[]   @relation("userFollowers")
@@ -183,6 +186,16 @@ model UserRating {
   updatedAt DateTime @updatedAt
   rating    Rating   @relation(fields: [ratingId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Like {
+  id           Int         @id @default(autoincrement())
+  itemId       Int?
+  userId       Int?
+  collectionId Int?
+  Collection   Collection? @relation(fields: [collectionId], references: [id])
+  Item         Item?       @relation(fields: [itemId], references: [id])
+  User         User?       @relation(fields: [userId], references: [id])
 }
 
 enum EntityType {

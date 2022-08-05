@@ -59,7 +59,6 @@ const Index = () => {
         );
       }
 
-      
       const res = await axios.post("/api/user/signup", {
         address: account,
         email: state.email,

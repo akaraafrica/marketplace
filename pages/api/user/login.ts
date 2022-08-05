@@ -6,7 +6,7 @@ import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function Login(req: NextApiRequest, res: NextApiResponse) {
   const { email, password } = req.body;
-  if (req.method === "GET") return res.end("Method not allowed");
+  if (req.method != "POST") return res.end("Method not allowed");
 
   if (!email)
     return res
@@ -25,7 +25,7 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!myUser)
-      return res.status(401).json({
+      return res.status(400).json({
         message: "You have not been signed up. Please signup to login",
       });
 
@@ -43,11 +43,13 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
           .status(200)
           .json({ message: "Logged In", accessToken: token, user: myUser });
       } else {
-        return res.status(401).json({ message: "Invalid password, try again" });
+        return res
+          .status(400)
+          .json({ message: "Invalid email or password, try again" });
       }
     }
   } catch (error: any) {
-    console.log('error here ', error)
+    console.log("error here ", error);
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       return res.status(500).send(ParsePrismaError(error));
     }

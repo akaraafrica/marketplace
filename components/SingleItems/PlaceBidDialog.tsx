@@ -1,9 +1,9 @@
-import Image from "next/image";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import Image from "next/image";
+import { AuthContext } from "../../contexts/AuthContext";
 import Dialog from "../global/Dialog";
 import styles from "./PlaceBidDialog.module.scss";
-import { useUser } from "../../contexts/UserContext";
 
 export default function PlaceBidDialog({
   open,
@@ -16,13 +16,14 @@ export default function PlaceBidDialog({
   const [followSteps, setFollowSteps] = useState(false);
   const balanceValue = 10;
   const [balance, setBalance] = useState(balanceValue);
-  const user = useUser()?.user;
+  const { user, isAuthenticated, signIn } = useContext(AuthContext);
+
   const router = useRouter();
 
   const startSteps = () => {
-    if (user)setFollowSteps(true)
-    else router.push('/login')
-  }
+    if (user) setFollowSteps(true);
+    else router.push("/login");
+  };
   const handleChange = (e: any) => {
     const value = Number(e.target.value);
     setAmount(value);

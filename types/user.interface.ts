@@ -9,11 +9,11 @@ export interface IUser {
   id: number;
   walletAddress: string;
   email: string;
-  accessToken: string;
-  joined: string;
-  isVerified: boolean;
-  profile: IProfile;
-  bids: IBid[];
+  accessToken?: string;
+  joined?: string;
+  isVerified?: boolean;
+  profile?: IProfile;
+  bids?: IBid[];
 }
 
 export const initialState: IUser = {

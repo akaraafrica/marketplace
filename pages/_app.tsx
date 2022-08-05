@@ -5,13 +5,11 @@ import "swiper/css";
 import "swiper/css/bundle";
 import "./_app.css";
 import type { AppProps } from "next/app";
-import { SessionProvider } from "next-auth/react"
 import { ethers } from "ethers";
 import { Provider } from "react-redux";
 import store from "../store/store";
 import { AuthProvider } from "../contexts/AuthContext";
 import { Web3ReactProvider } from "@web3-react/core";
-import UserProvider from "../contexts/UserContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -22,9 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
       >
         <AuthProvider>
-          <UserProvider>
-            <Component {...pageProps} />
-          </UserProvider>
+          <Component {...pageProps} />
         </AuthProvider>
       </Web3ReactProvider>
     </Provider>
