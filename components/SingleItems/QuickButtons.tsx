@@ -5,6 +5,13 @@ import { LikeDs } from "../../ds";
 import { ICollection } from "../../types/collection.interface";
 import { IItem } from "../../types/item.interface";
 import styles from "./QuickButtons.module.scss";
+import {
+  FacebookIcon,
+  RedditIcon,
+  TelegramIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
 interface IQuickButtons {
   desktop?: boolean;
   item?: IItem;
@@ -15,6 +22,10 @@ export default function QuickButtons({
   item,
   collection,
 }: IQuickButtons) {
+  const [showSocial, setShowSocial] = useState(false);
+  const handleShare = () => {
+    setShowSocial(!showSocial);
+  };
   const user = useUser()?.user;
 
   const like = user?.likes?.find((like) => like.itemId === item?.id);
@@ -46,12 +57,24 @@ export default function QuickButtons({
           height={40}
         />
       </div>
-      <Image
-        alt="share"
-        src="/assets/singleItem/share.svg"
-        width={40}
-        height={40}
-      />
+      <div className={styles.share}>
+        {showSocial && (
+          <section>
+            <FacebookIcon size={32} round />
+            <TwitterIcon size={32} round />
+            <WhatsappIcon size={32} round />
+            <TelegramIcon size={32} round />
+            <RedditIcon size={32} round />
+          </section>
+        )}
+        <Image
+          alt="share"
+          src="/assets/singleItem/share.svg"
+          onClick={handleShare}
+          width={40}
+          height={40}
+        />
+      </div>
       <div className={styles.love} onClick={handleLike}>
         <svg
           width="24"

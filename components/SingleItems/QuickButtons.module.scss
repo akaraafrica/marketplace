@@ -60,3 +60,27 @@
     display: none;
   }
 }
+
+.share {
+  position: relative;
+
+  section {
+    position: absolute;
+    display: flex;
+    height: 50px;
+    width: 200px;
+    gap: 10px;
+    bottom: 2px;
+    left: 50px;
+    cursor: pointer;
+
+    @media only screen and (max-width: 1400px) {
+      left: -220px;
+    }
+
+    @media only screen and (max-width: 800px) {
+      bottom: 50px;
+      left: -30px;
+    }
+  }
+}

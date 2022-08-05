@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
-import { useWeb3React } from "@web3-react/core";
 import { useRouter } from "next/router";
 import styles from "./index.module.scss";
 // import NotificationModal from "../NotificationModal/index";
@@ -22,7 +21,7 @@ function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [mobile, setMobile] = React.useState(false);
-  const { account, active, activate } = useWeb3React();
+  // const { account, active, activate } = useWeb3React();
   const router = useRouter();
   const user = useUser()?.user;
 
@@ -90,7 +89,7 @@ function Header() {
           <div
             className={styles.notification}
             onClick={() => {
-              active && account
+              user
                 ? router.push("/login")
                 : setNotificationOpen(!notificationOpen);
               setProfileOpen(false);
@@ -106,7 +105,7 @@ function Header() {
           </div>
           <button
             type="button"
-            className={active && account ? styles.btnLight : styles.btn}
+            className={user ? styles.btnLight : styles.btn}
             onClick={() => handleUpload()}
           >
             Upload

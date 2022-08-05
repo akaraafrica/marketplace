@@ -72,6 +72,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
           open={openPlaceBidDialog}
           handleClose={handleBidClose}
           setAmount={setAmount}
+          item={item}
           amount={amount}
           handlePlaceBid={handlePlaceBid}
         />
