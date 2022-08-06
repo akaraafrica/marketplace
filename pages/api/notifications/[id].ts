@@ -5,7 +5,7 @@ import verifyToken from "../../../utils/middlewares/verifyToken";
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  auth?: { user: string }
+  auth?: string
 ) => {
   const id: number = parseInt(req.query.id as string);
   if (req.method === "GET") {
@@ -40,11 +40,11 @@ const handler = async (
         error: new Error("Notification does not exist"),
       });
     }
-    if (item.userId.toString() !== auth?.user) {
-      return res.status(401).json({
-        error: new Error("Requête non autorisée !"),
-      });
-    }
+    // if (item.userId.toString() !== auth) {
+    //   return res.status(401).json({
+    //     error: new Error("Requête non autorisée !"),
+    //   });
+    // }
     await prisma.notification.delete({
       where: {
         id: id,

@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../services/apiClient";
 import data from "../data.json";
 
 interface CreateNotificationData {
@@ -7,14 +7,14 @@ interface CreateNotificationData {
   userId: string;
 }
 
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/notifications`;
+const url = `/api/notifications`;
 
 class Notifications {
   constructor() {}
 
   async fetch(token: string, walletAddress: string) {
     try {
-      const resp = await axios.get(baseUrl, {
+      const resp = await api.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -28,7 +28,7 @@ class Notifications {
 
   async updateAll(token: string, walletAddress: string) {
     try {
-      const resp = await axios.put(`${baseUrl}/updateAll`, {
+      const resp = await api.put(`${url}/updateAll`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ class Notifications {
 
   async update(id: string, walletAddress: string, token: string) {
     try {
-      const resp = await axios.put(`${baseUrl}/${id}`, {
+      const resp = await api.put(`${url}/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ class Notifications {
 
   async create({ title, content, userId }: CreateNotificationData) {
     try {
-      const resp = await axios.post(`${baseUrl}/create`, {
+      const resp = await api.post(`${url}/create`, {
         title,
         content,
         userId,

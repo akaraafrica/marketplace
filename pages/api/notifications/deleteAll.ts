@@ -5,14 +5,14 @@ import verifyToken from "../../../utils/middlewares/verifyToken";
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  auth?: { user: string }
+  auth?: string
 ) => {
-  const id: string = req.query.id as string;
+  if (!auth) return res.status(404).send("user not found");
 
   if (req.method === "DELETE") {
     await prisma.user.update({
       where: {
-        walletAddress: auth?.user || "",
+        walletAddress: auth,
       },
       data: {
         notifications: {
@@ -20,8 +20,11 @@ const handler = async (
         },
       },
     });
-    res.status(200).json({ message: "Deleted all notifications successfully" });
+    return res
+      .status(200)
+      .json({ message: "Deleted all notifications successfully" });
   }
+  return res.status(403).send("invalid request");
 };
 
 export default verifyToken(handler);

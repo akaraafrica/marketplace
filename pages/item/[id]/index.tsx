@@ -73,7 +73,7 @@ const Index = ({ item }: { item: IItem }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const itemId = ctx.params?.id;
   let [Item] = await Promise.all([ItemDs.getData()]);
-  let item = Item.find((i: any) => i.id == Number(itemId));
+  let item = Item ? Item.find((i: any) => i.id == Number(itemId)) : null;
 
   if (!item) {
     return {

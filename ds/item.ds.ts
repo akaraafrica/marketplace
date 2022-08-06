@@ -1,14 +1,14 @@
-import axios from "axios";
+import { api } from "../services/apiClient";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/items`;
+const url = `/api/items`;
 
 class Item {
   constructor() {}
 
   async createData(data: any, walletAddress: string, tokenid: string) {
     try {
-      const user = await axios.get(`api/user/${walletAddress}`);
-      await axios.post(baseUrl, {
+      const user = await api.get(`api/user/${walletAddress}`);
+      await api.post(url, {
         ...data,
         owner: user.data,
         ownerId: user.data.id,
@@ -22,7 +22,7 @@ class Item {
 
   async getData() {
     try {
-      const items = await axios.get(baseUrl);
+      const items = await api.get(url);
       return items.data;
     } catch (error) {
       console.log(error);

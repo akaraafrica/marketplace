@@ -1,13 +1,14 @@
 import axios from "axios";
+import { api } from "../services/apiClient";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/bid`;
+const url = `/api/bid`;
 
 type route = "purchase" | "placeBid" | "acceptBid";
 
 class Bid {
   async postData(route: route, data: any) {
     try {
-      const res = await axios.post(baseUrl + "/" + route, data);
+      const res = await api.post(url + "/" + route, data);
       return res.data;
     } catch (error) {
       console.log(error);

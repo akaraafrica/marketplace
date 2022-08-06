@@ -2,11 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../utils/lib/prisma";
 import verifyToken from "../../../utils/middlewares/verifyToken";
 
-const handler = async (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  auth?: { user: string }
-) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = parseInt(req.query.id as string);
 
   if (req.method === "PUT") {
@@ -35,11 +31,11 @@ const handler = async (
           },
         },
       });
-      // console.log('body', req.body)
+
       return res.status(201).json({ message: "Updated successfully" });
     } catch (error: any) {
       console.log(error);
-      return res.status(400).json({ message: error.response.data });
+      return res.status(500).json({ message: error.response.data });
     }
   }
 };

@@ -1,6 +1,6 @@
+import { useState, useContext } from "react";
 import Image from "next/image";
-import { useState } from "react";
-import { useUser } from "../../contexts/UserContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import { LikeDs } from "../../ds";
 import { ICollection } from "../../types/collection.interface";
 import { IItem } from "../../types/item.interface";
@@ -26,7 +26,7 @@ export default function QuickButtons({
   const handleShare = () => {
     setShowSocial(!showSocial);
   };
-  const user = useUser()?.user;
+  const { user } = useContext(AuthContext);
 
   const like = user?.likes?.find((like) => like.itemId === item?.id);
 

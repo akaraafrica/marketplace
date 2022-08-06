@@ -1,4 +1,5 @@
 import axios from "axios";
+import { api } from "../services/apiClient";
 
 export const enum Filter {
   All = 0,
@@ -8,14 +9,14 @@ export const enum Filter {
   Music = 4,
   Video = 5,
 }
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/items`;
+const url = `/api/items`;
 
 class Discovery {
   constructor() {}
 
   async getData(filterBy: Filter) {
     try {
-      const res = await axios.get(baseUrl, {
+      const res = await api.get(url, {
         params: {
           filterBy,
         },

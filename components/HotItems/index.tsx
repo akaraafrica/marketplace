@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import styles from "./index.module.scss";
 import ItemCard from "../ItemCard";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,9 +14,13 @@ interface properties {
 }
 
 function HotItems({ items }: properties) {
-  const [data, setData] = useState([...items]);
-
+  const [data, setData] = useState<IItem[]>();
   const [swiperRef, setSwiperRef] = useState<swiperClass>();
+
+  useEffect(() => {
+    if (items && items.length > 0) setData([...items]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLeftClick = useCallback(() => {
     if (!swiperRef) return;

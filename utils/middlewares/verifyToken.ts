@@ -1,18 +1,23 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import jwt, { Secret } from "jsonwebtoken";
+import { IUser } from "../../types/user.interface";
 
 interface JwtPayload {
-  user: string;
+  address: string;
 }
 
 interface Handler {
-  (req: NextApiRequest, res: NextApiResponse<any>, auth: any): Promise<void>;
+  (
+    req: NextApiRequest,
+    res: NextApiResponse<any>,
+    auth?: string
+  ): Promise<void>;
   (req: NextApiRequest, res: NextApiResponse<any>): Promise<void>;
   (req: NextApiRequest, res: NextApiResponse<any>): Promise<void>;
   (
     arg0: NextApiRequest,
     arg1: NextApiResponse<any>,
-    arg2: { user: string } | undefined
+    arg2: string | undefined
   ): any;
 }
 
@@ -25,27 +30,13 @@ const verifyToken = (handler: Handler) => {
         token as string,
         process.env.JWT_KEY as Secret
       ) as JwtPayload;
-      const user = decodeToken.user;
-      const auth = { user };
-
-      if (req.method === "DELETE") {
-        return handler(req, res, auth);
-      }
-
+      const address = decodeToken.address;
+      const auth = address;
       // compare userId from request body to decoded userId
-      if (req.body.address !== user) {
-        res.status(401).json({
-          error: "Invalid user Id",
-        });
-        return;
-      } else {
-        return handler(req, res);
-      }
+
+      return handler(req, res, auth);
     } catch (error) {
-      res.status(401).json({
-        error: error,
-      });
-      return;
+      return res.status(401).json(error);
     }
   };
 };

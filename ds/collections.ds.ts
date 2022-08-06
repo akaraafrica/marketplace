@@ -1,11 +1,11 @@
-import axios from "axios";
+import { api } from "../services/apiClient";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/collections`;
+const url = `/api/collections`;
 
 class Collection {
   async getCollections() {
     try {
-      const res = await axios.get(baseUrl);
+      const res = await api.get(url);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -14,7 +14,7 @@ class Collection {
 
   async getCollectionById(id: number) {
     try {
-      const res = await axios.get(`${baseUrl}/${id}`);
+      const res = await api.get(`${url}/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);

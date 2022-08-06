@@ -1,7 +1,6 @@
-import axios from "axios";
 import { api } from "../services/apiClient";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/user`;
+const url = `/api/user`;
 
 class User {
   constructor() {}
@@ -13,7 +12,7 @@ class User {
     }
 
     try {
-      const response = await api.get(`${baseUrl}/${walletAddress}`);
+      const response = await api.get(`${url}/${walletAddress}`);
       return response.data;
     } catch (error) {
       console.log(error);

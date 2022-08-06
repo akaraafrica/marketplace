@@ -1,13 +1,13 @@
-import axios from "axios";
+import { api } from "../services/apiClient";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}api/`;
+const url = `/api`;
 
 class Profile {
   constructor() {}
 
   async fetch(id: number) {
     try {
-      const res = await axios.get(`${baseUrl}/${id}`);
+      const res = await api.get(`${url}/${id}`);
       console.log(res);
       return res.data;
     } catch (error) {
@@ -17,8 +17,8 @@ class Profile {
 
   async updateData(data: any, id: number, accessToken: string) {
     try {
-      await axios.put(
-        `${baseUrl}profile/${id}`,
+      await api.put(
+        `${url}profile/${id}`,
         {
           name: data.name,
           bio: data.bio,

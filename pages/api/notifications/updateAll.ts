@@ -2,11 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../utils/lib/prisma";
 import verifyToken from "../../../utils/middlewares/verifyToken";
 
-const handler = async (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  auth?: { user: string }
-) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id: string = req.query.id as string;
   if (req.method === "PUT") {
     await prisma.user.update({

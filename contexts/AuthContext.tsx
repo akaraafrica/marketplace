@@ -3,7 +3,6 @@ import Router from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import { getCookies, setCookies, removeCookies } from "cookies-next";
 import { api } from "../services/apiClient";
-import { AxiosResponse } from "axios";
 import { IUser } from "../types/user.interface";
 import { UserDs } from "../ds";
 
@@ -28,6 +27,10 @@ export const AuthContext = createContext({} as AuthContextData);
 let authChannel: BroadcastChannel;
 
 export function signOut() {
+  removeCookies("nextauth.token");
+  removeCookies("nextauth.refreshToken");
+  removeCookies("address");
+  localStorage.clear();
   authChannel.postMessage("signOut");
 }
 
@@ -38,46 +41,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    authChannel = new BroadcastChannel("auth");
+    const { "nextauth.token": token } = getCookies();
+    console.log("we have token please ", token);
+    console.log("running twice");
+    api
+      .get(`/api/me`)
+      .then((savedUser: IUser) => setUser(savedUser))
+      .catch((err: any) => console.log(err));
 
-    authChannel.onmessage = (message) => {
-      switch (message.data) {
-        case "signOut":
-          {
-            // signOut();
-            removeCookies("nextauth.token");
-            removeCookies("nextauth.refreshToken");
-            removeCookies("address");
-            localStorage.clear();
-            Router.push("/");
-          }
-          break;
-
-        default: {
-          break;
-        }
-      }
-    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const id = localStorage.getItem("id");
-    const { "nextauth.token": token } = getCookies();
-    console.log("trying to get token ", id);
-    if (id) {
-      console.log("we have token please ", token);
-      api
-        .get(`/user/${id}`)
-        .then((response: AxiosResponse) => {
-          const { email, walletAddress, id } = response.data;
-          console.log({ "response.data from user": response.data });
+    authChannel = new BroadcastChannel("auth");
+    authChannel.onmessage = (message) => {
+      switch (message.data) {
+        case "signOut":
+          Router.push("/");
+          setUser(undefined);
+          break;
 
-          setUser(response.data);
-        })
-        .catch(() => {
-          signOut();
-        });
-    }
+        default:
+          break;
+      }
+    };
   }, []);
 
   async function signIn({ email, password }: SignInCredential) {

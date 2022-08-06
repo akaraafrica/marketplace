@@ -1,12 +1,12 @@
-import axios from "axios";
+import { api } from "../services/apiClient";
 import { ILike } from "../types/like.interface";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN!}/api/like`;
+const url = `/api/like`;
 
 class Like {
   async postData(data: ILike) {
     try {
-      const res = await axios.post(baseUrl, data);
+      const res = await api.post(url, data);
       return res.data;
     } catch (error) {
       console.log(error);
