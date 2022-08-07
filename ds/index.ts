@@ -6,6 +6,7 @@ import CollectionDs from "./collections.ds";
 import ProfileDs from "./profile.ds";
 import BidDs from "./bid.ds";
 import LikeDs from "./like.ds";
+import UploadDs from "./upload.ds";
 
 export {
   NotificationDs,
@@ -16,4 +17,5 @@ export {
   CollectionDs,
   BidDs,
   LikeDs,
+  UploadDs,
 };

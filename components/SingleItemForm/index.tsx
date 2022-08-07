@@ -5,6 +5,7 @@ import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import MintTokenDialog from "./MintTokenDialog";
 import { toast } from "react-toastify";
+import { getFileUploadURL } from "../../utils/upload/fileUpload";
 
 function SingleCollectibleItem() {
   const [foto, setFoto] = useState(null);
@@ -24,16 +25,19 @@ function SingleCollectibleItem() {
   const onSubmit = (data: any) => {
     setOpenDialog(true);
   };
-  const handleMint = () => {
+  const handleMint = async () => {
     setTimeout(() => {
-      toast.success("successful");
-      // setOpenDialog(false)
+      // toast.success("successful");
+      setOpenDialog(false);
       return;
     }, 3000);
-    // const data = getValues()
-    // if (foto) {
-    //   data.image = foto;
-    // }
+    const data = getValues();
+    if (foto) {
+      data.image = foto;
+    }
+    console.log(data.image.name, data.image.type);
+
+    const url = await getFileUploadURL(data.image);
     // const address: string = localStorage.getItem("address")!;
     // const accessToken: string = localStorage.getItem("accessToken")!;
 
@@ -182,7 +186,7 @@ function SingleCollectibleItem() {
               </label>
             </div>
             <div className={styles.putonscalebtnsec}>
-              <button type="submit">
+              <button disabled={!foto} type="submit">
                 Create item
                 <span>
                   <img src={`/assets/arrow.svg`} alt="" />
