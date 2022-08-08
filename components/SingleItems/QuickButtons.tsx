@@ -11,7 +11,15 @@ import {
   TelegramIcon,
   TwitterIcon,
   WhatsappIcon,
+  LinkedinIcon,
+  FacebookShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  LinkedinShareButton,
 } from "react-share";
+import { useRouter } from "next/router";
 interface IQuickButtons {
   desktop?: boolean;
   item?: IItem;
@@ -22,10 +30,14 @@ export default function QuickButtons({
   item,
   collection,
 }: IQuickButtons) {
+  const router = useRouter();
+  const url = `${process.env.NEXT_PUBLIC_DOMAIN}${router.asPath}`;
+
   const [showSocial, setShowSocial] = useState(false);
   const handleShare = () => {
     setShowSocial(!showSocial);
   };
+
   const { user } = useContext(AuthContext);
 
   const like = user?.likes?.find((like) => like.itemId === item?.id);
@@ -60,11 +72,29 @@ export default function QuickButtons({
       <div className={styles.share}>
         {showSocial && (
           <section>
-            <FacebookIcon size={32} round />
-            <TwitterIcon size={32} round />
-            <WhatsappIcon size={32} round />
-            <TelegramIcon size={32} round />
-            <RedditIcon size={32} round />
+            <FacebookShareButton
+              url={url}
+              quote={item?.title}
+              hashtag="#Akara4Africa"
+            >
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            <TwitterShareButton
+              url={url}
+              title={item?.title}
+              hashtags={["#Akara4Africa"]}
+            >
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            <WhatsappShareButton url={url} title={item?.title}>
+              <WhatsappIcon size={32} round />
+            </WhatsappShareButton>
+            <TelegramShareButton url={url} title={item?.title}>
+              <TelegramIcon size={32} round />
+            </TelegramShareButton>
+            <RedditShareButton url={url} title={item?.title}>
+              <RedditIcon size={32} round />
+            </RedditShareButton>
           </section>
         )}
         <Image
