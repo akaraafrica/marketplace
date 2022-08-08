@@ -1,10 +1,11 @@
 import React from "react";
+import CreateCollectionForm from "../../../components/CreateCollectionForm";
 import Layout from "../../../components/Layout";
 
 const Index = () => {
   return (
     <Layout>
-      <div>index</div>
+      <CreateCollectionForm />
     </Layout>
   );
 };

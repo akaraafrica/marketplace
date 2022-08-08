@@ -13,6 +13,7 @@ import { ProfileDs } from "../../ds";
 import { GetServerSideProps } from "next";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import ProfileItem from "../../components/ProfileItem";
+import DefaultAvatar from "../../components/DefaultAvatar";
 
 const ProfilePage = (props: any) => {
   const [open, setOpen] = React.useState(0);
@@ -33,7 +34,14 @@ const ProfilePage = (props: any) => {
         <div className={styles.bottom}>
           <div className={styles.left}>
             <div className={styles.leftTop}>
-              <NextImage
+              <DefaultAvatar
+                url={profile && profile.avatar}
+                width="160px"
+                height="160px"
+                walletAddress={walletAddress && walletAddress}
+                fontSize="1.2em"
+              />
+              {/* <NextImage
                 className={styles.image2}
                 src={
                   profile.avatar
@@ -42,9 +50,9 @@ const ProfilePage = (props: any) => {
                 }
                 width="160px"
                 height="160px"
-              />
+              /> */}
               <span className={styles.name}>
-                {profile.name && profile.name}
+                {profile && profile.name && profile.name}
               </span>
               <div className={styles.wallet2}>
                 <span>{walletAddress && walletAddress}</span>
@@ -54,7 +62,9 @@ const ProfilePage = (props: any) => {
                   src="/assets/copyicon.svg"
                 />
               </div>
-              <span className={styles.desc}>{profile.bio && profile.bio}</span>
+              <span className={styles.desc}>
+                {profile && profile.bio && profile.bio}
+              </span>
               <span className={styles.web}>
                 <TbWorld /> https://ui8.net
               </span>
