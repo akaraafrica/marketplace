@@ -25,6 +25,7 @@ function SingleCollectibleItem() {
   const onSubmit = (data: any) => {
     setOpenDialog(true);
   };
+
   const handleMint = async () => {
     setTimeout(() => {
       // toast.success("successful");
@@ -38,6 +39,8 @@ function SingleCollectibleItem() {
     console.log(data.image.name, data.image.type);
 
     const url = await getFileUploadURL(data.image);
+    console.log({ url });
+
     // const address: string = localStorage.getItem("address")!;
     // const accessToken: string = localStorage.getItem("accessToken")!;
 
