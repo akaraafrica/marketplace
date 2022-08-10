@@ -6,19 +6,17 @@
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
-
 .default {
   display: flex;
-  // flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 5px;
-  // background: yellow;
   color: #000;
 
   div {
     // font-size: 1em;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 5px;
+    color: #000;
   }
 }

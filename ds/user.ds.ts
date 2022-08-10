@@ -19,6 +19,15 @@ class User {
       throw error;
     }
   }
+  async fetchAll() {
+    try {
+      const response = await api.get(`${url}/signup`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 
   async update() {}
 }
