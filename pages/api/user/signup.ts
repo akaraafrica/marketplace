@@ -118,9 +118,14 @@ export default async function Signup(
             items: true,
           },
         });
-        res.send(allusers);
-      } catch (error) {
-        res.status(500).send(error);
+        res.json(allusers);
+      } catch (error: any) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          return res.status(500).send(ParsePrismaError(error));
+        }
+        return res.json({
+          message: error.message,
+        });
       }
       break;
 

@@ -5,6 +5,7 @@ import NextImage from "../Image";
 import DefaultAvatar from "../DefaultAvatar";
 import { IUser } from "../../types/user.interface";
 import { toast } from "react-toastify";
+import { IItem } from "../../types/item.interface";
 
 const Index = ({
   users,
@@ -18,9 +19,11 @@ const Index = ({
   const [searchUser, setSearchUser] = useState("");
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
   const [resultDisplay, setResultDisplay] = useState(false);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<IItem[]>([]);
 
-  console.log(users);
+  // useEffect(() => {
+
+  // }, [selectedUser])
 
   const {
     register,
@@ -48,7 +51,6 @@ const Index = ({
     reset();
   };
 
-  console.log(collectionTypes);
   return (
     <div className={styles.root}>
       <div className={styles.sciCon}>
@@ -173,6 +175,7 @@ const Index = ({
                             }
                           }
                           setSelectedUser([...selectedUser, user]);
+                          // setItems([...items, ...user.items])
                           setResultDisplay(false);
                         }}
                       >
