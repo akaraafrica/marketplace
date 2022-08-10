@@ -13,10 +13,10 @@ const myBucket = new AWS.S3({
   region: REGION,
 });
 
-export const getFileUploadURL = async (file: any) => {
+export const getFileUploadURL = async (file: any, fileName: string) => {
   try {
     const address = getCookie("address") as string;
-    const Key = address?.slice(1, 6) + "-" + file.name;
+    const Key = address?.slice(1, 6) + "/" + fileName;
     const params = {
       ACL: "public-read",
       Body: file,
@@ -24,9 +24,8 @@ export const getFileUploadURL = async (file: any) => {
       Key,
     };
 
-    const res = await myBucket.putObject(params).promise();
+    await myBucket.putObject(params).promise();
     const url = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${Key}`;
-    console.log(url);
     return url;
   } catch (error) {
     console.log(error);

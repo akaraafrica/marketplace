@@ -8,14 +8,27 @@
   @media screen and (max-width: 1440px) {
     flex-direction: column;
   }
+
   @media screen and (max-width: 640px) {
     padding: 100px 20px;
   }
 
+  .editor {
+    color: white;
+    margin-bottom: 2rem;
+    margin-top: 10px;
+
+    label {
+      color: #666;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+
   .sci {
     display: flex;
-    flex-direction: column;
     gap: 40px;
+    flex-direction: column;
     flex: 1;
     width: 100%;
 
@@ -33,6 +46,7 @@
         }
       }
     }
+
     .sciuploadseccon {
       display: flex;
       flex-direction: column;
@@ -51,6 +65,7 @@
           line-height: 24px;
           color: #fcfcfd;
         }
+
         .drag {
           font-style: normal;
           font-weight: 400;
@@ -59,6 +74,7 @@
           color: #777e91;
         }
       }
+
       .sciuploadbox {
         width: 100%;
         display: flex;
@@ -70,7 +86,32 @@
         background: #23262f;
         border-radius: 16px;
       }
+
+      .additional {
+        display: flex;
+        gap: 10px;
+      }
+
+      .img {
+        img {
+          border-radius: 16px;
+          object-fit: cover;
+        }
+      }
+
+      .optional {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+        gap: 10px;
+        background: #23262f;
+        border-radius: 16px;
+      }
     }
+
     .itemdetailsformcon {
       display: flex;
       flex-direction: column;
@@ -89,6 +130,10 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
+
+        span {
+          color: orangered;
+        }
 
         label {
           font-style: normal;
@@ -123,18 +168,18 @@
             color: #fcfcfd;
           }
         }
+
         select {
           line-height: 30px;
           color: #777e91;
+
           option {
             color: #777e91;
             background-color: #000000;
           }
         }
-        span {
-          color: orangered;
-        }
       }
+
       .itemdetailformdropdownsCon {
         display: flex;
         justify-content: space-between;
@@ -165,9 +210,15 @@
             color: #ffffff;
             height: 48px;
           }
+
+          .input {
+            padding: 0px 10px;
+          }
+
           select {
             color: #777e91;
           }
+
           span {
             color: orangered;
           }
@@ -178,10 +229,12 @@
         }
       }
     }
+
     .divider {
       height: 1px;
       background: #353945;
     }
+
     .putonscalesec {
       display: flex;
       justify-content: space-between;
@@ -193,12 +246,14 @@
         font-size: 16px;
         line-height: 24px;
       }
+
       p {
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
         line-height: 20px;
       }
+
       .switch {
         position: relative;
         display: inline-block;
@@ -261,6 +316,7 @@
         border-radius: 50%;
       }
     }
+
     .putonscalebtnsec {
       display: flex;
       justify-content: space-between;
@@ -277,6 +333,7 @@
         border-radius: 90px;
         border: 1px solid #f2994a;
       }
+
       p {
         font-style: normal;
         font-weight: 700;
@@ -286,6 +343,7 @@
       }
     }
   }
+
   .previewCard {
     display: flex;
     flex-direction: column;
@@ -296,6 +354,7 @@
     border: 1px solid #353945;
     box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12);
     border-radius: 16px;
+
     h1 {
       font-style: normal;
       font-weight: 600;
@@ -303,16 +362,19 @@
       line-height: 32px;
       color: #fcfcfd;
     }
+
     .previewcontent {
       display: flex;
       flex-direction: column;
       gap: 21px;
+
       .previewimg {
         width: 256px;
         height: 303px;
         border-radius: 16px;
         object-fit: cover;
       }
+
       .previewdiv {
         display: flex;
         justify-content: space-between;
@@ -325,6 +387,7 @@
           line-height: 24px;
           color: #fcfcfd;
         }
+
         .previewprice {
           font-style: normal;
           font-weight: 700;
@@ -339,6 +402,7 @@
           border: 2px solid #45b36b;
           border-radius: 4px;
         }
+
         .avatars {
           display: flex;
           align-items: center;
@@ -356,10 +420,12 @@
           }
         }
       }
+
       hr {
         color: #353945;
         border: 1px solid #353945;
       }
+
       .bidsec {
         display: flex;
         font-size: 12px;
