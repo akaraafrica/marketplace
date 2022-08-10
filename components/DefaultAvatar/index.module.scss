@@ -1,0 +1,24 @@
+.default,
+.avatar {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.default {
+  display: flex;
+  // flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 5px;
+  // background: yellow;
+  color: #000;
+
+  div {
+    // font-size: 1em;
+    font-weight: 700;
+    letter-spacing: 5px;
+  }
+}

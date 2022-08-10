@@ -1,6 +1,6 @@
 import { api } from "../services/apiClient";
 
-const url = `/api`;
+const url = `/api/user`;
 
 class Profile {
   constructor() {}
