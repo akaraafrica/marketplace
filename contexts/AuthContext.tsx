@@ -5,6 +5,7 @@ import { getCookies, setCookies, removeCookies } from "cookies-next";
 import { api } from "../services/apiClient";
 import { IUser } from "../types/user.interface";
 import { UserDs } from "../ds";
+import { AxiosError, AxiosResponse } from "axios";
 
 type SignInCredential = {
   email: string;
@@ -46,8 +47,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     console.log("running twice");
     api
       .get(`/api/me`)
-      .then((savedUser: IUser) => setUser(savedUser))
-      .catch((err: any) => console.log(err));
+      .then((res: AxiosResponse) => setUser(res.data))
+      .catch((err: AxiosError) => console.log(err));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

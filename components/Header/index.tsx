@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "./index.module.scss";
 // import NotificationModal from "../NotificationModal/index";
@@ -9,6 +9,8 @@ import styles from "./index.module.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useWeb3React } from "@web3-react/core";
+import { injected } from "../../connectors";
 import NewNotificationModal from "../NewNotificationModal";
 import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
@@ -22,7 +24,8 @@ function Header() {
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [mobile, setMobile] = React.useState(false);
   const router = useRouter();
-  const { user, isAuthenticated, signOut } = useContext(AuthContext);
+  const { user, isAuthenticated } = useContext(AuthContext);
+  const { account, active, activate } = useWeb3React();
 
   console.log("header user is ", isAuthenticated);
   function handleUpload() {
@@ -31,6 +34,15 @@ function Header() {
       toast.info("You must be logged in to create an item.");
     }
   }
+
+  useEffect(() => {
+    if (
+      (isAuthenticated && !active) ||
+      (isAuthenticated && user?.walletAddress != account)
+    )
+      activate(injected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, active]);
 
   return (
     <div className={styles.headerCon}>
