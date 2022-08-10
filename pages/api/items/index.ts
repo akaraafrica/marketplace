@@ -32,24 +32,41 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   if (req.method === "POST") {
     try {
-      await prisma.item.create({
+      const response = await prisma.item.create({
         data: {
           title: req.body.title,
           description: req.body.description,
-          price: req.body.price,
+          price: Number(req.body.price),
           ownerId: req.body.ownerId,
           tokenId: req.body.tokenId,
           published: req.body.published,
           acceptedBid: req.body.acceptedBid,
-          openForBid: req.body.openForBid,
-          owner: req.body.owner,
+          openForBid: req.body.published,
           images: req.body.image,
           video: req.body.video,
-          updatedAt: Date.now().toString(),
+          updatedAt: new Date(),
         },
       });
-      res.status(201).json({ message: "Item created" });
+      res.status(201).json({ id: response.id, message: "Item created" });
     } catch (error) {
+      console.log(error);
+
+      res.json({ error });
+    }
+  }
+  if (req.method === "PATCH") {
+    try {
+      await prisma.item.update({
+        where: {
+          id: req.body.id,
+        },
+        data: {
+          images: req.body.images,
+        },
+      });
+      res.status(201).json({ message: "Item images updated" });
+    } catch (error) {
+      console.log(error);
       res.json({ error });
     }
   }
