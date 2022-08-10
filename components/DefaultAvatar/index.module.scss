@@ -1,0 +1,22 @@
+.default,
+.avatar {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  color: #000;
+
+  div {
+    // font-size: 1em;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: #000;
+  }
+}

@@ -12,7 +12,7 @@ let failedRequestQueue: {
 
 export function setupAPIClient(ctx = undefined): any {
   let cookies = getCookies();
-  console.log("coolie here is ", JSON.stringify(cookies));
+  console.log("cookie here is ", JSON.stringify(cookies));
 
   const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_DOMAIN!,
