@@ -117,10 +117,26 @@ export default function PlaceBid({ item }: { item: IItem }) {
           </div>
         </section>
         <section className={styles.button}>
-          <button onClick={() => setOpenPurchaseDialog(true)}>
+          <button
+            onClick={() => {
+              if (!user) {
+                toast.error("please login first");
+                return;
+              }
+              setOpenPurchaseDialog(true);
+            }}
+          >
             Purchase now
           </button>
-          <button onClick={() => setOpenPlaceBidDialog(true)}>
+          <button
+            onClick={() => {
+              if (!user) {
+                toast.error("please login first");
+                return;
+              }
+              setOpenPlaceBidDialog(true);
+            }}
+          >
             place a bid
           </button>
         </section>

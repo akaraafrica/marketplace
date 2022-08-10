@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Image from "next/image";
 import { AuthContext } from "../../contexts/AuthContext";
 import { LikeDs } from "../../ds";
@@ -12,6 +12,7 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
+import { toast } from "react-toastify";
 interface IQuickButtons {
   desktop?: boolean;
   item?: IItem;
@@ -23,25 +24,41 @@ export default function QuickButtons({
   collection,
 }: IQuickButtons) {
   const [showSocial, setShowSocial] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleShare = () => {
     setShowSocial(!showSocial);
   };
-  const { user } = useContext(AuthContext);
 
-  const like = user?.likes?.find((like) => like.itemId === item?.id);
+  const { user } = useContext(AuthContext);
+  const like = item?.likes?.find((like) => like.userId === user?.id);
 
   const [isLiked, setIsLiked] = useState(!!like);
+
+  useEffect(() => {
+    if (like) {
+      setIsLiked(true);
+    }
+  }, [like]);
   const handleLike = async () => {
+    if (loading) return;
+    if (!user) {
+      toast.error("please login first");
+      return;
+    }
     setIsLiked(!isLiked);
+
     let data = {
-      likedId: like?.id,
       itemId: item?.id,
       userId: user!.id,
       collectionId: collection?.id,
     };
 
     try {
+      setLoading(true);
       await LikeDs.postData(data);
+      setLoading(false);
+
       console.log("success!");
     } catch (error) {
       console.log(error);

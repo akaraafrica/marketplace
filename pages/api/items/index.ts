@@ -22,6 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               rating: true,
             },
           },
+          likes: true,
         },
       });
       return res.status(200).json(items);

@@ -7,16 +7,20 @@ export default async function profile(
 ) {
   if (req.method === "POST") {
     try {
-      console.log(req.body);
-      if (req.body.likedId) {
+      const item = await prisma.like.findFirst({
+        where: {
+          userId: req.body.userId,
+          itemId: req.body.itemId,
+        },
+      });
+      console.log(item);
+      if (item) {
         const data = await prisma.like.delete({
           where: {
-            id: req.body.likedId,
+            id: item.id,
           },
         });
         res.status(200).json(data);
-
-        console.log(data);
       } else {
         const data = await prisma.like.create({
           data: {
@@ -26,8 +30,6 @@ export default async function profile(
           },
         });
         res.status(200).json(data);
-
-        console.log(data);
       }
     } catch (error) {
       console.log(error);
