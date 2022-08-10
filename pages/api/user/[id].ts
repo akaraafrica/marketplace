@@ -4,13 +4,13 @@ import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
-    const id = req.query.id as string;
+    const id = parseInt(req.query.id as string);
 
     if (!id) return res.status(404);
     try {
       const user = await prisma.user.findFirst({
         where: {
-          walletAddress: id,
+          id: id,
         },
         include: {
           profile: true,

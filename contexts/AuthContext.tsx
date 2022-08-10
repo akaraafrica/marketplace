@@ -46,7 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     console.log("running twice");
     api
       .get(`/api/me`)
-      .then((savedUser: IUser) => setUser(savedUser))
+      .then((savedUser: { data: IUser }) => setUser(savedUser.data))
       .catch((err: any) => console.log(err));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

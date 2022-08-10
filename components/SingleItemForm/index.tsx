@@ -1,13 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React, { MutableRefObject, useRef, useState } from "react";
+import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import MintTokenDialog from "./MintTokenDialog";
 import { toast } from "react-toastify";
+import { getFileUploadURL } from "../../utils/upload/fileUpload";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+import { ItemDs } from "../../ds";
+import Image from "next/image";
+import itemDs from "../../ds/item.ds";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 function SingleCollectibleItem() {
-  const [foto, setFoto] = useState(null);
+  const [images, setImages] = useState({
+    main: null,
+    optional1: null,
+    optional2: null,
+    optional3: null,
+  });
   const [state, setState] = useState({
     title: "",
     description: "",
@@ -17,37 +29,18 @@ function SingleCollectibleItem() {
   const [openDialog, setOpenDialog] = useState(false);
   const {
     register,
-    handleSubmit,
     getValues,
+    handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data: any) => {
-    setOpenDialog(true);
-  };
-  const handleMint = () => {
-    setTimeout(() => {
-      toast.success("successful");
-      // setOpenDialog(false)
-      return;
-    }, 3000);
-    // const data = getValues()
-    // if (foto) {
-    //   data.image = foto;
-    // }
-    // const address: string = localStorage.getItem("address")!;
-    // const accessToken: string = localStorage.getItem("accessToken")!;
-
-    // ItemDs.createData(data, address, accessToken);
-  };
-  const handleDialogClose = () => setOpenDialog(false);
-
-  const target = useRef<HTMLInputElement>(null);
-  const handleChange = (e: any) => {
-    setFoto(e.target.files[0]);
-  };
-
   const clearState = () => {
-    setFoto(null);
+    setImages({
+      main: null,
+      optional1: null,
+      optional2: null,
+      optional3: null,
+    });
     setState({
       title: "",
       description: "",
@@ -55,6 +48,72 @@ function SingleCollectibleItem() {
       gas: "",
     });
   };
+
+  const onSubmit = async () => {
+    setOpenDialog(true);
+  };
+
+  const handleMint = async () => {
+    const data = getValues();
+    const address: string = localStorage.getItem("address")!;
+
+    try {
+      data.description = state.description;
+      const result = await ItemDs.createData(data, address);
+      let imageArr = [];
+      for (const image of Object.entries(images)) {
+        imageArr.push({
+          name: image[0],
+          file: image[1],
+        });
+      }
+      let promise: any = [];
+      imageArr.forEach((image) => {
+        promise.push(getFileUploadURL(image.file, `item/${image.name}`));
+      });
+      toast.success("successful");
+      reset();
+      clearState();
+      setOpenDialog(false);
+
+      const imageURLs = await Promise.all(promise);
+      await itemDs.updateData({ id: result.data.id, images: imageURLs });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDialogClose = () => setOpenDialog(false);
+
+  const target = useRef<HTMLInputElement>(null);
+  const optional1 = useRef<HTMLInputElement>(null);
+  const optional2 = useRef<HTMLInputElement>(null);
+  const optional3 = useRef<HTMLInputElement>(null);
+
+  const handleChnage = (e?: any, name?: any) => {
+    setImages({
+      ...images,
+      main: e.target.files[0],
+    });
+  };
+  const handleOptional1 = (e?: any) => {
+    setImages({
+      ...images,
+      optional1: e.target.files[0],
+    });
+  };
+  const handleOptional2 = (e?: any) => {
+    setImages({
+      ...images,
+      optional2: e.target.files[0],
+    });
+  };
+  const handleOptional3 = (e?: any) => {
+    setImages({
+      ...images,
+      optional3: e.target.files[0],
+    });
+  };
+
   return (
     <>
       <MintTokenDialog
@@ -62,6 +121,7 @@ function SingleCollectibleItem() {
         handleClose={handleDialogClose}
         handleMint={handleMint}
       />
+
       <div className={styles.sciCon}>
         <div className={styles.sci}>
           <div className={styles.scihead}>
@@ -87,8 +147,95 @@ function SingleCollectibleItem() {
               style={{ display: "none" }}
               type="file"
               ref={target}
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => handleChnage(e, "main")}
             />
+          </div>
+          <div className={styles.sciuploadseccon}>
+            <div className={styles.uploadsechead}>
+              <span className={styles.upload}>
+                Additional Images (optional)
+              </span>
+            </div>
+            <section className={styles.additional}>
+              <div
+                onClick={() => optional1.current?.click()}
+                className={images.optional1 ? styles.img : styles.optional}
+              >
+                {images.optional1 ? (
+                  <Image
+                    width={600}
+                    height={500}
+                    alt="item optional 1"
+                    src={URL.createObjectURL(images.optional1)}
+                  />
+                ) : (
+                  <Image
+                    width={20}
+                    height={20}
+                    alt="upload icon"
+                    src={`/assets/uploadicon.svg`}
+                  />
+                )}
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  ref={optional1}
+                  onChange={(e) => handleOptional1(e)}
+                />
+              </div>
+              <div
+                onClick={() => optional2.current?.click()}
+                className={images.optional2 ? styles.img : styles.optional}
+              >
+                {images.optional2 ? (
+                  <Image
+                    width={600}
+                    height={500}
+                    alt="item optional 2"
+                    src={URL.createObjectURL(images.optional2)}
+                  />
+                ) : (
+                  <Image
+                    width={20}
+                    height={20}
+                    alt="upload icon"
+                    src={`/assets/uploadicon.svg`}
+                  />
+                )}
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  ref={optional2}
+                  onChange={(e) => handleOptional2(e)}
+                />
+              </div>
+              <div
+                onClick={() => optional3.current?.click()}
+                className={images.optional3 ? styles.img : styles.optional}
+              >
+                {images.optional3 ? (
+                  <Image
+                    width={600}
+                    height={500}
+                    alt="item optional 1"
+                    src={URL.createObjectURL(images.optional3)}
+                  />
+                ) : (
+                  <Image
+                    width={20}
+                    height={20}
+                    alt="upload icon"
+                    src={`/assets/uploadicon.svg`}
+                  />
+                )}
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  ref={optional3}
+                  onChange={(e) => handleOptional3(e)}
+                />
+              </div>
+            </section>
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -101,25 +248,29 @@ function SingleCollectibleItem() {
                 type="text"
                 placeholder='e. g. "Redeemable Bitcoin Card with logo"'
                 {...register("title", { required: true })}
-                value={state.title}
-                onChange={(e) =>
-                  setState({ ...state, [e.target.name]: e.target.value })
-                }
               />
               {errors.title && <span>This field is required</span>}
             </div>
-            <div className={styles.itemdetailsforminput}>
-              <label>Description</label>
-              <input
-                type="text"
-                placeholder='e. g. “After purchasing you will able to recived the logo...”"'
-                {...register("description", { required: true })}
-                value={state.description}
-                onChange={(e) =>
-                  setState({ ...state, [e.target.name]: e.target.value })
-                }
-              />
-              {errors.description && <span>This field is required</span>}
+            <div className={styles.editor}>
+              <label>DESCRIPTION</label>
+
+              <div className={styles.editor}>
+                <ReactQuill
+                  theme="snow"
+                  style={{
+                    height: "14rem",
+                    color: "white",
+                  }}
+                  placeholder='e. g. “After purchasing you will able to recived the logo...”"'
+                  value={state.description}
+                  onChange={(e: any) => {
+                    setState({
+                      ...state,
+                      description: e,
+                    });
+                  }}
+                />
+              </div>
             </div>
             <div className={styles.itemdetailsforminput}>
               <label>BLOCKCHAIN</label>
@@ -146,12 +297,9 @@ function SingleCollectibleItem() {
                 <label>GAS ESTIMATE</label>
                 <input
                   type="number"
+                  className={styles.input}
                   placeholder="1"
-                  {...register("gas", {})}
-                  value={state.gas}
-                  onChange={(e) =>
-                    setState({ ...state, [e.target.name]: e.target.value })
-                  }
+                  {...register("gas", { required: true })}
                 />
               </div>
               <div className={styles.itemdetailsforminput1}>
@@ -159,13 +307,10 @@ function SingleCollectibleItem() {
                 <input
                   type="number"
                   placeholder="2.45 ETH"
+                  className={styles.input}
                   min="0"
                   step="0.01"
                   {...register("price", { required: true })}
-                  value={state.price}
-                  onChange={(e) =>
-                    setState({ ...state, [e.target.name]: e.target.value })
-                  }
                 />
                 {errors.price && <span>This field is required</span>}
               </div>
@@ -182,7 +327,7 @@ function SingleCollectibleItem() {
               </label>
             </div>
             <div className={styles.putonscalebtnsec}>
-              <button type="submit">
+              <button disabled={!images.main} type="submit">
                 Create item
                 <span>
                   <img src={`/assets/arrow.svg`} alt="" />
@@ -200,8 +345,8 @@ function SingleCollectibleItem() {
             <img
               className={styles.previewimg}
               src={
-                foto
-                  ? URL.createObjectURL(foto)
+                images.main
+                  ? URL.createObjectURL(images.main)
                   : `/assets/placeholder-image.jpg`
               }
               alt="preview"
@@ -234,6 +379,7 @@ function SingleCollectibleItem() {
                 <span>New bid</span>
               </div>
             </div>
+
             <div className={styles.clearsec} onClick={() => clearState()}>
               <img alt="close icon" src={`/assets/closeicon.svg`} />
               <span>Clear all</span>

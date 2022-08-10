@@ -10,8 +10,6 @@ const s3 = new S3({
 export const fileParams = {
   Bucket: process.env.BUCKET_NAME,
   Expires: 600,
-  Key: "",
-  ContentType: "",
   ACL: "public_read",
 };
 
