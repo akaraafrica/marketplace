@@ -56,7 +56,8 @@ const Index = () => {
       toast.success("Welcome to Akara, Login successful.");
       console.log("new signin result here ", res);
     } catch (error: any) {
-      toast.error(error.error.message);
+      console.log(error);
+      toast.error(error.error?.message);
     }
   };
 

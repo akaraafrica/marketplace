@@ -97,10 +97,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       localStorage.setItem("address", user.walletAddress);
       localStorage.setItem("accessToken", accessToken);
 
-      const savedUser = await UserDs.fetch(account || "");
-      setUser(savedUser);
-
       api.defaults.headers.head["Authorization"] = `Bearer ${accessToken}`;
+
+      api
+        .get(`/api/me`)
+        .then((savedUser: { data: IUser }) => setUser(savedUser.data))
+        .catch((err: any) => console.log(err));
 
       Router.push("/");
     } catch (err: any) {

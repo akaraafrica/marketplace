@@ -10,7 +10,7 @@ class Item {
     const token = randStr(10);
 
     try {
-      const user = await api.get(`api/user/${walletAddress}`);
+      const user = await api.get(`api/me`);
       const res = await api.post(url, {
         ...data,
         ownerId: user.data.id,

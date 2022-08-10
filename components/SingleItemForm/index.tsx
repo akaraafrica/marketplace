@@ -7,11 +7,24 @@ import MintTokenDialog from "./MintTokenDialog";
 import { toast } from "react-toastify";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
 import { ItemDs } from "../../ds";
 import Image from "next/image";
 import itemDs from "../../ds/item.ds";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
+const toolbarOptions = [
+  ["bold", "italic", "underline", "strike"],
+  ["blockquote", "code-block"],
+  [{ header: 1 }, { header: 2 }],
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ script: "sub" }, { script: "super" }],
+  [{ indent: "-1" }, { indent: "+1" }],
+  [{ direction: "rtl" }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ color: ["#353945"] }, { background: [] }],
+  [{ font: [] }],
+  [{ align: [] }],
+  ["clean"],
+];
 
 function SingleCollectibleItem() {
   const [images, setImages] = useState({
@@ -256,12 +269,14 @@ function SingleCollectibleItem() {
 
               <div className={styles.editor}>
                 <ReactQuill
+                  modules={{
+                    toolbar: toolbarOptions,
+                  }}
                   theme="snow"
                   style={{
-                    height: "14rem",
-                    color: "white",
+                    height: "20rem",
                   }}
-                  placeholder='e. g. “After purchasing you will able to recived the logo...”"'
+                  placeholder='e.g. “After purchasing you will able to receive the logo...”"'
                   value={state.description}
                   onChange={(e: any) => {
                     setState({
