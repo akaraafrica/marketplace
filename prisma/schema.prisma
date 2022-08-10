@@ -77,8 +77,8 @@ model Item {
   title        String
   description  String       @db.VarChar(250)
   images       String[]
-  video        String
-  acceptedBid  Float
+  video        String?
+  acceptedBid  Float?
   createdAt    DateTime     @default(now())
   openForBid   Boolean
   price        Float

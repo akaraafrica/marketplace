@@ -1,4 +1,5 @@
 import { IBid } from "./bid.interface";
+import { ILike } from "./like.interface";
 import { IUser } from "./user.interface";
 
 export interface IItem {
@@ -19,4 +20,5 @@ export interface IItem {
   ratings: any[];
   owner: IUser;
   bids: IBid[];
+  likes: ILike[];
 }
