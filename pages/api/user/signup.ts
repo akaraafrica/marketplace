@@ -112,7 +112,12 @@ export default async function Signup(
 
     case "GET":
       try {
-        const allusers = await prisma.user.findMany();
+        const allusers = await prisma.user.findMany({
+          include: {
+            profile: true,
+            items: true,
+          },
+        });
         res.send(allusers);
       } catch (error) {
         res.status(500).send(error);

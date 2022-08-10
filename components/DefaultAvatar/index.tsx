@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 import CircleType from "circletype";
 
 interface AvatarProps {
-  url: string;
+  url: string | undefined;
   width: string;
   height: string;
   walletAddress: string;
@@ -24,20 +24,12 @@ const Index: React.FC<AvatarProps> = ({
     "Green",
     "Yellow",
     "Blue",
-    "Magenta",
-    "BlueViolet",
-    "MagentaViolet",
-    "Chocolate",
     "Khaki",
     "Cyan",
     "White",
   ];
 
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-  useEffect(() => {
-    new CircleType(circleInstance.current).radius(parseInt(width) / 2);
-  }, [width]);
 
   if (url === undefined || url === null || url === "") {
     const lastThree = walletAddress.length - 3;
@@ -51,8 +43,11 @@ const Index: React.FC<AvatarProps> = ({
         style={{ width: width, height: height, backgroundColor: randomColor }}
         className={styles.default}
       >
-        {/* @ts-ignore: Unreachable code error */}
-        <div style={{ fontSize: fontSize }} ref={circleInstance}>
+        <div
+          style={{ fontSize: fontSize }}
+          /* @ts-ignore: Unreachable code error */
+          // ref={circleInstance}
+        >
           {walletFirstThree + walletLastThree}
         </div>
       </div>
@@ -63,6 +58,7 @@ const Index: React.FC<AvatarProps> = ({
       src={url}
       width={width}
       height={height}
+      style={{ borderRadius: "50%" }}
       className={styles.avatar}
     />
   );
