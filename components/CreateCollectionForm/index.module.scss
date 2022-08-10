@@ -3,7 +3,7 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 200px 15%;
-  gap: 128px;
+  gap: 175px;
 
   @media screen and (max-width: 1440px) {
     flex-direction: column;
@@ -13,22 +13,10 @@
     padding: 100px 20px;
   }
 
-  .editor {
-    color: white;
-    margin-bottom: 2rem;
-    margin-top: 10px;
-
-    label {
-      color: #666;
-      font-size: 12px;
-      font-weight: 600;
-    }
-  }
-
   .sci {
     display: flex;
-    gap: 40px;
     flex-direction: column;
+    gap: 40px;
     flex: 1;
     width: 100%;
 
@@ -86,30 +74,6 @@
         background: #23262f;
         border-radius: 16px;
       }
-
-      .additional {
-        display: flex;
-        gap: 10px;
-      }
-
-      .img {
-        img {
-          border-radius: 16px;
-          object-fit: cover;
-        }
-      }
-
-      .optional {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 60px 20px;
-        gap: 10px;
-        background: #23262f;
-        border-radius: 16px;
-      }
     }
 
     .itemdetailsformcon {
@@ -130,10 +94,6 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
-
-        span {
-          color: orangered;
-        }
 
         label {
           font-style: normal;
@@ -178,6 +138,136 @@
             background-color: #000000;
           }
         }
+
+        span {
+          color: orangered;
+        }
+      }
+
+      .itemdetailsforminputSearch {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+
+        label {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 12px;
+        }
+
+        input,
+        select {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          padding: 12px 16px;
+          gap: 10px;
+          border: 2px solid #353945;
+          border-radius: 12px;
+          background-color: transparent;
+          color: #ffffff;
+          // height: 48px;
+          width: 50%;
+          outline: none;
+
+          ::placeholder {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 24px;
+          }
+
+          :focus {
+            outline: none;
+            color: #fcfcfd;
+          }
+        }
+
+        select {
+          line-height: 30px;
+          color: #777e91;
+
+          option {
+            color: #777e91;
+            background-color: #000000;
+          }
+        }
+
+        span {
+          color: orangered;
+        }
+
+        .itemImagesDiv {
+          position: relative;
+          display: flex;
+          gap: 8px;
+          // overflow-x: scroll !important;
+          overflow-y: hidden;
+          flex-wrap: wrap;
+          max-width: 100%;
+          padding: 20px 0;
+
+          div {
+            // display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          img {
+            border-radius: 12px;
+            width: 112px;
+            height: 88px;
+          }
+
+          .userImage {
+            position: relative;
+            border: 2px solid #353945;
+            width: 112px;
+            height: 88px;
+            border-radius: 12px;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            -ms-border-radius: 12px;
+            -o-border-radius: 12px;
+
+            .closeIcon {
+              position: absolute;
+              top: 3px;
+              right: 3px;
+              cursor: pointer;
+            }
+          }
+        }
+
+        .searchResults {
+          position: absolute;
+          top: 65px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          background-color: #353945;
+          z-index: 10;
+          padding: 10px;
+          border-radius: 12px;
+          -webkit-border-radius: 12px;
+          -moz-border-radius: 12px;
+          -ms-border-radius: 12px;
+          -o-border-radius: 12px;
+
+          span {
+            color: #fcfcfd;
+            cursor: pointer;
+          }
+        }
+
+        .itemImagesDiv::-webkit-scrollbar {
+          display: none;
+          height: 5px;
+        }
       }
 
       .itemdetailformdropdownsCon {
@@ -209,10 +299,6 @@
             background-color: #000000;
             color: #ffffff;
             height: 48px;
-          }
-
-          .input {
-            padding: 0px 10px;
           }
 
           select {
