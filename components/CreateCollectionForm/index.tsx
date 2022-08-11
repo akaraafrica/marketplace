@@ -19,7 +19,10 @@ const Index = ({
   const [searchUser, setSearchUser] = useState("");
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
   const [resultDisplay, setResultDisplay] = useState(false);
+  const [itemResultDisplay, setItemResultDisplay] = useState(false);
   const [items, setItems] = useState<IItem[]>([]);
+  const [searchItem, setSearchItem] = useState("");
+  const [selectedItems, setSelectedItems] = useState<IItem[]>([]);
 
   // useEffect(() => {
 
@@ -50,7 +53,8 @@ const Index = ({
     setPhotos([]);
     reset();
   };
-
+  console.log("users", selectedUser);
+  console.log("items", items);
   return (
     <div className={styles.root}>
       <div className={styles.sciCon}>
@@ -175,7 +179,7 @@ const Index = ({
                             }
                           }
                           setSelectedUser([...selectedUser, user]);
-                          // setItems([...items, ...user.items])
+                          setItems([...items, ...user.items]);
                           setResultDisplay(false);
                         }}
                       >
@@ -215,16 +219,70 @@ const Index = ({
             </div>
             <div className={styles.itemdetailsforminputSearch}>
               <label>SELECT ITEMS FROM GALLERY</label>
-              <input type="text" name="Search" placeholder="Search items" />
+              <input
+                type="text"
+                name="Search"
+                placeholder="Search items"
+                onChange={(e) => {
+                  setItemResultDisplay(true);
+                  setSearchItem(e.target.value);
+                }}
+              />
+              <div
+                style={{ display: `${itemResultDisplay ? "flex" : "none"}` }}
+                className={styles.searchResults}
+              >
+                {searchItem &&
+                  items &&
+                  items
+                    .filter((item) => item.title.includes(searchItem))
+                    .map((item, index) => (
+                      <span
+                        key={index}
+                        onClick={() => {
+                          for (let i = 0; i < selectedItems.length; i++) {
+                            if (selectedItems[i].title === item.title) {
+                              toast.warning("Item already selected");
+                              return;
+                            }
+                          }
+                          setSelectedItems([...selectedItems, item]);
+                          setItemResultDisplay(false);
+                        }}
+                      >
+                        {item.title && item.title}
+                      </span>
+                    ))}
+              </div>
               <div className={styles.itemImagesDiv}>
-                {}
-                <div>
-                  <NextImage
-                    src="/assets/productimg3.png"
-                    width="112px"
-                    height="88px"
-                  />
-                </div>
+                {selectedItems.map((user, index) => (
+                  <div key={index} className={styles.userImage}>
+                    <div
+                      className={styles.closeIcon}
+                      onClick={() =>
+                        setSelectedItems([
+                          ...selectedItems.slice(0, index),
+                          ...selectedItems.slice(
+                            index + 1,
+                            selectedItems.length
+                          ),
+                        ])
+                      }
+                    >
+                      <NextImage
+                        width="30px"
+                        height="30px"
+                        alt="close icon"
+                        src={`/assets/closeicon.svg`}
+                      />
+                    </div>
+                    <NextImage
+                      src="/assets/productimg3.png"
+                      width="112px"
+                      height="88px"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
             <div className={styles.addItem}>
