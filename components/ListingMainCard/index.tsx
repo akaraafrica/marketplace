@@ -1,18 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-// TODO: convert this to NextImage when given the chance
-
-import { Box, Typography } from "@mui/material";
 import React from "react";
 import NextImage from "../../components/Image";
 import styles from "./index.module.scss";
 
+const data = {
+  bid: "1.125 ETH",
+  stock: "18 in stock",
+  image: "/assets/listingcardimg.png",
+  avatar: "/assets/Avator.svg",
+};
+
 function ListingMainCard() {
-  const data = {
-    bid: "1.125 ETH",
-    stock: "18 in stock",
-    image: "/assets/listingcardimg.png",
-    avatar: "/assets/Avator.svg",
-  };
   return (
     <div className={styles.root}>
       <div className={styles.left}>

@@ -88,19 +88,17 @@ model Item {
   collection   Collection?  @relation(fields: [collectionId], references: [id])
   owner        User         @relation(fields: [ownerId], references: [id])
   bids         Bid[]
-  itemRatings  ItemRating[]
+  ratings      ItemRating[]
   likes        Like[]
   purchases    Purchase[]
-  ratings      Rating[]
 }
 
 model ItemRating {
   id        Int      @id @default(autoincrement())
   itemId    Int
-  ratingId  Int
+  rating    Int
   updatedAt DateTime @updatedAt
   item      Item     @relation(fields: [itemId], references: [id])
-  rating    Rating   @relation(fields: [ratingId], references: [id])
 }
 
 model Notification {
@@ -131,10 +129,8 @@ model Rating {
   raterId           Int
   itemId            Int
   createdAt         DateTime           @default(now())
-  item              Item               @relation(fields: [itemId], references: [id])
   user              User               @relation(fields: [raterId], references: [id])
   collectionRatings CollectionRating[]
-  itemRatings       ItemRating[]
   userRatings       UserRating[]
 }
 
