@@ -1,4 +1,5 @@
 import { IBid } from "./bid.interface";
+import { IItem } from "./item.interface";
 import { ILike } from "./like.interface";
 import { IProfile, profileInitialState } from "./profile.interface";
 
@@ -16,6 +17,7 @@ export interface IUser {
   profile?: IProfile;
   bids?: IBid[];
   likes?: ILike[];
+  items?: IItem[];
 }
 
 export const initialState: IUser = {
@@ -28,4 +30,5 @@ export const initialState: IUser = {
   profile: profileInitialState,
   bids: [],
   likes: [],
+  items: [],
 };
