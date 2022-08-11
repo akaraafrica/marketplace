@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import MintTokenDialog from "./MintTokenDialog";

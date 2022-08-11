@@ -27,9 +27,10 @@ export function setupAPIClient(ctx = undefined): any {
     },
     (error: AxiosError) => {
       if (!error || !error.response) {
-        return;
+        console.log("inside here");
+        return Promise.reject(error);
       }
-
+      console.log("about to switch here");
       switch (error.response.status as number) {
         case 400:
           return Promise.reject({

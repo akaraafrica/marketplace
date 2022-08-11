@@ -4,8 +4,7 @@ import { useWeb3React } from "@web3-react/core";
 import { getCookies, setCookies, removeCookies } from "cookies-next";
 import { api } from "../services/apiClient";
 import { IUser } from "../types/user.interface";
-import { UserDs } from "../ds";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 
 type SignInCredential = {
   email: string;
@@ -38,13 +37,15 @@ export function signOut() {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<IUser>();
   const { account, active, activate } = useWeb3React();
-
   const isAuthenticated = !!user;
 
   useEffect(() => {
+    if (isAuthenticated && account != user.walletAddress) signOut();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account]);
+
+  useEffect(() => {
     const { "nextauth.token": token } = getCookies();
-    console.log("we have token please ", token);
-    console.log("running twice");
     api
       .get(`/api/me`)
       .then((savedUser: { data: IUser }) => setUser(savedUser.data))
@@ -77,6 +78,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (response.status == 400) return response.error;
 
       const { accessToken, user, refreshToken } = response.data;
+      if (account && account != user.walletAddress)
+        throw new AxiosError(
+          "Please connect the metamask account attached to this credentials to login.",
+          "500"
+        );
 
       setCookies("nextauth.token", accessToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -101,7 +107,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api
         .get(`/api/me`)
-        .then((savedUser: { data: IUser }) => setUser(savedUser.data))
+        .then((savedUser: { data: IUser }) => {
+          console.log(savedUser.data);
+          setUser(savedUser.data);
+        })
         .catch((err: any) => console.log(err));
 
       Router.push("/");

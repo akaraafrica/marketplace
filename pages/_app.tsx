@@ -4,6 +4,7 @@ import "swiper/css/pagination";
 import "swiper/css";
 import "swiper/css/bundle";
 import "./_app.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./react-quill.css";
 import type { AppProps } from "next/app";
 import { ethers } from "ethers";

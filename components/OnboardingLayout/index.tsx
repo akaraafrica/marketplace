@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import OnboardingSidebar from "../../components/OnboardingSidebar";
 
 interface Props {

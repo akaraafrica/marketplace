@@ -1,49 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
-import web3 from "web3";
-import { useWeb3React } from "@web3-react/core";
+import React, { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import NextImage from "../../components/Image";
 import Link from "../Link";
 import styles from "./index.module.scss";
-import { useContract } from "../../hooks/web3";
-import { CHAIN_TO_WETH_ADDRESS, SupportedChainId } from "../../constants";
-import WETH_ABI from "../../artifacts/weth.json";
-import { formControlClasses } from "@mui/material";
+import { maskWallet } from "../../utils/helpers/maskWallet";
 
-const Index = () => {
-  const { user, isAuthenticated, signOut } = useContext(AuthContext);
-  const { account, chainId } = useWeb3React();
-  const wethContract = useContract(
-    CHAIN_TO_WETH_ADDRESS[chainId as SupportedChainId],
-    WETH_ABI
-  );
-  const [balance, setBalance] = useState("0");
-
-  async function getBalance() {
-    console.log("we have user here ", user);
-
-    console.log("weth contract is ", wethContract);
-    console.log("wallet address is ", user?.walletAddress);
-    const balance = await wethContract?.balanceOf(account);
-    console.log("balance here is ", balance);
-    const formattedBalance = web3.utils.fromWei(balance?.toString());
-    console.log("formatted balance is ", formattedBalance);
-    setBalance(formattedBalance);
-  }
-  useEffect(() => {
-    getBalance();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account]);
+interface properties {
+  balance: string;
+}
+const Index = ({ balance }: properties) => {
+  const { user, signOut } = useContext(AuthContext);
 
   return (
     <div className={styles.root}>
       <span className={styles.name}>
         {" "}
-        {user?.profile?.name || user?.walletAddress}
+        {user?.profile?.name || maskWallet(user?.walletAddress || "")}
       </span>
       <div className={styles.wallet}>
-        <span>{user?.walletAddress}</span>
+        <span>{maskWallet(user?.walletAddress || "")}</span>
         <NextImage width="30px" height="30px" src="/assets/copyicon.svg" />
       </div>
       <div className={styles.balCard}>

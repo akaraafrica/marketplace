@@ -7,23 +7,20 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../../hooks/app";
-import { set as setUser } from "../../store/reducers/userSlice";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
-import { UserDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const { account, active, activate } = useWeb3React();
-  const { user, isAuthenticated, signIn } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (!active) activate(injected);
+    setError("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -56,8 +53,7 @@ const Index = () => {
       toast.success("Welcome to Akara, Login successful.");
       console.log("new signin result here ", res);
     } catch (error: any) {
-      console.log(error);
-      toast.error(error.error?.message);
+      toast.error(error.error?.message || error.message);
     }
   };
 

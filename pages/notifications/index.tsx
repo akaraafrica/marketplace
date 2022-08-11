@@ -7,7 +7,6 @@ import Header from "../../components/Header/index";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import { UserDs, NotificationDs } from "../../ds";
 import { IUser } from "../../types/user.interface";

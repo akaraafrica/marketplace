@@ -1,16 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-// TODO: convert this to NextImage when given the chance
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import web3 from "web3";
 import styles from "./index.module.scss";
 // import NotificationModal from "../NotificationModal/index";
 // import ProfileModal from "../ProfileModal/index";
 // import MobileHeader from "../MobileHeader/index";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
+import { useContract } from "../../hooks/web3";
+import { CHAIN_TO_WETH_ADDRESS, SupportedChainId } from "../../constants";
+import WETH_ABI from "../../artifacts/weth.json";
 import NewNotificationModal from "../NewNotificationModal";
 import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
@@ -25,17 +27,23 @@ function Header() {
   const [mobile, setMobile] = React.useState(false);
   const router = useRouter();
   const { user, isAuthenticated } = useContext(AuthContext);
-  const { account, active, activate } = useWeb3React();
+  const [balance, setBalance] = useState("0");
+  const { account, active, activate, chainId } = useWeb3React();
+  const wethContract = useContract(
+    CHAIN_TO_WETH_ADDRESS[chainId as SupportedChainId],
+    WETH_ABI
+  );
 
-  console.log("header user is ", isAuthenticated);
-  function handleUpload() {
-    if (user) router.push("/item/create-item");
-    else {
-      toast.info("You must be logged in to create an item.");
-    }
+  async function getBalance() {
+    const balance = await wethContract?.balanceOf(account);
+    const formattedBalance = web3.utils.fromWei(balance?.toString() || "0");
+    console.log("balance here is ", balance);
+    console.log("formatted balance is ", formattedBalance);
+    setBalance(Number(formattedBalance).toFixed());
   }
 
   useEffect(() => {
+    if (account) getBalance();
     if (
       (isAuthenticated && !active) ||
       (isAuthenticated && user?.walletAddress != account)
@@ -43,6 +51,12 @@ function Header() {
       activate(injected);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, active]);
+
+  function handleUpload() {
+    user
+      ? router.push("/item/create")
+      : toast.info("You must be logged in to create an item.");
+  }
 
   return (
     <div className={styles.headerCon}>
@@ -132,11 +146,11 @@ function Header() {
             >
               <img alt="avatar" src={`/assets/Avator.svg`} />
               <div className={styles.amt}>
-                7.00698 <span>ETH</span>
+                {balance} <span>ETH</span>
               </div>
               {profileOpen && (
                 <div className={styles.profile}>
-                  <NewProfileModal />
+                  <NewProfileModal balance={balance} />
                 </div>
               )}
             </div>
