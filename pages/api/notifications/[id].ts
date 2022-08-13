@@ -23,7 +23,7 @@ const handler = async (
         id: id,
       },
       data: {
-        status: true,
+        read: true,
       },
     });
     res.status(200).json({ message: "Updated successfully" });

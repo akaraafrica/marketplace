@@ -1,7 +1,7 @@
 export interface IProfile {
-  id: number | string;
-  avatar: string;
-  name: string;
+  id?: number;
+  avatar?: string;
+  name?: string;
 }
 
 export const profileInitialState: IProfile = {

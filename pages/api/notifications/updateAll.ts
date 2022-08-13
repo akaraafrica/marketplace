@@ -10,13 +10,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         walletAddress: req.body.address,
       },
       data: {
-        notifications: {
+        receivedNotifications: {
           updateMany: {
             where: {
-              status: false,
+              read: false,
             },
             data: {
-              status: true,
+              read: true,
             },
           },
         },

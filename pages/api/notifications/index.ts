@@ -9,19 +9,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         walletAddress: req.body.address,
       },
       include: {
-        notifications: true,
+        receivedNotifications: true,
       },
     });
 
-    res.status(200).json({ data: user?.notifications });
+    res.status(200).json({ data: user?.receivedNotifications });
   }
   if (req.method === "POST") {
+    const receiverId = parseInt(req.body.userId);
     await prisma.notification.create({
       data: {
         title: req.body.title,
         content: req.body.content,
-        status: false,
-        userId: req.body.address,
+        read: false,
+        receiverId: receiverId,
+        action: req.body.action,
       },
     });
 

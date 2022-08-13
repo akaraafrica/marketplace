@@ -208,7 +208,7 @@ const Index = ({
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
-                      url={user.profile && user.profile.avatar}
+                      url={user?.profile?.avatar}
                       walletAddress={user.walletAddress}
                       width="56px"
                       height="56px"

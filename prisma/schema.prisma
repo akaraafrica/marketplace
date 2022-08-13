@@ -102,13 +102,18 @@ model ItemRating {
 }
 
 model Notification {
-  userId    Int
-  title     String
-  content   String
-  status    Boolean
-  createdAt DateTime @default(now())
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
+  id             Int         @id @default(autoincrement())
+  senderId       Int?
+  receiverId     Int
+  itemType       String?
+  itemId         Int?
+  title          String?
+  action         String
+  content        String?
+  read           Boolean
+  createdAt      DateTime   @default(now())
+  sender         User?      @relation("sender", fields: [senderId], references: [id])
+  receiver       User       @relation("receiver", fields: [receiverId], references: [id])
 }
 
 model Profile {
@@ -135,26 +140,27 @@ model Rating {
 }
 
 model User {
-  id              Int              @id @default(autoincrement())
-  walletAddress   String           @unique
-  email           String           @unique
-  password        String
-  verified        Boolean          @default(false)
-  profileId       Int?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  bids            Bid[]
-  collections     Collection[]
-  items           Item[]
-  likes           Like[]
-  notifications   Notification[]
-  profile         Profile?
-  purchases       Purchase?
-  ratings         Rating[]
-  userCollections UserCollection[]
-  userFollowers   UserFollower[]   @relation("userFollowers")
-  userFollowing   UserFollower[]   @relation("userFollowing")
-  userRatings     UserRating[]
+  id                      Int              @id @default(autoincrement())
+  walletAddress           String           @unique
+  email                   String           @unique
+  password                String
+  verified                Boolean          @default(false)
+  profileId               Int?
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+  bids                    Bid[]
+  collections             Collection[]
+  items                   Item[]
+  likes                   Like[]
+  sentNotifications       Notification[]    @relation("sender")
+  receivedNotifications   Notification[]    @relation("receiver")
+  profile                 Profile?
+  purchases               Purchase?
+  ratings                 Rating[]
+  userCollections         UserCollection[]
+  userFollowers           UserFollower[]    @relation("userFollowers")
+  userFollowing           UserFollower[]    @relation("userFollowing")
+  userRatings             UserRating[]
 }
 
 model UserCollection {

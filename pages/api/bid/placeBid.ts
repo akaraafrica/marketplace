@@ -17,6 +17,7 @@ export default async function profile(
           updatedAt: new Date(),
         },
       });
+
       res.status(200).json(data);
       console.log(data);
     } catch (error) {

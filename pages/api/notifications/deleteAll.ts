@@ -15,7 +15,7 @@ const handler = async (
         walletAddress: auth,
       },
       data: {
-        notifications: {
+        receivedNotifications: {
           deleteMany: {},
         },
       },
