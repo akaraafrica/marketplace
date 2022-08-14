@@ -3,7 +3,7 @@ import { SupportedChainId } from "./chains";
 export const CHAIN_TO_MARKETPLACE_ADDRESS = {
   [SupportedChainId.MAINNET]: "",
   [SupportedChainId.ROPSTEN]: "",
-  [SupportedChainId.RINKEBY]: "0xa3dae83a755c2cebb68f5603f52f3d6de9191cb6",
+  [SupportedChainId.RINKEBY]: "0x804375947d078656eb2abd0a6d03ed739f779540",
   [SupportedChainId.KOVAN]: "",
   [SupportedChainId.GOERLI]: "",
 };

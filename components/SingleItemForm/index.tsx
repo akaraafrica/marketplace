@@ -346,11 +346,11 @@ function SingleCollectibleItem() {
               <div className={styles.itemdetailsformdropdown}>
                 <label>ROYALTIES</label>
                 <select {...register("royalties")}>
-                  <option value="0.01">1%</option>
-                  <option value="0.05">5%</option>
-                  <option value="0.10">10%</option>
-                  <option value="0.15">15%</option>
-                  <option value="0.20">20%</option>
+                  <option value="1">1%</option>
+                  <option value="5">5%</option>
+                  <option value="10">10%</option>
+                  <option value="15">15%</option>
+                  <option value="20">20%</option>
                 </select>
               </div>
               <div className={styles.itemdetailsforminput1}>
