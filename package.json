@@ -50,6 +50,7 @@
     "next-auth": "^4.10.3",
     "next-redux-wrapper": "^7.0.5",
     "next-superjson": "^0.0.3",
+    "nft.storage": "^7.0.0",
     "plyr-react": "4.0.0-alpha.5",
     "react": "18.1.0",
     "react-dom": "18.1.0",

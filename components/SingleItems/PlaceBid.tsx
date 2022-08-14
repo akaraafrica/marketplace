@@ -142,7 +142,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
         </section>
         <p>
           <strong>Service fee</strong>
-          <span>2.563 ETH</span>
+          <span>{item.price} ETH</span>
           <span>$4,540.62</span>
         </p>
       </div>

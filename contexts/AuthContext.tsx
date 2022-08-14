@@ -106,7 +106,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api.defaults.headers.head["Authorization"] = `Bearer ${accessToken}`;
 
       api
-        .get(`/api/me`)
+        .get(`/api/me`, { headers: { Authorization: `Bearer ${accessToken}` } })
         .then((savedUser: { data: IUser }) => {
           console.log(savedUser.data);
           setUser(savedUser.data);

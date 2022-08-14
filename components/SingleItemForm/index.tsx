@@ -1,15 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
-// TODO: convert this to NextImage when given the chance
 import React, { useRef, useState } from "react";
-import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
-import MintTokenDialog from "./MintTokenDialog";
-import { toast } from "react-toastify";
-import { getFileUploadURL } from "../../utils/upload/fileUpload";
-import dynamic from "next/dynamic";
-import { ItemDs } from "../../ds";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
+import { useWeb3React } from "@web3-react/core";
+import { useContract } from "../../hooks/web3";
+import {
+  CHAIN_TO_NFT_ADDRESS,
+  CHAIN_TO_MARKETPLACE_ADDRESS,
+  SupportedChainId,
+} from "../../constants";
+import token from "../../artifacts/nft.json";
+import styles from "./index.module.scss";
+import MintTokenDialog from "./MintTokenDialog";
+import { getFileUploadURL } from "../../utils/upload/fileUpload";
+import { ItemDs } from "../../ds";
 import itemDs from "../../ds/item.ds";
+
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"],
@@ -27,6 +35,15 @@ const toolbarOptions = [
 ];
 
 function SingleCollectibleItem() {
+  const { chainId } = useWeb3React();
+  const tokenContract = useContract(
+    CHAIN_TO_NFT_ADDRESS[chainId as SupportedChainId],
+    token
+  );
+  const marketplaceContract = useContract(
+    CHAIN_TO_MARKETPLACE_ADDRESS[chainId as SupportedChainId],
+    token
+  );
   const [images, setImages] = useState({
     main: null,
     optional1: null,
@@ -45,8 +62,10 @@ function SingleCollectibleItem() {
     getValues,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm();
+
   const clearState = () => {
     setImages({
       main: null,
@@ -63,6 +82,29 @@ function SingleCollectibleItem() {
   };
 
   const onSubmit = async () => {
+    // step 1
+    console.log("storing NFT...");
+    const uploadResp = await itemDs.storeNFT(
+      images.main,
+      getValues("title"),
+      getValues("description")
+    );
+    console.log("upload to ipfs resp ", uploadResp);
+
+    // step 2
+    const mintedResp = await tokenContract?.createToken(uploadResp.url);
+    console.log("mint Token resp ", mintedResp);
+
+    // step 3
+    const listResp = await marketplaceContract?.list(
+      mintedResp.data.id, // itemId from response
+      getValues("price"),
+      getValues("royalties"),
+      tokenContract?.address
+    );
+    console.log("listing token resp ", listResp);
+
+    console.log("submitting here ......");
     setOpenDialog(true);
   };
 
@@ -126,7 +168,7 @@ function SingleCollectibleItem() {
       optional3: e.target.files[0],
     });
   };
-
+  console.log("errors here is === ", errors?.title);
   return (
     <>
       <MintTokenDialog
@@ -257,16 +299,17 @@ function SingleCollectibleItem() {
             <h4>Item Details</h4>
             <div className={styles.itemdetailsforminput}>
               <label>ITEM NAME</label>
+              {/* {errors.title && <p>{errors["title"]}</p>} */}
               <input
                 type="text"
                 placeholder='e. g. "Redeemable Bitcoin Card with logo"'
+                required
                 {...register("title", { required: true })}
               />
               {errors.title && <span>This field is required</span>}
             </div>
             <div className={styles.editor}>
               <label>DESCRIPTION</label>
-
               <div className={styles.editor}>
                 <ReactQuill
                   modules={{
@@ -303,25 +346,18 @@ function SingleCollectibleItem() {
               <div className={styles.itemdetailsformdropdown}>
                 <label>ROYALTIES</label>
                 <select {...register("royalties")}>
-                  <option>10%</option>
-                  <option>15%</option>
-                  <option>20%</option>
+                  <option value="0.01">1%</option>
+                  <option value="0.05">5%</option>
+                  <option value="0.10">10%</option>
+                  <option value="0.15">15%</option>
+                  <option value="0.20">20%</option>
                 </select>
-              </div>
-              <div className={styles.itemdetailsforminput1}>
-                <label>GAS ESTIMATE</label>
-                <input
-                  type="number"
-                  className={styles.input}
-                  placeholder="1"
-                  {...register("gas", { required: true })}
-                />
               </div>
               <div className={styles.itemdetailsforminput1}>
                 <label>PRICE</label>
                 <input
                   type="number"
-                  placeholder="2.45 ETH"
+                  placeholder="0.25 ETH"
                   className={styles.input}
                   min="0"
                   step="0.01"
@@ -367,11 +403,9 @@ function SingleCollectibleItem() {
               alt="preview"
             />
             <div className={styles.previewdiv}>
-              <div className={styles.previewtitle}>
-                {state.title ? state.title : "Amazing digital art"}
-              </div>
+              <div className={styles.previewtitle}>{getValues("title")}</div>
               <span className={styles.previewprice}>
-                {state.price ? state.price : "0.00"} ETH
+                {getValues("price") || "0.00"} ETH
               </span>
             </div>
             {/* <div className={styles.previewdiv}>
@@ -383,7 +417,7 @@ function SingleCollectibleItem() {
             <div>{state.stock ? state.stock : "0"} in stock</div>
           </div> */}
             <hr />
-            <div className={styles.bidsec}>
+            {/* <div className={styles.bidsec}>
               <div className={styles.bidsec1}>
                 <img alt="bid icon" src={`/assets/bidicon.svg`} />
                 <span>
@@ -393,7 +427,7 @@ function SingleCollectibleItem() {
               <div className="bidsec2">
                 <span>New bid</span>
               </div>
-            </div>
+            </div> */}
 
             <div className={styles.clearsec} onClick={() => clearState()}>
               <img alt="close icon" src={`/assets/closeicon.svg`} />
