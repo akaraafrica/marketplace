@@ -19,7 +19,7 @@ class Item {
     // create a new NFTStorage client using our API key
     // call client.store, passing in the image & metadata
 
-    const resp = this.nftStorage.store({
+    const resp = await this.nftStorage.store({
       image,
       name,
       description,
