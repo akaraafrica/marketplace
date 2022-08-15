@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -56,15 +56,26 @@ function SingleCollectibleItem() {
     price: "",
   });
   const [openDialog, setOpenDialog] = useState(false);
+  type form = {
+    title: string;
+    description: string;
+    price: string;
+    blockchain: string;
+    published: boolean;
+    royalties: string;
+    image: any;
+  };
+
   const {
     register,
     getValues,
     handleSubmit,
+    setValue,
     reset,
     setError,
     formState: { errors },
-  } = useForm();
-
+  } = useForm<form>();
+  // console.log(getValues());
   const clearState = () => {
     setImages({
       main: null,
@@ -118,11 +129,9 @@ function SingleCollectibleItem() {
       { gasLimit: 3e6 }
     );
     console.log("listing token resp ", listResp);
-
     console.log("submitting here ......");
     setOpenDialog(true);
   };
-
   const handleMint = async () => {
     const data = getValues();
     const address: string = localStorage.getItem("address")!;
@@ -158,8 +167,12 @@ function SingleCollectibleItem() {
   const optional1 = useRef<HTMLInputElement>(null);
   const optional2 = useRef<HTMLInputElement>(null);
   const optional3 = useRef<HTMLInputElement>(null);
-
   const handleChnage = (e?: any, name?: any) => {
+    if (e.target.files[0]) {
+      setValue("image", true);
+    } else {
+      setValue("image", undefined);
+    }
     setImages({
       ...images,
       main: e.target.files[0],
@@ -183,7 +196,6 @@ function SingleCollectibleItem() {
       optional3: e.target.files[0],
     });
   };
-  console.log("errors here is === ", errors?.title);
   return (
     <>
       <MintTokenDialog
@@ -216,9 +228,11 @@ function SingleCollectibleItem() {
             <input
               style={{ display: "none" }}
               type="file"
+              {...register("image", { required: true })}
               ref={target}
               onChange={(e) => handleChnage(e, "main")}
             />
+            {errors.image && <span>This field is required</span>}
           </div>
           <div className={styles.sciuploadseccon}>
             <div className={styles.uploadsechead}>
@@ -318,7 +332,7 @@ function SingleCollectibleItem() {
               <input
                 type="text"
                 placeholder='e. g. "Redeemable Bitcoin Card with logo"'
-                required
+                // required
                 {...register("title", { required: true })}
               />
               {errors.title && <span>This field is required</span>}
@@ -335,14 +349,9 @@ function SingleCollectibleItem() {
                     height: "20rem",
                   }}
                   placeholder='e.g. “After purchasing you will able to receive the logo...”"'
-                  value={state.description}
-                  required
-                  // {...register("description", { required: true })}
+                  value={getValues("description")}
                   onChange={(e: any) => {
-                    setState({
-                      ...state,
-                      description: e,
-                    });
+                    setValue("description", e);
                   }}
                 />
               </div>
@@ -395,7 +404,7 @@ function SingleCollectibleItem() {
               </label>
             </div>
             <div className={styles.putonscalebtnsec}>
-              <button disabled={!images.main} type="submit">
+              <button type="submit">
                 Create item
                 <span>
                   <img src={`/assets/arrow.svg`} alt="" />
