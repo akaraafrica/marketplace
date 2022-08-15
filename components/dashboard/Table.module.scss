@@ -1,0 +1,97 @@
+@use "../../styles/colors" as *;
+
+.container {
+  background: $dialogbackground;
+  color: white;
+  width: fit-content;
+  padding: 3rem;
+  border: 20px;
+  margin-left: 2rem;
+
+  @media screen and (max-width: 900px) {
+    padding: 1rem;
+    margin-left: 0rem;
+  }
+
+  .head {
+    border-bottom: 1px solid $grey2;
+
+    h1 {
+      color: white;
+    }
+
+    td {
+      font-weight: 800;
+      color: $grey3;
+    }
+  }
+
+  td {
+    color: white;
+    text-align: center;
+    width: 15rem;
+
+    @media screen and (max-width: 1400px) {
+      padding: 1rem 6vw;
+      width: 10vw;
+    }
+  }
+
+  select: {
+    color: white;
+    background: black;
+  }
+
+  option: {
+    color: white;
+    background: black;
+  }
+
+  svg {
+    color: white;
+  }
+
+  table {
+    border: 0px;
+  }
+
+  td {
+    border: 0px;
+    font-size: large;
+  }
+
+  th {
+    padding: 2px 4px;
+    color: white;
+  }
+
+  button {
+    color: white !important;
+  }
+
+  .item {
+    margin-left: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      margin: 20rem;
+      border-radius: 10px;
+    }
+  }
+
+  tfoot {
+    color: white;
+  }
+
+  tfoot th {
+    font-weight: normal;
+  }
+
+  img {
+    margin-left: 10px;
+    padding: 2rem;
+  }
+}

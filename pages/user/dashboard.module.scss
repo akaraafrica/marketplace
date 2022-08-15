@@ -1,0 +1,48 @@
+@use "../../styles/colors" as *;
+
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+  margin-top: 10rem;
+  padding: 1rem;
+  padding-bottom: 20rem;
+  // overflow: hidden;
+  display: flex;
+
+  .tabs {
+    margin-left: 2rem;
+    max-width: 50rem;
+    transition: all;
+
+    @media screen and (max-width: 500px) {
+      margin-left: 10px;
+      overflow: auto;
+    }
+  }
+
+  .sidebar {
+    width: 20rem;
+    color: $grey3;
+    margin-right: 4rem;
+
+    @media screen and (max-width: 1000px) {
+      margin-right: 2rem;
+      margin-left: -1rem;
+      width: 10rem;
+    }
+
+    @media screen and (max-width: 640px) {
+      display: none;
+    }
+
+    li {
+      display: flex;
+      gap: 1rem;
+      width: 10rem;
+      list-style: none;
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+}
