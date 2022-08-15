@@ -17,17 +17,17 @@ const handler = async (
     res.status(200).json({ data });
   }
 
-  if (req.method === "PUT") {
-    await prisma.notification.update({
-      where: {
-        id: id,
-      },
-      data: {
-        status: true,
-      },
-    });
-    res.status(200).json({ message: "Updated successfully" });
-  }
+  // if (req.method === "PUT") {
+  //   await prisma.notification.update({
+  //     where: {
+  //       id: id,
+  //     },
+  //     data: {
+  //       status: true,
+  //     },
+  //   });
+  //   res.status(200).json({ message: "Updated successfully" });
+  // }
 
   if (req.method === "DELETE") {
     const item = await prisma.notification.findFirst({

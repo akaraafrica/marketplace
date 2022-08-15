@@ -58,7 +58,7 @@ export default async function Signup(
             email: userEmail,
             password: encryptedPassword,
             walletAddress: address,
-            notifications: {},
+            // notifications: {},
             updatedAt: new Date(),
           },
         });

@@ -1,11 +1,32 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
-import NextImage from "../Image";
+import Image from "../Image";
 import DefaultAvatar from "../DefaultAvatar";
 import { IUser } from "../../types/user.interface";
 import { toast } from "react-toastify";
 import { IItem } from "../../types/item.interface";
+import { RiVideoUploadLine } from "react-icons/ri";
+import dynamic from "next/dynamic";
+import { getFileUploadURL } from "../../utils/upload/fileUpload";
+import MintTokenDialog from "../SingleItemForm/MintTokenDialog";
+import { CollectionDs } from "../../ds";
+
+const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
+const toolbarOptions = [
+  ["bold", "italic", "underline", "strike"],
+  ["blockquote", "code-block"],
+  [{ header: 1 }, { header: 2 }],
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ script: "sub" }, { script: "super" }],
+  [{ indent: "-1" }, { indent: "+1" }],
+  [{ direction: "rtl" }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ color: ["#353945"] }, { background: [] }],
+  [{ font: [] }],
+  [{ align: [] }],
+  ["clean"],
+];
 
 const Index = ({
   users,
@@ -14,8 +35,8 @@ const Index = ({
   users: any[];
   collectionTypes: any[];
 }) => {
-  const [photos, setPhotos] = useState([]);
-  const [video, setVideo] = useState("");
+  const [desc, setDesc] = useState("");
+  const [video, setVideo] = useState(null);
   const [searchUser, setSearchUser] = useState("");
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
   const [resultDisplay, setResultDisplay] = useState(false);
@@ -23,40 +44,134 @@ const Index = ({
   const [items, setItems] = useState<IItem[]>([]);
   const [searchItem, setSearchItem] = useState("");
   const [selectedItems, setSelectedItems] = useState<IItem[]>([]);
+  const [images, setImages] = useState({
+    main: null,
+    optional1: null,
+    optional2: null,
+    optional3: null,
+    optional4: null,
+  });
+  const [openDialog, setOpenDialog] = useState(false);
 
-  // useEffect(() => {
+  const targetVid = useRef<HTMLInputElement>(null);
+  const target = useRef<HTMLInputElement>(null);
+  const optional1 = useRef<HTMLInputElement>(null);
+  const optional2 = useRef<HTMLInputElement>(null);
+  const optional3 = useRef<HTMLInputElement>(null);
+  const optional4 = useRef<HTMLInputElement>(null);
 
-  // }, [selectedUser])
-
+  const handleOptional1 = (e?: any) => {
+    setImages({
+      ...images,
+      optional1: e.target.files[0],
+    });
+  };
+  const handleOptional2 = (e?: any) => {
+    setImages({
+      ...images,
+      optional2: e.target.files[0],
+    });
+  };
+  const handleOptional3 = (e?: any) => {
+    setImages({
+      ...images,
+      optional3: e.target.files[0],
+    });
+  };
+  const handleOptional4 = (e?: any) => {
+    setImages({
+      ...images,
+      optional4: e.target.files[0],
+    });
+  };
   const {
     register,
     handleSubmit,
     watch,
     reset,
+    getValues,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
-    // setOpenDialog(true);
+  const title = watch("title", "");
+  const collectionType = watch("collectionType", "");
+  const countdown = watch("countdown", "");
+  const stock = watch("stock", "");
+
+  const onSubmit = () => {
+    if (!title || !desc || !collectionType || !countdown || !stock) {
+      toast.error("Ensure required fields are not empty");
+      return;
+    }
+    setOpenDialog(true);
   };
 
-  const title = watch("title", "");
-  const price = watch("price", "");
+  const handleMint = async () => {
+    const data = getValues();
+    const address: string = localStorage.getItem("address")!;
 
-  const handleChange = (event: any) => {
+    try {
+      data.description = desc;
+      data.users = selectedUser;
+      data.items = selectedItems;
+      const result = await CollectionDs.createData(data, address);
+      let imageArr = [];
+      for (const image of Object.entries(images)) {
+        imageArr.push({
+          name: image[0],
+          file: image[1],
+        });
+      }
+      let promise: any = [];
+      imageArr.forEach((image) => {
+        promise.push(getFileUploadURL(image.file, `collection/${image.name}`));
+      });
+      getFileUploadURL(video, `collection/${video && video["name"]}`);
+
+      toast.success("successful");
+      reset();
+      clearState();
+      setOpenDialog(false);
+
+      const imageURLs = await Promise.all(promise);
+      await CollectionDs.updateData({ id: result.data.id, images: imageURLs });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDialogClose = () => setOpenDialog(false);
+
+  const handleVideoChange = (event: any) => {
     const file = event.target.files[0];
-    if (!file) return;
-    const videoFile = URL.createObjectURL(file);
-    setVideo(videoFile);
+    setVideo(file);
+  };
+  const handleChangeRequired = (e?: any, name?: any) => {
+    setImages({
+      ...images,
+      main: e.target.files[0],
+    });
   };
   const clearState = () => {
-    setPhotos([]);
+    setDesc("");
+    setVideo(null);
+    setImages({
+      main: null,
+      optional1: null,
+      optional2: null,
+      optional3: null,
+      optional4: null,
+    });
     reset();
   };
-  console.log("users", selectedUser);
-  console.log("items", items);
+  // console.log("users", selectedUser);
+  // console.log("items", items);
   return (
     <div className={styles.root}>
+      <MintTokenDialog
+        open={openDialog}
+        handleClose={handleDialogClose}
+        handleMint={handleMint}
+      />
       <div className={styles.sciCon}>
         <div className={styles.sci}>
           <div className={styles.scihead}>
@@ -66,26 +181,179 @@ const Index = ({
             onSubmit={handleSubmit(onSubmit)}
             className={styles.itemdetailsformcon}
           >
-            <h4>Collection Details</h4>
             <div className={styles.uploadsechead}>
-              <h4 className={styles.upload}>Upload Video Section</h4>
+              <h4 className={styles.upload}>Upload Video (required)</h4>
               <span className={styles.drag}>
                 Drag or choose your file to upload
               </span>
             </div>
+            {!video ? (
+              <div
+                onClick={() => targetVid.current?.click()}
+                className={styles.sciuploadvideobox}
+              >
+                <RiVideoUploadLine size={50} color="#777E91" />
+                <p>WEBM or MP4.</p>
+              </div>
+            ) : (
+              <video controls>
+                <source src={URL.createObjectURL(video)} />
+              </video>
+            )}
             <input
               style={{
-                display: "block",
+                display: "none",
                 backgroundColor: "#f2994a",
                 width: "200px",
                 color: "#fff",
               }}
+              ref={targetVid}
               type="file"
               accept="video/*"
               onChange={(event) => {
-                handleChange(event);
+                handleVideoChange(event);
               }}
             />
+            <div className={styles.sciuploadseccon}>
+              <div className={styles.uploadsechead}>
+                <span className={styles.upload}>Upload image (required)</span>
+                <span className={styles.drag}>
+                  Drag or choose your file to upload
+                </span>
+              </div>
+              <div
+                onClick={() => target.current?.click()}
+                className={styles.sciuploadbox}
+              >
+                <Image
+                  width="50px"
+                  height="50px"
+                  alt="upload icon"
+                  src={`/assets/uploadicon.svg`}
+                />
+                <p>PNG, GIF, WEBP, MP4 or MP3. Max 1Gb.</p>
+              </div>
+              <input
+                style={{ display: "none" }}
+                type="file"
+                ref={target}
+                onChange={(e) => handleChangeRequired(e, "main")}
+              />
+            </div>
+            <div className={styles.sciuploadseccon}>
+              <div className={styles.uploadsechead}>
+                <span className={styles.upload}>
+                  Additional Images (optional)
+                </span>
+              </div>
+              <section className={styles.additional}>
+                <div
+                  onClick={() => optional1.current?.click()}
+                  className={images.optional1 ? styles.img : styles.optional}
+                >
+                  {images.optional1 ? (
+                    <Image
+                      width={600}
+                      height={500}
+                      alt="item optional 1"
+                      src={URL.createObjectURL(images.optional1)}
+                    />
+                  ) : (
+                    <Image
+                      width={20}
+                      height={20}
+                      alt="upload icon"
+                      src={`/assets/uploadicon.svg`}
+                    />
+                  )}
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    ref={optional1}
+                    onChange={(e) => handleOptional1(e)}
+                  />
+                </div>
+                <div
+                  onClick={() => optional2.current?.click()}
+                  className={images.optional2 ? styles.img : styles.optional}
+                >
+                  {images.optional2 ? (
+                    <Image
+                      width={600}
+                      height={500}
+                      alt="item optional 2"
+                      src={URL.createObjectURL(images.optional2)}
+                    />
+                  ) : (
+                    <Image
+                      width={20}
+                      height={20}
+                      alt="upload icon"
+                      src={`/assets/uploadicon.svg`}
+                    />
+                  )}
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    ref={optional2}
+                    onChange={(e) => handleOptional2(e)}
+                  />
+                </div>
+                <div
+                  onClick={() => optional3.current?.click()}
+                  className={images.optional3 ? styles.img : styles.optional}
+                >
+                  {images.optional3 ? (
+                    <Image
+                      width={600}
+                      height={500}
+                      alt="item optional 1"
+                      src={URL.createObjectURL(images.optional3)}
+                    />
+                  ) : (
+                    <Image
+                      width={20}
+                      height={20}
+                      alt="upload icon"
+                      src={`/assets/uploadicon.svg`}
+                    />
+                  )}
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    ref={optional3}
+                    onChange={(e) => handleOptional3(e)}
+                  />
+                </div>
+                <div
+                  onClick={() => optional4.current?.click()}
+                  className={images.optional4 ? styles.img : styles.optional}
+                >
+                  {images.optional4 ? (
+                    <Image
+                      width={600}
+                      height={500}
+                      alt="item optional 1"
+                      src={URL.createObjectURL(images.optional4)}
+                    />
+                  ) : (
+                    <Image
+                      width={20}
+                      height={20}
+                      alt="upload icon"
+                      src={`/assets/uploadicon.svg`}
+                    />
+                  )}
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    ref={optional4}
+                    onChange={(e) => handleOptional4(e)}
+                  />
+                </div>
+              </section>
+            </div>
+            <h4>Collection Details</h4>
             <div className={styles.itemdetailsforminput}>
               <label>COLLECTION NAME</label>
               <input
@@ -95,14 +363,25 @@ const Index = ({
               />
               {errors.title && <span>This field is required</span>}
             </div>
-            <div className={styles.itemdetailsforminput}>
+            <div className={styles.editor}>
               <label>DESCRIPTION</label>
-              <input
-                type="text"
-                placeholder='e. g. “After purchasing you will able to recived the logo...”"'
-                {...register("description", { required: true })}
-              />
-              {errors.description && <span>This field is required</span>}
+
+              <div className={styles.editor}>
+                <ReactQuill
+                  modules={{
+                    toolbar: toolbarOptions,
+                  }}
+                  theme="snow"
+                  style={{
+                    height: "20rem",
+                  }}
+                  placeholder='e.g. “After purchasing you will able to receive the logo...”"'
+                  value={desc}
+                  onChange={(e: any) => {
+                    setDesc(e);
+                  }}
+                />
+              </div>
             </div>
             <div className={styles.itemdetailsforminput}>
               <label>COLLECTION TYPE</label>
@@ -132,17 +411,6 @@ const Index = ({
                   placeholder="1"
                   {...register("stock", {})}
                 />
-              </div>
-              <div className={styles.itemdetailsforminput1}>
-                <label>PRICE</label>
-                <input
-                  type="number"
-                  placeholder="2.45 ETH"
-                  min="0"
-                  step="0.01"
-                  {...register("price", { required: true })}
-                />
-                {errors.price && <span>This field is required</span>}
               </div>
             </div>
             <div className={styles.divider}></div>
@@ -199,7 +467,7 @@ const Index = ({
                         ])
                       }
                     >
-                      <NextImage
+                      <Image
                         width="30px"
                         height="30px"
                         alt="close icon"
@@ -269,17 +537,18 @@ const Index = ({
                         ])
                       }
                     >
-                      <NextImage
+                      <Image
                         width="30px"
                         height="30px"
                         alt="close icon"
                         src={`/assets/closeicon.svg`}
                       />
                     </div>
-                    <NextImage
+                    <Image
                       src="/assets/productimg3.png"
                       width="112px"
                       height="88px"
+                      alt=""
                     />
                   </div>
                 ))}
@@ -295,7 +564,7 @@ const Index = ({
                 <p>You’ll receive bids on this item</p>
               </div>
               <label className={styles.switch}>
-                <input type="checkbox" {...register("published", {})} />
+                <input type="checkbox" {...register("visible", {})} />
                 <span className={`${styles.slider} ${styles.round}`}></span>
               </label>
             </div>
@@ -303,7 +572,7 @@ const Index = ({
               <button type="submit">
                 Create collection
                 <span>
-                  <NextImage
+                  <Image
                     width="20px"
                     height="10px"
                     src={`/assets/arrow.svg`}
@@ -319,59 +588,87 @@ const Index = ({
           <div className={styles.previewheading}>
             <h1>Preview</h1>
           </div>
-          <div className={styles.previewcontent}>
-            <NextImage
-              src={
-                photos[0]
-                  ? URL.createObjectURL(photos[0])
-                  : `/assets/placeholder-image.jpg`
-              }
-              width="256px"
-              height="303px"
-              className={styles.previewimg}
-            />
-
-            <div className={styles.previewdiv}>
-              <div className={styles.previewtitle}>
-                {title ? title : "Amazing digital art"}
+          <div className={styles.previewContent}>
+            <div className={styles.collectionsPreview}>
+              <div className={styles.mainImgdiv}>
+                <Image
+                  className={styles.mainImg}
+                  src={
+                    images.main
+                      ? URL.createObjectURL(images.main)
+                      : `/assets/placeholder-image.jpg`
+                  }
+                  layout="fill"
+                  alt=""
+                />
               </div>
-              <span className={styles.previewprice}>
-                {price ? price : "0.00"} ETH
-              </span>
-            </div>
-            {/* <div className={styles.previewdiv}>
-            <div className={styles.avatars}>
-              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
-              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
-              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
-            </div>
-            <div>{state.stock ? state.stock : "0"} in stock</div>
-          </div> */}
-            <hr />
-            <div className={styles.bidsec}>
-              <div className={styles.bidsec1}>
-                <NextImage
+              <div className={styles.imagesDiv}>
+                <div className={styles.images}>
+                  <Image
+                    className={styles.subImg}
+                    src={
+                      images.optional1
+                        ? URL.createObjectURL(images.optional1)
+                        : `/assets/placeholder-image.jpg`
+                    }
+                    layout="fill"
+                    alt=""
+                  />
+                </div>
+                <div className={styles.images}>
+                  <Image
+                    className={styles.subImg}
+                    src={
+                      images.optional2
+                        ? URL.createObjectURL(images.optional2)
+                        : `/assets/placeholder-image.jpg`
+                    }
+                    layout="fill"
+                    alt=""
+                  />
+                </div>
+                <div className={styles.images}>
+                  <Image
+                    className={styles.subImg}
+                    src={
+                      images.optional3
+                        ? URL.createObjectURL(images.optional3)
+                        : `/assets/placeholder-image.jpg`
+                    }
+                    layout="fill"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className={styles.infoDiv}>
+                <h4>{(title && title) || "Amazing Digital Art"}</h4>
+                <div className={styles.bottom}>
+                  <div className={styles.left}>
+                    <Image
+                      className={styles.image}
+                      src={`/assets/avatar.png`}
+                      width="50px"
+                      height="50px"
+                      alt=""
+                    />
+
+                    <div className={styles.owner}>
+                      By Samuel Nnaji
+                      {/* {author?.profile?.name && author.profile.name} */}
+                    </div>
+                  </div>
+                  <span>{items && items.length} Items</span>
+                </div>
+              </div>
+              <div className={styles.clearsec} onClick={() => clearState()}>
+                <Image
                   width="20px"
                   height="20px"
-                  alt="bid icon"
-                  src={`/assets/bidicon.svg`}
+                  alt="close icon"
+                  src={`/assets/closeicon.svg`}
                 />
-                <span>
-                  Highest bid <span>0.00</span>
-                </span>
+                <span>Clear all</span>
               </div>
-              <div className="bidsec2">
-                <span>New bid</span>
-              </div>
-            </div>
-            <div className={styles.clearsec} onClick={() => clearState()}>
-              <NextImage
-                width="20px"
-                height="20px"
-                alt="close icon"
-                src={`/assets/closeicon.svg`}
-              />
-              <span>Clear all</span>
             </div>
           </div>
         </div>
