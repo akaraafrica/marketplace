@@ -101,7 +101,7 @@ const rows = [
   createData("Nonso", "Amazing Art", 0),
 ];
 
-export default function PaginationTable({}) {
+export default function PaginationTable({ title }: { title: string }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -127,7 +127,7 @@ export default function PaginationTable({}) {
     <TableContainer component={Paper} className={styles.container}>
       <Table aria-label="custom pagination table">
         <TableRow className={styles.head}>
-          <h1>Bids</h1>
+          <h1>{title}</h1>
         </TableRow>
         <TableRow className={styles.head}>
           <TableCell align="left">By</TableCell>

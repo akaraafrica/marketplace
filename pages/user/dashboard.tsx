@@ -18,6 +18,8 @@ import TurnedInIcon from "@mui/icons-material/TurnedIn";
 
 import MarkunreadIcon from "@mui/icons-material/Markunread";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ItemGrid from "../../components/dashboard/ItemGrid";
+import Link from "next/link";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -59,32 +61,44 @@ const Dashboard = ({ items }: { items: IItem[] }) => {
       <Box className={styles.container}>
         <div className={styles.sidebar}>
           <ul>
-            <li>
-              <IoMdListBox size={25} /> Watchlist
-            </li>
-            <li>
-              <MarkunreadIcon />
-              Indox
-            </li>
-            <li>
-              <CgArrowsExchangeV size={25} />
-              Offers
-            </li>
-            <li>
+            <Link href="#watchlist">
+              <li>
+                <IoMdListBox size={25} /> Watchlist
+              </li>
+            </Link>
+            <Link href="/notifications">
+              <li>
+                <MarkunreadIcon />
+                Indox
+              </li>
+            </Link>
+            <Link href="#bids">
+              <li>
+                <CgArrowsExchangeV size={25} />
+                Bids
+              </li>
+            </Link>
+            {/* <li>
               <TurnedInIcon />
               Owned
-            </li>
-            <li>
-              <TurnedInNotIcon />
-              Sold
-            </li>
-            <li>
-              <AccountCircleIcon />
-              Profile
-            </li>
-            <li>
-              <SettingsIcon /> Settings
-            </li>
+            </li> */}
+            <Link href="#itemsold">
+              <li>
+                <TurnedInNotIcon />
+                Sold
+              </li>
+            </Link>
+            <Link href="/profile/9">
+              <li>
+                <AccountCircleIcon />
+                Profile
+              </li>
+            </Link>
+            <Link href="/settings">
+              <li>
+                <SettingsIcon /> Settings
+              </li>
+            </Link>
           </ul>
         </div>
         <div>
@@ -114,7 +128,15 @@ const Dashboard = ({ items }: { items: IItem[] }) => {
             <Items items={items} />
           </TabPanel>
           <NoSsr>
-            <CustomTable />
+            <div id="watchlist">
+              <ItemGrid items={items} title="watchlist" />
+            </div>
+            <div id="itemsold">
+              <ItemGrid items={items} title="Items Sold" />
+            </div>
+            <div id="bids">
+              <CustomTable title="Bids" />
+            </div>
           </NoSsr>
         </div>
       </Box>

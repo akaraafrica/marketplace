@@ -67,7 +67,7 @@ function Items({ items }: properties) {
                   // when window width is >= 768px
                   768: {
                     width: 768,
-                    slidesPerView: 1,
+                    slidesPerView: 3,
                   },
                   1260: {
                     width: 1260,
