@@ -1,32 +1,40 @@
-import { NFTStorage, File } from "nft.storage";
 import { api } from "../services/apiClient";
 import { randStr } from "../utils/helpers/randomStr";
+import { getBase64 } from "../utils/helpers/getBase64";
 
 const url = `/api/items`;
 
 class Item {
   nftStorage: any;
 
-  constructor() {
-    this.nftStorage = new NFTStorage({
-      token: process.env.NFT_STORAGE_KEY || "",
-    });
-  }
+  constructor() {}
 
   async storeNFT(image: any, name: string, description: string) {
-    // load the file from disk
-    // const image = await fileFromPath(imagePath)
-    // create a new NFTStorage client using our API key
-    // call client.store, passing in the image & metadata
+    try {
+      const body = new FormData();
+      body.append("image", image);
+      // body.append('name', name);
+      // body.append('description', description);
+      console.log("raw image here is ", image);
+      //  console.log("base64 image here ", await getBase64(image))
+      const blob = new Blob([image], image.type);
+      const img = URL.createObjectURL(blob);
 
-    const resp = this.nftStorage.store({
-      image,
-      name,
-      description,
-    });
-    console.log("created nft data ==> ", resp);
-    return resp;
+      console.log("we have blob ", blob);
+      console.log("we have createobject url ", img);
+
+      const res = await api.post(`${url}/mint`, {
+        image: img,
+        name,
+        description,
+      });
+      console.log("resp from upload here ", res);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   async createData(data: any, walletAddress: string) {
     const token = randStr(10);
 

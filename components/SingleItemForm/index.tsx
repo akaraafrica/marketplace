@@ -54,7 +54,6 @@ function SingleCollectibleItem() {
     title: "",
     description: "",
     price: "",
-    gas: "",
   });
   const [openDialog, setOpenDialog] = useState(false);
   const {
@@ -77,30 +76,46 @@ function SingleCollectibleItem() {
       title: "",
       description: "",
       price: "",
-      gas: "",
     });
   };
 
   const onSubmit = async () => {
+    if (!state.description) {
+      console.log("description needed please");
+      return;
+    }
+    console.log("we got here ...");
+    if (!images || !images?.main) {
+      console.log("main image needed please");
+      return;
+    }
+
     // step 1
     console.log("storing NFT...");
+    //  const blob = new Blob([images.main], images.main?.type || "image/jpeg");
+    const img = URL.createObjectURL(images.main);
+    console.log("url obj here ", img);
+
     const uploadResp = await itemDs.storeNFT(
-      images.main,
+      img,
       getValues("title"),
-      getValues("description")
+      state.description
     );
     console.log("upload to ipfs resp ", uploadResp);
 
     // step 2
-    const mintedResp = await tokenContract?.createToken(uploadResp.url);
-    console.log("mint Token resp ", mintedResp);
+    const mintResp = await tokenContract?.createToken(uploadResp.url, {
+      gasLimit: 3e6,
+    });
+    console.log("mint Token resp ", mintResp);
 
     // step 3
     const listResp = await marketplaceContract?.list(
-      mintedResp.data.id, // itemId from response
+      mintResp.data.id, // itemId from response
       getValues("price"),
       getValues("royalties"),
-      tokenContract?.address
+      tokenContract?.address,
+      { gasLimit: 3e6 }
     );
     console.log("listing token resp ", listResp);
 
@@ -321,6 +336,8 @@ function SingleCollectibleItem() {
                   }}
                   placeholder='e.g. “After purchasing you will able to receive the logo...”"'
                   value={state.description}
+                  required
+                  // {...register("description", { required: true })}
                   onChange={(e: any) => {
                     setState({
                       ...state,
