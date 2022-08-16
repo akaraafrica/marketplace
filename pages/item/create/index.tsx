@@ -25,10 +25,4 @@ const SingleCollectibleItem = () => {
   );
 };
 
-// export async function getStaticProps() {
-
-//   return {
-//   }
-// }
-
 export default SingleCollectibleItem;

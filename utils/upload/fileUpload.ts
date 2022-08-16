@@ -24,7 +24,15 @@ export const getFileUploadURL = async (file: any, fileName: string) => {
       Key,
     };
 
-    await myBucket.putObject(params).promise();
+    await myBucket
+      .putObject(params)
+      .promise()
+      .then(() => {
+        console.log("Successfully uploaded file");
+      })
+      .catch(() => {
+        console.log("Failed to upload file");
+      });
     const url = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${Key}`;
     return url;
   } catch (error) {

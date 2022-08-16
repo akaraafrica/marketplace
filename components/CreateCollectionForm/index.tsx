@@ -126,7 +126,7 @@ const Index = ({
       imageArr.forEach((image) => {
         promise.push(getFileUploadURL(image.file, `collection/${image.name}`));
       });
-      getFileUploadURL(video, `collection/${video && video["name"]}`);
+      video && getFileUploadURL(video, `collection/${video["name"]}`);
 
       toast.success("successful");
       reset();
@@ -476,7 +476,7 @@ const Index = ({
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
-                      url={user.profile && user.profile.avatar}
+                      url={user?.profile?.avatar}
                       walletAddress={user.walletAddress}
                       width="56px"
                       height="56px"

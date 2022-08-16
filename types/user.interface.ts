@@ -14,7 +14,7 @@ export interface IUser {
   accessToken?: string;
   joined?: string;
   isVerified?: boolean;
-  profile?: IProfile;
+  profile: IProfile | null;
   bids?: IBid[];
   likes?: ILike[];
   items?: IItem[];

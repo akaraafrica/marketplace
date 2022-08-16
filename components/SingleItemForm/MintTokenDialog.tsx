@@ -65,11 +65,25 @@ export const StepSection = ({
 };
 export const Steps = ({ handleMint, handleClose }: any) => {
   const [loading, setLoading] = useState(false);
+  const [mintLoading, setMintLoading] = useState(false);
+
   const [submitLoading, setSubmitLoading] = useState(false);
   const [sign, setSign] = useState(false);
-  const [disable, setDisable] = useState(false);
+  const [mint, setMink] = useState(false);
+
+  const [disable, setDisable] = useState(true);
+  const [mintDisable, setMintDisable] = useState(false);
 
   const [terms, setTerms] = useState(false);
+  const handleMintToken = () => {
+    setMintLoading(true);
+    setTimeout(() => {
+      setMintLoading(false);
+      setMink(true);
+      setMintDisable(true);
+      setDisable(false);
+    }, 5000);
+  };
   const handleSign = () => {
     setLoading(true);
     setTimeout(() => {
@@ -92,13 +106,22 @@ export const Steps = ({ handleMint, handleClose }: any) => {
   return (
     <div className={styles.followsteps}>
       <StepSection
-        heading="Upload files & Mint token"
-        text="Call contract method"
+        heading="Upload files"
+        text="files uploaded"
         step={true}
         disabled={true}
         img=""
         loading={false}
         onClick={null}
+      />
+      <StepSection
+        heading="Mint token"
+        text="Call contract method"
+        step={mint}
+        disabled={mintDisable}
+        img="mint.svg"
+        loading={mintLoading}
+        onClick={handleMintToken}
       />
       <StepSection
         img="sign.svg"
