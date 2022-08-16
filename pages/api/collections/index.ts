@@ -26,7 +26,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         data: {
           title: req.body.title,
           description: req.body.description,
-          authorId: req.body.authorId,
           tokenId: req.body.tokenId,
           images: req.body.image,
           type: req.body.type,

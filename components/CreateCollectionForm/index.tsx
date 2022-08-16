@@ -36,6 +36,7 @@ const Index = ({
   collectionTypes: any[];
 }) => {
   const [desc, setDesc] = useState("");
+  const [type, setType] = useState();
   const [video, setVideo] = useState(null);
   const [searchUser, setSearchUser] = useState("");
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
@@ -94,27 +95,28 @@ const Index = ({
   } = useForm();
 
   const title = watch("title", "");
-  const collectionType = watch("collectionType", "");
+  // const type = watch("type", "");
   const countdown = watch("countdown", "");
-  const stock = watch("stock", "");
 
   const onSubmit = () => {
-    if (!title || !desc || !collectionType || !countdown || !stock) {
+    if (!title || !desc || !type || !countdown) {
       toast.error("Ensure required fields are not empty");
       return;
     }
     setOpenDialog(true);
   };
-
+  console.log(type);
   const handleMint = async () => {
     const data = getValues();
     const address: string = localStorage.getItem("address")!;
 
     try {
       data.description = desc;
+      data.type = type;
       data.users = selectedUser;
       data.items = selectedItems;
       const result = await CollectionDs.createData(data, address);
+      console.log(result);
       let imageArr = [];
       for (const image of Object.entries(images)) {
         imageArr.push({
@@ -126,22 +128,32 @@ const Index = ({
       imageArr.forEach((image) => {
         promise.push(getFileUploadURL(image.file, `collection/${image.name}`));
       });
-      video && getFileUploadURL(video, `collection/${video["name"]}`);
 
+      let videoUrl = await getFileUploadURL(
+        video,
+        `collection/${title.replace(" ", "-")}`
+      );
+      // console.log({ videoUrl });
+
+      console.log(data);
       toast.success("successful");
       reset();
       clearState();
       setOpenDialog(false);
 
       const imageURLs = await Promise.all(promise);
-      await CollectionDs.updateData({ id: result.data.id, images: imageURLs });
+      await CollectionDs.updateData({
+        id: result.data.id,
+        images: imageURLs,
+        videos: videoUrl,
+      });
     } catch (error) {
       console.log(error);
     }
   };
   const handleDialogClose = () => setOpenDialog(false);
 
-  const handleVideoChange = (event: any) => {
+  const handleVideoChange = async (event: any) => {
     const file = event.target.files[0];
     setVideo(file);
   };
@@ -385,10 +397,10 @@ const Index = ({
             </div>
             <div className={styles.itemdetailsforminput}>
               <label>COLLECTION TYPE</label>
-              <select {...register("collectionType", { required: true })}>
+              <select onChange={(e: any) => setType(e.target.value)}>
                 {collectionTypes &&
                   collectionTypes.map((collectionType, index) => (
-                    <option key={index} value={collectionType}>
+                    <option key={index} value={type}>
                       {collectionType.name}
                     </option>
                   ))}
@@ -657,7 +669,7 @@ const Index = ({
                       {/* {author?.profile?.name && author.profile.name} */}
                     </div>
                   </div>
-                  <span>{items && items.length} Items</span>
+                  <span>{selectedItems && selectedItems.length} Items</span>
                 </div>
               </div>
               <div className={styles.clearsec} onClick={() => clearState()}>

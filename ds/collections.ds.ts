@@ -28,9 +28,10 @@ class Collection {
       const user = await api.get(`api/me`);
       const res = await api.post(url, {
         ...data,
-        authorId: user.data.id,
+        author: user.data,
         tokenId: token,
       });
+      console.log(res);
       return res;
     } catch (error) {
       console.log(error);
