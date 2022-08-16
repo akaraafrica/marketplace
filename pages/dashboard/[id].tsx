@@ -4,9 +4,8 @@ import discoveryDs, { Filter } from "../../ds/discovery.ds";
 import { IItem } from "../../types/item.interface";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./dashboard.module.scss";
 import CustomTable from "../../components/dashboard/Table";
 import { NoSsr } from "@mui/material";
@@ -14,12 +13,17 @@ import { IoMdListBox } from "react-icons/io";
 import { CgArrowsExchangeV } from "react-icons/cg";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
-import TurnedInIcon from "@mui/icons-material/TurnedIn";
 
 import MarkunreadIcon from "@mui/icons-material/Markunread";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ItemGrid from "../../components/dashboard/ItemGrid";
 import Link from "next/link";
+import { CollectionDs, ItemDs, ProfileDs } from "../../ds";
+import { ICollection } from "../../types/collection.interface";
+import HotCollectionCard from "../../components/HotCollectionsCard";
+import Collections from "../../components/dashboard/collections";
+import { AuthContext } from "../../contexts/AuthContext";
+import { GetServerSideProps } from "next";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -51,11 +55,18 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const Dashboard = ({ items }: { items: IItem[] }) => {
+const Dashboard = ({
+  items,
+  collections,
+}: {
+  items: IItem[];
+  collections: ICollection[];
+}) => {
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const { user } = useContext(AuthContext);
   return (
     <Layout>
       <Box className={styles.container}>
@@ -88,7 +99,7 @@ const Dashboard = ({ items }: { items: IItem[] }) => {
                 Sold
               </li>
             </Link>
-            <Link href="/profile/9">
+            <Link href={`/profile/${user?.id}`}>
               <li>
                 <AccountCircleIcon />
                 Profile
@@ -102,40 +113,55 @@ const Dashboard = ({ items }: { items: IItem[] }) => {
           </ul>
         </div>
         <div>
-          <Box className={styles.tabs}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              textColor="primary"
-              indicatorColor="primary"
-            >
-              <Tab sx={{ color: "white" }} label="Auction" {...a11yProps(0)} />
-              <Tab sx={{ color: "white" }} label="Items" {...a11yProps(1)} />
-              <Tab
-                sx={{ color: "white" }}
-                label="Collections"
-                {...a11yProps(2)}
-              />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <Items items={items} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <Items items={items} />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <Items items={items} />
-          </TabPanel>
+          <div className={styles.main}>
+            <Box className={styles.tabs}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                textColor="primary"
+                indicatorColor="primary"
+              >
+                <Tab
+                  sx={{ color: "white" }}
+                  label="Auction"
+                  {...a11yProps(0)}
+                />
+                <Tab sx={{ color: "white" }} label="Items" {...a11yProps(1)} />
+                <Tab
+                  sx={{ color: "white" }}
+                  label="Collections"
+                  {...a11yProps(2)}
+                />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+              <Items items={items} />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <Items items={items} />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <div className={styles.collections}>
+                {collections.map((collection) => (
+                  <div className={styles.collection} key={collection.id}>
+                    <Collections collection={collection} />
+                  </div>
+                ))}
+              </div>
+            </TabPanel>
+          </div>
+
           <NoSsr>
-            <div id="watchlist">
-              <ItemGrid items={items} title="watchlist" />
-            </div>
-            <div id="itemsold">
-              <ItemGrid items={items} title="Items Sold" />
-            </div>
-            <div id="bids">
-              <CustomTable title="Bids" />
+            <div className={styles.bottom}>
+              <div id="watchlist">
+                <ItemGrid items={items} title="watchlist" />
+              </div>
+              <div id="itemsold">
+                <ItemGrid items={items} title="Items Sold" />
+              </div>
+              <div id="bids">
+                <CustomTable title="Bids" />
+              </div>
             </div>
           </NoSsr>
         </div>
@@ -143,14 +169,20 @@ const Dashboard = ({ items }: { items: IItem[] }) => {
     </Layout>
   );
 };
-export async function getServerSideProps() {
-  let data = await discoveryDs.getData(Filter.All);
-  console.log("items here are ", data);
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  // const { id }: any = ctx.params;
+  // const { items, bids, collections } = await ProfileDs.fetch(id);
+
+  let [collections, items] = await Promise.all([
+    CollectionDs.getCollections(),
+    ItemDs.getData(),
+  ]);
+
   return {
     props: {
-      items: data,
+      collections,
+      items,
     },
   };
-}
-
+};
 export default Dashboard;

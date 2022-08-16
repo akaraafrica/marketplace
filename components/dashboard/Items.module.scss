@@ -1,74 +1,21 @@
-.root {
-  width: 100%;
-  box-sizing: border-box;
+.container {
+  display: flex;
+  gap: 1rem;
+  max-width: 45rem;
+  height: 15rem;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  user-select: none;
 
-  .container {
-    max-width: 75rem;
-    display: flex;
-    margin: auto;
-    overflow: hidden;
-    height: 23rem;
-    flex-direction: column;
-
-    @media screen and (min-width: 1024px) {
-      widths: 70%;
-      height: 23rem;
-    }
-
-    .bottom {
-      margin: auto;
-    }
-
-    .top {
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-
-      h1 {
-        font-style: normal;
-        font-weight: 700;
-        font-size: 40px;
-        line-height: 48px;
-        letter-spacing: -0.01em;
-        color: #fcfcfd;
-      }
-
-      .hotitemsbtn button {
-        width: 40px;
-        height: 40px;
-        border: 2px solid #353945;
-        border-radius: 40px;
-        background-color: transparent;
-      }
-
-      .hotitemsbtn button span img {
-        width: 14px;
-        height: 9px;
-      }
-    }
+  @media screen and (max-width: 800px) {
+    max-width: 40rem;
   }
-}
 
-.swiper_container {
-  width: 100%;
-  // display: flex;
-  // justify-content: space-between;
-}
-
-@media screen and (min-width: 640px) {
-  .swiper_container {
-    width: 100%;
+  @media screen and (max-width: 500px) {
+    max-width: 23rem;
   }
-}
 
-@media screen and (min-width: 768px) {
-  .swiper_container {
-    width: 100%;
-  }
-}
-
-@media screen and (min-width: 1260px) {
-  .swiper_container {
-    width: 100%;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
