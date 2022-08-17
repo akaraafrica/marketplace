@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import Image from "../Image";
@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import MintTokenDialog from "../SingleItemForm/MintTokenDialog";
 import { CollectionDs } from "../../ds";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -35,6 +36,8 @@ const Index = ({
   users: any[];
   collectionTypes: any[];
 }) => {
+  const { user } = useContext(AuthContext);
+  const userIndex = users.filter((person) => person.id === user?.id);
   const [desc, setDesc] = useState("");
   const [type, setType] = useState<Number>();
   const [video, setVideo] = useState(null);
@@ -42,7 +45,7 @@ const Index = ({
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
   const [resultDisplay, setResultDisplay] = useState(false);
   const [itemResultDisplay, setItemResultDisplay] = useState(false);
-  const [items, setItems] = useState<IItem[]>([]);
+  const [items, setItems] = useState<IItem[]>([...userIndex[0].items]);
   const [searchItem, setSearchItem] = useState("");
   const [selectedItems, setSelectedItems] = useState<IItem[]>([]);
   const [images, setImages] = useState({
