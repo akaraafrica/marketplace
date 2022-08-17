@@ -30,25 +30,6 @@ model Purchase {
   user          User     @relation(fields: [userId], references: [id])
 }
 
-model Collection {
-  id               Int                @id @default(autoincrement())
-  title            String
-  tokenId          String             @unique
-  collectionTypeId Int
-  description      String             @db.VarChar(250)
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  authorId         Int
-  images           String[]
-  videos           String[]
-  author           User               @relation(fields: [authorId], references: [id])
-  type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
-  ratings          CollectionRating[]
-  items            Item[]
-  likes            Like[]
-  userCollections  UserCollection[]
-}
-
 model CollectionRating {
   id           Int        @id @default(autoincrement())
   collectionId Int
@@ -139,6 +120,27 @@ model Rating {
   userRatings       UserRating[]
 }
 
+model Collection {
+  id               Int                @id @default(autoincrement())
+  title            String
+  tokenId          String             @unique
+  collectionTypeId Int
+  description      String             @db.VarChar(250)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  authorId         Int
+  images           String[]
+  videos           String[]
+  status           CollectionStatus   @default(CREATED)
+  visible          Boolean            @default(false)
+  author           User               @relation(fields: [authorId], references: [id])
+  type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
+  ratings          CollectionRating[]
+  items            Item[]
+  likes            Like[]
+  userCollections  UserCollection[]
+}
+
 model User {
   id                    Int              @id @default(autoincrement())
   walletAddress         String           @unique
@@ -211,4 +213,11 @@ enum Gender {
   FEMALE
   OTHERS
   NON_BINARY
+}
+
+enum CollectionStatus {
+  CREATED
+  VERIFIED
+  READY
+  PUBLISHED
 }

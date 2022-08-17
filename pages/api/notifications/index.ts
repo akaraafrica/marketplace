@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(201).json({ message: "Notifications created" });
   }
-  // res.status(405).send({ message: 'Only POST requests allowed' })
+  res.status(405).send({ message: "Only POST requests allowed" });
 };
 
 export default verifyToken(handler);
