@@ -36,7 +36,7 @@ const Index = ({
   collectionTypes: any[];
 }) => {
   const [desc, setDesc] = useState("");
-  const [type, setType] = useState();
+  const [type, setType] = useState<Number>();
   const [video, setVideo] = useState(null);
   const [searchUser, setSearchUser] = useState("");
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
@@ -105,6 +105,7 @@ const Index = ({
     }
     setOpenDialog(true);
   };
+  console.log(video);
   console.log(type);
   const handleMint = async () => {
     const data = getValues();
@@ -115,6 +116,7 @@ const Index = ({
       data.type = type;
       data.users = selectedUser;
       data.items = selectedItems;
+      console.log(type);
       const result = await CollectionDs.createData(data, address);
       console.log(result);
       let imageArr = [];
@@ -145,7 +147,7 @@ const Index = ({
       await CollectionDs.updateData({
         id: result.data.id,
         images: imageURLs,
-        videos: videoUrl,
+        videos: [videoUrl],
       });
     } catch (error) {
       console.log(error);
@@ -174,6 +176,8 @@ const Index = ({
       optional4: null,
     });
     reset();
+    setSelectedItems([]);
+    setSelectedUser([]);
   };
   // console.log("users", selectedUser);
   // console.log("items", items);
@@ -400,8 +404,9 @@ const Index = ({
               <select onChange={(e: any) => setType(e.target.value)}>
                 {collectionTypes &&
                   collectionTypes.map((collectionType, index) => (
-                    <option key={index} value={type}>
+                    <option key={index} value={collectionType.id}>
                       {collectionType.name}
+                      {console.log(typeof collectionType.id)}
                     </option>
                   ))}
               </select>
