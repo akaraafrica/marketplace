@@ -10,8 +10,9 @@
 
 .center {
   display: flex;
+
+  max-width: 50rem;
   flex-wrap: wrap;
-  // flex-direction: column;
   gap: 32px;
   margin-bottom: 2rem;
 
@@ -19,7 +20,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-    width: 23rem;
 
     .cardImg {
       border-radius: 12px;
