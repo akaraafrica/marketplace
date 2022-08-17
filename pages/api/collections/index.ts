@@ -28,6 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           description: req.body.description,
           tokenId: req.body.tokenId,
           images: req.body.image,
+          visible: req.body.visible,
           type: {
             connect: {
               id: req.body.typeId,
@@ -39,6 +40,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             connect: {
               id: req.body.authorId,
             },
+          },
+          items: {
+            connect: req.body.items.map((item: { id: number }) => ({
+              id: item.id,
+            })),
           },
         },
       });

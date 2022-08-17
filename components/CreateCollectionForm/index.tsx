@@ -389,7 +389,7 @@ const Index = ({
                   }}
                   theme="snow"
                   style={{
-                    height: "20rem",
+                    height: "16rem",
                   }}
                   placeholder='e.g. “After purchasing you will able to receive the logo...”"'
                   value={desc}
@@ -401,12 +401,17 @@ const Index = ({
             </div>
             <div className={styles.itemdetailsforminput}>
               <label>COLLECTION TYPE</label>
-              <select onChange={(e: any) => setType(e.target.value)}>
+              <select
+                defaultValue={"default"}
+                onChange={(e: any) => setType(e.target.value)}
+              >
+                <option value="default" disabled>
+                  Choose a Collection type
+                </option>
                 {collectionTypes &&
                   collectionTypes.map((collectionType, index) => (
                     <option key={index} value={collectionType.id}>
                       {collectionType.name}
-                      {console.log(typeof collectionType.id)}
                     </option>
                   ))}
               </select>
@@ -466,6 +471,7 @@ const Index = ({
                           setSelectedUser([...selectedUser, user]);
                           setItems([...items, ...user.items]);
                           setResultDisplay(false);
+                          setSearchUser("");
                         }}
                       >
                         {user.walletAddress && user.walletAddress}
@@ -533,6 +539,7 @@ const Index = ({
                           }
                           setSelectedItems([...selectedItems, item]);
                           setItemResultDisplay(false);
+                          setSearchItem("");
                         }}
                       >
                         {item.title && item.title}
