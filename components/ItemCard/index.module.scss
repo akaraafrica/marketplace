@@ -4,6 +4,7 @@
   border-radius: 20px;
   padding: 12px;
   display: flex;
+  height: 27rem;
   flex-direction: column;
   gap: 2px;
   cursor: pointer;
@@ -34,6 +35,7 @@
       }
     }
   }
+
   .previewstockcon {
     display: flex;
     align-items: center;
@@ -83,6 +85,7 @@
     }
   }
 }
+
 .previewcardcontentcon {
   display: flex;
   flex-direction: column;
@@ -116,6 +119,7 @@
       }
     }
   }
+
   .previewstockcon {
     display: flex;
     align-items: center;
@@ -164,6 +168,7 @@
       }
     }
   }
+
   .collectionsimgs {
     display: flex;
     align-items: center;

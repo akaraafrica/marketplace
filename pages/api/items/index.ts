@@ -5,7 +5,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const items = await prisma.item.findMany({
-        take: 10,
+        take: 8,
         include: {
           owner: {
             include: {
