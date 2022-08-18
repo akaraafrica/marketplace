@@ -36,8 +36,6 @@ const Index = ({
   users: any[];
   collectionTypes: any[];
 }) => {
-  const { user } = useContext(AuthContext);
-  const userIndex = users.filter((person) => person.id === user?.id);
   const [desc, setDesc] = useState("");
   const [type, setType] = useState<Number>();
   const [video, setVideo] = useState(null);
@@ -45,7 +43,7 @@ const Index = ({
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
   const [resultDisplay, setResultDisplay] = useState(false);
   const [itemResultDisplay, setItemResultDisplay] = useState(false);
-  const [items, setItems] = useState<IItem[]>([...userIndex[0].items]);
+  const [items, setItems] = useState<IItem[]>([]);
   const [searchItem, setSearchItem] = useState("");
   const [selectedItems, setSelectedItems] = useState<IItem[]>([]);
   const [images, setImages] = useState({
@@ -56,6 +54,11 @@ const Index = ({
     optional4: null,
   });
   const [openDialog, setOpenDialog] = useState(false);
+  const { user } = useContext(AuthContext);
+  const userIndex = users.filter((person) => person.id === user?.id);
+  if (userIndex[0]?.items.length > 0) {
+    setItems([...userIndex[0].items]);
+  }
 
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
@@ -98,7 +101,6 @@ const Index = ({
   } = useForm();
 
   const title = watch("title", "");
-  // const type = watch("type", "");
   const countdown = watch("countdown", "");
 
   const onSubmit = () => {
@@ -109,8 +111,10 @@ const Index = ({
     setOpenDialog(true);
   };
   console.log(video);
-  console.log(type);
+  console.log("items", items);
+  console.log("selectedItems", selectedItems);
   const handleMint = async () => {
+    console.log("items", items);
     const data = getValues();
     const address: string = localStorage.getItem("address")!;
 
@@ -160,6 +164,18 @@ const Index = ({
 
   const handleVideoChange = async (event: any) => {
     const file = event.target.files[0];
+    const MIN_FILE_SIZE = 1024; // 1MB
+    const MAX_FILE_SIZE = 5120; // 5MB
+
+    if (file.size / 1024 < MIN_FILE_SIZE) {
+      toast.warning("uploaded video file is too small");
+      return;
+    }
+
+    if (file.size / 1024 > MAX_FILE_SIZE) {
+      toast.warning("uploaded video file is too big");
+      return;
+    }
     setVideo(file);
   };
   const handleChangeRequired = (e?: any, name?: any) => {
@@ -445,6 +461,7 @@ const Index = ({
                 type="text"
                 name="Search"
                 placeholder="Search users"
+                value={searchUser}
                 onChange={(e) => {
                   setResultDisplay(true);
                   setSearchUser(e.target.value);
@@ -473,8 +490,8 @@ const Index = ({
                           }
                           setSelectedUser([...selectedUser, user]);
                           setItems([...items, ...user.items]);
-                          setResultDisplay(false);
                           setSearchUser("");
+                          setResultDisplay(false);
                         }}
                       >
                         {user.walletAddress && user.walletAddress}
@@ -517,6 +534,7 @@ const Index = ({
                 type="text"
                 name="Search"
                 placeholder="Search items"
+                value={searchItem}
                 onChange={(e) => {
                   setItemResultDisplay(true);
                   setSearchItem(e.target.value);
@@ -541,8 +559,8 @@ const Index = ({
                             }
                           }
                           setSelectedItems([...selectedItems, item]);
-                          setItemResultDisplay(false);
                           setSearchItem("");
+                          setItemResultDisplay(false);
                         }}
                       >
                         {item.title && item.title}

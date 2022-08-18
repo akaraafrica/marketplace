@@ -28,6 +28,7 @@ class Collection {
       const user = await api.get(`api/me`);
       const res = await api.post(url, {
         ...data,
+        users: data.users,
         items: [...data.items],
         typeId: parseInt(data.type),
         authorId: user.data.id,

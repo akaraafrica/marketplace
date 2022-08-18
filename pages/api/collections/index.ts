@@ -46,6 +46,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               id: item.id,
             })),
           },
+          userCollections: {
+            create: req.body.users.map((user: { id: number }) => ({
+              user: {
+                connect: {
+                  id: user.id,
+                },
+              },
+            })),
+          },
         },
       });
       res.status(201).json({ id: response.id, message: "Collection created" });
