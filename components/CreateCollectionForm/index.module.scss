@@ -10,7 +10,7 @@
   }
 
   @media screen and (max-width: 640px) {
-    padding: 100px 20px;
+    padding: 200px 20px;
   }
 
   .sci {
@@ -64,7 +64,7 @@
       }
 
       .sciuploadbox {
-        width: 100%;
+        width: 95%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -91,6 +91,10 @@
     .additional {
       display: flex;
       gap: 10px;
+
+      @media screen and (max-width: 640px) {
+        flex-wrap: wrap;
+      }
     }
 
     .img {
@@ -127,7 +131,7 @@
       }
 
       .sciuploadvideobox {
-        width: 100%;
+        width: 95%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -492,7 +496,8 @@
     width: 300px;
 
     @media screen and (max-width: 640px) {
-      width: 100%;
+      width: 70%;
+      margin: 0 auto;
     }
 
     h1 {

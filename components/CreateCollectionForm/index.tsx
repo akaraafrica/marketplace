@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import Image from "../Image";
@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import MintTokenDialog from "../SingleItemForm/MintTokenDialog";
 import { CollectionDs } from "../../ds";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -36,7 +37,7 @@ const Index = ({
   collectionTypes: any[];
 }) => {
   const [desc, setDesc] = useState("");
-  const [type, setType] = useState();
+  const [type, setType] = useState<Number>();
   const [video, setVideo] = useState(null);
   const [searchUser, setSearchUser] = useState("");
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
@@ -53,6 +54,11 @@ const Index = ({
     optional4: null,
   });
   const [openDialog, setOpenDialog] = useState(false);
+  const { user } = useContext(AuthContext);
+  const userIndex = users.filter((person) => person.id === user?.id);
+  if (userIndex[0]?.items.length > 0) {
+    setItems([...userIndex[0].items]);
+  }
 
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
@@ -95,7 +101,6 @@ const Index = ({
   } = useForm();
 
   const title = watch("title", "");
-  // const type = watch("type", "");
   const countdown = watch("countdown", "");
 
   const onSubmit = () => {
@@ -105,8 +110,11 @@ const Index = ({
     }
     setOpenDialog(true);
   };
-  console.log(type);
+  console.log(video);
+  console.log("items", items);
+  console.log("selectedItems", selectedItems);
   const handleMint = async () => {
+    console.log("items", items);
     const data = getValues();
     const address: string = localStorage.getItem("address")!;
 
@@ -115,6 +123,7 @@ const Index = ({
       data.type = type;
       data.users = selectedUser;
       data.items = selectedItems;
+      console.log(type);
       const result = await CollectionDs.createData(data, address);
       console.log(result);
       let imageArr = [];
@@ -145,7 +154,7 @@ const Index = ({
       await CollectionDs.updateData({
         id: result.data.id,
         images: imageURLs,
-        videos: videoUrl,
+        videos: [videoUrl],
       });
     } catch (error) {
       console.log(error);
@@ -155,6 +164,18 @@ const Index = ({
 
   const handleVideoChange = async (event: any) => {
     const file = event.target.files[0];
+    const MIN_FILE_SIZE = 1024; // 1MB
+    const MAX_FILE_SIZE = 5120; // 5MB
+
+    if (file.size / 1024 < MIN_FILE_SIZE) {
+      toast.warning("uploaded video file is too small");
+      return;
+    }
+
+    if (file.size / 1024 > MAX_FILE_SIZE) {
+      toast.warning("uploaded video file is too big");
+      return;
+    }
     setVideo(file);
   };
   const handleChangeRequired = (e?: any, name?: any) => {
@@ -174,6 +195,8 @@ const Index = ({
       optional4: null,
     });
     reset();
+    setSelectedItems([]);
+    setSelectedUser([]);
   };
   // console.log("users", selectedUser);
   // console.log("items", items);
@@ -385,7 +408,7 @@ const Index = ({
                   }}
                   theme="snow"
                   style={{
-                    height: "20rem",
+                    height: "16rem",
                   }}
                   placeholder='e.g. “After purchasing you will able to receive the logo...”"'
                   value={desc}
@@ -397,10 +420,16 @@ const Index = ({
             </div>
             <div className={styles.itemdetailsforminput}>
               <label>COLLECTION TYPE</label>
-              <select onChange={(e: any) => setType(e.target.value)}>
+              <select
+                defaultValue={"default"}
+                onChange={(e: any) => setType(e.target.value)}
+              >
+                <option value="default" disabled>
+                  Choose a Collection type
+                </option>
                 {collectionTypes &&
                   collectionTypes.map((collectionType, index) => (
-                    <option key={index} value={type}>
+                    <option key={index} value={collectionType.id}>
                       {collectionType.name}
                     </option>
                   ))}
@@ -432,6 +461,7 @@ const Index = ({
                 type="text"
                 name="Search"
                 placeholder="Search users"
+                value={searchUser}
                 onChange={(e) => {
                   setResultDisplay(true);
                   setSearchUser(e.target.value);
@@ -460,6 +490,7 @@ const Index = ({
                           }
                           setSelectedUser([...selectedUser, user]);
                           setItems([...items, ...user.items]);
+                          setSearchUser("");
                           setResultDisplay(false);
                         }}
                       >
@@ -503,6 +534,7 @@ const Index = ({
                 type="text"
                 name="Search"
                 placeholder="Search items"
+                value={searchItem}
                 onChange={(e) => {
                   setItemResultDisplay(true);
                   setSearchItem(e.target.value);
@@ -527,6 +559,7 @@ const Index = ({
                             }
                           }
                           setSelectedItems([...selectedItems, item]);
+                          setSearchItem("");
                           setItemResultDisplay(false);
                         }}
                       >

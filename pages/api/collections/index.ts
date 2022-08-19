@@ -28,10 +28,33 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           description: req.body.description,
           tokenId: req.body.tokenId,
           images: req.body.image,
-          type: req.body.type,
-          author: req.body.author,
-          videos: req.body.video,
+          visible: req.body.visible,
+          type: {
+            connect: {
+              id: req.body.typeId,
+            },
+          },
+          videos: req.body.videos,
           updatedAt: new Date(),
+          author: {
+            connect: {
+              id: req.body.authorId,
+            },
+          },
+          items: {
+            connect: req.body.items.map((item: { id: number }) => ({
+              id: item.id,
+            })),
+          },
+          userCollections: {
+            create: req.body.users.map((user: { id: number }) => ({
+              user: {
+                connect: {
+                  id: user.id,
+                },
+              },
+            })),
+          },
         },
       });
       res.status(201).json({ id: response.id, message: "Collection created" });
@@ -49,6 +72,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         data: {
           images: req.body.images,
+          videos: req.body.videos,
         },
       });
       res.status(201).json({ message: "Collection images updated" });
