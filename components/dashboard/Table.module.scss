@@ -6,7 +6,7 @@
   width: fit-content;
   padding: 3rem;
   border: 20px;
-  margin-left: 2rem;
+  margin: auto;
   margin-bottom: 4rem;
 
   @media screen and (max-width: 900px) {
@@ -33,8 +33,8 @@
     width: 15rem;
 
     @media screen and (max-width: 1400px) {
-      padding: 1rem 6vw;
-      width: 10vw;
+      padding: 1rem 5vw;
+      width: 15vw;
     }
   }
 
@@ -73,12 +73,13 @@
   .item {
     margin-left: 10px;
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
     align-items: center;
 
     img {
-      margin: 20rem;
+      // margin: 20rem;
       border-radius: 10px;
     }
   }

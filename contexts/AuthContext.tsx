@@ -113,7 +113,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         })
         .catch((err: any) => console.log(err));
 
-      Router.push("/");
+      Router.back();
     } catch (err: any) {
       console.log(err);
       throw err;

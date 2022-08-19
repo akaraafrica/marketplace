@@ -2,6 +2,8 @@
   background: #23262f;
   box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12);
   border-radius: 20px;
+  height: 20rem;
+  user-select: none;
   // padding: 12px;
   display: flex;
   flex-direction: column;
@@ -41,6 +43,7 @@
         border-radius: 50%;
         margin: -8px;
         border: 2px solid #353945;
+        user-select: none;
       }
 
       :first-child {
@@ -78,24 +81,21 @@
 .previewcardcontentcon {
   display: flex;
   flex-direction: column;
+
   gap: 10px;
-  height: 20rem;
-  width: 15rem;
+  // height: 20rem;
+  width: 14rem;
   cursor: pointer;
 
-  .swiper-slide {
-    background: red;
-  }
-
   @media screen and (max-width: 500px) {
-    width: 16rem;
+    width: 14rem;
   }
 
   .previewcardimg {
     img {
-      width: 15rem;
+      width: 14rem;
       border-radius: 20px;
-      height: 15rem;
+      height: 13rem;
       // margin-right: 10px;
       margin-right: 10rem;
 

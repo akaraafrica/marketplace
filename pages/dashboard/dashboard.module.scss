@@ -1,20 +1,58 @@
 @use "../../styles/colors" as *;
 
 .container {
-  max-width: 90rem;
-  margin: 0 auto;
+  margin: auto;
   margin-top: 10rem;
-  // overflow: hidden;
   display: flex;
+  padding: auto 10rem;
+  max-width: 70rem;
+  position: relative;
+
+  @media screen and (max-width: 500px) {
+    max-width: 26rem;
+  }
+
+  .main {
+    max-width: 50rem;
+
+    @media screen and (max-width: 800px) {
+      max-width: 44rem;
+    }
+
+    @media screen and (max-width: 500px) {
+      max-width: 26rem;
+    }
+  }
+
+  .bottom {
+    padding-left: 1.2rem;
+    margin: auto;
+  }
 
   .tabs {
     margin-left: 2rem;
-    max-width: 50rem;
     transition: all;
 
     @media screen and (max-width: 500px) {
       margin-left: 10px;
       overflow: auto;
+    }
+  }
+
+  .collections {
+    display: flex;
+    gap: 1rem;
+    max-width: 50rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    user-select: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .collection {
+      width: 50rem;
     }
   }
 

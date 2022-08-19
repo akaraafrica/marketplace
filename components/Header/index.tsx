@@ -57,7 +57,6 @@ function Header() {
       ? router.push("/item/create")
       : toast.info("You must be logged in to create an item.");
   }
-
   return (
     <div className={styles.headerCon}>
       <div className={styles.mobile}>
@@ -87,7 +86,14 @@ function Header() {
           <Link href={`/notifications`}>
             <span>Notifications</span>
           </Link>
-          <span>Profile</span>
+          {user?.id && (
+            <Link href={`/profile/${user?.id}`}>
+              <span>Profile</span>
+            </Link>
+          )}
+          <Link href="/settings">
+            <span>Settings</span>
+          </Link>
           <button onClick={() => handleUpload()}>Upload</button>
           <span>Logout</span>
         </div>
