@@ -19,7 +19,6 @@ interface ItemCardProps {
 function ItemCard(props: ItemCardProps) {
   const router = useRouter();
   const isMarketplace = router.pathname === "/marketplace";
-
   return (
     <div>
       <div
@@ -54,7 +53,7 @@ function ItemCard(props: ItemCardProps) {
           )}
           {props.collectionImages && <span>{props.stock}</span>}
         </div>
-        {!props.collectionImages && (
+        {!props.collectionImages && props.ownerAvatar != "undefined" && (
           <div className={styles.previewstockcon}>
             <div className={styles.avatars}>
               <img alt="avatar" src={props.ownerAvatar} />

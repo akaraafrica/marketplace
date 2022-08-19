@@ -63,6 +63,15 @@ class Item {
       console.log(error);
     }
   }
+
+  async getMore(lastIndex: number) {
+    try {
+      const items = await api.get(`${url}/fetchmore?lastIndex=${lastIndex}`);
+      return items.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default new Item();
