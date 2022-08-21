@@ -1,40 +1,44 @@
-import AWS from "aws-sdk";
 import { getCookie } from "cookies-next";
-
-const S3_BUCKET = "ak-marketplace";
-const REGION = "eu-west-3";
-AWS.config.update({
-  accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY,
-  secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_KEY,
-});
-
-const myBucket = new AWS.S3({
-  params: { Bucket: S3_BUCKET },
-  region: REGION,
-});
+import { api } from "../../services/apiClient";
 
 export const getFileUploadURL = async (file: any, fileName: string) => {
   try {
     const address = getCookie("address") as string;
-    const Key = address?.slice(1, 6) + "/" + fileName;
-    const params = {
-      ACL: "public-read",
-      Body: file,
-      Bucket: S3_BUCKET,
-      Key,
-    };
+    const key = address?.slice(1, 6) + "/" + fileName;
 
-    await myBucket
-      .putObject(params)
-      .promise()
-      .then(() => {
-        console.log("Successfully uploaded file");
-      })
-      .catch(() => {
-        console.log("Failed to upload file");
-      });
-    const url = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${Key}`;
-    return url;
+    const res = await api.post("/api/s3", { key });
+
+    const { fields, url } = res.data;
+
+    const data = {
+      bucket: "ak-marketplace",
+      ...fields,
+      "Content-Type": file.type,
+      file: file,
+    };
+    console.log(data);
+
+    const formData = new FormData();
+    for (const name in data) {
+      formData.append(name, data[name]);
+    }
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+    console.log(response);
+
+    // await fetch(data, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "multipart/form-data"
+    //   },
+    //   body: file
+    // })
+    // const imageUrl = data.split('?')[0]
+    // console.log(imageUrl)
+    // const url = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${Key}`;
+    // return url;
   } catch (error) {
     console.log(error);
   }

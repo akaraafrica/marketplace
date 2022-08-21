@@ -95,24 +95,24 @@ function SingleCollectibleItem() {
   const onSubmit = async () => {
     // step 1
     console.log("storing NFT...");
-    const uploadResp = await itemDs.storeNFT(
-      images.main,
-      getValues("title"),
-      getValues("description")
-    );
-    console.log("upload to ipfs resp ", uploadResp);
-    // step 2
-    const mintedResp = await tokenContract?.createToken(uploadResp.url);
-    console.log("mint Token resp ", mintedResp);
-    // step 3
-    const listResp = await marketplaceContract?.list(
-      mintedResp.data.id, // itemId from response
-      getValues("price"),
-      getValues("royalties"),
-      tokenContract?.address
-    );
-    console.log("listing token resp ", listResp);
-    console.log("submitting here ......");
+    // const uploadResp = await itemDs.storeNFT(
+    //   images.main,
+    //   getValues("title"),
+    //   getValues("description")
+    // );
+    // console.log("upload to ipfs resp ", uploadResp);
+    // // step 2
+    // const mintedResp = await tokenContract?.createToken(uploadResp.url);
+    // console.log("mint Token resp ", mintedResp);
+    // // step 3
+    // const listResp = await marketplaceContract?.list(
+    //   mintedResp.data.id, // itemId from response
+    //   getValues("price"),
+    //   getValues("royalties"),
+    //   tokenContract?.address
+    // );
+    // console.log("listing token resp ", listResp);
+    // console.log("submitting here ......");
     setOpenDialog(true);
   };
   const handleMint = async () => {
@@ -121,7 +121,7 @@ function SingleCollectibleItem() {
 
     try {
       data.description = state.description;
-      const result = await ItemDs.createData(data, address);
+      // const result = await ItemDs.createData(data, address);
       let imageArr = [];
       for (const image of Object.entries(images)) {
         imageArr.push({
@@ -130,16 +130,17 @@ function SingleCollectibleItem() {
         });
       }
       let promise: any = [];
-      imageArr.forEach((image) => {
-        promise.push(getFileUploadURL(image.file, `item/${image.name}`));
+      imageArr.forEach((image, index) => {
+        index == 1 &&
+          promise.push(getFileUploadURL(image.file, `item/${image.name}`));
       });
-      toast.success("successful");
-      reset();
-      clearState();
-      setOpenDialog(false);
+      // toast.success("successful");
+      // reset();
+      // clearState();
+      // setOpenDialog(false);
 
       const imageURLs = await Promise.all(promise);
-      await itemDs.updateData({ id: result.data.id, images: imageURLs });
+      // await itemDs.updateData({ id: result.data.id, images: imageURLs });
     } catch (error) {
       console.log(error);
     }
