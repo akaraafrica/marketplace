@@ -25,7 +25,7 @@ model Purchase {
   createdAt     DateTime @default(now())
   transactionId String   @unique
   itemId        Int
-  userId        Int      @unique
+  userId        Int
   item          Item     @relation(fields: [itemId], references: [id])
   user          User     @relation(fields: [userId], references: [id])
 }
@@ -51,27 +51,28 @@ model CollectionType {
 }
 
 model Item {
-  id           Int          @id @default(autoincrement())
-  ownerId      Int
-  collectionId Int?
-  tokenId      String       @unique
-  title        String
-  description  String       @db.VarChar(250)
-  images       String[]
-  video        String?
-  acceptedBid  Float?
-  createdAt    DateTime     @default(now())
-  openForBid   Boolean
-  price        Float
-  published    Boolean
-  publishedAt  DateTime?
-  updatedAt    DateTime     @updatedAt
-  collection   Collection?  @relation(fields: [collectionId], references: [id])
-  owner        User         @relation(fields: [ownerId], references: [id])
-  bids         Bid[]
-  ratings      ItemRating[]
-  likes        Like[]
-  purchases    Purchase[]
+  id            Int            @id @default(autoincrement())
+  ownerId       Int
+  collectionId  Int?
+  tokenId       String         @unique
+  title         String
+  description   String         @db.VarChar(250)
+  images        String[]
+  video         String?
+  acceptedBid   Float?
+  createdAt     DateTime       @default(now())
+  openForBid    Boolean
+  price         Float
+  published     Boolean
+  publishedAt   DateTime?
+  updatedAt     DateTime       @updatedAt
+  collection    Collection?    @relation(fields: [collectionId], references: [id])
+  owner         User           @relation(fields: [ownerId], references: [id])
+  bids          Bid[]
+  ratings       ItemRating[]
+  notifications Notification[]
+  likes         Like[]
+  purchases     Purchase[]
 }
 
 model ItemRating {
@@ -83,16 +84,17 @@ model ItemRating {
 }
 
 model Notification {
-  title      String?
+  title      String
   content    String?
   createdAt  DateTime @default(now())
   id         Int      @id @default(autoincrement())
   action     String
   itemId     Int?
   itemType   String?
-  read       Boolean
+  read       Boolean  @default(false)
   receiverId Int
-  senderId   Int?
+  senderId   Int
+  item       Item?    @relation(fields: [itemId], references: [id])
   receiver   User     @relation("receiver", fields: [receiverId], references: [id])
   sender     User?    @relation("sender", fields: [senderId], references: [id])
 }
@@ -157,7 +159,7 @@ model User {
   receivedNotifications Notification[]   @relation("receiver")
   sentNotifications     Notification[]   @relation("sender")
   profile               Profile?
-  purchases             Purchase?
+  purchases             Purchase[]
   ratings               Rating[]
   userCollections       UserCollection[]
   userFollowers         UserFollower[]   @relation("userFollowers")

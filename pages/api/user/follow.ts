@@ -8,29 +8,13 @@ export default async function profile(
 ) {
   if (req.method === "POST") {
     try {
-      console.log(req.body);
-
-      const data = await prisma.bid.create({
-        data: {
-          amount: Number(req.body.amount),
-          bidderId: req.body.bidderId,
-          itemId: req.body.itemId,
-          updatedAt: new Date(),
-        },
-      });
-
       await TriggerAction({
-        action: "place-bid",
+        action: "follow",
         receivers: [req.body.ownerId],
         actor: req.body.userId,
         title: req.body.notificationTitle,
-        itemTypes: [ItemType.Item],
-        itemIds: [req.body.itemId],
       });
-      res.status(200);
-
-      res.status(200).json(data);
-      console.log(data);
+      res.status(200).end();
     } catch (error) {
       console.log(error);
       res.json({

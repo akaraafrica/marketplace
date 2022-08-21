@@ -8,7 +8,6 @@ class Profile {
   async fetch(id: number) {
     try {
       const res = await api.get(`${url}/${id}`);
-      console.log(res);
       return res.data;
     } catch (error) {
       console.log(error);

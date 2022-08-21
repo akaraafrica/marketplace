@@ -13,16 +13,6 @@ export const enum ItemType {
   User = "user",
   Bid = "bid",
 }
-export const enum Actions {
-  PlaceBid = "place-bid",
-  AcceptBid = "accept-bid",
-  Follow = "follow",
-  Purchase = "purchase",
-  CreateItem = "create-item",
-  CreateCollection = "create-collection",
-  Announcement = "announcement",
-  UrgentAnnouncement = "urgent-announcement",
-}
 
 export const enum MailTemplateIDs {
   SignUp = "d-1fbec631dc1248fc9b79e51299b0917f",
@@ -40,11 +30,32 @@ export const TemplateProps = {
   CollectionInvite: {},
 };
 
+export const enum Actions {
+  PlaceBid = "place-bid",
+  AcceptBid = "accept-bid",
+  Follow = "follow",
+  Purchase = "purchase",
+  CreateItem = "create-item",
+  CreateCollection = "create-collection",
+  Announcement = "announcement",
+  UrgentAnnouncement = "urgent-announcement",
+  Like = "like",
+}
 export interface ActionProps {
-  action: string;
+  action:
+    | "place-bid"
+    | "accept-bid"
+    | "like"
+    | "follow"
+    | "purchase"
+    | "create-item"
+    | "create-collection"
+    | "announcement"
+    | "urgent-announcement";
   receivers: number[];
-  actor?: number;
+  actor: number;
   content?: string;
+  title: string;
   itemTypes?: ItemType[];
   itemIds?: number[];
 }
@@ -62,46 +73,40 @@ async function getItem(type: ItemType, id: number) {
 
 async function inApp(
   props: ActionProps,
-  actor: IUser,
-  receiver: IUser[],
-  items: any[]
+  receiverId: number
+  // actor: IUser,
+  // receiver: IUser[],
+  // items: any[]
 ) {
   let data = [];
-  switch (props.action) {
-    case Actions.PlaceBid:
-      data.push({
-        receiverId: receiver[0].id,
-        senderId: actor.id,
-        action: props.action,
-        read: false,
-        content: props.content,
-        itemType: props.itemTypes ? props.itemTypes[0] : "",
-        itemId: items[0].id,
-      });
-      break;
 
-    case Actions.AcceptBid:
-      break;
-    case Actions.Follow:
-      break;
-    case Actions.Purchase:
-      break;
-
-    default:
-      break;
-  }
-
-  await prisma.notification.createMany({
-    data: [...data],
-    skipDuplicates: true,
+  data.push({
+    receiverId: receiverId,
+    senderId: props.actor,
+    action: props.action,
+    read: false,
+    content: props.content,
+    title: props.title,
+    itemType: props?.itemTypes ? props.itemTypes[0] : "",
+    itemId: props?.itemIds ? props.itemIds[0] : null,
   });
+  console.log({ data });
+  console.log(data.length > 0);
+
+  if (data.length > 0) {
+    await prisma.notification.createMany({
+      data: [...data],
+      skipDuplicates: true,
+    });
+    console.log("notification created");
+  }
 }
 
 async function email(
-  props: ActionProps,
-  actor: IUser,
-  receiver: IUser[],
-  items: any[]
+  props: ActionProps
+  // actor: IUser,
+  // receiver: IUser[],
+  // items: any[]
 ) {
   let data: any; // object for single person, Array for multiple
   let isMultiple = false;
@@ -129,35 +134,10 @@ async function email(
 }
 
 export async function TriggerAction(props: ActionProps) {
-  if (
-    !props.itemTypes ||
-    !props.itemIds ||
-    props.itemTypes.length == 0 ||
-    props.itemIds?.length == 0
-  )
-    throw Error("invalid action");
-
-  const items = props.itemTypes?.map(
-    async (type, i) => await getItem(type, props.itemIds ? props.itemIds[i] : 0)
-  );
-
-  const [actor, ...receivers]: IUser[] = await prisma.user.findMany({
-    where: {
-      id: { in: [props.actor || 0, ...props.receivers] },
-    },
-    select: {
-      id: true,
-      email: true,
-      walletAddress: true,
-      profile: {
-        select: {
-          name: true,
-          avatar: true,
-        },
-      },
-    },
+  props.receivers.forEach(async (receiver) => {
+    await inApp(props, receiver);
   });
-
-  await inApp(props, actor, receivers, items);
-  await email(props, actor, receivers, items);
+  // await email(props);
+  // await inApp(props, actor, receivers, items);
+  // await email(props, actor, receivers, items);
 }

@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { ItemType, TriggerAction } from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -57,6 +58,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         },
       });
+      await TriggerAction({
+        action: "create-collection",
+        receivers: [req.body.authorId],
+        actor: req.body.authorId,
+        title: req.body.notificationTitle,
+        itemTypes: [ItemType.Item],
+        itemIds: [response.id],
+      });
+
       res.status(201).json({ id: response.id, message: "Collection created" });
     } catch (error) {
       console.log(error);

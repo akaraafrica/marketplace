@@ -30,9 +30,17 @@ export default function PlaceBid({ item }: { item: IItem }) {
   };
 
   const handlePlaceBid = async () => {
+    if (!user) {
+      return;
+    }
     const data = {
       bidderId: user?.id,
       itemId: item.id,
+      userId: user!.id,
+      ownerId: item?.ownerId,
+      notificationTitle: `${
+        user.profile?.name || user.walletAddress.slice(0, 6)
+      } place ${amount} ETH bid on ${item?.title}`,
       amount,
     };
     try {
@@ -48,12 +56,18 @@ export default function PlaceBid({ item }: { item: IItem }) {
     }
   };
   const handlePurchaseNow = async () => {
+    if (!user) {
+      return;
+    }
     try {
       const data = {
         itemId: item.id,
         amount: item.price,
-        transactionId: randStr(20),
         userId: user?.id,
+        ownerId: item?.ownerId,
+        notificationTitle: `${
+          user.profile?.name || user.walletAddress.slice(0, 6)
+        } purchase ${item?.title} for ${item.price} ETH `,
       };
       await BidDs.postData("purchase", data);
       setOpenSuccessDialog(true);

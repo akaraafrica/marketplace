@@ -19,17 +19,25 @@ export default function AcceptBid({
   setTag?: Dispatch<SetStateAction<number>>;
 }) {
   const highestBid = item.bids[0];
-  const { user, isAuthenticated, signOut } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const router = useRouter();
   const handleAcceptBid = async () => {
+    if (!user) {
+      return;
+    }
+
     const data = {
       userId: user?.id,
       itemId: item.id,
       amount: item.price,
       transactionId: randStr(20),
+      ownerId: item?.ownerId,
+      notificationTitle: `congratulation ${
+        user.profile?.name || user.walletAddress.slice(0, 6)
+      } your bid on ${item?.title} for ${item.price} ETH is accepted`,
     };
     try {
-      const res = BidDs.postData("acceptBid", data);
+      await BidDs.postData("acceptBid", data);
       toast.success("Bid Accepted Successfully");
       handleClose();
       setTimeout(() => {

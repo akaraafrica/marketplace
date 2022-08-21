@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -17,6 +17,8 @@ import MintTokenDialog from "./MintTokenDialog";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import { ItemDs } from "../../ds";
 import itemDs from "../../ds/item.ds";
+import { AuthContext } from "../../contexts/AuthContext";
+import { randStr } from "../../utils/helpers/randomStr";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -40,6 +42,8 @@ function SingleCollectibleItem() {
     CHAIN_TO_NFT_ADDRESS[chainId as SupportedChainId],
     token
   );
+  const { user } = useContext(AuthContext);
+
   const marketplaceContract = useContract(
     CHAIN_TO_MARKETPLACE_ADDRESS[chainId as SupportedChainId],
     token
@@ -76,7 +80,6 @@ function SingleCollectibleItem() {
     setError,
     formState: { errors },
   } = useForm<form>();
-  // console.log(getValues());
   const clearState = () => {
     setImages({
       main: null,
@@ -116,12 +119,13 @@ function SingleCollectibleItem() {
     setOpenDialog(true);
   };
   const handleMint = async () => {
+    if (!user) return;
     const data = getValues();
     const address: string = localStorage.getItem("address")!;
 
     try {
       data.description = state.description;
-      const result = await ItemDs.createData(data, address);
+      const result = await ItemDs.createData(data, user, address);
       let imageArr = [];
       for (const image of Object.entries(images)) {
         imageArr.push({

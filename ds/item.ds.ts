@@ -1,5 +1,6 @@
 import { NFTStorage, File } from "nft.storage";
 import { api } from "../services/apiClient";
+import { IUser } from "../types/user.interface";
 import { randStr } from "../utils/helpers/randomStr";
 
 const url = `/api/items`;
@@ -27,15 +28,17 @@ class Item {
     console.log("created nft data ==> ", resp);
     return resp;
   }
-  async createData(data: any, walletAddress: string) {
+  async createData(data: any, user: IUser, walletAddress: string) {
     const token = randStr(10);
 
     try {
-      const user = await api.get(`api/me`);
       const res = await api.post(url, {
         ...data,
-        ownerId: user.data.id,
+        ownerId: user.id,
         tokenId: token,
+        notificationTitle: `congratulation ${
+          user.profile?.name || user.walletAddress.slice(0, 6)
+        }  ${data?.title} has been minted`,
       });
       return res;
     } catch (error) {

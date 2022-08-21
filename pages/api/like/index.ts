@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { ItemType, TriggerAction } from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 export default async function profile(
@@ -20,6 +21,18 @@ export default async function profile(
             id: item.id,
           },
         });
+        const notification = await prisma.notification.findFirst({
+          where: {
+            action: "like",
+            senderId: req.body.userId,
+            itemId: req.body.itemId,
+          },
+        });
+        await prisma.notification.delete({
+          where: {
+            id: notification?.id,
+          },
+        });
         res.status(200).json(data);
       } else {
         const data = await prisma.like.create({
@@ -28,6 +41,15 @@ export default async function profile(
             collectionId: req.body.collectionId,
             userId: req.body.userId,
           },
+        });
+
+        await TriggerAction({
+          action: "like",
+          receivers: [req.body.ownerId],
+          actor: req.body.userId,
+          title: req.body.notificationTitle,
+          itemTypes: [ItemType.Item],
+          itemIds: [req.body.itemId],
         });
         res.status(200).json(data);
       }

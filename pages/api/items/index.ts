@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { ItemType, TriggerAction } from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -32,6 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   if (req.method === "POST") {
     try {
+      console.log(req.body);
       const response = await prisma.item.create({
         data: {
           title: req.body.title,
@@ -42,10 +44,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           published: req.body.published,
           acceptedBid: req.body.acceptedBid,
           openForBid: req.body.published,
-          images: req.body.image,
+          images: [],
           video: req.body.video,
           updatedAt: new Date(),
         },
+      });
+
+      await TriggerAction({
+        action: "create-item",
+        receivers: [req.body.ownerId],
+        actor: req.body.ownerId,
+        title: req.body.notificationTitle,
+        itemTypes: [ItemType.Item],
+        itemIds: [response.id],
       });
       res.status(201).json({ id: response.id, message: "Item created" });
     } catch (error) {

@@ -11,13 +11,11 @@ import {
   TelegramIcon,
   TwitterIcon,
   WhatsappIcon,
-  LinkedinIcon,
   FacebookShareButton,
   RedditShareButton,
   TelegramShareButton,
   TwitterShareButton,
   WhatsappShareButton,
-  LinkedinShareButton,
 } from "react-share";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -52,17 +50,24 @@ export default function QuickButtons({
     }
   }, [like]);
   const handleLike = async () => {
+    const props = {};
+
     if (loading) return;
     if (!user) {
       toast.error("please login first");
       return;
     }
+
     setIsLiked(!isLiked);
 
     let data = {
       itemId: item?.id,
       userId: user!.id,
       collectionId: collection?.id,
+      ownerId: item?.ownerId,
+      notificationTitle: `${
+        user.profile?.name || user.walletAddress.slice(0, 6)
+      } likes ${item?.title}`,
     };
 
     try {

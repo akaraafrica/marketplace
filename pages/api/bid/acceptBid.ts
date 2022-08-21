@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { ItemType, TriggerAction } from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 export default async function profile(
@@ -33,6 +34,14 @@ export default async function profile(
       });
 
       await prisma.$transaction([deleteBids, updateItemOwner, createPurchase]);
+      await TriggerAction({
+        action: "accept-bid",
+        receivers: [req.body.ownerId],
+        actor: req.body.userId,
+        title: req.body.notificationTitle,
+        itemTypes: [ItemType.Item],
+        itemIds: [req.body.itemId],
+      });
       res.status(200).json("successful");
     } catch (error) {
       console.log(error);
