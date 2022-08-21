@@ -4,6 +4,7 @@ import NextImage from "../../components/Image";
 import Link from "../Link";
 import styles from "./index.module.scss";
 import { maskWallet } from "../../utils/helpers/maskWallet";
+import DefaultAvatar from "../../components/DefaultAvatar";
 
 interface properties {
   balance: string;
@@ -13,10 +14,7 @@ const Index = ({ balance }: properties) => {
 
   return (
     <div className={styles.root}>
-      <span className={styles.name}>
-        {" "}
-        {user?.profile?.name || maskWallet(user?.walletAddress || "")}
-      </span>
+      <span className={styles.name}> {user?.profile?.name}</span>
       <div className={styles.wallet}>
         <span>{maskWallet(user?.walletAddress || "")}</span>
         <NextImage width="30px" height="30px" src="/assets/copyicon.svg" />
@@ -33,13 +31,15 @@ const Index = ({ balance }: properties) => {
         </div>
       </div>
       <div className={styles.list}>
-        <NextImage
-          width="20px"
-          height="20px"
-          alt="user icon"
-          src="/assets/usericon.svg"
+        <DefaultAvatar
+          url={user?.profile?.avatar}
+          width="40px"
+          height="40px"
+          walletAddress={user?.walletAddress || ""}
+          fontSize="0.7em"
+          length={2}
         />
-        <Link href={`/profile/${user?.id}`}>
+        <Link href={`/dashboard/${user?.id}`}>
           <span>My Profile</span>
         </Link>
       </div>
@@ -51,7 +51,7 @@ const Index = ({ balance }: properties) => {
           alt="user icon"
           src="/assets/collectionicon.svg"
         />
-        <Link href={`/profile`}>
+        <Link href={`/collections`}>
           <span>My Collections</span>
         </Link>
       </div>
