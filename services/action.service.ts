@@ -91,10 +91,10 @@ async function inApp(
       break;
   }
 
-  await prisma.notification.createMany({
-    data: [...data],
-    skipDuplicates: true,
-  });
+  // await prisma.notification.createMany({
+  //   data: [...data],
+  //   skipDuplicates: true,
+  // });
 }
 
 async function email(

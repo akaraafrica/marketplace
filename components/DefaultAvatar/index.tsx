@@ -9,6 +9,7 @@ interface AvatarProps {
   height: string;
   walletAddress: string;
   fontSize: string;
+  length?: number;
 }
 const Index: React.FC<AvatarProps> = ({
   url,
@@ -16,6 +17,7 @@ const Index: React.FC<AvatarProps> = ({
   width,
   height,
   fontSize,
+  length,
 }) => {
   const circleInstance = useRef();
   const colors = [
@@ -32,10 +34,10 @@ const Index: React.FC<AvatarProps> = ({
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
   if (url === undefined || url === null || url === "") {
-    const lastThree = walletAddress.length - 3;
-
-    const walletFirstThree = walletAddress.slice(0, 3);
-
+    console.log("length in avatar ", length);
+    const len = length && length > 0 ? length : 3;
+    const lastThree = walletAddress.length - len;
+    const walletFirstThree = walletAddress.slice(0, len);
     const walletLastThree = walletAddress.slice(lastThree);
 
     return (
