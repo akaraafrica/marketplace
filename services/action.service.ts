@@ -69,6 +69,18 @@ export interface ActionProps {
   title?: string;
   content?: string;
 }
+
+async function getItem(type: ItemType, id: number) {
+  let item;
+  if (type === ItemType.Item) {
+    item = await prisma.item.findFirstOrThrow({ where: { id } });
+  }
+  if (type === ItemType.Collection)
+    return await prisma.collection.findFirstOrThrow({ where: { id } });
+  if (type === ItemType.Bid)
+    return await prisma.bid.findFirstOrThrow({ where: { id } });
+}
+
 export async function TriggerAction(props: ActionProps) {
   const { action, user, item, collection, bidAmount, profile, title, content } =
     props;

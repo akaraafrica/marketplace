@@ -20,6 +20,7 @@ import { MdNotificationsNone } from "react-icons/md";
 import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
 import Link from "../Link";
+import DefaultAvatar from "../../components/DefaultAvatar";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
@@ -89,7 +90,10 @@ function Header() {
           <Link href={`/marketplace`}>
             <span>Marketplace</span>
           </Link>
-          <span>How it works</span>
+          <Link href={`/collections`}>
+            <span>Collections</span>
+          </Link>
+          {/* <span>How it works</span> */}
           <Link href={`/notifications`}>
             <span>Notifications</span>
           </Link>
@@ -117,7 +121,27 @@ function Header() {
                 <span>Marketplace</span>
               </Link>
             </li>
-            <li>How it works</li>
+            <li>
+              <Link href={`/collections`}>
+                <span>Collections</span>
+              </Link>
+            </li>
+            <li>
+              <Link href={`#subscribe`}>
+                <span>Subscribe</span>
+              </Link>
+            </li>
+            {/* <li>
+              <Link href={`#howitworks`}>
+                <span>More</span>
+              </Link>
+            </li> */}
+            <li>
+              <a href="http://akara.com.co" target="_blank" rel="noreferrer">
+                <span>Community</span>
+              </a>
+            </li>
+            {/* <li>How it works</li> */}
           </ul>
         </div>
         <div className={styles.right}>
@@ -128,9 +152,9 @@ function Header() {
           <div
             className={styles.notification}
             onClick={() => {
-              // user
-              // ? router.push("/login")
-              setNotificationOpen(!notificationOpen);
+              user
+                ? router.push("/login")
+                : setNotificationOpen(!notificationOpen);
               setProfileOpen(false);
             }}
           >
@@ -157,7 +181,14 @@ function Header() {
                 setNotificationOpen(false);
               }}
             >
-              <img alt="avatar" src={`/assets/Avator.svg`} />
+              <DefaultAvatar
+                url={user?.profile?.avatar}
+                width="30px"
+                height="30px"
+                walletAddress={user?.walletAddress || ""}
+                fontSize="0.7em"
+                length={1}
+              />
               <div className={styles.amt}>
                 {balance} <span>ETH</span>
               </div>

@@ -42,7 +42,10 @@ const Home = (props: any) => {
       <HotCollectionsSection collections={props.collection} />
       <Discover items={props.discovery} />
       <div className={styles.discoverdividercon}></div>
-      <SubscribeModal />
+      <div id="subscribe">
+        <SubscribeModal />
+      </div>
+      <div className={styles.discoverdividercon}></div>
       <HowItWorks />
     </Layout>
   );

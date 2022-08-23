@@ -93,7 +93,7 @@ model Notification {
   itemType   String?
   read       Boolean  @default(false)
   receiverId Int
-  senderId   Int
+  senderId   Int?
   item       Item?    @relation(fields: [itemId], references: [id])
   receiver   User     @relation("receiver", fields: [receiverId], references: [id])
   sender     User?    @relation("sender", fields: [senderId], references: [id])
