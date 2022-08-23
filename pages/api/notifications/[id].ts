@@ -50,11 +50,7 @@ const handler = async (
         error: new Error("Notification does not exist"),
       });
     }
-    // if (item.userId.toString() !== auth) {
-    //   return res.status(401).json({
-    //     error: new Error("Requête non autorisée !"),
-    //   });
-    // }
+
     await prisma.notification.delete({
       where: {
         id: id,
