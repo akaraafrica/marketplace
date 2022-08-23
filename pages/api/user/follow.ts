@@ -1,18 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { ItemType, TriggerAction } from "../../../services/action.service";
-import prisma from "../../../utils/lib/prisma";
+import { Actions, TriggerAction } from "../../../services/action.service";
 
 export default async function profile(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    const { profile, user } = req.body;
+    console.log({ profile }, { user });
+
     try {
       await TriggerAction({
-        action: "follow",
-        receivers: [req.body.ownerId],
-        actor: req.body.userId,
-        title: req.body.notificationTitle,
+        action: Actions.Follow,
+        user,
+        profile,
       });
       res.status(200).end();
     } catch (error) {

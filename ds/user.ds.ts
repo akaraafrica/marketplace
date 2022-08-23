@@ -34,13 +34,7 @@ class User {
   async update() {}
   async follow(profile: IProfile, user: IUser) {
     try {
-      const response = await api.post(`${url}/follow`, {
-        ownerId: profile.id,
-        userId: user.id,
-        notificationTitle: ` ${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        }  follows you`,
-      });
+      const response = await api.post(`${url}/follow`, { profile, user });
       return response.data;
     } catch (error) {}
   }

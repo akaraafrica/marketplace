@@ -33,18 +33,9 @@ export default function PlaceBid({ item }: { item: IItem }) {
     if (!user) {
       return;
     }
-    const data = {
-      bidderId: user?.id,
-      itemId: item.id,
-      userId: user!.id,
-      ownerId: item?.ownerId,
-      notificationTitle: `${
-        user.profile?.name || user.walletAddress.slice(0, 6)
-      } place ${amount} ETH bid on ${item?.title}`,
-      amount,
-    };
+
     try {
-      await BidDs.postData("placeBid", data);
+      await BidDs.postData("placeBid", item, user, amount);
       toast.success("Bid Placed Successfully");
       handleBidClose();
       setAmount(0);
@@ -60,16 +51,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
       return;
     }
     try {
-      const data = {
-        itemId: item.id,
-        amount: item.price,
-        userId: user?.id,
-        ownerId: item?.ownerId,
-        notificationTitle: `${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        } purchase ${item?.title} for ${item.price} ETH `,
-      };
-      await BidDs.postData("purchase", data);
+      await BidDs.postData("purchase", item, user);
       setOpenSuccessDialog(true);
       handlePurchaseClose();
       router.reload();

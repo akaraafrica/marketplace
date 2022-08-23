@@ -29,17 +29,8 @@ class Item {
     return resp;
   }
   async createData(data: any, user: IUser, walletAddress: string) {
-    const token = randStr(10);
-
     try {
-      const res = await api.post(url, {
-        ...data,
-        ownerId: user.id,
-        tokenId: token,
-        notificationTitle: `congratulation ${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        }  ${data?.title} has been minted`,
-      });
+      const res = await api.post(url, { item: data, user });
       return res;
     } catch (error) {
       console.log(error);

@@ -72,7 +72,7 @@ export default function QuickButtons({
 
     try {
       setLoading(true);
-      await LikeDs.postData(data);
+      if (item) await LikeDs.postData(item, user);
       setLoading(false);
 
       console.log("success!");

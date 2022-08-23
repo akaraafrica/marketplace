@@ -4,7 +4,6 @@ import { Dispatch, SetStateAction, useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { IItem } from "../../types/item.interface";
-import { randStr } from "../../utils/helpers/randomStr";
 import styles from "./AcceptBid.module.scss";
 import AcceptBidDialog from "./AcceptBidDialog";
 import { BidDs } from "../../ds";
@@ -18,26 +17,15 @@ export default function AcceptBid({
   item: IItem;
   setTag?: Dispatch<SetStateAction<number>>;
 }) {
-  const highestBid = item.bids[0];
+  const highestBid = item?.bids[0]?.amount;
   const { user } = useContext(AuthContext);
   const router = useRouter();
   const handleAcceptBid = async () => {
     if (!user) {
       return;
     }
-
-    const data = {
-      userId: user?.id,
-      itemId: item.id,
-      amount: item.price,
-      transactionId: randStr(20),
-      ownerId: item?.ownerId,
-      notificationTitle: `congratulation ${
-        user.profile?.name || user.walletAddress.slice(0, 6)
-      } your bid on ${item?.title} for ${item.price} ETH is accepted`,
-    };
     try {
-      await BidDs.postData("acceptBid", data);
+      await BidDs.postData("acceptBid", item, user, highestBid);
       toast.success("Bid Accepted Successfully");
       handleClose();
       setTimeout(() => {
@@ -101,7 +89,7 @@ export default function AcceptBid({
                 <span> Kohaku Tora</span>
               </h5>
               <h3>
-                <span>{highestBid?.amount} ETH</span>
+                <span>{highestBid} ETH</span>
               </h3>
             </div>
           </section>

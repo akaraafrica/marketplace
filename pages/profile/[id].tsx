@@ -20,11 +20,10 @@ const ProfilePage = (props: any) => {
   const [open, setOpen] = React.useState(0);
   const { profile, walletAddress, createdAt, items, following, collections } =
     props.profile;
-  console.log(props.profile);
   const user = useContext(AuthContext);
-  // console.log(props);
   const handleFollow = () => {
     if (!user.user) return;
+
     UserDs.follow(props.profile, user.user);
   };
   return (

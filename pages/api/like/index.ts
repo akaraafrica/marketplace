@@ -1,5 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { ItemType, TriggerAction } from "../../../services/action.service";
+import {
+  Actions,
+  ItemType,
+  TriggerAction,
+} from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 export default async function profile(
@@ -7,25 +11,27 @@ export default async function profile(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    const { user, item } = req.body;
+
     try {
-      const item = await prisma.like.findFirst({
+      const itemData = await prisma.like.findFirst({
         where: {
-          userId: req.body.userId,
-          itemId: req.body.itemId,
+          userId: user.id,
+          itemId: item.id,
         },
       });
-      console.log(item);
-      if (item) {
+      console.log({ itemData });
+      if (itemData) {
         const data = await prisma.like.delete({
           where: {
-            id: item.id,
+            id: itemData.id,
           },
         });
         const notification = await prisma.notification.findFirst({
           where: {
             action: "like",
-            senderId: req.body.userId,
-            itemId: req.body.itemId,
+            senderId: user.id,
+            itemId: item.id,
           },
         });
         await prisma.notification.delete({
@@ -37,19 +43,16 @@ export default async function profile(
       } else {
         const data = await prisma.like.create({
           data: {
-            itemId: req.body.itemId,
-            collectionId: req.body.collectionId,
-            userId: req.body.userId,
+            itemId: item.id,
+            collectionId: item.collection?.id,
+            userId: user.id,
           },
         });
 
         await TriggerAction({
-          action: "like",
-          receivers: [req.body.ownerId],
-          actor: req.body.userId,
-          title: req.body.notificationTitle,
-          itemTypes: [ItemType.Item],
-          itemIds: [req.body.itemId],
+          action: Actions.Like,
+          user,
+          item,
         });
         res.status(200).json(data);
       }

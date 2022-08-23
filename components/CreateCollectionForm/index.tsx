@@ -60,7 +60,7 @@ const Index = ({
     if (userIndex[0]?.items.length > 0) {
       setItems([...userIndex[0].items]);
     }
-  }, [userIndex]);
+  }, []);
 
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
@@ -112,9 +112,6 @@ const Index = ({
     }
     setOpenDialog(true);
   };
-  console.log(video);
-  console.log("items", items);
-  console.log("selectedItems", selectedItems);
   const handleMint = async () => {
     console.log("items", items);
     const data = getValues();
@@ -123,9 +120,8 @@ const Index = ({
     try {
       data.description = desc;
       data.type = type;
-      data.users = selectedUser;
+      data.owners = selectedUser;
       data.items = selectedItems;
-      console.log(type);
       const result = await CollectionDs.createData(data, user!, address);
       console.log(result);
       let imageArr = [];

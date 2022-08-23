@@ -14,11 +14,10 @@ import {
 import token from "../../artifacts/nft.json";
 import styles from "./index.module.scss";
 import MintTokenDialog from "./MintTokenDialog";
-import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import { ItemDs } from "../../ds";
-import itemDs from "../../ds/item.ds";
 import { AuthContext } from "../../contexts/AuthContext";
-import { randStr } from "../../utils/helpers/randomStr";
+import { getFileUploadURL } from "../../utils/upload/fileUpload";
+import itemDs from "../../ds/item.ds";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -126,6 +125,7 @@ function SingleCollectibleItem() {
     try {
       data.description = state.description;
       const result = await ItemDs.createData(data, user, address);
+
       let imageArr = [];
       for (const image of Object.entries(images)) {
         imageArr.push({

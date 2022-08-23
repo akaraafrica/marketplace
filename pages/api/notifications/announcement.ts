@@ -1,5 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { ItemType, TriggerAction } from "../../../services/action.service";
+import {
+  Actions,
+  ItemType,
+  TriggerAction,
+} from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 export default async function profile(
@@ -7,16 +11,12 @@ export default async function profile(
   res: NextApiResponse
 ) {
   try {
-    let users = await prisma.user.findMany({
-      select: { id: true },
-    });
-    const receivers = users.map((user) => user.id);
-    await TriggerAction({
-      action: "announcement",
-      receivers: receivers,
-      actor: 5,
+    const user = "" as any;
+    TriggerAction({
+      action: Actions.Announcement,
       content: "announcement content",
       title: "announcement",
+      user,
     });
     res.status(200).end();
   } catch (error) {
