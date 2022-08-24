@@ -1,4 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { Actions, TriggerAction } from "../../../services/action.service";
+import { randStr } from "../../../utils/helpers/randomStr";
 import prisma from "../../../utils/lib/prisma";
 
 export default async function profile(
@@ -6,33 +8,40 @@ export default async function profile(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    const { user, item, amount } = req.body;
     try {
       const createPurchase = prisma.purchase.create({
         data: {
-          amount: Number(req.body.amount),
-          userId: req.body.userId,
-          transactionId: req.body.transactionId,
-          itemId: req.body.itemId,
+          amount: amount,
+          userId: user.id,
+          transactionId: randStr(10),
+          itemId: item.id,
         },
       });
       const updateItemOwner = prisma.item.update({
         where: {
-          id: req.body.itemId,
+          id: item.id,
         },
 
         data: {
-          ownerId: req.body.userId,
+          ownerId: user.id,
           acceptedBid: 1,
           updatedAt: new Date(),
         },
       });
       const deleteBids = prisma.bid.deleteMany({
         where: {
-          itemId: req.body.itemId,
+          itemId: item.id,
         },
       });
 
       await prisma.$transaction([deleteBids, updateItemOwner, createPurchase]);
+      await TriggerAction({
+        action: Actions.AcceptBid,
+        user,
+        item,
+        bidAmount: amount,
+      });
       res.status(200).json("successful");
     } catch (error) {
       console.log(error);

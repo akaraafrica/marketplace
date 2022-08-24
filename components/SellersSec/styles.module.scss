@@ -1,31 +1,99 @@
+.root {
+  background-color: #23262f;
+  padding: 150px 15%;
+}
+
 .popularCon {
   display: flex;
   flex-direction: column;
+  // padding: 100px 15%;
+  // width: 70%;
 }
+
 .popularText {
   font-size: 1.4vw;
   color: #777e90;
   font-weight: 600;
 }
+
 .sellersText {
   font-size: 2.4vw;
   color: #fcfcfd;
   font-weight: 600;
 }
+
 .popularHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
+
 @media only screen and (max-width: 600px) {
   .popularHeader {
     flex-wrap: wrap;
   }
+
   .popularText {
     font-size: 3vw;
   }
+
   .sellersText {
     font-size: 5vw;
+  }
+}
+
+.swiperWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  button {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    gap: 10px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #e6e8ec;
+    border-radius: 40px;
+    background-color: transparent;
+    top: 45%;
+  }
+
+  .left {
+    left: -50px;
+    // margin-left: -70px;
+  }
+
+  .right {
+    right: -50px;
+  }
+}
+
+.swiper_container {
+  width: 100%;
+  // display: flex;
+  // justify-content: space-between;
+}
+
+@media screen and (min-width: 640px) {
+  .swiper_container {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .swiper_container {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1260px) {
+  .swiper_container {
+    width: 100%;
   }
 }

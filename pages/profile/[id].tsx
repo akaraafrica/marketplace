@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./index.module.scss";
 import Layout from "../../components/Layout";
 import NextImage from "next/image";
@@ -13,12 +13,19 @@ import { GetServerSideProps } from "next";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import ProfileItem from "../../components/ProfileItem";
 import DefaultAvatar from "../../components/DefaultAvatar";
+import { UserDs } from "../../ds";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const ProfilePage = (props: any) => {
   const [open, setOpen] = React.useState(0);
   const { profile, walletAddress, createdAt, items, following, collections } =
     props.profile;
-  console.log(props.profile);
+  const user = useContext(AuthContext);
+  const handleFollow = () => {
+    if (!user.user) return;
+
+    UserDs.follow(props.profile, user.user);
+  };
   return (
     <Layout>
       <div className={styles.root}>
@@ -69,7 +76,9 @@ const ProfilePage = (props: any) => {
               </span>
             </div>
             <div className={styles.leftCenter}>
-              <button className={styles.btn}>Follow</button>
+              <button className={styles.btn} onClick={handleFollow}>
+                Follow
+              </button>
               <span className={styles.icon}>
                 <IoShareOutline />
               </span>

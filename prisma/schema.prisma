@@ -78,12 +78,12 @@ model Item {
   updatedAt    DateTime       @updatedAt
   collection   Collection?    @relation(fields: [collectionId], references: [id])
   owner        User           @relation(fields: [ownerId], references: [id])
-  auction      Auction?
   bids         Bid[]
   ratings      ItemRating[]
   likes        Like[]
   Notification Notification[]
   purchases    Purchase[]
+  auction      Auction?
 }
 
 model ItemRating {

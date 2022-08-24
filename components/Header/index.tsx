@@ -34,7 +34,6 @@ function Header() {
     CHAIN_TO_WETH_ADDRESS[chainId as SupportedChainId],
     WETH_ABI
   );
-
   async function getBalance() {
     const balance = await wethContract?.balanceOf(account);
     const formattedBalance = web3.utils.fromWei(balance?.toString() || "0");
@@ -52,6 +51,14 @@ function Header() {
       activate(injected);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, active]);
+
+  useEffect(() => {
+    (async () => {
+      if (user?.id) {
+        // const { data } = await NotificationDs.fetch(user?.id);
+      }
+    })();
+  });
 
   function handleUpload() {
     user
@@ -142,25 +149,23 @@ function Header() {
             <input type="text" placeholder="Search" />
             <img alt="search icon" src={`/assets/searchIcon.svg`} />
           </div>
-          {user && (
-            <div
-              className={styles.notification}
-              onClick={() => {
-                user
-                  ? router.push("/login")
-                  : setNotificationOpen(!notificationOpen);
-                setProfileOpen(false);
-              }}
-            >
-              <div className={styles.active}></div>
-              <MdNotificationsNone size={40} />
-              {notificationOpen && (
-                <div className={styles.dialog}>
-                  <NewNotificationModal />
-                </div>
-              )}
-            </div>
-          )}
+          <div
+            className={styles.notification}
+            onClick={() => {
+              user
+                ? router.push("/login")
+                : setNotificationOpen(!notificationOpen);
+              setProfileOpen(false);
+            }}
+          >
+            <div className={styles.active}></div>
+            <MdNotificationsNone size={40} />
+            {notificationOpen && (
+              <div className={styles.dialog}>
+                <NewNotificationModal />
+              </div>
+            )}
+          </div>
           <button
             type="button"
             className={user ? styles.btnLight : styles.btn}

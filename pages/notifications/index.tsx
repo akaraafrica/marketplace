@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import styles from "./index.module.scss";
 import Footer from "../../components/Footer/index";
@@ -10,11 +10,13 @@ import { toast } from "react-toastify";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import { UserDs, NotificationDs } from "../../ds";
 import { IUser } from "../../types/user.interface";
+import { AuthContext } from "../../contexts/AuthContext";
 
 interface ListItemProps {
   title: string;
   subTitle: string;
   date: string;
+  img: string;
   onClick: (e: any) => void;
 }
 const ListItem: React.FC<ListItemProps> = ({
@@ -22,10 +24,15 @@ const ListItem: React.FC<ListItemProps> = ({
   subTitle,
   date,
   onClick,
+  img,
 }) => (
   <div className={styles.listItem} onClick={onClick}>
     <div className={styles.left}>
-      <img className={styles.avatar} src="/assets/avatar.png" alt="" />
+      <img
+        className={styles.avatar}
+        src={img ? img : "/assets/avatar.png"}
+        alt=""
+      />
       <div className={styles.desc}>
         <div className={styles.title}>{title}</div>
         <p className={styles.sub}>{subTitle}</p>
@@ -39,34 +46,23 @@ const ListItem: React.FC<ListItemProps> = ({
 const Index = () => {
   const router = useRouter();
   const [notifications, setNotifications] = useState([]);
-  const [user, setUser] = useState<IUser>();
-  const { account, active, activate } = useWeb3React();
+  const { user, isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
-    const getUser = async (address: string) => {
-      const user = await UserDs.fetch(address);
-      if (!user) {
-        console.log("user not found");
-        return;
-      }
-      console.log("user here is ", user);
-      setUser(user);
-      const data = await NotificationDs.fetch(
-        user?.accessToken,
-        user?.walletAddress
-      );
-      setNotifications(data);
-    };
-    if (account) getUser(account);
-  }, [account]);
+    if (user?.id)
+      NotificationDs.fetch(user!.id).then((res) => {
+        console.log(res.data);
+        setNotifications(res.data);
+      });
+  }, [user]);
 
-  const updateData = async (id: string) => {
-    await NotificationDs.update(
-      id,
-      user?.walletAddress || "",
-      user?.accessToken || ""
-    );
-  };
+  // const updateData = async (id: string) => {
+  //   await NotificationDs.update(
+  //     id,
+  //     user?.walletAddress || "",
+  //     user?.accessToken || ""
+  //   );
+  // };
 
   const updateAllData = async () => {
     const data = await NotificationDs.updateAll(
@@ -78,7 +74,7 @@ const Index = () => {
     }
   };
 
-  console.log(notifications);
+  console.log({ notifications });
   return (
     <div className={styles.root}>
       <Header />
@@ -112,9 +108,10 @@ const Index = () => {
                 key={item.id}
                 title={item.title}
                 subTitle={item.content}
-                date={getNiceDate(item.created)}
+                img={item?.item?.images[0]}
+                date={getNiceDate(item.createdAt)}
                 onClick={() => {
-                  updateData(item.id);
+                  // updateData(item.id);
                   return router.push(`/notifications/${item.id}`);
                 }}
               />

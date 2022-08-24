@@ -164,7 +164,6 @@ const Index = ({ items }: properties) => {
 };
 export async function getServerSideProps() {
   let data = await Discovery.getData(Filter.All);
-  console.log("items here are ", data);
   return {
     props: {
       items: data,
