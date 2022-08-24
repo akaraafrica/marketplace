@@ -50,6 +50,16 @@ model CollectionType {
   collection      Collection[]
 }
 
+model Auction {
+  id        Int     @id @default(autoincrement())
+  open      Boolean @default(false)
+  startTime String
+  endTime   String
+  openPrice Float
+  itemId    Int     @unique
+  item      Item    @relation(fields: [itemId], references: [id])
+}
+
 model Item {
   id           Int            @id @default(autoincrement())
   ownerId      Int
@@ -68,6 +78,7 @@ model Item {
   updatedAt    DateTime       @updatedAt
   collection   Collection?    @relation(fields: [collectionId], references: [id])
   owner        User           @relation(fields: [ownerId], references: [id])
+  auction      Auction?
   bids         Bid[]
   ratings      ItemRating[]
   likes        Like[]
@@ -96,7 +107,7 @@ model Notification {
   senderId   Int?
   item       Item?    @relation(fields: [itemId], references: [id])
   receiver   User     @relation("receiver", fields: [receiverId], references: [id])
-  sender     User?     @relation("sender", fields: [senderId], references: [id])
+  sender     User?    @relation("sender", fields: [senderId], references: [id])
 }
 
 model Profile {

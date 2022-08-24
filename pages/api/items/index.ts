@@ -23,6 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
           likes: true,
+          auction: true,
         },
       });
       return res.status(200).json(items);
