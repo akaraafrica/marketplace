@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import SellersCard from "../SellersCard";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -9,18 +9,13 @@ import styles from "./styles.module.scss";
 // import Slider from "infinite-react-carousel";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Pagination, Autoplay } from "swiper";
+import { Navigation } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import swiperClass from "swiper/types/swiper-class";
 
 const SellersSec = () => {
-  SwiperCore.use([Pagination, Autoplay]);
-
-  useEffect(() => {
-    const deviceWidth = window.innerWidth;
-    const settings = {
-      slidesPerRow: deviceWidth <= 600 ? 2 : 5,
-    };
-  }, []);
-
+  const [swiperRef, setSwiperRef] = useState<swiperClass>();
   const names = [
     "Oliver Hansen",
     "Van Henry",
@@ -37,13 +32,22 @@ const SellersSec = () => {
     PaperProps: {
       style: {
         width: 250,
-        backgroundColor: "black",
+        backgroundColor: "#777E91",
         color: "white",
       },
     },
   };
+  const handleLeftClick = useCallback(() => {
+    if (!swiperRef) return;
+    swiperRef.slidePrev();
+  }, [swiperRef]);
+
+  const handleRightClick = useCallback(() => {
+    if (!swiperRef) return;
+    swiperRef.slideNext();
+  }, [swiperRef]);
   return (
-    <div style={{ backgroundColor: "#23262f", padding: "5vw 5vw" }}>
+    <div className={styles.root}>
       <div className={styles.popularHeader}>
         <div className={styles.popularCon}>
           <span className={styles.popularText}>Popular</span>
@@ -60,7 +64,7 @@ const SellersSec = () => {
           </span>
         </div>
         <div>
-          <FormControl sx={{ m: 1, width: 300 }}>
+          {/* <FormControl sx={{ m: 1, width: 300 }}>
             <InputLabel id="demo-multiple-name-label">Name</InputLabel>
             <Select
               labelId="demo-multiple-name-label"
@@ -77,35 +81,70 @@ const SellersSec = () => {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
         </div>
       </div>
-      <Swiper style={{ zIndex: 0 }}>
-        <SwiperSlide>
-          <SellersCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SellersCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SellersCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SellersCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SellersCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SellersCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SellersCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <SellersCard />
-        </SwiperSlide>
-      </Swiper>
+      <div className={styles.swiperWrapper}>
+        <button className={styles.left} onClick={handleLeftClick}>
+          <span>
+            <img alt="leftarrow" src={`/assets/leftArrow.svg`} />
+          </span>
+        </button>
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={32}
+          style={{ zIndex: 0 }}
+          onSwiper={setSwiperRef}
+          breakpoints={{
+            // when window width is >= 640px
+            640: {
+              width: 640,
+              slidesPerView: 2,
+            },
+            // when window width is >= 768px
+            768: {
+              width: 768,
+              slidesPerView: 3,
+            },
+            1260: {
+              width: 1260,
+              slidesPerView: 5,
+            },
+          }}
+          modules={[Navigation]}
+          className={styles.swiper_container}
+        >
+          <SwiperSlide>
+            <SellersCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <SellersCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <SellersCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <SellersCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <SellersCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <SellersCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <SellersCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <SellersCard />
+          </SwiperSlide>
+        </Swiper>
+        <button className={styles.right} onClick={handleRightClick}>
+          <span>
+            <img alt="rightarrow" src={`/assets/rightArrow.svg`} />
+          </span>
+        </button>
+      </div>
     </div>
   );
 };
