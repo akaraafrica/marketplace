@@ -107,7 +107,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.PlaceBid,
         title: item.title,
         amount: bidAmount,
-        link: "",
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -134,7 +134,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.AcceptBid,
         title: item.title,
         amount: bidAmount,
-        link: "",
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -193,7 +193,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.Purchase,
         title: item.title,
         amount: item.price,
-        link: "",
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -218,7 +218,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.CreateItem,
         title: item.title,
         amount: item.price,
-        link: "",
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -244,7 +244,7 @@ export async function TriggerAction(props: ActionProps) {
           from: "info@mbizi.org",
           templateId: MailTemplateIDs.CreateCollection,
           title: collection.title,
-          link: "",
+          link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}`,
         };
         if (data && emailData) {
           promise.push(inApp([data]));
@@ -272,7 +272,7 @@ export async function TriggerAction(props: ActionProps) {
             from: "info@mbizi.org",
             templateId: MailTemplateIDs.CreateCollection,
             title: collection.title,
-            link: "",
+            link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}`,
           },
         ])
       );
