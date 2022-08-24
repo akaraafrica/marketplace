@@ -1,5 +1,5 @@
 import { api } from "../services/apiClient";
-import { randStr } from "../utils/helpers/randomStr";
+import { IUser } from "../types/user.interface";
 
 const url = `/api/collections`;
 
@@ -21,18 +21,11 @@ class Collection {
       console.log(error);
     }
   }
-  async createData(data: any, walletAddress: string) {
-    const token = randStr(10);
-
+  async createData(data: any, user: IUser, walletAddress: string) {
     try {
-      const user = await api.get(`api/me`);
       const res = await api.post(url, {
-        ...data,
-        users: data.users,
-        items: [...data.items],
-        typeId: parseInt(data.type),
-        authorId: user.data.id,
-        tokenId: token,
+        data,
+        user,
       });
       console.log(res);
       return res;
