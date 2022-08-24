@@ -18,9 +18,8 @@ interface infoProperties {
 const InfoComponent = ({ user, item }: infoProperties) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const handleDelete = async () => {
-    console.log(item.auction.id);
 
+  const handleDelete = async () => {
     try {
       await AuctionDs.deleteData({
         id: item.auction.id,
@@ -38,7 +37,7 @@ const InfoComponent = ({ user, item }: infoProperties) => {
           open={open}
           handleClose={handleClose}
           item={item}
-          edit={true}
+          edit={item?.auction?.open ? true : false}
         />
       )}
       <div>
