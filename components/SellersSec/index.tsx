@@ -13,6 +13,7 @@ import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import swiperClass from "swiper/types/swiper-class";
+import NextImage from "../Image";
 
 const SellersSec = (props: any) => {
   const [swiperRef, setSwiperRef] = useState<swiperClass>();
@@ -89,7 +90,12 @@ const SellersSec = (props: any) => {
       <div className={styles.swiperWrapper}>
         <button className={styles.left} onClick={handleLeftClick}>
           <span>
-            <img alt="leftarrow" src={`/assets/leftArrow.svg`} />
+            <NextImage
+              width="40px"
+              height="40px"
+              alt="leftarrow"
+              src={`/assets/leftArrow.svg`}
+            />
           </span>
         </button>
         <Swiper
@@ -116,15 +122,25 @@ const SellersSec = (props: any) => {
           modules={[Navigation]}
           className={styles.swiper_container}
         >
-          {props.sellers.sellers.map((seller: any, idx: number) => (
-            <SwiperSlide key={seller.id}>
-              <SellersCard seller={seller} index={idx} />
-            </SwiperSlide>
-          ))}
+          {props.sellers.sellers
+            .filter((seller: any) => seller._count.items > 0)
+            .sort((a: any, b: any) =>
+              a._count.items > b._count.items ? -1 : 1
+            )
+            .map((seller: any, idx: number) => (
+              <SwiperSlide key={seller.id} className={styles.slide}>
+                <SellersCard seller={seller} index={idx} />
+              </SwiperSlide>
+            ))}
         </Swiper>
         <button className={styles.right} onClick={handleRightClick}>
           <span>
-            <img alt="rightarrow" src={`/assets/rightArrow.svg`} />
+            <NextImage
+              width="40px"
+              height="40px"
+              alt="rightarrow"
+              src={`/assets/rightArrow.svg`}
+            />
           </span>
         </button>
       </div>

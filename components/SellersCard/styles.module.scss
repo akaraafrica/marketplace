@@ -6,17 +6,20 @@
   background-color: #131416;
   height: auto;
   padding: 20px;
+  cursor: pointer;
   border-radius: 16px;
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
   -ms-border-radius: 16px;
   -o-border-radius: 16px;
 }
+
 .sellercardchipimg {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .sellerCardChip {
   display: flex;
   flex-direction: row;
@@ -44,6 +47,7 @@
   width: 100%;
   margin-top: 1vw;
 }
+
 .topLeft {
   display: flex;
   align-items: center;
@@ -98,9 +102,11 @@
   width: 1vw;
   height: 1vw;
 }
+
 .defaultAvatar {
   margin-top: 30px;
 }
+
 .selercardavatar {
   width: 80px !important;
   height: 80px !important;

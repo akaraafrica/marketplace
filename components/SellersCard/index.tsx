@@ -65,7 +65,7 @@ const SellersCard = ({ seller, index }: any) => {
               src="/assets/diamond.png"
               sx={{
                 backgroundColor: "#FF8060",
-                borderColor: "#000",
+                border: "1px solid #000",
                 clipPath: `polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`,
                 // padding: '-5px'
               }}
