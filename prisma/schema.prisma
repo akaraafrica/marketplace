@@ -51,28 +51,28 @@ model CollectionType {
 }
 
 model Item {
-  id           Int            @id @default(autoincrement())
-  ownerId      Int
-  collectionId Int?
-  tokenId      String         @unique
-  title        String
-  description  String         @db.VarChar(250)
-  images       String[]
-  video        String?
-  acceptedBid  Float?
-  createdAt    DateTime       @default(now())
-  openForBid   Boolean
-  price        Float
-  published    Boolean
-  publishedAt  DateTime?
-  updatedAt    DateTime       @updatedAt
-  collection   Collection?    @relation(fields: [collectionId], references: [id])
-  owner        User           @relation(fields: [ownerId], references: [id])
-  bids         Bid[]
-  ratings      ItemRating[]
-  likes        Like[]
-  Notification Notification[]
-  purchases    Purchase[]
+  id            Int            @id @default(autoincrement())
+  ownerId       Int
+  collectionId  Int?
+  tokenId       String         @unique
+  title         String
+  description   String         @db.VarChar(250)
+  images        String[]
+  video         String?
+  acceptedBid   Float?
+  createdAt     DateTime       @default(now())
+  openForBid    Boolean
+  price         Float
+  published     Boolean
+  publishedAt   DateTime?
+  updatedAt     DateTime       @updatedAt
+  collection    Collection?    @relation(fields: [collectionId], references: [id])
+  owner         User           @relation(fields: [ownerId], references: [id])
+  bids          Bid[]
+  ratings       ItemRating[]
+  notifications Notification[]
+  likes         Like[]
+  purchases     Purchase[]
 }
 
 model ItemRating {
@@ -96,7 +96,7 @@ model Notification {
   senderId   Int?
   item       Item?    @relation(fields: [itemId], references: [id])
   receiver   User     @relation("receiver", fields: [receiverId], references: [id])
-  sender     User?     @relation("sender", fields: [senderId], references: [id])
+  sender     User?    @relation("sender", fields: [senderId], references: [id])
 }
 
 model Profile {

@@ -1,4 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import {
+  Actions,
+  ItemType,
+  TriggerAction,
+} from "../../../services/action.service";
+import { randStr } from "../../../utils/helpers/randomStr";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -21,33 +27,35 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
   if (req.method === "POST") {
+    const { data, user } = req.body;
+
     try {
       const response = await prisma.collection.create({
         data: {
-          title: req.body.title,
-          description: req.body.description,
-          tokenId: req.body.tokenId,
-          images: req.body.image,
-          visible: req.body.visible,
+          title: data.title,
+          description: data.description,
+          tokenId: randStr(10),
+          images: data.image,
+          visible: data.visible,
           type: {
             connect: {
-              id: req.body.typeId,
+              id: parseInt(data.type),
             },
           },
-          videos: req.body.videos,
+          videos: data.videos,
           updatedAt: new Date(),
           author: {
             connect: {
-              id: req.body.authorId,
+              id: user.id,
             },
           },
           items: {
-            connect: req.body.items.map((item: { id: number }) => ({
+            connect: data.items.map((item: { id: number }) => ({
               id: item.id,
             })),
           },
           userCollections: {
-            create: req.body.users.map((user: { id: number }) => ({
+            create: data.owners.map((user: { id: number }) => ({
               user: {
                 connect: {
                   id: user.id,
@@ -57,6 +65,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         },
       });
+
+      await TriggerAction({
+        action: Actions.CreateCollection,
+        user,
+        collection: data,
+      });
+
       res.status(201).json({ id: response.id, message: "Collection created" });
     } catch (error) {
       console.log(error);

@@ -16,18 +16,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({ data: user?.receivedNotifications });
   }
   if (req.method === "POST") {
-    const receiverId = parseInt(req.body.userId);
-    await prisma.notification.create({
-      data: {
-        title: req.body.title,
-        content: req.body.content,
-        read: false,
-        receiverId: receiverId,
-        action: req.body.action,
-      },
-    });
-
-    res.status(201).json({ message: "Notifications created" });
+    // const receiverId = parseInt(req.body.userId);
+    // await prisma.notification.create({
+    //   data: {
+    //     title: req.body.title,
+    //     content: req.body.content,
+    //     read: false,
+    //     receiverId: receiverId,
+    //     action: req.body.action,
+    //   },
+    // });
+    // res.status(201).json({ message: "Notifications created" });
   }
   res.status(405).send({ message: "Only POST requests allowed" });
 };

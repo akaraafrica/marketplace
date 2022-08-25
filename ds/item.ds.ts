@@ -1,5 +1,6 @@
 import { NFTStorage, File } from "nft.storage";
 import { api } from "../services/apiClient";
+import { IUser } from "../types/user.interface";
 import { randStr } from "../utils/helpers/randomStr";
 
 const url = `/api/items`;
@@ -27,16 +28,9 @@ class Item {
     console.log("created nft data ==> ", resp);
     return resp;
   }
-  async createData(data: any, walletAddress: string) {
-    const token = randStr(10);
-
+  async createData(data: any, user: IUser, walletAddress: string) {
     try {
-      const user = await api.get(`api/me`);
-      const res = await api.post(url, {
-        ...data,
-        ownerId: user.data.id,
-        tokenId: token,
-      });
+      const res = await api.post(url, { item: data, user });
       return res;
     } catch (error) {
       console.log(error);

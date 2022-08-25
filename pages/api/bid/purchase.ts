@@ -1,4 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import {
+  Actions,
+  ItemType,
+  TriggerAction,
+} from "../../../services/action.service";
+import { randStr } from "../../../utils/helpers/randomStr";
 import prisma from "../../../utils/lib/prisma";
 
 export default async function profile(
@@ -6,22 +12,24 @@ export default async function profile(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    const { user, item } = req.body;
+
     try {
       const createPurchase = prisma.purchase.create({
         data: {
-          amount: Number(req.body.amount),
-          userId: req.body.userId,
-          transactionId: req.body.transactionId,
-          itemId: req.body.itemId,
+          amount: item.price,
+          userId: user.id,
+          transactionId: randStr(10),
+          itemId: item.id,
         },
       });
       const updateItemOwner = prisma.item.update({
         where: {
-          id: req.body.itemId,
+          id: item.id,
         },
 
         data: {
-          ownerId: req.body.userId,
+          ownerId: user.id,
           acceptedBid: 1,
           updatedAt: new Date(),
         },
@@ -31,12 +39,20 @@ export default async function profile(
           itemId: req.body.itemId,
         },
       });
-
-      const transaction = await prisma.$transaction([
-        deleteBids,
-        updateItemOwner,
-        createPurchase,
-      ]);
+      try {
+        await prisma.$transaction([
+          deleteBids,
+          updateItemOwner,
+          createPurchase,
+        ]);
+        await TriggerAction({
+          action: Actions.Purchase,
+          user,
+          item,
+        });
+      } catch (error) {
+        console.log(error);
+      }
       res.status(200).json("successful");
     } catch (error) {
       console.log(error);

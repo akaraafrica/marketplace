@@ -14,7 +14,6 @@ const Index = ({ item }: { item: IItem }) => {
   const { user, isAuthenticated, signIn } = useContext(AuthContext);
   const width = useWindowSize().width!;
   const isComingSoon = item?.openForBid;
-
   return (
     <Layout>
       <main className={styles.main}>
