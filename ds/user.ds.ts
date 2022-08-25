@@ -30,6 +30,16 @@ class User {
   }
 
   async update() {}
+
+  async fetchSellers() {
+    try {
+      const response = await api.get(`${url}/sellers`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }
 
 export default new User();

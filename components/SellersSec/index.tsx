@@ -14,7 +14,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import swiperClass from "swiper/types/swiper-class";
 
-const SellersSec = () => {
+const SellersSec = (props: any) => {
   const [swiperRef, setSwiperRef] = useState<swiperClass>();
   const names = [
     "Oliver Hansen",
@@ -46,6 +46,8 @@ const SellersSec = () => {
     if (!swiperRef) return;
     swiperRef.slideNext();
   }, [swiperRef]);
+
+  console.log(props.sellers.sellers);
   return (
     <div className={styles.root}>
       <div className={styles.popularHeader}>
@@ -99,7 +101,7 @@ const SellersSec = () => {
             // when window width is >= 640px
             640: {
               width: 640,
-              slidesPerView: 2,
+              slidesPerView: 1,
             },
             // when window width is >= 768px
             768: {
@@ -114,30 +116,11 @@ const SellersSec = () => {
           modules={[Navigation]}
           className={styles.swiper_container}
         >
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
+          {props.sellers.sellers.map((seller: any, idx: number) => (
+            <SwiperSlide key={seller.id}>
+              <SellersCard seller={seller} index={idx} />
+            </SwiperSlide>
+          ))}
         </Swiper>
         <button className={styles.right} onClick={handleRightClick}>
           <span>

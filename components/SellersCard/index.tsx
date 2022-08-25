@@ -5,6 +5,10 @@ import { Avatar } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import styles from "./styles.module.scss";
+import { MdOutlineAddBox } from "react-icons/md";
+import { BsArrowUpRight } from "react-icons/bs";
+import { CgArrowTopRight } from "react-icons/cg";
+import DefaultAvatar from "../DefaultAvatar";
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
@@ -12,29 +16,41 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
   border: `2px solid ${theme.palette.background.paper}`,
 }));
 
-const SellersCard = () => {
+const SellersCard = ({ seller, index }: any) => {
   return (
     <div className={styles.sellerCardMain}>
       <div className={styles.sellerCardHeaderCon}>
         <div className={styles.sellerCardHeader}>
-          <span className={styles.sellerCardChip}>
+          <span
+            className={styles.sellerCardChip}
+            style={{
+              backgroundColor:
+                index === 0
+                  ? "#3772ff"
+                  : index === 1
+                  ? "#BE7B40"
+                  : index === 2
+                  ? "#FF8462"
+                  : "#23262F",
+            }}
+          >
             <span className={styles.sellercardchipimg}>
-              <img alt="trophy icon" src={`/assets/TrophyIcon.svg`} />
+              <img
+                alt="trophy icon"
+                src={
+                  index === 0
+                    ? `/assets/TrophyIcon.svg`
+                    : index === 2
+                    ? "/assets/lightning.png"
+                    : "/assets/donut.png"
+                }
+              />
             </span>
-            <span className={styles.sellerCardNum}>#1</span>
+            <span className={styles.sellerCardNum}>#{index + 1}</span>
           </span>
-          <span>
-            <span
-              style={{ color: "white", width: "2vw", height: "2vw" }}
-            ></span>
-            <span
-              style={{
-                color: "white",
-                width: "2vw",
-                height: "2vw",
-                marginLeft: "-0.4vw",
-              }}
-            ></span>
+          <span className={styles.topLeft}>
+            <MdOutlineAddBox size={30} color="#777E90" />
+            <CgArrowTopRight size={30} color="#353945" />
           </span>
         </div>
         <div className={styles.sellerCardDivider}></div>
@@ -46,18 +62,38 @@ const SellersCard = () => {
           badgeContent={
             <SmallAvatar
               alt="Payton Harris"
-              src="/static/images/avatar/1.jpg"
+              src="/assets/diamond.png"
+              sx={{
+                backgroundColor: "#FF8060",
+                borderColor: "#000",
+                clipPath: `polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`,
+                // padding: '-5px'
+              }}
             />
           }
         >
-          <Avatar
-            src={`/assets/auctionAvatar.png`}
-            alt="seller-photo"
-            className={styles.selercardavatar}
-          />
+          {seller.profile && seller.profile.avatar ? (
+            <Avatar
+              src={seller.profile.avatar}
+              alt="seller-photo"
+              className={styles.selercardavatar}
+            />
+          ) : (
+            <div className={styles.defaultAvatar}>
+              <DefaultAvatar
+                url={seller.profile && seller.profile.avatar}
+                width="80px"
+                height="80px"
+                fontSize="8px"
+                walletAddress={seller.walletAddress}
+              />
+            </div>
+          )}
         </Badge>
         <div className={styles.sellerCardBody}>
-          <span className={styles.sellerName}>Payton Harris</span>
+          <span className={styles.sellerName}>
+            {seller.profile && seller.profile.name && seller.profile.name}
+          </span>
           <span className={styles.sellerPrice}>
             2.456 <span className={styles.sellerPriceETHColor}>ETH</span>
           </span>
