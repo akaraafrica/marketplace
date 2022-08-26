@@ -7,24 +7,63 @@ import PlaceBid from "./PlaceBid";
 import styles from "./Tags.module.scss";
 import Link from "../Link";
 import { IItem } from "../../types/item.interface";
+import AuctionDialog from "./AuctionDialog";
+import { AuctionDs } from "../../ds";
+import { toast } from "react-toastify";
 
 interface infoProperties {
   user: IUser;
+  item: IItem;
 }
-const InfoComponent = ({ user }: infoProperties) => {
+const InfoComponent = ({ user, item }: infoProperties) => {
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+
+  const handleDelete = async () => {
+    try {
+      await AuctionDs.deleteData({
+        id: item.auction.id,
+      });
+      toast.success("Auction deleted");
+      handleClose();
+    } catch (error) {
+      toast.error("Error deleting auction");
+    }
+  };
   return (
     <div className={styles.profileInfoCard}>
-      <Avatar
-        src={user.profile?.avatar}
-        alt="creator-photo"
-        sx={{ width: 50, height: 50 }}
-      />
-      <Link href={`/profile/${user.id}`}>
-        <div>
-          <span>Creator</span>
-          <span>{user.profile?.name}</span>
-        </div>
-      </Link>
+      {open && (
+        <AuctionDialog
+          open={open}
+          handleClose={handleClose}
+          item={item}
+          edit={item?.auction?.open ? true : false}
+        />
+      )}
+      <div>
+        <Avatar
+          src={user.profile?.avatar}
+          alt="creator-photo"
+          sx={{ width: 50, height: 50 }}
+        />
+        <Link href={`/profile/${user.id}`}>
+          <div>
+            <span>Creator</span>
+            <span>{user.profile?.name}</span>
+          </div>
+        </Link>
+      </div>
+      <div className={styles.buttons}>
+        <button onClick={() => setOpen(true)}>
+          {item?.auction?.open ? "edit auction" : `place on auction`}
+        </button>
+
+        {item?.auction?.open && (
+          <button className={styles.close} onClick={handleDelete}>
+            close auction
+          </button>
+        )}
+      </div>
     </div>
   );
 };
@@ -66,12 +105,13 @@ export default function Tags({ item }: { item: IItem }) {
       </div>
       {tag === 0 && (
         <>
-          <InfoComponent user={item.owner} />
-          {isOwner ? (
-            <AcceptBid item={item} setTag={setTag} />
-          ) : (
-            <PlaceBid item={item} />
-          )}
+          <InfoComponent user={item.owner} item={item} />
+          {item?.auction?.open &&
+            (isOwner ? (
+              <AcceptBid item={item} setTag={setTag} />
+            ) : (
+              <PlaceBid item={item} />
+            ))}
         </>
       )}
       {tag === 3 && isOwner && <AcceptBid viewall={true} item={item} />}

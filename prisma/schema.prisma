@@ -50,29 +50,40 @@ model CollectionType {
   collection      Collection[]
 }
 
+model Auction {
+  id        Int     @id @default(autoincrement())
+  open      Boolean @default(false)
+  startTime String
+  endTime   String
+  openPrice Float
+  itemId    Int     @unique
+  item      Item    @relation(fields: [itemId], references: [id])
+}
+
 model Item {
-  id            Int            @id @default(autoincrement())
-  ownerId       Int
-  collectionId  Int?
-  tokenId       String         @unique
-  title         String
-  description   String         @db.VarChar(250)
-  images        String[]
-  video         String?
-  acceptedBid   Float?
-  createdAt     DateTime       @default(now())
-  openForBid    Boolean
-  price         Float
-  published     Boolean
-  publishedAt   DateTime?
-  updatedAt     DateTime       @updatedAt
-  collection    Collection?    @relation(fields: [collectionId], references: [id])
-  owner         User           @relation(fields: [ownerId], references: [id])
-  bids          Bid[]
-  ratings       ItemRating[]
-  notifications Notification[]
-  likes         Like[]
-  purchases     Purchase[]
+  id           Int            @id @default(autoincrement())
+  ownerId      Int
+  collectionId Int?
+  tokenId      String         @unique
+  title        String
+  description  String         @db.VarChar(250)
+  images       String[]
+  video        String?
+  acceptedBid  Float?
+  createdAt    DateTime       @default(now())
+  openForBid   Boolean
+  price        Float
+  published    Boolean
+  publishedAt  DateTime?
+  updatedAt    DateTime       @updatedAt
+  collection   Collection?    @relation(fields: [collectionId], references: [id])
+  owner        User           @relation(fields: [ownerId], references: [id])
+  bids         Bid[]
+  ratings      ItemRating[]
+  likes        Like[]
+  Notification Notification[]
+  purchases    Purchase[]
+  auction      Auction?
 }
 
 model ItemRating {
