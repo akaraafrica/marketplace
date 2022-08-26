@@ -13,11 +13,11 @@ import { Filter } from "../ds/discovery.ds";
 import LandingMainSection from "../components/LandingMainSection";
 import Layout from "../components/Layout";
 import HotCollectionsSection from "../components/HotCollectionsSection";
-import { CollectionDs, DiscoveryDs, ItemDs } from "../ds/index";
+import { CollectionDs, DiscoveryDs, ItemDs, UserDs } from "../ds/index";
 
 const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
-
+  console.log(props.collection);
   return (
     <Layout>
       <div className={styles.styles}>
@@ -36,8 +36,8 @@ const Home = (props: any) => {
           />
         </div>
       </div>
-      <LandingMainSection />
-      <SellersSec />
+      <LandingMainSection collection={props.collection[0]} />
+      <SellersSec sellers={props.sellers} />
       <HotItems items={props.item} />
       <HotCollectionsSection collections={props.collection} />
       <Discover items={props.discovery} />
@@ -52,10 +52,11 @@ const Home = (props: any) => {
 };
 
 export async function getServerSideProps() {
-  let [discovery, collection, item] = await Promise.all([
+  let [discovery, collection, item, sellers] = await Promise.all([
     DiscoveryDs.getData(Filter.All),
     CollectionDs.getCollections(),
     ItemDs.getData(),
+    UserDs.fetchSellers(),
   ]);
 
   return {
@@ -63,6 +64,7 @@ export async function getServerSideProps() {
       discovery,
       collection,
       item,
+      sellers,
     },
   };
 }

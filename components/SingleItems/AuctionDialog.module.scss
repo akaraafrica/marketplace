@@ -1,0 +1,122 @@
+@use "../../styles/colors" as *;
+
+.main {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  input {
+    width: 25rem;
+    height: 1rem;
+    font-size: 1rem;
+    background-color: $dialogbackground;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid $grey3;
+    color: white;
+    color-scheme: dark;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    color: white;
+  }
+
+  .auctionAmount {
+    width: 2rem;
+    margin-top: 80px;
+
+    input {
+      width: 7rem;
+      text-align: end;
+      padding-right: 1rem;
+    }
+  }
+
+  p {
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    align-self: flex-start;
+    margin: 0;
+    margin-top: 1rem;
+
+    strong {
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
+  }
+
+  h3 {
+    color: white;
+    font-size: 1.3rem;
+    margin: 1rem 0;
+    align-self: flex-start;
+    font-weight: 600;
+  }
+
+  section {
+    div {
+      display: flex;
+      justify-content: space-between;
+      width: 23.5rem;
+      align-items: center;
+      margin-top: 10px;
+
+      span {
+        color: $grey3;
+        font-weight: 400;
+        word-break: keep-all;
+
+        width: 15rem;
+      }
+
+      strong {
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.bidinput {
+  position: relative;
+  color: white;
+
+  strong {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-weight: 400;
+  }
+}
+
+.button {
+  margin-top: 2rem;
+  display: flex;
+  gap: 10px;
+
+  button {
+    color: white;
+    background: $grey2;
+    border: 0;
+    border-radius: 30px;
+    padding: 12px 45px;
+    cursor: pointer;
+    margin: auto;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    width: 23rem;
+  }
+
+  .accept {
+    background: $secondary-color;
+  }
+}

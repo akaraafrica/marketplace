@@ -32,6 +32,16 @@ class User {
   }
 
   async update() {}
+
+  async fetchSellers() {
+    try {
+      const response = await api.get(`${url}/sellers`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   async follow(profile: IProfile, user: IUser) {
     try {
       const response = await api.post(`${url}/follow`, { profile, user });

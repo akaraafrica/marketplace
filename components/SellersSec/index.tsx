@@ -13,8 +13,9 @@ import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import swiperClass from "swiper/types/swiper-class";
+import NextImage from "../Image";
 
-const SellersSec = () => {
+const SellersSec = (props: any) => {
   const [swiperRef, setSwiperRef] = useState<swiperClass>();
   const names = [
     "Oliver Hansen",
@@ -46,6 +47,8 @@ const SellersSec = () => {
     if (!swiperRef) return;
     swiperRef.slideNext();
   }, [swiperRef]);
+
+  console.log(props.sellers.sellers);
   return (
     <div className={styles.root}>
       <div className={styles.popularHeader}>
@@ -87,7 +90,12 @@ const SellersSec = () => {
       <div className={styles.swiperWrapper}>
         <button className={styles.left} onClick={handleLeftClick}>
           <span>
-            <img alt="leftarrow" src={`/assets/leftArrow.svg`} />
+            <NextImage
+              width="40px"
+              height="40px"
+              alt="leftarrow"
+              src={`/assets/leftArrow.svg`}
+            />
           </span>
         </button>
         <Swiper
@@ -99,7 +107,7 @@ const SellersSec = () => {
             // when window width is >= 640px
             640: {
               width: 640,
-              slidesPerView: 2,
+              slidesPerView: 1,
             },
             // when window width is >= 768px
             768: {
@@ -114,34 +122,25 @@ const SellersSec = () => {
           modules={[Navigation]}
           className={styles.swiper_container}
         >
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <SellersCard />
-          </SwiperSlide>
+          {props.sellers.sellers
+            .filter((seller: any) => seller._count.items > 0)
+            .sort((a: any, b: any) =>
+              a._count.items > b._count.items ? -1 : 1
+            )
+            .map((seller: any, idx: number) => (
+              <SwiperSlide key={seller.id} className={styles.slide}>
+                <SellersCard seller={seller} index={idx} />
+              </SwiperSlide>
+            ))}
         </Swiper>
         <button className={styles.right} onClick={handleRightClick}>
           <span>
-            <img alt="rightarrow" src={`/assets/rightArrow.svg`} />
+            <NextImage
+              width="40px"
+              height="40px"
+              alt="rightarrow"
+              src={`/assets/rightArrow.svg`}
+            />
           </span>
         </button>
       </div>

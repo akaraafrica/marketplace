@@ -17,7 +17,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
   const [openPurchaseDialog, setOpenPurchaseDialog] = useState(false);
   const [openSucceesDialog, setOpenSuccessDialog] = useState(false);
   const [amount, setAmount] = useState(0);
-  const { user, isAuthenticated, signOut } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const handleBidClose = () => {
     setOpenPlaceBidDialog(false);
