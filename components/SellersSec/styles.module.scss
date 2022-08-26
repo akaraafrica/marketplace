@@ -62,6 +62,12 @@
     border-radius: 40px;
     background-color: transparent;
     top: 45%;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .left {

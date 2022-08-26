@@ -13,13 +13,15 @@ function HotCollectionCard(props: properties) {
   return (
     <div className={styles.root}>
       <div className={styles.mainImgdiv}>
-        <Link href={`/collection/${id}`}>
-          <NextImage
-            className={styles.mainImg}
-            src={images[0] || ""}
-            layout="fill"
-          />
-        </Link>
+        {images[0] && (
+          <Link href={`/collection/${id}`}>
+            <NextImage
+              className={styles.mainImg}
+              src={images[0] || ""}
+              layout="fill"
+            />
+          </Link>
+        )}
       </div>
       <div className={styles.imagesDiv}>
         {images &&
