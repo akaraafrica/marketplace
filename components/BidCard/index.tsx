@@ -1,11 +1,17 @@
 import React from "react";
 import { Avatar } from "@mui/material";
 import styles from "./styles.module.scss";
-const BidCard = () => {
+import { ICollection } from "../../types/collection.interface";
+import { Router } from "next/router";
+import Link from "../Link";
+interface properties {
+  collection: ICollection;
+}
+const BidCard = ({ collection }: properties) => {
   return (
     <div>
       <div className={styles.bidSec}>
-        <span className={styles.auctionHeading}>The Odogu Collection</span>
+        <span className={styles.auctionHeading}>{collection.title}</span>
         <div className={styles.profileInfoCardCon}>
           <div className={styles.profileInfoCard}>
             <Avatar
@@ -16,7 +22,9 @@ const BidCard = () => {
             />
             <span className={styles.profileInfo}>
               <span className={styles.profileInfoClass}>Creator</span>
-              <span className={styles.profileInfoDesc}>Sarah Shaibu</span>
+              <span className={styles.profileInfoDesc}>
+                {collection?.author?.profile?.name}
+              </span>
             </span>
           </div>
           <div className={styles.profileInfoCard}>
@@ -58,7 +66,9 @@ const BidCard = () => {
         </div>
         <div>
           <button className={styles.bidBtn}>Place a bid</button>
-          <button className={styles.viewBtn}>View item</button>
+          <Link href={`/collection/${collection.id}`}>
+            <button className={styles.viewBtn}>View item</button>
+          </Link>
         </div>
       </div>
     </div>

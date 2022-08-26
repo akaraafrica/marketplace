@@ -2,13 +2,17 @@ import React, { useEffect, useRef } from "react";
 import Plyr, { PlyrSource } from "plyr-react";
 import styles from "./styles.module.scss";
 import BidCard from "../BidCard";
+import { ICollection } from "../../types/collection.interface";
 
-const LandingBidding = () => {
+interface properties {
+  collection: ICollection;
+}
+const LandingBidding = ({ collection }: properties) => {
   const videoSrc: PlyrSource = {
     type: "video",
     sources: [
       {
-        src: "https://www.w3schools.com/html/mov_bbb.mp4",
+        src: collection.videos[0] && collection.videos[0],
       },
     ],
   };
@@ -34,7 +38,7 @@ const LandingBidding = () => {
           }
         }
       />
-      <BidCard />
+      <BidCard collection={collection} />
     </div>
   );
 };

@@ -17,7 +17,7 @@ import { CollectionDs, DiscoveryDs, ItemDs, UserDs } from "../ds/index";
 
 const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
-
+  console.log(props.collection);
   return (
     <Layout>
       <div className={styles.styles}>
@@ -36,7 +36,7 @@ const Home = (props: any) => {
           />
         </div>
       </div>
-      <LandingMainSection />
+      <LandingMainSection collection={props.collection[0]} />
       <SellersSec sellers={props.sellers} />
       <HotItems items={props.item} />
       <HotCollectionsSection collections={props.collection} />

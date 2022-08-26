@@ -3,12 +3,16 @@ import LandingMain from "../LandingMain";
 import styles from "./index.module.scss";
 import LandingBidding from "../LandingBidding";
 import ListingMainCard from "../ListingMainCard";
+import { ICollection } from "../../types/collection.interface";
 
-const Index = () => {
+interface properties {
+  collection: ICollection;
+}
+const Index = ({ collection }: properties) => {
   return (
     <div className={styles.root}>
       <LandingMain />
-      <LandingBidding />
+      <LandingBidding collection={collection} />
       <div className={styles.bottom}>
         <ListingMainCard />
       </div>
