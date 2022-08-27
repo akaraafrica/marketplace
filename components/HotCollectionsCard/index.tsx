@@ -9,6 +9,7 @@ interface properties {
 
 function HotCollectionCard(props: properties) {
   const { id, images, title, author, items } = props.collection;
+  console.log(props);
 
   return (
     <div className={styles.root}>
