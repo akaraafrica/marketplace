@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import Layout from "../../components/Layout";
 import NextImage from "next/image";
@@ -15,16 +15,33 @@ import ProfileItem from "../../components/ProfileItem";
 import DefaultAvatar from "../../components/DefaultAvatar";
 import { UserDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
+import { IProfile } from "../../types/profile.interface";
 
-const ProfilePage = (props: any) => {
+const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const [open, setOpen] = React.useState(0);
-  const { profile, walletAddress, createdAt, items, following, collections } =
-    props.profile;
-  const user = useContext(AuthContext);
-  const handleFollow = () => {
-    if (!user.user) return;
+  const { walletAddress, createdAt, items, userFollowers, collections } =
+    profile;
+  const user = useContext(AuthContext).user;
+  // console.log(profile);
+  const [isFollowing, setIsFollowing] = useState<false | { id: number }>(false);
+  useEffect(() => {
+    const isFollowing = userFollowers?.find(
+      (follower) => follower.followerId === user?.id
+    );
+    if (isFollowing?.id) {
+      setIsFollowing(isFollowing);
+    }
+  }, [userFollowers]);
 
-    UserDs.follow(props.profile, user.user);
+  const handleFollow = async () => {
+    if (!user) return;
+    if (isFollowing) {
+      await UserDs.unfollow(isFollowing.id);
+      setIsFollowing(false);
+    } else {
+      const res = await UserDs.follow(profile, user);
+      setIsFollowing(res);
+    }
   };
   return (
     <Layout>
@@ -44,7 +61,7 @@ const ProfilePage = (props: any) => {
                 url={profile && profile.avatar}
                 width="160px"
                 height="160px"
-                walletAddress={walletAddress && walletAddress}
+                walletAddress={walletAddress!}
                 fontSize="1.2em"
               />
               {/* <NextImage
@@ -77,7 +94,7 @@ const ProfilePage = (props: any) => {
             </div>
             <div className={styles.leftCenter}>
               <button className={styles.btn} onClick={handleFollow}>
-                Follow
+                {isFollowing ? "unfollow" : "follow"}
               </button>
               <span className={styles.icon}>
                 <IoShareOutline />
@@ -133,9 +150,9 @@ const ProfilePage = (props: any) => {
             </div>
             <div className={styles.sections}>
               <ProfileItem
-                items={items}
+                items={items!}
                 open={open}
-                following={following}
+                following={userFollowers}
                 collections={collections}
               />
             </div>
