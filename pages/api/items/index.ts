@@ -42,7 +42,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           published: req.body.published,
           acceptedBid: req.body.acceptedBid,
           openForBid: req.body.published,
-          images: req.body.image,
+          images: [],
           video: req.body.video,
           updatedAt: new Date(),
         },

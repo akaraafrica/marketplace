@@ -10,16 +10,18 @@ interface properties {
 function HotCollectionCard(props: properties) {
   const { id, images, title, author, items } = props.collection;
 
-  return (
+  return images.length ? (
     <div className={styles.root}>
       <div className={styles.mainImgdiv}>
-        <Link href={`/collection/${id}`}>
-          <NextImage
-            className={styles.mainImg}
-            src={images[0] || ""}
-            layout="fill"
-          />
-        </Link>
+        {images[0] && (
+          <Link href={`/collection/${id}`}>
+            <NextImage
+              className={styles.mainImg}
+              src={images[0] || ""}
+              layout="fill"
+            />
+          </Link>
+        )}
       </div>
       <div className={styles.imagesDiv}>
         {images &&
@@ -55,6 +57,8 @@ function HotCollectionCard(props: properties) {
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 }
 export default HotCollectionCard;
