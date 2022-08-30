@@ -12,14 +12,9 @@ const url = `/api/notifications`;
 class Notifications {
   constructor() {}
 
-  async fetch(token: string, walletAddress: string) {
+  async fetch(id: number) {
     try {
-      const resp = await api.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: { address: walletAddress },
-      });
+      const resp = await api.get(`${url}/${id}`);
       return resp.data;
     } catch (error) {
       console.log(error);

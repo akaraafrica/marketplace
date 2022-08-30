@@ -17,7 +17,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
   const [openPurchaseDialog, setOpenPurchaseDialog] = useState(false);
   const [openSucceesDialog, setOpenSuccessDialog] = useState(false);
   const [amount, setAmount] = useState(0);
-  const { user, isAuthenticated, signOut } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const handleBidClose = () => {
     setOpenPlaceBidDialog(false);
@@ -30,13 +30,12 @@ export default function PlaceBid({ item }: { item: IItem }) {
   };
 
   const handlePlaceBid = async () => {
-    const data = {
-      bidderId: user?.id,
-      itemId: item.id,
-      amount,
-    };
+    if (!user) {
+      return;
+    }
+
     try {
-      await BidDs.postData("placeBid", data);
+      await BidDs.postData("placeBid", item, user, amount);
       toast.success("Bid Placed Successfully");
       handleBidClose();
       setAmount(0);
@@ -48,14 +47,11 @@ export default function PlaceBid({ item }: { item: IItem }) {
     }
   };
   const handlePurchaseNow = async () => {
+    if (!user) {
+      return;
+    }
     try {
-      const data = {
-        itemId: item.id,
-        amount: item.price,
-        transactionId: randStr(20),
-        userId: user?.id,
-      };
-      await BidDs.postData("purchase", data);
+      await BidDs.postData("purchase", item, user);
       setOpenSuccessDialog(true);
       handlePurchaseClose();
       router.reload();

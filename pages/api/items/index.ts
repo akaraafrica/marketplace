@@ -1,4 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { Actions, TriggerAction } from "../../../services/action.service";
+import { randStr } from "../../../utils/helpers/randomStr";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -23,6 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
           likes: true,
+          auction: true,
         },
       });
       return res.status(200).json(items);
@@ -32,20 +35,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   if (req.method === "POST") {
     try {
+      const { item, user } = req.body;
+      console.log({ item, user });
       const response = await prisma.item.create({
         data: {
-          title: req.body.title,
-          description: req.body.description,
-          price: Number(req.body.price),
-          ownerId: req.body.ownerId,
-          tokenId: req.body.tokenId,
-          published: req.body.published,
-          acceptedBid: req.body.acceptedBid,
-          openForBid: req.body.published,
+          title: item.title,
+          description: item.description,
+          price: Number(item.price),
+          ownerId: user.id,
+          tokenId: randStr(10),
+          published: item.published,
+          openForBid: item.published,
           images: [],
-          video: req.body.video,
           updatedAt: new Date(),
         },
+      });
+
+      await TriggerAction({
+        action: Actions.CreateItem,
+        user,
+        item,
       });
       res.status(201).json({ id: response.id, message: "Item created" });
     } catch (error) {

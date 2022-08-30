@@ -9,11 +9,21 @@ const handler = async (
 ) => {
   const id: number = parseInt(req.query.id as string);
   if (req.method === "GET") {
-    const data = await prisma.notification.findUnique({
+    const data = await prisma.notification.findMany({
       where: {
-        id: id,
+        receiverId: id,
+        read: false,
+      },
+      include: {
+        receiver: {
+          include: {
+            profile: true,
+          },
+        },
+        item: true,
       },
     });
+
     res.status(200).json({ data });
   }
 
@@ -40,11 +50,7 @@ const handler = async (
         error: new Error("Notification does not exist"),
       });
     }
-    // if (item.userId.toString() !== auth) {
-    //   return res.status(401).json({
-    //     error: new Error("Requête non autorisée !"),
-    //   });
-    // }
+
     await prisma.notification.delete({
       where: {
         id: id,

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import Image from "../Image";
@@ -56,9 +56,11 @@ const Index = ({
   const [openDialog, setOpenDialog] = useState(false);
   const { user } = useContext(AuthContext);
   const userIndex = users.filter((person) => person.id === user?.id);
-  if (userIndex[0]?.items.length > 0) {
-    setItems([...userIndex[0].items]);
-  }
+  useEffect(() => {
+    if (userIndex[0]?.items.length > 0) {
+      setItems([...userIndex[0].items]);
+    }
+  }, []);
 
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
@@ -110,9 +112,6 @@ const Index = ({
     }
     setOpenDialog(true);
   };
-  console.log(video);
-  console.log("items", items);
-  console.log("selectedItems", selectedItems);
   const handleMint = async () => {
     console.log("items", items);
     const data = getValues();
@@ -121,10 +120,9 @@ const Index = ({
     try {
       data.description = desc;
       data.type = type;
-      data.users = selectedUser;
+      data.owners = selectedUser;
       data.items = selectedItems;
-      console.log(type);
-      const result = await CollectionDs.createData(data, address);
+      const result = await CollectionDs.createData(data, user!, address);
       console.log(result);
       let imageArr = [];
       for (const image of Object.entries(images)) {

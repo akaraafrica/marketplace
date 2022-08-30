@@ -20,6 +20,7 @@ import { MdNotificationsNone } from "react-icons/md";
 import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
 import Link from "../Link";
+import DefaultAvatar from "../../components/DefaultAvatar";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
@@ -33,7 +34,6 @@ function Header() {
     CHAIN_TO_WETH_ADDRESS[chainId as SupportedChainId],
     WETH_ABI
   );
-
   async function getBalance() {
     const balance = await wethContract?.balanceOf(account);
     const formattedBalance = web3.utils.fromWei(balance?.toString() || "0");
@@ -51,6 +51,14 @@ function Header() {
       activate(injected);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, active]);
+
+  useEffect(() => {
+    (async () => {
+      if (user?.id) {
+        // const { data } = await NotificationDs.fetch(user?.id);
+      }
+    })();
+  });
 
   function handleUpload() {
     user
@@ -82,7 +90,10 @@ function Header() {
           <Link href={`/marketplace`}>
             <span>Marketplace</span>
           </Link>
-          <span>How it works</span>
+          <Link href={`/collections`}>
+            <span>Collections</span>
+          </Link>
+          {/* <span>How it works</span> */}
           <Link href={`/notifications`}>
             <span>Notifications</span>
           </Link>
@@ -110,7 +121,27 @@ function Header() {
                 <span>Marketplace</span>
               </Link>
             </li>
-            <li>How it works</li>
+            <li>
+              <Link href={`/collections`}>
+                <span>Collections</span>
+              </Link>
+            </li>
+            <li>
+              <Link href={`#subscribe`}>
+                <span>Subscribe</span>
+              </Link>
+            </li>
+            {/* <li>
+              <Link href={`#howitworks`}>
+                <span>More</span>
+              </Link>
+            </li> */}
+            <li>
+              <a href="http://akara.com.co" target="_blank" rel="noreferrer">
+                <span>Community</span>
+              </a>
+            </li>
+            {/* <li>How it works</li> */}
           </ul>
         </div>
         <div className={styles.right}>
@@ -150,7 +181,14 @@ function Header() {
                 setNotificationOpen(false);
               }}
             >
-              <img alt="avatar" src={`/assets/Avator.svg`} />
+              <DefaultAvatar
+                url={user?.profile?.avatar}
+                width="30px"
+                height="30px"
+                walletAddress={user?.walletAddress || ""}
+                fontSize="0.7em"
+                length={1}
+              />
               <div className={styles.amt}>
                 {balance} <span>ETH</span>
               </div>
