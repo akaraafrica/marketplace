@@ -80,7 +80,7 @@ const Dashboard = ({
             <Link href="/notifications">
               <li>
                 <MarkunreadIcon />
-                Indox
+                Inbox
               </li>
             </Link>
             <Link href="#bids">

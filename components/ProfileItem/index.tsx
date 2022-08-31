@@ -11,7 +11,6 @@ interface ProfileItemProps {
   collections: any;
 }
 const Index = ({ items, open, following, collections }: ProfileItemProps) => {
-  console.log(items);
   return (
     <div>
       {open === 0 || open === 2 ? (
