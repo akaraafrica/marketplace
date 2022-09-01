@@ -9,6 +9,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         id: id,
       },
       include: {
+        contributors: {
+          include: {
+            User: {
+              include: {
+                profile: true,
+              },
+            },
+          },
+        },
         author: {
           include: {
             profile: true,

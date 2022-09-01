@@ -25,4 +25,10 @@ export interface ICollection {
   ratings: any[];
   type: ICollectionType;
   owners: IUser[];
+  status: ContributorStatus;
+}
+enum ContributorStatus {
+  PENDING,
+  ACCEPTED,
+  REJECTED,
 }
