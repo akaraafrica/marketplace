@@ -7,7 +7,7 @@ import { RiCloseCircleLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 
 const UserCard = ({ contributor, isAuthor, handleDelete }: any) => {
-  const user = contributor.User;
+  const user = contributor.user;
   const [edit, setEdit] = useState(false);
   const [percentage, setPecentage] = useState(contributor?.percentage || 0);
 
