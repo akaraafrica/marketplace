@@ -213,8 +213,8 @@ model Contributor {
   updatedAt    DateTime          @updatedAt
   percentage   Int               @default(0)
   confirmation ContributorStatus @default(PENDING)
-  Collection   Collection        @relation(fields: [collectionId], references: [id])
-  User         User              @relation(fields: [userId], references: [id])
+  collection   Collection        @relation(fields: [collectionId], references: [id])
+  user         User              @relation(fields: [userId], references: [id])
 }
 
 enum EntityType {

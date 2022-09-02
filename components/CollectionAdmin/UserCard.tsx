@@ -5,20 +5,11 @@ import DefaultAvatar from "../DefaultAvatar";
 import { ContributorDs } from "../../ds";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
 
-const UserCard = ({ contributor, isAuthor }: any) => {
+const UserCard = ({ contributor, isAuthor, handleDelete }: any) => {
   const user = contributor.User;
   const [edit, setEdit] = useState(false);
   const [percentage, setPecentage] = useState(contributor?.percentage || 0);
-  const router = useRouter();
-  const handleDelete = async () => {
-    await ContributorDs.deleteContributor({ id: contributor.id });
-    toast.success("contributor deleted");
-    setTimeout(() => {
-      router.reload();
-    }, 3000);
-  };
 
   const handleSubmit = async () => {
     setEdit(false);
@@ -37,7 +28,10 @@ const UserCard = ({ contributor, isAuthor }: any) => {
     <div className={styles.main}>
       <div className={styles.sellerCardMain}>
         <span className={styles.close}>
-          <RiCloseCircleLine size={20} onClick={handleDelete} />
+          <RiCloseCircleLine
+            size={20}
+            onClick={() => handleDelete(contributor.id)}
+          />
         </span>
         {user?.profile && user.profile.avatar ? (
           <Avatar
