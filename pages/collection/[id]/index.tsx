@@ -155,8 +155,9 @@ const Index = ({ collection }: properties) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   let collection = await CollectionDs.getCollectionById(id);
+  console.log({ collection });
 
-  if (!collection) return { notFound: true };
+  // /  if (!collection) return { notFound: true };
 
   return {
     props: {
