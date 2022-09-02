@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       include: {
         contributors: {
           include: {
-            User: {
+            user: {
               include: {
                 profile: true,
               },
