@@ -18,6 +18,7 @@ import { ItemDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import itemDs from "../../ds/item.ds";
+import { useRouter } from "next/router";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -47,6 +48,7 @@ function SingleCollectibleItem() {
     CHAIN_TO_MARKETPLACE_ADDRESS[chainId as SupportedChainId],
     token
   );
+  const router = useRouter();
   const [images, setImages] = useState({
     main: null,
     optional1: null,
@@ -95,7 +97,6 @@ function SingleCollectibleItem() {
   };
 
   const onSubmit = async () => {
-    // step 1
     console.log("storing NFT...");
     const uploadResp = await itemDs.storeNFT(
       images.main,
@@ -134,16 +135,18 @@ function SingleCollectibleItem() {
         });
       }
       let promise: any = [];
-      imageArr.forEach((image) => {
-        promise.push(getFileUploadURL(image.file, `item/${image.name}`));
+      imageArr.forEach((image, index) => {
+        promise.push(
+          getFileUploadURL(image.file, `item/${result.data.id}/${image.name}`)
+        );
       });
       toast.success("successful");
       reset();
       clearState();
       setOpenDialog(false);
-
       const imageURLs = await Promise.all(promise);
       await itemDs.updateData({ id: result.data.id, images: imageURLs });
+      router.push("/marketplace");
     } catch (error) {
       console.log(error);
     }
