@@ -13,6 +13,7 @@ import MintTokenDialog from "../SingleItemForm/MintTokenDialog";
 import { CollectionDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ICollection } from "../../types/collection.interface";
+import { useRouter } from "next/router";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -89,7 +90,7 @@ const Index = ({
       setSelectedItems(collection.items);
     }
   }, [collection]);
-
+  const router = useRouter();
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
   const optional1 = useRef<HTMLInputElement>(null);
@@ -156,18 +157,18 @@ const Index = ({
       }
       let promise: any = [];
       imageArr.forEach((image) => {
-        promise.push(getFileUploadURL(image.file, `collection/${image.name}`));
+        promise.push(
+          getFileUploadURL(
+            image.file,
+            `collection/${result.data.id}/${image.name}`
+          )
+        );
       });
 
       let videoUrl = await getFileUploadURL(
         video,
-        `collection/${title.replace(" ", "-")}`
+        `/video/collection/${result.data.id}/${title.replace(" ", "-")}`
       );
-
-      toast.success("successful");
-      reset();
-      clearState();
-      setOpenDialog(false);
 
       const imageURLs = await Promise.all(promise);
       await CollectionDs.updateData({
@@ -175,6 +176,13 @@ const Index = ({
         images: imageURLs,
         videos: [videoUrl],
       });
+      toast.success("successful");
+      reset();
+      clearState();
+      setOpenDialog(false);
+      setTimeout(() => {
+        router.push("/collection/" + result.data.id);
+      }, 3000);
     } catch (error) {
       console.log(error);
     }
@@ -187,10 +195,8 @@ const Index = ({
     data.items = selectedItems;
     data.id = collection.id;
 
-    console.log(data);
-
     try {
-      // const result = await CollectionDs.updateCollection(data);
+      await CollectionDs.updateCollection(data);
       let imageArr = [];
       for (const image of Object.entries(images)) {
         if (image[1])
@@ -202,27 +208,27 @@ const Index = ({
 
       let promise: any = [];
       imageArr.forEach((image) => {
-        promise.push(getFileUploadURL(image.file, `collection/${image.name}`));
+        promise.push(
+          getFileUploadURL(
+            image.file,
+            `collection/${collection.id}/${image.name}`
+          )
+        );
       });
 
       let videoUrl;
       if (video) {
         videoUrl = await getFileUploadURL(
           video,
-          `collection/${title.replace(" ", "-")}`
+          `/video/collection/${collection.id}/${title.replace(" ", "-")}`
         );
       }
-      console.log(promise);
-      console.log(videoUrl);
 
-      toast.success("collection updated successful");
-
-      const imageURLs = await Promise.all(promise);
-      console.log(videoUrl);
+      let imageURLs = await Promise.all(promise);
       if (imageURLs.length) {
         await CollectionDs.updateData({
           id: collection.id,
-          images: [...imageURLs, ...collection.images],
+          images: imageURLs,
         });
       }
       if (videoUrl) {
@@ -231,6 +237,10 @@ const Index = ({
           videos: [videoUrl],
         });
       }
+      toast.success("collection updated successful");
+      setTimeout(() => {
+        router.push("/collection/" + collection.id);
+      }, 2000);
     } catch (error) {
       console.log(error);
     }

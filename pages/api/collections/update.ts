@@ -21,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             })),
           },
           contributors: {
-            create: data.owners.map((user: { id: number }) => ({
+            set: data.owners.map((user: { id: number }) => ({
               user: {
                 connect: {
                   id: user.id,

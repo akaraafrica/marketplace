@@ -1,4 +1,3 @@
-import { getCookie } from "cookies-next";
 import { api } from "../../services/apiClient";
 
 export const getFileUploadURL = async (file: any, filepath: string) => {
