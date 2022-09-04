@@ -5,7 +5,7 @@ const client = new PrismaClient();
 
 async function seed() {
   try {
-    await client.userCollection.deleteMany();
+    await client.contributor.deleteMany();
     await client.profile.deleteMany();
     await client.collectionRating.deleteMany();
     await client.userRating.deleteMany();
@@ -73,7 +73,7 @@ async function seed() {
     const userCollections = await Promise.all(
       collections.map(async (collection) => {
         uc = uc == users.length - 1 ? 0 : uc + 1;
-        return await client.userCollection.create({
+        return await client.contributor.create({
           data: {
             collectionId: collection.id,
             userId: users[uc].id,
