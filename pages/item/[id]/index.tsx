@@ -11,7 +11,7 @@ import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
 
 const Index = ({ item }: { item: IItem }) => {
-  const { user, isAuthenticated, signIn } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
   const isComingSoon = item?.openForBid;
   return (
