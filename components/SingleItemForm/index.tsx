@@ -19,6 +19,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import itemDs from "../../ds/item.ds";
 import { useRouter } from "next/router";
+import { IItem } from "../../types/item.interface";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -36,7 +37,7 @@ const toolbarOptions = [
   ["clean"],
 ];
 
-function SingleCollectibleItem() {
+function SingleCollectibleItem({ item }: { item?: IItem }) {
   const { chainId } = useWeb3React();
   const tokenContract = useContract(
     CHAIN_TO_NFT_ADDRESS[chainId as SupportedChainId],
@@ -71,16 +72,24 @@ function SingleCollectibleItem() {
     royalties: string;
     image: any;
   };
-
   const {
     register,
     getValues,
     handleSubmit,
     setValue,
     reset,
-    setError,
     formState: { errors },
   } = useForm<form>();
+
+  useEffect(() => {
+    if (item) {
+      setValue("image", item.images[0]);
+      setValue("title", item.title);
+      setValue("description", item.description);
+      setValue("price", item.price.toString());
+    }
+  }, [item]);
+
   const clearState = () => {
     setImages({
       main: null,
@@ -97,35 +106,38 @@ function SingleCollectibleItem() {
   };
 
   const onSubmit = async () => {
-    console.log("storing NFT...");
-    const uploadResp = await itemDs.storeNFT(
-      images.main,
-      getValues("title"),
-      getValues("description")
-    );
-    console.log("upload to ipfs resp ", uploadResp);
-    // step 2
-    const mintedResp = await tokenContract?.createToken(uploadResp.url);
-    console.log("mint Token resp ", mintedResp);
-    // step 3
-    const listResp = await marketplaceContract?.list(
-      mintedResp.data.id, // itemId from response
-      getValues("price"),
-      getValues("royalties"),
-      tokenContract?.address
-    );
-    console.log("listing token resp ", listResp);
-    console.log("submitting here ......");
-    setOpenDialog(true);
+    if (item) {
+      handleEditItem();
+    } else {
+      console.log("storing NFT...");
+      const uploadResp = await itemDs.storeNFT(
+        images.main,
+        getValues("title"),
+        getValues("description")
+      );
+      console.log("upload to ipfs resp ", uploadResp);
+      // step 2
+      const mintedResp = await tokenContract?.createToken(uploadResp.url);
+      console.log("mint Token resp ", mintedResp);
+      // step 3
+      const listResp = await marketplaceContract?.list(
+        mintedResp.data.id, // itemId from response
+        getValues("price"),
+        getValues("royalties"),
+        tokenContract?.address
+      );
+      console.log("listing token resp ", listResp);
+      console.log("submitting here ......");
+      setOpenDialog(true);
+    }
   };
   const handleMint = async () => {
     if (!user) return;
     const data = getValues();
-    const address: string = localStorage.getItem("address")!;
 
     try {
       data.description = state.description;
-      const result = await ItemDs.createData(data, user, address);
+      const result = await ItemDs.createData(data, user);
 
       let imageArr = [];
       for (const image of Object.entries(images)) {
@@ -146,7 +158,39 @@ function SingleCollectibleItem() {
       setOpenDialog(false);
       const imageURLs = await Promise.all(promise);
       await itemDs.updateData({ id: result.data.id, images: imageURLs });
-      router.push("/marketplace");
+      router.push("/item/" + result.data.id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEditItem = async () => {
+    if (!user) return;
+    const data = getValues();
+
+    try {
+      await ItemDs.updateItem({ ...data, id: item!.id });
+
+      let imageArr = [];
+      for (const image of Object.entries(images)) {
+        if (image[1])
+          imageArr.push({
+            name: image[0],
+            file: image[1],
+          });
+      }
+      let promise: any = [];
+      imageArr.forEach((image, index) => {
+        promise.push(
+          getFileUploadURL(image.file, `item/${item!.id}/${image.name}`)
+        );
+      });
+      toast.success("successful");
+      const imageURLs = await Promise.all(promise);
+      if (imageURLs.length) {
+        await itemDs.updateData({ id: item!.id, images: imageURLs });
+      }
+      router.push("/item/" + item?.id);
     } catch (error) {
       console.log(error);
     }
@@ -198,7 +242,8 @@ function SingleCollectibleItem() {
         <div className={styles.sci}>
           <div className={styles.scihead}>
             <h1>
-              Create <span>single item</span>
+              {item ? "Edit" : "Create"}
+              <span>single item</span>
             </h1>
           </div>
           <div className={styles.sciuploadseccon}>
@@ -318,12 +363,11 @@ function SingleCollectibleItem() {
             <h4>Item Details</h4>
             <div className={styles.itemdetailsforminput}>
               <label>ITEM NAME</label>
-              {/* {errors.title && <p>{errors["title"]}</p>} */}
               <input
                 type="text"
                 placeholder='e. g. "Redeemable Bitcoin Card with logo"'
-                // required
                 {...register("title", { required: true })}
+                disabled={!!item?.title}
               />
               {errors.title && <span>This field is required</span>}
             </div>
@@ -395,7 +439,7 @@ function SingleCollectibleItem() {
             </div>
             <div className={styles.putonscalebtnsec}>
               <button type="submit">
-                Create item
+                {item ? "Edit " : "Create "}item
                 <span>
                   <img src={`/assets/arrow.svg`} alt="" />
                 </span>
@@ -414,6 +458,8 @@ function SingleCollectibleItem() {
               src={
                 images.main
                   ? URL.createObjectURL(images.main)
+                  : item?.images
+                  ? item?.images[0]
                   : `/assets/placeholder-image.jpg`
               }
               alt="preview"
@@ -424,27 +470,7 @@ function SingleCollectibleItem() {
                 {getValues("price") || "0.00"} ETH
               </span>
             </div>
-            {/* <div className={styles.previewdiv}>
-            <div className={styles.avatars}>
-              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
-              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
-              <img alt="avatar" src={`/assets/auctionAvatar.png`} />
-            </div>
-            <div>{state.stock ? state.stock : "0"} in stock</div>
-          </div> */}
             <hr />
-            {/* <div className={styles.bidsec}>
-              <div className={styles.bidsec1}>
-                <img alt="bid icon" src={`/assets/bidicon.svg`} />
-                <span>
-                  Highest bid <span>0.00</span>
-                </span>
-              </div>
-              <div className="bidsec2">
-                <span>New bid</span>
-              </div>
-            </div> */}
-
             <div className={styles.clearsec} onClick={() => clearState()}>
               <img alt="close icon" src={`/assets/closeicon.svg`} />
               <span>Clear all</span>
