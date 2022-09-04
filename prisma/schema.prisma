@@ -211,8 +211,8 @@ model Contributor {
   collectionId Int
   userId       Int
   updatedAt    DateTime          @updatedAt
-  percentage   Int               @default(0)
   confirmation ContributorStatus @default(PENDING)
+  percentage   Int               @default(0)
   collection   Collection        @relation(fields: [collectionId], references: [id])
   user         User              @relation(fields: [userId], references: [id])
 }
