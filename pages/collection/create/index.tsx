@@ -2,13 +2,17 @@ import { GetServerSideProps } from "next";
 import React from "react";
 import CreateCollectionForm from "../../../components/CreateCollectionForm";
 import Layout from "../../../components/Layout";
-import { UserDs, CollectionTypeDs } from "../../../ds";
-import { ICollectionType } from "../../../types/collection.interface";
+import { UserDs, CollectionTypeDs, CollectionDs } from "../../../ds";
+import {
+  ICollection,
+  ICollectionType,
+} from "../../../types/collection.interface";
 import { IUser } from "../../../types/user.interface";
 
 interface CreateCollection {
   users: IUser[];
   collectionTypes: ICollectionType[];
+  collection: ICollection;
 }
 
 const Index: React.FC<CreateCollection> = (props: CreateCollection) => {
@@ -17,22 +21,26 @@ const Index: React.FC<CreateCollection> = (props: CreateCollection) => {
       <CreateCollectionForm
         users={props.users}
         collectionTypes={props.collectionTypes}
+        collection={props.collection}
       />
     </Layout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const [users, collectionTypes] = await Promise.all([
+  const { id }: any = ctx.query;
+
+  const [users, collectionTypes, collection] = await Promise.all([
     UserDs.fetchAll(),
     CollectionTypeDs.fetchAll(),
+    CollectionDs.getCollectionById(id),
   ]);
-  console.log(collectionTypes);
 
   return {
     props: {
       users,
       collectionTypes,
+      collection: collection?.data,
     },
   };
 };
