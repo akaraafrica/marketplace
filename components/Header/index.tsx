@@ -37,8 +37,6 @@ function Header() {
   async function getBalance() {
     const balance = await wethContract?.balanceOf(account);
     const formattedBalance = web3.utils.fromWei(balance?.toString() || "0");
-    console.log("balance here is ", balance);
-    console.log("formatted balance is ", formattedBalance);
     setBalance(Number(formattedBalance).toFixed());
   }
 

@@ -48,6 +48,12 @@ class User {
       return response.data;
     } catch (error) {}
   }
+  async unfollow(id: number) {
+    try {
+      const response = await api.post(`${url}/unfollow`, { id });
+      return response.data;
+    } catch (error) {}
+  }
 }
 
 export default new User();
