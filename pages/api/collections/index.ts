@@ -54,7 +54,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               id: item.id,
             })),
           },
-          userCollections: {
+          contributors: {
             create: data.owners.map((user: { id: number }) => ({
               user: {
                 connect: {

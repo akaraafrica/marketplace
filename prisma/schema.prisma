@@ -149,42 +149,43 @@ model Collection {
   author           User               @relation(fields: [authorId], references: [id])
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
   ratings          CollectionRating[]
+  contributors     Contributor[]
   items            Item[]
   likes            Like[]
-  userCollections  UserCollection[]
 }
 
 model User {
-  id                    Int              @id @default(autoincrement())
-  walletAddress         String           @unique
-  email                 String           @unique
+  id                    Int            @id @default(autoincrement())
+  walletAddress         String         @unique
+  email                 String         @unique
   password              String
-  verified              Boolean          @default(false)
+  verified              Boolean        @default(false)
   profileId             Int?
-  createdAt             DateTime         @default(now())
-  updatedAt             DateTime         @updatedAt
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
   bids                  Bid[]
   collections           Collection[]
+  contributors          Contributor[]
   items                 Item[]
   likes                 Like[]
-  receivedNotifications Notification[]   @relation("receiver")
-  sentNotifications     Notification[]   @relation("sender")
+  receivedNotifications Notification[] @relation("receiver")
+  sentNotifications     Notification[] @relation("sender")
   profile               Profile?
   purchases             Purchase[]
   ratings               Rating[]
-  userCollections       UserCollection[]
-  userFollowers         UserFollower[]   @relation("userFollowers")
-  userFollowing         UserFollower[]   @relation("userFollowing")
+  userFollowers         UserFollower[] @relation("userFollowers")
+  userFollowing         UserFollower[] @relation("userFollowing")
   userRatings           UserRating[]
 }
 
-model UserCollection {
-  id           Int        @id @default(autoincrement())
+model Contributor {
+  id           Int               @id @default(autoincrement())
   collectionId Int
   userId       Int
-  updatedAt    DateTime   @updatedAt
-  collection   Collection @relation(fields: [collectionId], references: [id])
-  user         User       @relation(fields: [userId], references: [id])
+  updatedAt    DateTime          @updatedAt
+  confirmation ContributorStatus @default(PENDING)
+  collection   Collection        @relation(fields: [collectionId], references: [id])
+  user         User              @relation(fields: [userId], references: [id])
 }
 
 model UserFollower {
@@ -233,4 +234,10 @@ enum CollectionStatus {
   VERIFIED
   READY
   PUBLISHED
+}
+
+enum ContributorStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
