@@ -1,0 +1,436 @@
+{
+  "collectionTypes": [
+    {
+      "name": "Funding",
+      "minContributors": 0,
+      "maxContributors": 10,
+      "minItems": 0,
+      "maxItems": 10,
+      "typeId": "7824h723b328928yh89yhuih897897"
+    },
+    {
+      "name": "Escrow",
+      "minContributors": 0,
+      "maxContributors": 10,
+      "minItems": 0,
+      "maxItems": 10,
+      "typeId": "782320000b328928yh89yhuih897897"
+    }
+  ],
+  "collections": [
+    {
+      "title": "Odogwu Collection",
+      "tokenId": "78234782323gjwihwafh98asdfuja8sauj112",
+      "description": "a badass collection depicting igbo culture",
+      "images": [
+        "/assets/listingcardimg.png",
+        "/assets/listingsubcardimg.png",
+        "/assets/listingsubcardimg.png"
+      ],
+      "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+    },
+    {
+      "title": "Freedom Collection",
+      "tokenId": "782347628003gjwihwafh98asdfuja8sauj112",
+      "description": "a badass collection depicting igbo culture",
+      "images": [
+        "/assets/listingcardimg.png",
+        "/assets/listingsubcardimg.png",
+        "/assets/listingsubcardimg.png"
+      ],
+      "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+    },
+    {
+      "title": "Fund Raising Collection",
+      "tokenId": "1114782323gjwihwafh98asdfuja8sauj112",
+      "description": "a badass collection depicting igbo culture",
+      "images": [
+        "/assets/listingcardimg.png",
+        "/assets/listingsubcardimg.png",
+        "/assets/listingsubcardimg.png"
+      ],
+      "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+    },
+    {
+      "title": "Photos Collection",
+      "tokenId": "78009992323gjwihwafh98asdfuja8sauj112",
+      "description": "a badass collection depicting igbo culture",
+      "images": ["/assets/listingcardimg.png", "/assets/listingsubcardimg.png"],
+      "videos": ["https://www.w3schools.com/html/mov_bbb.mp4"]
+    }
+  ],
+  "ratings": [
+    {
+      "rating": 2
+    },
+    {
+      "rating": 3
+    },
+    {
+      "rating": 5
+    },
+    {
+      "rating": 5
+    },
+    {
+      "rating": 2
+    },
+    {
+      "rating": 3
+    },
+    {
+      "rating": 1
+    },
+    {
+      "rating": 5
+    }
+  ],
+  "collectionRatings": [],
+  "itemRatings": [],
+  "profiles": [
+    {
+      "name": "Jessica Parker",
+      "rating": 0,
+      "avatar": "/assets/auctionAvatar.png",
+      "phoneNumber": "+1607826283",
+      "bio": "I'm a cool person that likes NFTs"
+    },
+    {
+      "name": "Donna Shinny",
+      "rating": 0,
+      "avatar": "/assets/auctionAvatar.png",
+      "phoneNumber": "+1202728678",
+      "bio": "I am a good person trading in NFTs and music and stuff"
+    },
+    {
+      "name": "Harvey Specter",
+      "rating": 0,
+      "avatar": "/assets/auctionAvatar.png",
+      "phoneNumber": "+19090728729",
+      "bio": "NFTs can be used for anything I like how thery work. ANother story to make things difficult to just be a short memo"
+    },
+    {
+      "name": "Scotty Banks",
+      "rating": 0,
+      "avatar": "/assets/auctionAvatar.png",
+      "phoneNumber": "+13036828729",
+      "bio": "How about solution resolution smart contracts with juries and shit"
+    }
+  ],
+  "users": [
+    {
+      "email": "samuelnnj@gmail.com",
+      "password": "akara12345",
+      "verified": true,
+      "walletAddress": "7fahdf9a8s9iafasfhad899890f9s8dfadf4643652314ias"
+    },
+    {
+      "email": "adaorajiaku@gmail.com",
+      "password": "akara12345",
+      "verified": false,
+      "walletAddress": "7fahdf9a3434535iaf09asfhadf9s8dfadfi134143123as"
+    },
+    {
+      "email": "bolajokoadah@gmail.com",
+      "password": "akara12345",
+      "verified": true,
+      "walletAddress": "7fahdf9a3434535iaf23542fq4r3adf9s8dfad98908fias"
+    },
+    {
+      "email": "ada@mbizi.org",
+      "password": "akara12345",
+      "verified": false,
+      "walletAddress": "7fahdf9a343453564356addfasfhadf9s85476467adfias"
+    }
+  ],
+  "items": [
+    {
+      "title": "Amazing digital art",
+      "price": 1.45,
+      "images": ["/assets/productimg1.png"],
+      "ownerId": 1,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL1",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 3.5,
+      "images": ["/assets/productimg2.png"],
+      "ownerId": 2,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL23",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.23,
+      "images": ["/assets/productimg3.png"],
+      "ownerId": 3,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL2",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.19,
+      "images": ["/assets/productimg4.png"],
+      "ownerId": 4,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL4",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 1.14,
+      "images": ["/assets/productimg5.png"],
+      "ownerId": 1,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL5",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 2.98,
+      "images": ["/assets/productimg6.png"],
+      "ownerId": 2,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL6",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 2.45,
+      "images": ["/assets/productimg7.png"],
+      "ownerId": 3,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL7",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.62,
+      "images": ["/assets/productimg8.png"],
+      "ownerId": 4,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL8",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 3.21,
+      "images": ["/assets/productimg1.png"],
+      "ownerId": 1,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL9",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.18,
+      "images": ["/assets/productimg2.png"],
+      "ownerId": 2,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL91",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.71,
+      "images": ["/assets/productimg3.png"],
+      "ownerId": 3,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL92",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 1.91,
+      "images": ["/assets/productimg4.png"],
+      "ownerId": 4,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL93",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 2.11,
+      "images": ["/assets/productimg5.png"],
+      "ownerId": 1,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL94",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 3.95,
+      "images": ["/assets/productimg6.png"],
+      "ownerId": 2,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL95",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.15,
+      "images": ["/assets/productimg7.png"],
+      "ownerId": 3,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL96",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.05,
+      "images": ["/assets/productimg8.png"],
+      "ownerId": 4,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL97",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.019,
+      "images": ["/assets/productimg1.png"],
+      "ownerId": 1,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL98",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 1.38,
+      "images": ["/assets/productimg2.png"],
+      "ownerId": 2,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL99",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 1.95,
+      "images": ["/assets/productimg3.png"],
+      "ownerId": 3,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL891",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.75,
+      "images": ["/assets/productimg4.png"],
+      "ownerId": 3,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL8912",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 1.09,
+      "images": ["/assets/productimg5.png"],
+      "ownerId": 4,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL8913",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.065,
+      "images": ["/assets/productimg6.png"],
+      "ownerId": 4,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL8914",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 0.99,
+      "images": ["/assets/productimg7.png"],
+      "ownerId": 1,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL8915",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    },
+    {
+      "title": "Amazing digital art",
+      "price": 2.87,
+      "images": ["/assets/productimg8.png"],
+      "ownerId": 1,
+      "tokenId": "gadfasdfiA23452PENP7xu45jD324523NyW52345ewaqXhWy3452435dsL8916",
+      "description": "",
+      "video": "",
+      "acceptedBid": 0,
+      "openForBid": true,
+      "published": true
+    }
+  ]
+}

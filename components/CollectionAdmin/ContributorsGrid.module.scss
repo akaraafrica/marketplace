@@ -1,0 +1,101 @@
+@use "../../styles/colors" as *;
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  cursor: pointer;
+}
+
+.sellerCardMain {
+  width: 250px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #131416;
+  height: auto;
+  padding: 20px 0;
+  cursor: pointer;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+}
+
+.percentage {
+  color: white;
+  font-weight: 500;
+
+  input {
+    width: 2rem;
+    background: #131416;
+    color: white;
+  }
+
+  button {
+    color: white;
+    background: $grey2;
+    border: 0;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: auto;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    max-width: 5rem;
+  }
+}
+
+.status {
+  font-weight: 500;
+  color: white;
+  margin: 0.2rem;
+}
+
+.defaultAvatar {
+  margin-top: 30px;
+}
+
+.selercardavatar {
+  width: 80px !important;
+  height: 80px !important;
+  margin-top: 1.5vw !important;
+}
+
+.sellerName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+}
+
+@media only screen and (max-width: 600px) {
+  .sellerCardMain {
+    width: 100%;
+    height: 250px;
+    margin: 0 auto;
+  }
+
+  .sellerCardChip {
+    width: 8vw;
+    height: 4vw;
+  }
+
+  .sellerName {
+    font-size: 3vw;
+  }
+
+  .selercardavatar {
+    margin-top: 50px !important;
+  }
+}

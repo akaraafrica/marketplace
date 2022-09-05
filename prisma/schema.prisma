@@ -144,7 +144,7 @@ model Collection {
   authorId         Int
   images           String[]
   videos           String[]
-  status           CollectionStatus   @default(CREATED)
+  status           CollectionStatus?  @default(CREATED)
   visible          Boolean            @default(false)
   author           User               @relation(fields: [authorId], references: [id])
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
@@ -178,16 +178,6 @@ model User {
   userRatings           UserRating[]
 }
 
-model Contributor {
-  id           Int               @id @default(autoincrement())
-  collectionId Int
-  userId       Int
-  updatedAt    DateTime          @updatedAt
-  confirmation ContributorStatus @default(PENDING)
-  collection   Collection        @relation(fields: [collectionId], references: [id])
-  user         User              @relation(fields: [userId], references: [id])
-}
-
 model UserFollower {
   id            Int      @id @default(autoincrement())
   followerId    Int
@@ -214,6 +204,17 @@ model Like {
   Collection   Collection? @relation(fields: [collectionId], references: [id])
   Item         Item?       @relation(fields: [itemId], references: [id])
   User         User?       @relation(fields: [userId], references: [id])
+}
+
+model Contributor {
+  id           Int               @id @default(autoincrement())
+  collectionId Int
+  userId       Int
+  updatedAt    DateTime          @updatedAt
+  confirmation ContributorStatus @default(PENDING)
+  percentage   Int               @default(0)
+  collection   Collection        @relation(fields: [collectionId], references: [id])
+  user         User              @relation(fields: [userId], references: [id])
 }
 
 enum EntityType {

@@ -1,0 +1,90 @@
+@use "../../../styles/colors" as *;
+
+.container {
+  margin: auto;
+  margin-top: 10rem;
+  display: flex;
+  padding: auto 10rem;
+  max-width: 70rem;
+  position: relative;
+
+  @media screen and (max-width: 500px) {
+    max-width: 26rem;
+  }
+
+  .heading {
+    padding-left: 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    color: white;
+    justify-content: space-between;
+
+    h2 {
+      font-size: 3rem;
+      color: white;
+    }
+
+    span {
+      font-weight: 700;
+    }
+  }
+
+  .bottom {
+    padding-left: 1.2rem;
+    margin: auto;
+  }
+
+  .tabs {
+    margin-left: 2rem;
+    transition: all;
+
+    @media screen and (max-width: 500px) {
+      margin-left: 10px;
+      overflow: auto;
+    }
+  }
+
+  .collections {
+    display: flex;
+    gap: 1rem;
+    max-width: 50rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    user-select: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .collection {
+      width: 50rem;
+    }
+  }
+
+  .sidebar {
+    width: 20rem;
+    color: $grey3;
+    margin-right: 4rem;
+
+    @media screen and (max-width: 1000px) {
+      margin-right: 2rem;
+      margin-left: -1rem;
+      width: 10rem;
+    }
+
+    @media screen and (max-width: 640px) {
+      display: none;
+    }
+
+    li {
+      display: flex;
+      gap: 1rem;
+      width: 10rem;
+      list-style: none;
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
