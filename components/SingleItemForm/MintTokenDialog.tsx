@@ -1,13 +1,46 @@
-import Image from "next/image";
-import { useState } from "react";
+import Image from "../../components/Image";
+import { useState, useContext } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { useContract } from "../../hooks/web3";
+import {
+  CHAIN_TO_NFT_ADDRESS,
+  CHAIN_TO_MARKETPLACE_ADDRESS,
+  SupportedChainId,
+} from "../../constants";
+import token from "../../artifacts/nft.json";
+import { AuthContext } from "../../contexts/AuthContext";
+import ItemDs from "../../ds/item.ds";
 import Dialog from "../global/Dialog";
 import styles from "./MintTokenDialog.module.scss";
+import { Step } from "./index";
 
-export default function PlaceBidDialog({ open, handleClose, handleMint }: any) {
+interface properties {
+  open: boolean;
+  handleMint: Function;
+  handleUpload: Function;
+  handleClose: Function;
+  handleSignOrder: Function;
+  step: Step;
+}
+
+export default function PlaceBidDialog({
+  open,
+  handleClose,
+  handleMint,
+  handleUpload,
+  handleSignOrder,
+  step,
+}: properties) {
   return (
     <>
       <Dialog open={open} handleClose={handleClose} title={"Follow steps"}>
-        <Steps handleMint={handleMint} handleClose={handleClose} />
+        <Steps
+          handleClose={handleClose}
+          handleMint={handleMint}
+          handleUpload={handleUpload}
+          handleSignOrder={handleSignOrder}
+          step={step}
+        />
       </Dialog>
     </>
   );
@@ -26,14 +59,14 @@ export const StepSection = ({
     <section>
       <div className={styles.top}>
         {step ? (
+          <Image alt="deposit" src={`/assets/${img}`} width={40} height={40} />
+        ) : (
           <Image
             alt="deposit"
             src="/assets/singleItem/approvegreen.svg"
             width={40}
             height={40}
           />
-        ) : (
-          <Image alt="deposit" src={`/assets/${img}`} width={40} height={40} />
         )}{" "}
         <div>
           <h4>{heading}</h4>
@@ -54,44 +87,25 @@ export const StepSection = ({
               height={20}
             />
           ) : step ? (
-            "Done"
-          ) : (
             "Start now"
+          ) : (
+            "Done"
           )}
         </span>
       </button>
     </section>
   );
 };
-export const Steps = ({ handleMint, handleClose }: any) => {
-  const [loading, setLoading] = useState(false);
-  const [mintLoading, setMintLoading] = useState(false);
 
+export const Steps = ({
+  handleClose,
+  handleUpload,
+  handleMint,
+  handleSignOrder,
+  step,
+}: any) => {
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [sign, setSign] = useState(false);
-  const [mint, setMink] = useState(false);
-
-  const [disable, setDisable] = useState(true);
-  const [mintDisable, setMintDisable] = useState(false);
-
   const [terms, setTerms] = useState(false);
-  const handleMintToken = () => {
-    setMintLoading(true);
-    setTimeout(() => {
-      setMintLoading(false);
-      setMink(true);
-      setMintDisable(true);
-      setDisable(false);
-    }, 5000);
-  };
-  const handleSign = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setDisable(true);
-      setSign(true);
-    }, 5000);
-  };
 
   const handleTerms = () => setTerms(!terms);
 
@@ -103,34 +117,37 @@ export const Steps = ({ handleMint, handleClose }: any) => {
       setSubmitLoading(false);
     }, 3000);
   };
+
+  console.log("current step is ", step);
+
   return (
     <div className={styles.followsteps}>
       <StepSection
         heading="Upload files"
         text="files uploaded"
-        step={true}
-        disabled={true}
-        img=""
-        loading={false}
-        onClick={null}
+        img={step.count > 1 || step.complete ? "" : "upload.svg"}
+        step={step.count == 1}
+        disabled={step.count >= 1 && !step.complete}
+        loading={step.count == 1 && step.loading}
+        onClick={handleUpload}
       />
       <StepSection
         heading="Mint token"
         text="Call contract method"
-        step={mint}
-        disabled={mintDisable}
-        img="mint.svg"
-        loading={mintLoading}
-        onClick={handleMintToken}
+        img={step.count > 2 || step.complete ? "" : "mint.svg"}
+        step={step.count == 2}
+        disabled={step.count >= 2 && step.complete}
+        loading={step.count == 2 && step.loading}
+        onClick={handleMint}
       />
       <StepSection
-        img="sign.svg"
         heading="Sign sell order"
         text="Sign sell order using your wallet"
-        step={sign}
-        disabled={disable}
-        loading={loading}
-        onClick={handleSign}
+        img={step.count > 3 || step.complete ? "" : "sign.svg"}
+        step={step.count == 3}
+        disabled={step.count >= 3 && step.complete}
+        loading={step.count == 3 && step.loading}
+        onClick={handleSignOrder}
       />
       <section className={styles.terms}>
         <input type="checkbox" onChange={handleTerms} />
@@ -139,7 +156,7 @@ export const Steps = ({ handleMint, handleClose }: any) => {
       <button
         onClick={handleSubmit}
         className={submitLoading ? styles.loading : ""}
-        disabled={!terms || !sign || submitLoading}
+        disabled={!terms || step.count < 3 || submitLoading}
       >
         {submitLoading ? (
           <Image

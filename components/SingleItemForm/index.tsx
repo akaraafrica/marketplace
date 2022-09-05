@@ -36,6 +36,12 @@ const toolbarOptions = [
   ["clean"],
 ];
 
+export interface Step {
+  count: number;
+  loading: boolean;
+  complete: boolean;
+}
+
 function SingleCollectibleItem() {
   const { chainId } = useWeb3React();
   const tokenContract = useContract(
@@ -96,34 +102,24 @@ function SingleCollectibleItem() {
     });
   };
 
+  const [step, setStep] = useState<Step>({
+    count: 1,
+    loading: false,
+    complete: false,
+  });
+  const [tokenId, setTokenId] = useState("");
+
   const onSubmit = async () => {
-    console.log("storing NFT...");
-    const uploadResp = await itemDs.storeNFT(
-      images.main,
-      getValues("title"),
-      getValues("description")
-    );
-    console.log("upload to ipfs resp ", uploadResp);
-    // step 2
-    const mintedResp = await tokenContract?.createToken(uploadResp.url);
-    console.log("mint Token resp ", mintedResp);
-    // step 3
-    const listResp = await marketplaceContract?.list(
-      mintedResp.data.id, // itemId from response
-      getValues("price"),
-      getValues("royalties"),
-      tokenContract?.address
-    );
-    console.log("listing token resp ", listResp);
-    console.log("submitting here ......");
     setOpenDialog(true);
   };
-  const handleMint = async () => {
+
+  const handleUpload = async () => {
     if (!user) return;
     const data = getValues();
     const address: string = localStorage.getItem("address")!;
 
     try {
+      setStep({ ...step, loading: true });
       data.description = state.description;
       const result = await ItemDs.createData(data, user, address);
 
@@ -143,14 +139,48 @@ function SingleCollectibleItem() {
       toast.success("successful");
       reset();
       clearState();
-      setOpenDialog(false);
       const imageURLs = await Promise.all(promise);
       await itemDs.updateData({ id: result.data.id, images: imageURLs });
-      router.push("/marketplace");
+      setStep({ ...step, loading: false, complete: true });
+      // router.push("/marketplace");
     } catch (error) {
       console.log(error);
     }
   };
+  const handleMint = async () => {
+    setStep({ ...step, count: 2, loading: false, complete: false });
+    const uploadResp = await itemDs.storeNFT(
+      images.main,
+      getValues("title"),
+      getValues("description")
+    );
+    console.log("upload to ipfs resp ", uploadResp);
+    // step 2
+    const mintedResp = await tokenContract?.createToken(uploadResp.url);
+    console.log("mint Token resp ", mintedResp);
+
+    //  await itemDs.updateData({ id: result.data.id, images: imageURLs });
+    setStep({ ...step, count: 2, loading: false, complete: true });
+    // router.push("/marketplace");
+  };
+
+  const handleSignSellOrder = async () => {
+    setStep({ ...step, count: 3, loading: true, complete: false });
+
+    const listResp = await marketplaceContract?.list(
+      tokenId, // itemId from response
+      getValues("price"),
+      getValues("royalties"),
+      tokenContract?.address
+    );
+    console.log("listing token resp ", listResp);
+    //   await itemDs.updateData({ id: result.data.id, images: imageURLs });
+
+    setOpenDialog(false);
+    setStep({ ...step, count: 3, loading: false, complete: true });
+    router.push("/marketplace");
+  };
+
   const handleDialogClose = () => setOpenDialog(false);
 
   const target = useRef<HTMLInputElement>(null);
@@ -192,6 +222,9 @@ function SingleCollectibleItem() {
         open={openDialog}
         handleClose={handleDialogClose}
         handleMint={handleMint}
+        handleUpload={handleUpload}
+        step={step}
+        handleSignOrder={handleSignSellOrder}
       />
 
       <div className={styles.sciCon}>
