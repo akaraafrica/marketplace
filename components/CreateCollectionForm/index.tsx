@@ -12,6 +12,9 @@ import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import MintTokenDialog from "../SingleItemForm/MintTokenDialog";
 import { CollectionDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ICollection } from "../../types/collection.interface";
+import { useRouter } from "next/router";
+import { Step } from "../SingleItemForm";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -120,14 +123,12 @@ const Index = ({
       optional4: e.target.files[0],
     });
   };
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    getValues,
-    formState: { errors },
-  } = useForm();
+
+  const [step, setStep] = useState<Step>({
+    count: 1,
+    loading: false,
+    complete: false,
+  });
 
   const title = watch("title", "");
   const countdown = watch("countdown", "");
@@ -186,13 +187,67 @@ const Index = ({
       reset();
       clearState();
       setOpenDialog(false);
+      setTimeout(() => {
+        router.push("/collection/" + result.data.id);
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleUpdateCollection = async () => {
+    const data = getValues();
+    data.description = desc;
+    data.type = type;
+    data.owners = selectedUser;
+    data.items = selectedItems;
+    data.id = collection.id;
 
-      const imageURLs = await Promise.all(promise);
-      await CollectionDs.updateData({
-        id: result.data.id,
-        images: imageURLs,
-        videos: [videoUrl],
+    try {
+      await CollectionDs.updateCollection(data);
+      let imageArr = [];
+      for (const image of Object.entries(images)) {
+        if (image[1])
+          imageArr.push({
+            name: image[0],
+            file: image[1],
+          });
+      }
+
+      let promise: any = [];
+      imageArr.forEach((image) => {
+        promise.push(
+          getFileUploadURL(
+            image.file,
+            `collection/${collection.id}/${image.name}`
+          )
+        );
       });
+
+      let videoUrl;
+      if (video) {
+        videoUrl = await getFileUploadURL(
+          video,
+          `/video/collection/${collection.id}/${title.replace(" ", "-")}`
+        );
+      }
+
+      let imageURLs = await Promise.all(promise);
+      if (imageURLs.length) {
+        await CollectionDs.updateData({
+          id: collection.id,
+          images: imageURLs,
+        });
+      }
+      if (videoUrl) {
+        await CollectionDs.updateData({
+          id: collection.id,
+          videos: [videoUrl],
+        });
+      }
+      toast.success("collection updated successful");
+      setTimeout(() => {
+        router.push("/collection/" + collection.id);
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
