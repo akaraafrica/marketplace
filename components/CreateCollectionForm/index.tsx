@@ -12,6 +12,7 @@ import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import MintTokenDialog from "../SingleItemForm/MintTokenDialog";
 import { CollectionDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
+import { Step } from "../SingleItemForm";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -101,6 +102,12 @@ const Index = ({
     getValues,
     formState: { errors },
   } = useForm();
+
+  const [step, setStep] = useState<Step>({
+    count: 1,
+    loading: false,
+    complete: false,
+  });
 
   const title = watch("title", "");
   const countdown = watch("countdown", "");
@@ -204,6 +211,9 @@ const Index = ({
         open={openDialog}
         handleClose={handleDialogClose}
         handleMint={handleMint}
+        handleUpload={() => console.log("handling upload")}
+        step={step}
+        handleSignOrder={() => console.log("handing sell order")}
       />
       <div className={styles.sciCon}>
         <div className={styles.sci}>
