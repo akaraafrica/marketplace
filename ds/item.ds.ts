@@ -27,7 +27,7 @@ class Item {
       console.log(error);
     }
   }
-  async createData(data: any, user: IUser, walletAddress: string) {
+  async createData(data: any, user: IUser) {
     try {
       const res = await api.post(url, { item: data, user });
       return res;
@@ -37,9 +37,19 @@ class Item {
   }
 
   async updateData(data: any) {
-    console.log(data);
     try {
       const res = await api.patch(url, {
+        ...data,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updateItem(data: any) {
+    console.log(data);
+    try {
+      const res = await api.patch(`${url}/update`, {
         ...data,
       });
       return res;
