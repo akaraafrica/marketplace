@@ -229,18 +229,19 @@ export async function TriggerAction(props: ActionProps) {
       if (!collection) throw Error("invalid action");
       let promise: any = [];
 
-      collection.owners.forEach((contributor) => {
+      collection.contributors.forEach((contributor) => {
         const data = {
           receiverId: contributor.id,
           senderId: user.id,
           action: action,
           title: `congratulation ${
-            contributor.profile?.name || contributor.walletAddress.slice(0, 6)
+            contributor.user?.profile?.name ||
+            contributor.user.walletAddress.slice(0, 6)
           }  ${collection?.title} collection has been created`,
           itemType: ItemType.Collection,
         };
         const emailData = {
-          to: contributor.email,
+          to: contributor.user.email,
           from: "info@mbizi.org",
           templateId: MailTemplateIDs.CreateCollection,
           title: collection.title,

@@ -61,7 +61,7 @@ const Index = ({
     if (userIndex[0]?.items.length > 0) {
       setItems([...userIndex[0].items]);
     }
-  }, []);
+  }, [userIndex]);
 
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
@@ -119,7 +119,7 @@ const Index = ({
     }
     setOpenDialog(true);
   };
-  const handleMint = async () => {
+  const handleUpload = async () => {
     console.log("items", items);
     const data = getValues();
     const address: string = localStorage.getItem("address")!;
@@ -172,10 +172,10 @@ const Index = ({
     const MIN_FILE_SIZE = 1024; // 1MB
     const MAX_FILE_SIZE = 5120; // 5MB
 
-    if (file.size / 1024 < MIN_FILE_SIZE) {
-      toast.warning("uploaded video file is too small");
-      return;
-    }
+    // if (file.size / 1024 < MIN_FILE_SIZE) {
+    //   toast.warning("uploaded video file is too small");
+    //   return;
+    // }
 
     if (file.size / 1024 > MAX_FILE_SIZE) {
       toast.warning("uploaded video file is too big");
@@ -210,8 +210,8 @@ const Index = ({
       <MintTokenDialog
         open={openDialog}
         handleClose={handleDialogClose}
-        handleMint={handleMint}
-        handleUpload={() => console.log("handling upload")}
+        handleMint={() => console.log("handling mint")}
+        handleUpload={handleUpload}
         step={step}
         handleSignOrder={() => console.log("handing sell order")}
       />
@@ -453,14 +453,14 @@ const Index = ({
                   {...register("countdown", {})}
                 />
               </div>
-              <div className={styles.itemdetailsforminput1}>
+              {/* <div className={styles.itemdetailsforminput1}>
                 <label>COLLECTION STOCK</label>
                 <input
                   type="number"
                   placeholder="1"
                   {...register("stock", {})}
                 />
-              </div>
+              </div> */}
             </div>
             <div className={styles.divider}></div>
             <div className={styles.itemdetailsforminputSearch}>

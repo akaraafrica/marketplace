@@ -31,7 +31,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
     if (isFollowing?.id) {
       setIsFollowing(isFollowing);
     }
-  }, [userFollowers]);
+  }, [user?.id, userFollowers]);
 
   const handleFollow = async () => {
     if (!user) return;
