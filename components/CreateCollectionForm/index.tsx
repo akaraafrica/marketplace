@@ -12,6 +12,8 @@ import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import MintTokenDialog from "../SingleItemForm/MintTokenDialog";
 import { CollectionDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ICollection } from "../../types/collection.interface";
+import { useRouter } from "next/router";
 import { Step } from "../SingleItemForm";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
@@ -33,12 +35,25 @@ const toolbarOptions = [
 const Index = ({
   users,
   collectionTypes,
+  collection,
 }: {
   users: any[];
   collectionTypes: any[];
+  collection: ICollection;
 }) => {
+  // console.log(collection);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm();
   const [desc, setDesc] = useState("");
-  const [type, setType] = useState<Number>();
+  const [type, setType] = useState<number>();
   const [video, setVideo] = useState(null);
   const [searchUser, setSearchUser] = useState("");
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
@@ -62,7 +77,21 @@ const Index = ({
       setItems([...userIndex[0].items]);
     }
   }, []);
+  useEffect(() => {
+    if (collection) {
+      setValue("title", collection.title);
+      setValue("visible", collection.visible);
 
+      setType(collection.collectionTypeId);
+      setDesc(collection.description);
+      const contributors = collection.contributors.map(
+        (contributors) => contributors.user
+      );
+      setSelectedUser(contributors);
+      setSelectedItems(collection.items);
+    }
+  }, [collection]);
+  const router = useRouter();
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
   const optional1 = useRef<HTMLInputElement>(null);
@@ -94,14 +123,6 @@ const Index = ({
       optional4: e.target.files[0],
     });
   };
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    getValues,
-    formState: { errors },
-  } = useForm();
 
   const [step, setStep] = useState<Step>({
     count: 1,
@@ -113,24 +134,27 @@ const Index = ({
   const countdown = watch("countdown", "");
 
   const onSubmit = () => {
-    if (!title || !desc || !type || !countdown) {
-      toast.error("Ensure required fields are not empty");
-      return;
+    if (collection) {
+      handleUpdateCollection();
+    } else {
+      if (!title || !desc || !type) {
+        toast.error("Ensure required fields are not empty");
+        return;
+      }
+      setOpenDialog(true);
     }
-    setOpenDialog(true);
   };
   const handleMint = async () => {
-    console.log("items", items);
     const data = getValues();
+    data.description = desc;
+    data.type = type;
+    data.owners = selectedUser;
+    data.items = selectedItems;
+
     const address: string = localStorage.getItem("address")!;
 
     try {
-      data.description = desc;
-      data.type = type;
-      data.owners = selectedUser;
-      data.items = selectedItems;
       const result = await CollectionDs.createData(data, user!, address);
-      console.log(result);
       let imageArr = [];
       for (const image of Object.entries(images)) {
         imageArr.push({
@@ -140,20 +164,18 @@ const Index = ({
       }
       let promise: any = [];
       imageArr.forEach((image) => {
-        promise.push(getFileUploadURL(image.file, `collection/${image.name}`));
+        promise.push(
+          getFileUploadURL(
+            image.file,
+            `collection/${result.data.id}/${image.name}`
+          )
+        );
       });
 
       let videoUrl = await getFileUploadURL(
         video,
-        `collection/${title.replace(" ", "-")}`
+        `/video/collection/${result.data.id}/${title.replace(" ", "-")}`
       );
-      // console.log({ videoUrl });
-
-      console.log(data);
-      toast.success("successful");
-      reset();
-      clearState();
-      setOpenDialog(false);
 
       const imageURLs = await Promise.all(promise);
       await CollectionDs.updateData({
@@ -161,6 +183,71 @@ const Index = ({
         images: imageURLs,
         videos: [videoUrl],
       });
+      toast.success("successful");
+      reset();
+      clearState();
+      setOpenDialog(false);
+      setTimeout(() => {
+        router.push("/collection/" + result.data.id);
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleUpdateCollection = async () => {
+    const data = getValues();
+    data.description = desc;
+    data.type = type;
+    data.owners = selectedUser;
+    data.items = selectedItems;
+    data.id = collection.id;
+
+    try {
+      await CollectionDs.updateCollection(data);
+      let imageArr = [];
+      for (const image of Object.entries(images)) {
+        if (image[1])
+          imageArr.push({
+            name: image[0],
+            file: image[1],
+          });
+      }
+
+      let promise: any = [];
+      imageArr.forEach((image) => {
+        promise.push(
+          getFileUploadURL(
+            image.file,
+            `collection/${collection.id}/${image.name}`
+          )
+        );
+      });
+
+      let videoUrl;
+      if (video) {
+        videoUrl = await getFileUploadURL(
+          video,
+          `/video/collection/${collection.id}/${title.replace(" ", "-")}`
+        );
+      }
+
+      let imageURLs = await Promise.all(promise);
+      if (imageURLs.length) {
+        await CollectionDs.updateData({
+          id: collection.id,
+          images: imageURLs,
+        });
+      }
+      if (videoUrl) {
+        await CollectionDs.updateData({
+          id: collection.id,
+          videos: [videoUrl],
+        });
+      }
+      toast.success("collection updated successful");
+      setTimeout(() => {
+        router.push("/collection/" + collection.id);
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
@@ -203,8 +290,6 @@ const Index = ({
     setSelectedItems([]);
     setSelectedUser([]);
   };
-  // console.log("users", selectedUser);
-  // console.log("items", items);
   return (
     <div className={styles.root}>
       <MintTokenDialog
@@ -218,7 +303,11 @@ const Index = ({
       <div className={styles.sciCon}>
         <div className={styles.sci}>
           <div className={styles.scihead}>
-            <h1>Create new collection</h1>
+            {collection ? (
+              <h1>Edit collection</h1>
+            ) : (
+              <h1>Create new collection</h1>
+            )}
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -396,16 +485,18 @@ const Index = ({
                 </div>
               </section>
             </div>
-            <h4>Collection Details</h4>
             <div className={styles.itemdetailsforminput}>
+              <h4>Collection Details</h4>
               <label>COLLECTION NAME</label>
               <input
                 type="text"
+                disabled={!!collection}
                 placeholder='e. g. "Redeemable Bitcoin Card with logo"'
                 {...register("title", { required: true })}
               />
               {errors.title && <span>This field is required</span>}
             </div>
+
             <div className={styles.editor}>
               <label>DESCRIPTION</label>
 
@@ -429,8 +520,9 @@ const Index = ({
             <div className={styles.itemdetailsforminput}>
               <label>COLLECTION TYPE</label>
               <select
-                defaultValue={"default"}
                 onChange={(e: any) => setType(e.target.value)}
+                disabled={!!collection}
+                value={type}
               >
                 <option value="default" disabled>
                   Choose a Collection type
@@ -451,14 +543,6 @@ const Index = ({
                   placeholder="12-03-2022"
                   onFocus={(e) => (e.target.type = "date")}
                   {...register("countdown", {})}
-                />
-              </div>
-              <div className={styles.itemdetailsforminput1}>
-                <label>COLLECTION STOCK</label>
-                <input
-                  type="number"
-                  placeholder="1"
-                  {...register("stock", {})}
                 />
               </div>
             </div>
@@ -613,7 +697,7 @@ const Index = ({
             </div>
             <div className={styles.putonscalesec}>
               <div className={styles.putonscalesec1}>
-                <h4>Put on sale</h4>
+                <h4>Publish</h4>
                 <p>You’ll receive bids on this item</p>
               </div>
               <label className={styles.switch}>
@@ -622,18 +706,31 @@ const Index = ({
               </label>
             </div>
             <div className={styles.putonscalebtnsec}>
-              <button type="submit">
-                Create collection
-                <span>
-                  <Image
-                    width="20px"
-                    height="10px"
-                    src={`/assets/arrow.svg`}
-                    alt=""
-                  />
-                </span>
-              </button>
-              {/* <p>Auto saving</p> */}
+              {collection ? (
+                <button type="submit">
+                  Update collection
+                  <span>
+                    <Image
+                      width="20px"
+                      height="10px"
+                      src={`/assets/arrow.svg`}
+                      alt=""
+                    />
+                  </span>
+                </button>
+              ) : (
+                <button type="submit">
+                  Create collection
+                  <span>
+                    <Image
+                      width="20px"
+                      height="10px"
+                      src={`/assets/arrow.svg`}
+                      alt=""
+                    />
+                  </span>
+                </button>
+              )}
             </div>
           </form>
         </div>
@@ -649,7 +746,7 @@ const Index = ({
                   src={
                     images.main
                       ? URL.createObjectURL(images.main)
-                      : `/assets/placeholder-image.jpg`
+                      : collection?.images[0] || `/assets/placeholder-image.jpg`
                   }
                   layout="fill"
                   alt=""
@@ -662,6 +759,8 @@ const Index = ({
                     src={
                       images.optional1
                         ? URL.createObjectURL(images.optional1)
+                        : collection
+                        ? collection?.images[1]
                         : `/assets/placeholder-image.jpg`
                     }
                     layout="fill"
@@ -674,6 +773,8 @@ const Index = ({
                     src={
                       images.optional2
                         ? URL.createObjectURL(images.optional2)
+                        : collection
+                        ? collection?.images[2]
                         : `/assets/placeholder-image.jpg`
                     }
                     layout="fill"
@@ -686,7 +787,8 @@ const Index = ({
                     src={
                       images.optional3
                         ? URL.createObjectURL(images.optional3)
-                        : `/assets/placeholder-image.jpg`
+                        : collection?.images[3] ||
+                          `/assets/placeholder-image.jpg`
                     }
                     layout="fill"
                     alt=""
@@ -699,15 +801,18 @@ const Index = ({
                   <div className={styles.left}>
                     <Image
                       className={styles.image}
-                      src={`/assets/avatar.png`}
+                      src={
+                        collection?.author?.profile?.avatar ||
+                        `/assets/avatar.png`
+                      }
                       width="50px"
                       height="50px"
                       alt=""
                     />
 
                     <div className={styles.owner}>
-                      By Samuel Nnaji
-                      {/* {author?.profile?.name && author.profile.name} */}
+                      {collection?.author?.profile?.name ||
+                        user?.walletAddress.slice(0, 6)}
                     </div>
                   </div>
                   <span>{selectedItems && selectedItems.length} Items</span>

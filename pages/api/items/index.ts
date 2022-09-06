@@ -39,14 +39,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       console.log({ item, user });
       const response = await prisma.item.create({
         data: {
-          title: item.title,
-          description: item.description,
-          price: Number(item.price),
-          ownerId: user.id,
-          tokenId: randStr(10),
-          published: item.published,
-          openForBid: item.published,
+          title: req.body.title,
+          description: req.body.description,
+          price: Number(req.body.price),
+          ownerId: req.body.ownerId,
+          tokenId: req.body.tokenId,
+          published: req.body.published,
+          acceptedBid: req.body.acceptedBid,
+          openForBid: req.body.published,
+          video: req.body.video,
           images: [],
+
           updatedAt: new Date(),
         },
       });

@@ -29,6 +29,26 @@
     }
   }
 
+  .editCollection {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    button {
+      color: white;
+      background: $grey2;
+      border: 0;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: auto;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      white-space: nowrap;
+      padding: 10px;
+    }
+  }
+
   .bottom {
     padding-left: 1.2rem;
     margin: auto;
