@@ -15,9 +15,10 @@ interface infoProperties {
   user: IUser;
   item: IItem;
 }
-const InfoComponent = ({ user, item }: infoProperties) => {
+const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
+  const { user } = useContext(AuthContext);
 
   const handleDelete = async () => {
     try {
@@ -42,28 +43,31 @@ const InfoComponent = ({ user, item }: infoProperties) => {
       )}
       <div>
         <Avatar
-          src={user.profile?.avatar}
+          src={Itemuser.profile?.avatar}
           alt="creator-photo"
           sx={{ width: 50, height: 50 }}
         />
-        <Link href={`/profile/${user.id}`}>
+        <Link href={`/profile/${Itemuser.id}`}>
           <div>
             <span>Creator</span>
-            <span>{user.profile?.name}</span>
+            <span>{Itemuser.profile?.name}</span>
           </div>
         </Link>
       </div>
-      <div className={styles.buttons}>
-        <button onClick={() => setOpen(true)}>
-          {item?.auction?.open ? "edit auction" : `place on auction`}
-        </button>
-
-        {item?.auction?.open && (
-          <button className={styles.close} onClick={handleDelete}>
-            close auction
-          </button>
-        )}
-      </div>
+      {user && (
+        <div className={styles.buttons}>
+          {user.id === Itemuser.id && (
+            <button onClick={() => setOpen(true)}>
+              {item?.auction?.open ? "edit auction" : `place on auction`}
+            </button>
+          )}
+          {item?.auction?.open && (
+            <button className={styles.close} onClick={handleDelete}>
+              close auction
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
