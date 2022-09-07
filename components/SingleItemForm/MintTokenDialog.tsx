@@ -21,15 +21,17 @@ interface properties {
   handleClose: Function;
   handleSignOrder: Function;
   step: Step;
+  handleSubmit: Function;
 }
 
-export default function PlaceBidDialog({
+export default function MinkTokenDialog({
   open,
   handleClose,
   handleMint,
   handleUpload,
   handleSignOrder,
   step,
+  handleSubmit,
 }: properties) {
   return (
     <>
@@ -40,6 +42,7 @@ export default function PlaceBidDialog({
           handleUpload={handleUpload}
           handleSignOrder={handleSignOrder}
           step={step}
+          handleSubmit={handleSubmit}
         />
       </Dialog>
     </>
@@ -98,54 +101,43 @@ export const StepSection = ({
 };
 
 export const Steps = ({
-  handleClose,
   handleUpload,
   handleMint,
   handleSignOrder,
   step,
+  handleSubmit,
 }: any) => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [terms, setTerms] = useState(false);
 
   const handleTerms = () => setTerms(!terms);
 
-  const handleSubmit = async () => {
-    setSubmitLoading(true);
-    await handleMint();
-    setTimeout(() => {
-      handleClose();
-      setSubmitLoading(false);
-    }, 3000);
-  };
-
-  console.log("current step is ", step);
-
   return (
     <div className={styles.followsteps}>
       <StepSection
         heading="Upload files"
         text="files uploaded"
-        img={step.count > 1 || step.complete ? "" : "upload.svg"}
-        step={step.count == 1}
-        disabled={step.count >= 1 && !step.complete}
+        img={step.count > 1 ? "" : "upload.svg"}
+        step={step.count <= 1}
+        disabled={step.count != 1}
         loading={step.count == 1 && step.loading}
         onClick={handleUpload}
       />
       <StepSection
         heading="Mint token"
         text="Call contract method"
-        img={step.count > 2 || step.complete ? "" : "mint.svg"}
-        step={step.count == 2}
-        disabled={step.count >= 2 && step.complete}
+        img={step.count > 2 ? "" : "mint.svg"}
+        step={step.count <= 2}
+        disabled={step.count != 2}
         loading={step.count == 2 && step.loading}
         onClick={handleMint}
       />
       <StepSection
         heading="Sign sell order"
         text="Sign sell order using your wallet"
-        img={step.count > 3 || step.complete ? "" : "sign.svg"}
-        step={step.count == 3}
-        disabled={step.count >= 3 && step.complete}
+        img={step.count > 3 ? "" : "sign.svg"}
+        step={step.count <= 3}
+        disabled={step.count != 3}
         loading={step.count == 3 && step.loading}
         onClick={handleSignOrder}
       />
