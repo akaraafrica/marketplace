@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { ICollection } from "../../../types/collection.interface";
 import { GetServerSideProps } from "next";
 import { IItem } from "../../../types/item.interface";
+import ReactHtmlParser from "react-html-parser";
 
 interface properties {
   collection: ICollection;
@@ -91,7 +92,7 @@ const Index = ({ collection }: properties) => {
               <span>{collection?.ratings?.length || 0}</span>
             </div>
           </div>
-          <p>{collection.description}</p>
+          <p>{ReactHtmlParser(collection.description)}</p>
 
           {width > 800 && (
             <QuickButtons desktop={true} collection={collection} />

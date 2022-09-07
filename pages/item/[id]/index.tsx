@@ -9,9 +9,9 @@ import { ItemDs } from "../../../ds";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
-
+import ReactHtmlParser from "react-html-parser";
 const Index = ({ item }: { item: IItem }) => {
-  const { user, isAuthenticated, signIn } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
   const isComingSoon = item?.openForBid;
   return (
@@ -59,7 +59,7 @@ const Index = ({ item }: { item: IItem }) => {
             This NFT Card will give you Access to Special Airdrops. To learn
             more about UI8 please visit
           </p>
-          <p>{item.description}</p>
+          <p>{ReactHtmlParser(item.description)}</p>
           <Tags item={item} />
           {width > 800 && <QuickButtons desktop={true} item={item} />}
         </section>

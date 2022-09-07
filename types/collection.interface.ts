@@ -26,6 +26,7 @@ export interface ICollection {
   ratings: any[];
   type: ICollectionType;
   owners: IUser[];
+  visible: boolean;
   status: CollectionStatus;
   contributors: IContributor[];
 }
