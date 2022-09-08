@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { ItemDs } from "../../../ds";
 import { GetServerSideProps } from "next";
 import { IItem } from "../../../types/item.interface";
+import withAuth from "../../../HOC/withAuth";
 
 const SingleCollectibleItem = ({ item }: { item: IItem }) => {
   return (
@@ -16,7 +17,7 @@ const SingleCollectibleItem = ({ item }: { item: IItem }) => {
   );
 };
 
-export default SingleCollectibleItem;
+export default withAuth(SingleCollectibleItem);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const itemId = ctx.query?.id;

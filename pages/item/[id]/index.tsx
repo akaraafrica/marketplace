@@ -10,6 +10,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
 import ReactHtmlParser from "react-html-parser";
+import withAuth from "../../../HOC/withAuth";
 const Index = ({ item }: { item: IItem }) => {
   const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
@@ -85,4 +86,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default Index;
+export default withAuth(Index);

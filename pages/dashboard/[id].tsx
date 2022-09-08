@@ -24,6 +24,7 @@ import HotCollectionCard from "../../components/HotCollectionsCard";
 import Collections from "../../components/dashboard/collections";
 import { AuthContext } from "../../contexts/AuthContext";
 import { GetServerSideProps } from "next";
+import withAuth from "../../HOC/withAuth";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -185,4 +186,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
-export default Dashboard;
+export default withAuth(Dashboard);
