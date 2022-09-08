@@ -8,8 +8,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import getNiceDate from "../../utils/helpers/dateFormatter";
-import { UserDs, NotificationDs } from "../../ds";
-import { IUser } from "../../types/user.interface";
+import { NotificationDs, ContributorDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 
 interface ListItemProps {
@@ -17,31 +16,64 @@ interface ListItemProps {
   subTitle: string;
   date: string;
   img: string;
-  onClick: (e: any) => void;
+  action: string;
 }
 const ListItem: React.FC<ListItemProps> = ({
   title,
   subTitle,
   date,
-  onClick,
   img,
-}) => (
-  <div className={styles.listItem} onClick={onClick}>
-    <div className={styles.left}>
-      <img
-        className={styles.avatar}
-        src={img ? img : "/assets/avatar.png"}
-        alt=""
-      />
-      <div className={styles.desc}>
-        <div className={styles.title}>{title}</div>
-        <p className={styles.sub}>{subTitle}</p>
-        <span className={styles.date}>{date}</span>
+  action,
+}) => {
+  const { user, isAuthenticated, signIn } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [respond, setRespond] = useState(true);
+
+  const id = user?.id;
+  const handleAccept = async () => {
+    setLoading(true);
+    await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
+    setLoading(false);
+    setRespond(false);
+  };
+  const handleReject = async () => {
+    setLoading(true);
+    await ContributorDs.updateStatus({ id, status: "REJECTED" });
+    setLoading(false);
+    setRespond(false);
+  };
+  return (
+    <div className={styles.listItemWrapper}>
+      <div className={styles.listItem}>
+        <div className={styles.left}>
+          <img
+            className={styles.avatar}
+            src={img ? img : "/assets/avatar.png"}
+            alt=""
+          />
+          <div className={styles.desc}>
+            <div className={styles.title}>{title}</div>
+            <p className={styles.sub}>{subTitle}</p>
+            <span className={styles.date}>{date}</span>
+          </div>
+        </div>
+        <span className={styles.dot}></span>
       </div>
+      {!loading ? (
+        action === "create-collection" && respond ? (
+          <div className={styles.actions}>
+            <button onClick={handleAccept}>Accept</button>
+            <button onClick={handleReject}>Reject</button>
+          </div>
+        ) : (
+          ""
+        )
+      ) : (
+        <span className={styles.actions}>Wait...</span>
+      )}
     </div>
-    <span className={styles.dot}></span>
-  </div>
-);
+  );
+};
 
 const Index = () => {
   const router = useRouter();
@@ -51,7 +83,6 @@ const Index = () => {
   useEffect(() => {
     if (user?.id)
       NotificationDs.fetch(user!.id).then((res) => {
-        console.log(res.data);
         setNotifications(res.data);
       });
   }, [user]);
@@ -110,10 +141,7 @@ const Index = () => {
                 subTitle={item.content}
                 img={item?.item?.images[0]}
                 date={getNiceDate(item.createdAt)}
-                onClick={() => {
-                  // updateData(item.id);
-                  return router.push(`/notifications/${item.id}`);
-                }}
+                action={item.action}
               />
             ))}
         </div>
