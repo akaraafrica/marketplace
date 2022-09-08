@@ -76,7 +76,7 @@ const Index = ({
     if (userIndex[0]?.items.length > 0) {
       setItems([...userIndex[0].items]);
     }
-  }, []);
+  }, [userIndex]);
   useEffect(() => {
     if (collection) {
       setValue("title", collection.title);
@@ -90,7 +90,7 @@ const Index = ({
       setSelectedUser(contributors);
       setSelectedItems(collection.items);
     }
-  }, [collection]);
+  }, [collection, setValue]);
   const router = useRouter();
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
@@ -144,7 +144,8 @@ const Index = ({
       setOpenDialog(true);
     }
   };
-  const handleMint = async () => {
+  const handleUpload = async () => {
+    console.log("items", items);
     const data = getValues();
     data.description = desc;
     data.type = type;
@@ -259,10 +260,10 @@ const Index = ({
     const MIN_FILE_SIZE = 1024; // 1MB
     const MAX_FILE_SIZE = 5120; // 5MB
 
-    if (file.size / 1024 < MIN_FILE_SIZE) {
-      toast.warning("uploaded video file is too small");
-      return;
-    }
+    // if (file.size / 1024 < MIN_FILE_SIZE) {
+    //   toast.warning("uploaded video file is too small");
+    //   return;
+    // }
 
     if (file.size / 1024 > MAX_FILE_SIZE) {
       toast.warning("uploaded video file is too big");
@@ -295,8 +296,8 @@ const Index = ({
       <MintTokenDialog
         open={openDialog}
         handleClose={handleDialogClose}
-        handleMint={handleMint}
-        handleUpload={() => console.log("handling upload")}
+        handleMint={() => console.log("handling mint")}
+        handleUpload={handleUpload}
         step={step}
         handleSignOrder={() => console.log("handing sell order")}
       />

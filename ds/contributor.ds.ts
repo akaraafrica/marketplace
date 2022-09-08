@@ -11,6 +11,14 @@ class Contributor {
       console.log(error);
     }
   }
+  async updateStatus(data: any) {
+    try {
+      const res = await api.put(url + "/status", data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async deleteContributor(data: any) {
     try {
       const res = await api.delete(url + "/delete", { data });

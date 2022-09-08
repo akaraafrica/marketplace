@@ -1,6 +1,7 @@
 .root {
   width: 100%;
   overflow-x: hidden;
+
   .breadcrumbWrap {
     display: flex;
     flex-direction: row;
@@ -11,6 +12,7 @@
     background: #141416;
     border-bottom: 1px solid #353945;
   }
+
   .backButton {
     box-sizing: border-box;
     display: flex;
@@ -23,6 +25,7 @@
     border: 2px solid #353945;
     border-radius: 90px;
     cursor: pointer;
+
     @media (max-width: 800px) {
       display: none;
     }
@@ -36,6 +39,7 @@
       color: #fcfcfd;
     }
   }
+
   .breadcrumb {
     display: flex;
     gap: 40px;
@@ -47,6 +51,7 @@
     color: #777e91;
     cursor: pointer;
   }
+
   .notification {
     display: flex;
     flex-direction: column;
@@ -56,9 +61,11 @@
     background: #141416;
     border-bottom: 1px solid #353945;
     box-sizing: border-box;
+
     @media (max-width: 800px) {
-      padding: 80px 40px;
+      padding: 80px 20px;
     }
+
     .noteTitle {
       text-align: center;
 
@@ -68,21 +75,25 @@
         font-size: 48px;
         letter-spacing: -0.02em;
         color: #fcfcfd;
+
         @media (max-width: 800px) {
           font-size: 32px;
         }
       }
     }
+
     .body {
       p {
         color: #f1f1f1;
       }
     }
+
     .top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 50%;
+
       @media (max-width: 800px) {
         width: 100%;
       }
@@ -93,10 +104,12 @@
         font-size: 48px;
         letter-spacing: -0.02em;
         color: #fcfcfd;
+
         @media (max-width: 800px) {
           font-size: 32px;
         }
       }
+
       .markButton {
         box-sizing: border-box;
         display: flex;
@@ -107,6 +120,7 @@
         border: 2px solid #353945;
         border-radius: 90px;
         cursor: pointer;
+
         @media (max-width: 800px) {
           width: 120px;
         }
@@ -122,6 +136,7 @@
         }
       }
     }
+
     .nav {
       display: flex;
       justify-content: flex-start;
@@ -129,6 +144,7 @@
       gap: 24px;
       width: 50%;
       margin: 64px 0 48px;
+
       @media (max-width: 800px) {
         width: 100%;
       }
@@ -152,12 +168,40 @@
         cursor: pointer;
       }
     }
+
     .list {
       display: flex;
       flex-direction: column;
       width: 50%;
+
       @media (max-width: 800px) {
         width: 100%;
+      }
+
+      .listItemWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        border-radius: 20px;
+        width: 100%;
+
+        .actions {
+          justify-content: end;
+          padding: 20px;
+
+          button {
+            cursor: pointer;
+            border: 2px solid #f2994a;
+            background-color: #f2994a;
+            color: #fcfcfd;
+            padding: 5px;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -ms-border-radius: 5px;
+            -o-border-radius: 5px;
+          }
+        }
       }
 
       .listItem {
@@ -167,11 +211,10 @@
         justify-content: space-between;
         padding: 20px;
         gap: 24px;
-        width: 100%;
-        cursor: pointer;
-        border-radius: 20px;
+        // width: 100%;
+
         @media (max-width: 800px) {
-          width: 100%;
+          width: 90%;
           gap: 0;
         }
 
@@ -188,15 +231,18 @@
             border-radius: 50%;
             width: 128px;
             height: 128px;
+
             @media (max-width: 800px) {
               width: 80px;
               height: 80px;
             }
           }
+
           .desc {
             display: block;
             flex-direction: column;
             padding: 20px;
+
             @media (max-width: 800px) {
               width: 100%;
             }
@@ -207,12 +253,14 @@
               font-size: 20px;
               color: #fcfcfd;
             }
+
             .sub {
               font-style: normal;
               font-weight: 400;
               font-size: 12px;
               color: #e6e8ec;
             }
+
             .date {
               font-style: normal;
               font-weight: 600;
@@ -221,6 +269,7 @@
             }
           }
         }
+
         .dot {
           width: 12px;
           height: 12px;
@@ -228,9 +277,15 @@
           border-radius: 16px;
         }
       }
-      .listItem:hover {
+
+      .listItemWrapper:hover {
         background-color: #23262f;
       }
     }
   }
+}
+
+.actions {
+  display: flex;
+  gap: 30px;
 }

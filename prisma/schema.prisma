@@ -165,7 +165,7 @@ model User {
   updatedAt             DateTime       @updatedAt
   bids                  Bid[]
   collections           Collection[]
-  contributor           Contributor[]
+  contributors          Contributor[]
   items                 Item[]
   likes                 Like[]
   receivedNotifications Notification[] @relation("receiver")
