@@ -88,7 +88,6 @@ function HotItems({ items }: properties) {
                       img={`${item.images ?? item.images[0]}`}
                       name={item.title}
                       price={item.price}
-                      stock={item.stock}
                       ownerAvatar={`${item.owner?.profile?.avatar}`}
                       highestBid={item.highestbid}
                     />

@@ -16,10 +16,25 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           profile: true,
           collections: true,
           items: true,
-          userFollowers: true,
-          userFollowing: true,
-          bids: true,
-          likes: true,
+          followedBy: {
+            include: {
+              profile: true,
+              followedBy: true,
+              items: true,
+            },
+          },
+          following: {
+            include: {
+              profile: true,
+              followedBy: true,
+              items: true,
+            },
+          },
+          likes: {
+            include: {
+              item: true,
+            },
+          },
         },
       });
       // console.log(user);
