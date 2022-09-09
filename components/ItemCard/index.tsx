@@ -10,7 +10,6 @@ interface ItemCardProps {
   img: string;
   name: string;
   price: number;
-  stock: string;
   ownerAvatar: string;
   highestBid: string;
   collectionImages?: string[];
@@ -55,7 +54,6 @@ function ItemCard(props: ItemCardProps) {
                   <span>{props.price} ETH</span>
                 </div>
               )}
-              {props.collectionImages && <span>{props.stock}</span>}
             </div>
             {!props.collectionImages && props.ownerAvatar != "undefined" && (
               <div className={styles.previewstockcon}>
@@ -64,7 +62,6 @@ function ItemCard(props: ItemCardProps) {
                   <img alt="avatar" src={props.ownerAvatar} />
                   <img alt="avatar" src={props.ownerAvatar} />
                 </div>
-                <span>{props.stock}</span>
               </div>
             )}
             {!props.collectionImages && <hr />}

@@ -3,17 +3,27 @@ import FollowingSec from "../FollowingSec";
 import ItemCard from "../ItemCard";
 import styles from "./index.module.scss";
 import { IItem } from "../../types/item.interface";
+import { ILike } from "../../types/like.interface";
 
 interface ProfileItemProps {
   items: IItem[];
   open: number;
   following: any;
+  followBy: any;
   collections: any;
+  likes: ILike[] | undefined;
 }
-const Index = ({ items, open, following, collections }: ProfileItemProps) => {
+const Index = ({
+  items,
+  open,
+  followBy,
+  following,
+  likes,
+  collections,
+}: ProfileItemProps) => {
   return (
     <div>
-      {open === 0 || open === 2 ? (
+      {open === 0 ? (
         <div className={styles.root}>
           {items &&
             items.map((item: any, idx) => (
@@ -23,7 +33,6 @@ const Index = ({ items, open, following, collections }: ProfileItemProps) => {
                 img={item.images[0]}
                 name={item.title}
                 price={item.price}
-                stock="3 in stock"
                 ownerAvatar={item.images[0]}
                 highestBid="0.001 ETH"
               />
@@ -39,24 +48,39 @@ const Index = ({ items, open, following, collections }: ProfileItemProps) => {
                 img={item.images[0]}
                 name={item.title}
                 price={item.price}
-                stock={`${item.images.length} in stock`}
                 ownerAvatar={item.images[0]}
-                highestBid="0.001 ETH"
+                highestBid=""
                 collectionImages={item.images}
+              />
+            ))}
+        </div>
+      ) : open === 2 ? (
+        <div className={styles.root}>
+          {likes &&
+            likes.map(({ item }) => (
+              <ItemCard
+                key={item?.id}
+                id={item!.id}
+                img={item!.images[0]}
+                name={item!.title}
+                price={item!.price}
+                ownerAvatar={item!.images[0]}
+                highestBid=""
               />
             ))}
         </div>
       ) : open === 3 ? (
         <div className={styles.following}>
+          {followBy &&
+            followBy.map((person: any) => (
+              <FollowingSec key={person.id} person={person} />
+            ))}
+        </div>
+      ) : open === 4 ? (
+        <div className={styles.following}>
           {following &&
             following.map((person: any) => (
-              <FollowingSec
-                key={person.id}
-                ProfilePhoto={`/assets/profilephoto.png`}
-                Name="Sally Fadel"
-                Followers="161 followers"
-                FollowerImage={`/assets/notificationImg.png`}
-              />
+              <FollowingSec key={person.id} person={person} />
             ))}
         </div>
       ) : (
