@@ -10,6 +10,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
 import ReactHtmlParser from "react-html-parser";
+import Link from "next/link";
 const Index = ({ item }: { item: IItem }) => {
   const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
@@ -61,6 +62,9 @@ const Index = ({ item }: { item: IItem }) => {
           </p>
           <p>{ReactHtmlParser(item.description)}</p>
           <Tags item={item} />
+          <Link href={`/item/create?id=${item.id}`}>
+            <button className={styles.edit}>Edit Item</button>
+          </Link>
           {width > 800 && <QuickButtons desktop={true} item={item} />}
         </section>
       </main>
@@ -70,8 +74,7 @@ const Index = ({ item }: { item: IItem }) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const itemId = ctx.params?.id;
-  let [Item] = await Promise.all([ItemDs.getData()]);
-  let item = Item ? Item.find((i: any) => i.id == Number(itemId)) : null;
+  let item = await ItemDs.getItem(itemId);
 
   if (!item) {
     return {
