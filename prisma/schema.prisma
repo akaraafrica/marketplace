@@ -75,9 +75,6 @@ model Item {
   price        Float
   published    Boolean
   publishedAt  DateTime?
-  step         Int?
-  terms        Boolean?
-  royalties    Int?
   updatedAt    DateTime       @updatedAt
   step         Int?
   royalties    Int?
