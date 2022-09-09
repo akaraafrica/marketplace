@@ -1,6 +1,7 @@
 import prisma, { Prisma } from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
+import exclude from "../../../utils/helpers/excludePassword";
 
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
@@ -22,8 +23,9 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           likes: true,
         },
       });
-      // console.log(user);
-      return res.status(200).json(user);
+      // @ts-ignore: Unreachable code error
+      const userWithoutPassword = exclude(user, "password");
+      return res.status(200).json(userWithoutPassword);
     } catch (error) {
       console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
