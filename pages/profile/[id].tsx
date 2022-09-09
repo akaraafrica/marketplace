@@ -16,6 +16,7 @@ import DefaultAvatar from "../../components/DefaultAvatar";
 import { UserDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IProfile } from "../../types/profile.interface";
+import { useRouter } from "next/router";
 
 const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const [open, setOpen] = React.useState(0);
@@ -24,6 +25,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const user = useContext(AuthContext).user;
   // console.log(profile);
   const [isFollowing, setIsFollowing] = useState<false | { id: number }>(false);
+  const router = useRouter();
   useEffect(() => {
     const isFollowing = userFollowers?.find(
       (follower) => follower.followerId === user?.id
@@ -34,7 +36,9 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
   }, [user?.id, userFollowers]);
 
   const handleFollow = async () => {
-    if (!user) return;
+    if (!user) {
+      return router.push("/login");
+    }
     if (isFollowing) {
       await UserDs.unfollow(isFollowing.id);
       setIsFollowing(false);

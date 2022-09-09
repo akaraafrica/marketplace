@@ -37,7 +37,7 @@ const Home = (props: any) => {
         </div>
       </div>
       <LandingMainSection collection={props.collection[0]} />
-      <SellersSec sellers={props.sellers} />
+      {/* <SellersSec sellers={props.sellers} /> */}
       <HotItems items={props.item} />
       <HotCollectionsSection collections={props.collection} />
       <Discover items={props.discovery} />
