@@ -6,10 +6,19 @@ export default async function profile(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    console.log(req.body);
+
     try {
-      await prisma.userFollower.delete({
+      await prisma.user.update({
         where: {
           id: req.body.id,
+        },
+        data: {
+          followedBy: {
+            disconnect: {
+              id: req.body.userId,
+            },
+          },
         },
       });
       console.log("user unfollowed");

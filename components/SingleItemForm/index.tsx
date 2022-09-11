@@ -73,9 +73,8 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
     title: string;
     description: string;
     price: string;
-    blockchain: string;
     published: boolean;
-    royalties: string;
+    royalties: number;
     image: any;
   };
   const {
@@ -92,7 +91,33 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       setValue("image", item.images[0]);
       setValue("title", item.title);
       setValue("description", item.description);
+      setValue("royalties", item?.royalties);
       setValue("price", item.price.toString());
+      setUploadId(item.id);
+      if (item.step == 2) {
+        setOpenDialog(true);
+        setStep({
+          count: 2,
+          loading: false,
+          complete: false,
+        });
+      }
+      if (item.step == 3) {
+        setOpenDialog(true);
+        setStep({
+          count: 3,
+          loading: false,
+          complete: false,
+        });
+      }
+      if (item.step == 4) {
+        setOpenDialog(true);
+        setStep({
+          count: 4,
+          loading: false,
+          complete: false,
+        });
+      }
     }
   }, [item]);
 
@@ -117,75 +142,21 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
     complete: false,
   });
   const [tokenId, setTokenId] = useState("");
+  const [uploadId, setUploadId] = useState(0);
 
   const onSubmit = async () => {
     if (item) {
-      handleEditItem();
+      if (item.step === 5) handleEditItem();
     } else {
-      console.log("storing NFT...");
-      const uploadResp = await itemDs.storeNFT(
-        images.main,
-        getValues("title"),
-        getValues("description")
-      );
-      console.log("upload to ipfs resp ", uploadResp);
-      // step 2
-      const mintedResp = await tokenContract?.createToken(uploadResp.url);
-      console.log("mint Token resp ", mintedResp);
-      // step 3
-      const listResp = await marketplaceContract?.list(
-        mintedResp.data.id, // itemId from response
-        getValues("price"),
-        getValues("royalties"),
-        tokenContract?.address
-      );
-      console.log("listing token resp ", listResp);
-      console.log("submitting here ......");
       setOpenDialog(true);
-    }
-    setOpenDialog(true);
-  };
-
-  const handleUpload = async () => {
-    if (!user) return;
-    const data = getValues();
-
-    try {
-      setStep({ ...step, loading: true });
-      data.description = state.description;
-      const result = await ItemDs.createData(data, user);
-
-      let imageArr = [];
-      for (const image of Object.entries(images)) {
-        imageArr.push({
-          name: image[0],
-          file: image[1],
-        });
-      }
-      let promise: any = [];
-      imageArr.forEach((image, index) => {
-        promise.push(
-          getFileUploadURL(image.file, `item/${result.data.id}/${image.name}`)
-        );
-      });
-      toast.success("successful");
-      reset();
-      clearState();
-      const imageURLs = await Promise.all(promise);
-      await itemDs.updateData({ id: result.data.id, images: imageURLs });
-      router.push("/item/" + result.data.id);
-    } catch (error) {
-      console.log(error);
     }
   };
 
   const handleEditItem = async () => {
     if (!user) return;
     const data = getValues();
-
     try {
       await ItemDs.updateItem({ ...data, id: item!.id });
-
       let imageArr = [];
       for (const image of Object.entries(images)) {
         if (image[1])
@@ -206,45 +177,126 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
         await itemDs.updateData({ id: item!.id, images: imageURLs });
       }
       setStep({ ...step, loading: false, complete: true });
-      router.push("/item /" + item?.id);
+      router.push("/item/" + item?.id);
     } catch (error) {
       console.log(error);
     }
   };
-  const handleMint = async () => {
-    setStep({ ...step, count: 2, loading: false, complete: false });
-    const uploadResp = await itemDs.storeNFT(
-      images.main,
-      getValues("title"),
-      getValues("description")
-    );
-    console.log("upload to ipfs resp ", uploadResp);
-    // step 2
-    const mintedResp = await tokenContract?.createToken(uploadResp.url);
-    console.log("mint Token resp ", mintedResp);
 
-    //  await itemDs.updateData({ id: result.data.id, images: imageURLs });
-    setStep({ ...step, count: 2, loading: false, complete: true });
-    // router.push("/marketplace");
+  const handleUpload = async () => {
+    setUploadId(0);
+
+    if (!user) return;
+    setStep({ ...step, loading: true });
+    const data = getValues();
+
+    try {
+      setStep({ ...step, loading: true });
+      data.description = state.description;
+      const result = await ItemDs.createData(data, user);
+      console.log("item result id " + result.data.id);
+
+      setUploadId(result.data.id);
+      setUploadId(result.data.id);
+
+      let imageArr = [];
+      for (const image of Object.entries(images)) {
+        imageArr.push({
+          name: image[0],
+          file: image[1],
+        });
+      }
+      let promise: any = [];
+      imageArr.forEach((image, index) => {
+        promise.push(
+          getFileUploadURL(image.file, `item/${result.data.id}/${image.name}`)
+        );
+      });
+      const imageURLs = await Promise.all(promise);
+      await itemDs.updateData({
+        id: result.data.id,
+        images: imageURLs,
+      });
+      console.log({ uploadId });
+      await itemDs.updateStep({ id: result.data.id, step: 2 });
+      setStep({ ...step, loading: false, count: 2 });
+    } catch (error) {
+      setStep({ ...step, loading: false });
+      handleDialogClose();
+      toast.error("error uploading files");
+      console.log(error);
+    }
+  };
+
+  const handleMint = async () => {
+    console.log("handleMint");
+    setStep({ ...step, loading: true });
+
+    try {
+      const uploadResp = await itemDs.storeNFT(
+        images.main,
+        getValues("title"),
+        getValues("description")
+      );
+      console.log("upload to ipfs resp ", uploadResp);
+
+      const mintedResp = await tokenContract?.createToken(uploadResp.url, {
+        gasLimit: 3e6,
+      });
+      console.log("mint Token resp ", mintedResp);
+      const status = await mintedResp?.wait();
+      console.log("mintedResp status", status?.status);
+      if (status?.status == 0) {
+        handleDialogClose();
+
+        toast.error("error minting token try again");
+        setStep({ ...step, loading: false });
+      } else {
+        await itemDs.updateStep({ id: uploadId, step: 3 });
+        setStep({ ...step, loading: false, count: 3 });
+      }
+    } catch (error) {
+      handleDialogClose();
+      setStep({ ...step, loading: false });
+
+      console.log(error);
+      toast.error("error minting token");
+    }
   };
 
   const handleSignSellOrder = async () => {
-    setStep({ ...step, count: 3, loading: true, complete: false });
+    console.log("handleSignSellOrder");
+    setStep({ ...step, loading: true });
 
-    const listResp = await marketplaceContract?.list(
-      tokenId, // itemId from response
-      getValues("price"),
-      getValues("royalties"),
-      tokenContract?.address
-    );
-    console.log("listing token resp ", listResp);
-    //   await itemDs.updateData({ id: result.data.id, images: imageURLs });
+    try {
+      const listResp = await marketplaceContract?.list(
+        tokenId, // itemId from response
+        getValues("price"),
+        getValues("royalties"),
+        tokenContract?.address
+      );
+      console.log("listing token resp ", listResp);
+      await itemDs.updateStep({ id: uploadId, step: 4 });
+      setStep({ ...step, loading: false, count: 4 });
+      // await itemDs.updateData({ id: result.data.id, images: imageURLs });
+    } catch (error) {
+      handleDialogClose();
+      setStep({ ...step, loading: false });
 
-    setOpenDialog(false);
-    setStep({ ...step, count: 3, loading: false, complete: true });
-    router.push("/marketplace");
+      console.log(error);
+      toast.error("error siging sell order");
+    }
   };
+  const handleDialogSubmit = async () => {
+    setStep({ ...step, complete: true });
+    await itemDs.updateStep({ id: uploadId, step: 5 });
 
+    handleDialogClose();
+    toast.success("successful");
+    reset();
+    clearState();
+    router.push(`item/${uploadId}`);
+  };
   const handleDialogClose = () => setOpenDialog(false);
 
   const target = useRef<HTMLInputElement>(null);
@@ -283,12 +335,13 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   return (
     <>
       <MintTokenDialog
-        open={openDialog}
         handleClose={handleDialogClose}
+        open={openDialog}
         handleMint={handleMint}
         handleUpload={handleUpload}
         step={step}
         handleSignOrder={handleSignSellOrder}
+        handleSubmit={handleDialogSubmit}
       />
 
       <div className={styles.sciCon}>
@@ -443,7 +496,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                 />
               </div>
             </div>
-            <div className={styles.itemdetailsforminput}>
+            {/* <div className={styles.itemdetailsforminput}>
               <label>BLOCKCHAIN</label>
               <select
                 {...register("blockchain", { required: true })}
@@ -454,11 +507,11 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                 <option>Bitcoin</option>
                 <option>Solana</option>
               </select>
-            </div>
+            </div> */}
             <div className={styles.itemdetailformdropdownsCon}>
               <div className={styles.itemdetailsformdropdown}>
                 <label>ROYALTIES</label>
-                <select {...register("royalties")}>
+                <select {...register("royalties")} disabled={!!item?.royalties}>
                   <option value="1">1%</option>
                   <option value="5">5%</option>
                   <option value="10">10%</option>

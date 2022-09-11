@@ -39,26 +39,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       console.log({ item, user });
       const response = await prisma.item.create({
         data: {
-          title: req.body.title,
-          description: req.body.description,
-          price: Number(req.body.price),
-          ownerId: req.body.ownerId,
-          tokenId: req.body.tokenId,
-          published: req.body.published,
-          acceptedBid: req.body.acceptedBid,
-          openForBid: req.body.published,
-          video: req.body.video,
+          title: item.title,
+          description: item.description,
+          price: Number(item.price),
+          ownerId: user.id,
+          tokenId: randStr(10),
+          published: item.published,
+          royalties: Number(item.royalties),
+          openForBid: false,
+          video: "",
           images: [],
-
           updatedAt: new Date(),
         },
       });
 
-      await TriggerAction({
-        action: Actions.CreateItem,
-        user,
-        item,
-      });
+      // await TriggerAction({
+      //   action: Actions.CreateItem,
+      //   user,
+      //   item,
+      // });
+      console.log(response.id);
+
       res.status(201).json({ id: response.id, message: "Item created" });
     } catch (error) {
       console.log(error);

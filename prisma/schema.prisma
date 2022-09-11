@@ -66,7 +66,7 @@ model Item {
   collectionId Int?
   tokenId      String         @unique
   title        String
-  description  String         @db.VarChar(250)
+  description  String?        @db.VarChar(250)
   images       String[]
   video        String?
   acceptedBid  Float?
@@ -76,6 +76,9 @@ model Item {
   published    Boolean
   publishedAt  DateTime?
   updatedAt    DateTime       @updatedAt
+  step         Int?
+  royalties    Int?
+  terms        Boolean?
   collection   Collection?    @relation(fields: [collectionId], references: [id])
   owner        User           @relation(fields: [ownerId], references: [id])
   auction      Auction?
@@ -173,18 +176,9 @@ model User {
   profile               Profile?
   purchases             Purchase[]
   ratings               Rating[]
-  userFollowers         UserFollower[] @relation("userFollowers")
-  userFollowing         UserFollower[] @relation("userFollowing")
   userRatings           UserRating[]
-}
-
-model UserFollower {
-  id            Int      @id @default(autoincrement())
-  followerId    Int
-  followingId   Int
-  updatedAt     DateTime @updatedAt
-  userFollower  User     @relation("userFollowers", fields: [followerId], references: [id])
-  userFollowing User     @relation("userFollowing", fields: [followingId], references: [id])
+  followedBy            User[]         @relation("UserFollows")
+  following             User[]         @relation("UserFollows")
 }
 
 model UserRating {
@@ -201,9 +195,9 @@ model Like {
   itemId       Int?
   userId       Int?
   collectionId Int?
-  Collection   Collection? @relation(fields: [collectionId], references: [id])
-  Item         Item?       @relation(fields: [itemId], references: [id])
-  User         User?       @relation(fields: [userId], references: [id])
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+  item         Item?       @relation(fields: [itemId], references: [id])
+  user         User?       @relation(fields: [userId], references: [id])
 }
 
 model Contributor {

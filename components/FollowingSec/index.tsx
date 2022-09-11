@@ -3,28 +3,27 @@
 import React from "react";
 import styles from "./index.module.scss";
 
-function FollowingSec(props: any) {
+function FollowingSec({ person }: any) {
   return (
-    // <div className={styles.followingseccon}>
     <div className={styles.followingsec}>
       <div className={styles.followingsec1con}>
-        <img alt="profile photo" src={props.ProfilePhoto} />
+        <img
+          alt="profile photo"
+          src={person?.profile?.image || `/assets/profilephoto.png`}
+        />
         <div className={styles.followingsec1content}>
-          <h4>{props.Name}</h4>
-          <p>{props.Followers}</p>
-          <button>Unfollow</button>
+          <h4>{person?.profile?.name || person.walletAddress?.slice(0, 6)}</h4>
+          <p>
+            {person?.followedBy?.length} <span> followers</span>
+          </p>
         </div>
       </div>
       <div className={styles.followingsec2con}>
-        {/* {props.followerItems.slice(0, 3).map((item: any, index: number) => ( */}
-        <img alt="follower image " src={props.FollowerImage} />
-        <img alt="follower image " src={props.FollowerImage} />
-        <img alt="follower image " src={props.FollowerImage} />
-        <img alt="follower image " src={props.FollowerImage} />
-        {/* ))} */}
+        {person.items.slice(0, 4).map((item: any) => (
+          <img key={item.id} alt="follower image" src={item.images[0]} />
+        ))}
       </div>
     </div>
-    // </div>
   );
 }
 export default FollowingSec;

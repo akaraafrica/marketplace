@@ -22,6 +22,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.json({ error });
     }
   }
+  if (req.method === "POST") {
+    console.log("update step");
+    console.log(req.body);
+
+    try {
+      await prisma.item.update({
+        where: {
+          id: req.body.id,
+        },
+        data: {
+          step: req.body.step,
+        },
+      });
+      res.status(201).json({ message: "step updated" });
+    } catch (error) {
+      console.log(error);
+      res.json({ error });
+    }
+  }
 };
 
 export default handler;
