@@ -184,16 +184,19 @@ const Index = ({
         images: imageURLs,
         videos: [videoUrl],
       });
-      toast.success("successful");
-      reset();
-      clearState();
-      setOpenDialog(false);
-      setTimeout(() => {
-        router.push("/collection/" + result.data.id);
-      }, 3000);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleDialogSubmit = () => {
+    toast.success("successful");
+    reset();
+    clearState();
+    setOpenDialog(false);
+    setTimeout(() => {
+      router.push("/collections");
+    }, 3000);
   };
   const handleUpdateCollection = async () => {
     const data = getValues();
@@ -295,6 +298,7 @@ const Index = ({
     <div className={styles.root}>
       <MintTokenDialog
         open={openDialog}
+        handleSubmit={handleDialogSubmit}
         handleClose={handleDialogClose}
         handleMint={() => console.log("handling mint")}
         handleUpload={handleUpload}

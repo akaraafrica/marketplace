@@ -46,6 +46,17 @@ class Item {
       console.log(error);
     }
   }
+  async updateStep({ id, step }: { id: number; step: number }) {
+    try {
+      const res = await api.post(`${url}/update`, {
+        id,
+        step,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async updateItem(data: any) {
     console.log(data);
     try {
@@ -70,6 +81,14 @@ class Item {
   async getMore(lastIndex: number) {
     try {
       const items = await api.get(`${url}/fetchmore?lastIndex=${lastIndex}`);
+      return items.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getItem(index: any) {
+    try {
+      const items = await api.get(`${url}/${index}`);
       return items.data;
     } catch (error) {
       console.log(error);
