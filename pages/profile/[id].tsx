@@ -16,6 +16,7 @@ import DefaultAvatar from "../../components/DefaultAvatar";
 import { UserDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IProfile } from "../../types/profile.interface";
+import { useRouter } from "next/router";
 
 const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const [open, setOpen] = React.useState(0);
@@ -29,9 +30,9 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
     collections,
   } = profile;
   const user = useContext(AuthContext).user;
-
+  // console.log(profile);
   const [isFollowing, setIsFollowing] = useState<any>(false);
-
+  const router = useRouter();
   useEffect(() => {
     const isFollowing = followedBy?.find((follower) => follower.id == user?.id);
     if (isFollowing?.id) {
@@ -40,7 +41,9 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
   }, [followedBy, user]);
 
   const handleFollow = async () => {
-    if (!user) return;
+    if (!user) {
+      return router.push("/login");
+    }
     if (isFollowing) {
       setIsFollowing(false);
       await UserDs.unfollow(user.id, isFollowing.id);

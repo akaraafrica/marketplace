@@ -28,4 +28,4 @@ const Settings = () => {
     </Layout>
   );
 };
-export default Settings;
+export default withAuth(Settings);

@@ -3,6 +3,7 @@ import React from "react";
 import CreateCollectionForm from "../../../components/CreateCollectionForm";
 import Layout from "../../../components/Layout";
 import { UserDs, CollectionTypeDs, CollectionDs } from "../../../ds";
+import withAuth from "../../../HOC/withAuth";
 import {
   ICollection,
   ICollectionType,
@@ -44,4 +45,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
-export default Index;
+export default withAuth(Index);

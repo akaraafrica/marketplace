@@ -10,6 +10,7 @@ import { ICollection } from "../../../types/collection.interface";
 import { GetServerSideProps } from "next";
 import { IItem } from "../../../types/item.interface";
 import ReactHtmlParser from "react-html-parser";
+import withAuth from "../../../HOC/withAuth";
 
 interface properties {
   collection: ICollection;
@@ -167,4 +168,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default Index;
+export default withAuth(Index);

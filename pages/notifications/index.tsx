@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import { NotificationDs, ContributorDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
+import withAuth from "../../HOC/withAuth";
 
 interface ListItemProps {
   title: string;
@@ -151,4 +152,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default withAuth(Index);
