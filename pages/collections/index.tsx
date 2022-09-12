@@ -42,11 +42,15 @@ const Index = ({ collections }: properties) => {
           </button>
         </div>
         <hr />
-        <div className={styles.collections}>
-          {data.map((collection) => (
-            <HotCollectionCard key={collection.id} collection={collection} />
-          ))}
-        </div>
+        {data ? (
+          <div className={styles.collections}>
+            {data?.map((collection) => (
+              <HotCollectionCard key={collection.id} collection={collection} />
+            ))}
+          </div>
+        ) : (
+          <div className={styles.noData}>No Data</div>
+        )}
       </div>
     </LandingLayout>
   );

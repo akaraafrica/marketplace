@@ -12,7 +12,7 @@ const LandingBidding = ({ collection }: properties) => {
     type: "video",
     sources: [
       {
-        src: collection.videos[0] && collection.videos[0],
+        src: collection?.videos[0],
       },
     ],
   };
