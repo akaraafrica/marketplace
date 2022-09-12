@@ -13,7 +13,14 @@ class Profile {
       console.log(error);
     }
   }
-
+  async getDashboradData(id: number) {
+    try {
+      const res = await api.get(`${url}/${id}/dashboard`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async updateData(data: any, id: number, accessToken: string) {
     try {
       await api.put(

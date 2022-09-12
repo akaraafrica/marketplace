@@ -1,7 +1,7 @@
-import prisma, { Prisma } from "../../../utils/lib/prisma";
+import prisma, { Prisma } from "../../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
-import excludePassword from "../../../utils/helpers/excludePassword";
+import { ParsePrismaError } from "../../../../utils/helpers/prisma.error";
+import excludePassword from "../../../../utils/helpers/excludePassword";
 
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
@@ -15,27 +15,6 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
         },
         include: {
           profile: true,
-          collections: true,
-          items: true,
-          followedBy: {
-            include: {
-              profile: true,
-              followedBy: true,
-              items: true,
-            },
-          },
-          following: {
-            include: {
-              profile: true,
-              followedBy: true,
-              items: true,
-            },
-          },
-          likes: {
-            include: {
-              item: true,
-            },
-          },
         },
       });
       const userWithoutPassword = excludePassword(user);
