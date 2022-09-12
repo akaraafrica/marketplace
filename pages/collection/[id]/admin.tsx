@@ -8,6 +8,7 @@ import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
 import { CollectionDs } from "../../../ds";
 import ContributorsGrid from "../../../components/CollectionAdmin/ContributorsGrid";
 import Link from "next/link";
+import withAuth from "../../../HOC/withAuth";
 
 const CollectionAdmin = ({ collection }: { collection: ICollection }) => {
   return (
@@ -47,4 +48,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
-export default CollectionAdmin;
+export default withAuth(CollectionAdmin);
