@@ -123,7 +123,7 @@ const SellersSec = (props: any) => {
           className={styles.swiper_container}
         >
           {props.sellers.sellers
-            .filter((seller: any) => seller._count.items > 0)
+            ?.filter((seller: any) => seller._count.items > 0)
             .sort((a: any, b: any) =>
               a._count.items > b._count.items ? -1 : 1
             )

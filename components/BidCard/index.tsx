@@ -11,7 +11,7 @@ const BidCard = ({ collection }: properties) => {
   return (
     <div>
       <div className={styles.bidSec}>
-        <span className={styles.auctionHeading}>{collection.title}</span>
+        <span className={styles.auctionHeading}>{collection?.title}</span>
         <div className={styles.profileInfoCardCon}>
           <div className={styles.profileInfoCard}>
             <Avatar
@@ -66,7 +66,7 @@ const BidCard = ({ collection }: properties) => {
         </div>
         <div>
           <button className={styles.bidBtn}>Place a bid</button>
-          <Link href={`/collection/${collection.id}`}>
+          <Link href={`/collection/${collection?.id}`}>
             <button className={styles.viewBtn}>View item</button>
           </Link>
         </div>
