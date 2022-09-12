@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import exclude from "../../../utils/helpers/excludePassword";
+import excludePassword from "../../../utils/helpers/excludePassword";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -16,8 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
 
-      // @ts-ignore: Unreachable code error
-      const sellersWithoutPassword = exclude(sellers, "password");
+      const sellersWithoutPassword = excludePassword(sellers);
       res.status(200).json({ sellersWithoutPassword });
     } catch (error) {
       console.log(error);

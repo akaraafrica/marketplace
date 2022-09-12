@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import Sendmail from "../../../utils/sendgrid/sendmail";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
-import exclude from "../../../utils/helpers/excludePassword";
+import excludePassword from "../../../utils/helpers/excludePassword";
 
 interface DT {
   email: string;
@@ -81,8 +81,7 @@ export default async function Signup(
         };
 
         Sendmail(Emaildata);
-        // @ts-ignore: Unreachable code error
-        const newUserWithoutPassword = exclude(newUser, "password");
+        const newUserWithoutPassword = excludePassword(newUser);
         res.status(200).json({
           user: newUserWithoutPassword,
           token,
@@ -121,8 +120,7 @@ export default async function Signup(
             items: true,
           },
         });
-        // @ts-ignore: Unreachable code error
-        const allusersWithoutPassword = exclude(allusers, "password");
+        const allusersWithoutPassword = excludePassword(allusers);
         res.json(allusersWithoutPassword);
       } catch (error: any) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
