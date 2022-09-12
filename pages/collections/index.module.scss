@@ -162,3 +162,12 @@
     }
   }
 }
+.noData {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50vh;
+  font-size: 2.5rem;
+  color: #fcfcfd;
+}
