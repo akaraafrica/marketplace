@@ -19,26 +19,33 @@ import { IProfile } from "../../types/profile.interface";
 
 const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const [open, setOpen] = React.useState(0);
-  const { walletAddress, createdAt, items, userFollowers, collections } =
-    profile;
+  const {
+    walletAddress,
+    createdAt,
+    items,
+    followedBy,
+    following,
+    likes,
+    collections,
+  } = profile;
   const user = useContext(AuthContext).user;
-  // console.log(profile);
-  const [isFollowing, setIsFollowing] = useState<false | { id: number }>(false);
+
+  const [isFollowing, setIsFollowing] = useState<any>(false);
+
   useEffect(() => {
-    const isFollowing = userFollowers?.find(
-      (follower) => follower.followerId === user?.id
-    );
+    const isFollowing = followedBy?.find((follower) => follower.id == user?.id);
     if (isFollowing?.id) {
       setIsFollowing(isFollowing);
     }
-  }, [user?.id, userFollowers]);
+  }, [followedBy, user]);
 
   const handleFollow = async () => {
     if (!user) return;
     if (isFollowing) {
-      await UserDs.unfollow(isFollowing.id);
       setIsFollowing(false);
+      await UserDs.unfollow(user.id, isFollowing.id);
     } else {
+      setIsFollowing(true);
       const res = await UserDs.follow(profile, user);
       setIsFollowing(res);
     }
@@ -64,16 +71,6 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
                 walletAddress={walletAddress!}
                 fontSize="1.2em"
               />
-              {/* <NextImage
-                className={styles.image2}
-                src={
-                  profile.avatar
-                    ? profile.avatar
-                    : "/assets/placeholder-image.jpg"
-                }
-                width="160px"
-                height="160px"
-              /> */}
               <span className={styles.name}>
                 {profile && profile.name && profile.name}
               </span>
@@ -145,6 +142,14 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
                   open === 3 ? styles.active : ""
                 }`}
               >
+                Followers
+              </span>
+              <span
+                onClick={() => setOpen(4)}
+                className={`${styles.navItem} ${
+                  open === 4 ? styles.active : ""
+                }`}
+              >
                 Following
               </span>
             </div>
@@ -152,7 +157,9 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
               <ProfileItem
                 items={items!}
                 open={open}
-                following={userFollowers}
+                followBy={followedBy}
+                following={following}
+                likes={profile.likes}
                 collections={collections}
               />
             </div>

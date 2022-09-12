@@ -2,15 +2,18 @@
   width: 100px;
   height: 100px;
 }
+
 .followingsec1content h4 {
   font-size: 1.2vw;
   color: white;
   font-weight: 500;
 }
+
 .followingsec1content p {
   font-size: 1vw;
   color: #777e91;
 }
+
 .followingsec1content button {
   width: 6vw;
   height: 2.3vw;
@@ -19,20 +22,29 @@
   font-size: 1vw;
   color: white;
   background-color: transparent;
+
+  p {
+    word-wrap: none;
+    word-break: keep-all;
+  }
 }
+
 .followingsec1content {
   line-height: 0.5vw;
   padding-left: 1vw;
 }
+
 .followingsec1con {
   display: flex;
   align-items: center;
 }
+
 .followingsec2con img {
   width: 100px;
   height: 80px;
   border-radius: 12px;
 }
+
 .followingsec2con {
   display: flex;
   align-items: center;
@@ -40,6 +52,7 @@
   // width: 34vw;
   gap: 20px;
 }
+
 .followingsec {
   display: flex;
   align-items: center;
@@ -51,29 +64,36 @@
 
   // width: 70vw;
 }
+
 @media only screen and (max-width: 640px) {
   .followingsec {
     width: 80vw !important;
     height: 20vw !important;
   }
+
   .followingsec1con img {
     width: 15vw !important;
     height: 15vw !important;
   }
+
   .followingsec1content h4 {
     font-size: 2.5vw !important;
   }
+
   .followingsec1content p {
     font-size: 2vw !important;
   }
+
   .followingsec1content button {
     width: 12vw !important;
     height: 5vw !important;
     font-size: 2vw !important;
   }
+
   .followingsec2con {
     width: 45vw !important;
   }
+
   .followingsec2con img {
     width: 10vw !important;
     height: 9vw !important;

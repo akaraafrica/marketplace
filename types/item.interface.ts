@@ -23,4 +23,6 @@ export interface IItem {
   bids: IBid[];
   likes: ILike[];
   auction: IAuction;
+  step: number;
+  royalties: number;
 }
