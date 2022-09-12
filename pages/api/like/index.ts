@@ -1,9 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import {
-  Actions,
-  ItemType,
-  TriggerAction,
-} from "../../../services/action.service";
+import { Actions, TriggerAction } from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 export default async function profile(
@@ -20,7 +16,6 @@ export default async function profile(
           itemId: item.id,
         },
       });
-      console.log({ itemData });
       if (itemData) {
         const data = await prisma.like.delete({
           where: {

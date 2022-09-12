@@ -9,6 +9,5 @@ export interface IBid {
   itemId: number;
   bidderId: number;
   user: IUser;
-  bidder: IUser;
   item: IItem;
 }

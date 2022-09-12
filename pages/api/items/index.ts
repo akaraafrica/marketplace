@@ -19,13 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               user: true,
             },
           },
-          ratings: {
-            select: {
-              rating: true,
-            },
-          },
           likes: true,
-          auction: true,
         },
       });
       return res.status(200).json(items);
@@ -53,12 +47,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
 
-      // await TriggerAction({
-      //   action: Actions.CreateItem,
-      //   user,
-      //   item,
-      // });
-      console.log(response.id);
+      await TriggerAction({
+        action: Actions.CreateItem,
+        user,
+        item,
+      });
 
       res.status(201).json({ id: response.id, message: "Item created" });
     } catch (error) {
