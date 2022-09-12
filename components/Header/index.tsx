@@ -150,7 +150,7 @@ function Header() {
           <div
             className={styles.notification}
             onClick={() => {
-              user
+              !user
                 ? router.push("/login")
                 : setNotificationOpen(!notificationOpen);
               setProfileOpen(false);
