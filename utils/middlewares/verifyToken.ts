@@ -24,6 +24,10 @@ interface Handler {
 const verifyToken = (handler: Handler) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+      console.log("verify token");
+
+      console.log(req.headers.authorization);
+
       const token =
         req.headers.authorization && req.headers.authorization.split(" ")[1];
       const decodeToken = jwt.verify(
