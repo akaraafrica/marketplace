@@ -18,6 +18,8 @@ import styles from "./Table.module.scss";
 import { TableHead } from "@mui/material";
 import NextImage from "../Image";
 import Image from "next/image";
+import { IItem } from "../../types/item.interface";
+import { IBid } from "../../types/bid.interface";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -85,23 +87,15 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-function createData(name: string, item: string, amount: number) {
-  return { name, item, amount };
-}
+export default function PaginationTable({
+  title,
+  bids,
+}: {
+  title: string;
+  bids: IBid[];
+}) {
+  const rows = bids;
 
-const rows = [
-  createData("Sam", "Amazing Art", 3.7),
-  createData("Ada", "Amazing Art", 25.0),
-  createData("Bola", "Amazing Art", 16.0),
-  createData("Sadeeq", "Amazing Art", 6.0),
-  createData("John", "Amazing Art", 16.0),
-  createData("Kate", "Amazing Art", 3.2),
-  createData("Mike", "Amazing Art", 9.0),
-  createData("Umar", "Amazing Art", 0.0),
-  createData("Nonso", "Amazing Art", 0),
-];
-
-export default function PaginationTable({ title }: { title: string }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -138,17 +132,19 @@ export default function PaginationTable({ title }: { title: string }) {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell align="left">{row.name}</TableCell>
+            <TableRow key={row.id}>
+              <TableCell align="left">
+                {row.user.profile?.name || row.user.walletAddress.slice(0, 6)}
+              </TableCell>
 
               <TableCell align="left" className={styles.item}>
-                {row.item}
+                {row.item.title}
                 <Image
                   className={styles.image}
-                  src="/assets/productimg6.png"
+                  src={row.item.images[0]}
                   width="80%"
                   height="60px"
-                  alt={row.name}
+                  alt={row.item.title}
                 />
               </TableCell>
               <TableCell align="left">{row.amount} ETH</TableCell>

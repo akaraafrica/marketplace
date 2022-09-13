@@ -85,7 +85,7 @@ function HotItems({ items }: properties) {
                     <ItemCard
                       key={idx}
                       id={item.id}
-                      img={`${item.images ?? item.images[0]}`}
+                      img={`${item.images[0]}`}
                       name={item.title}
                       price={item.price}
                       ownerAvatar={`${item.owner?.profile?.avatar}`}

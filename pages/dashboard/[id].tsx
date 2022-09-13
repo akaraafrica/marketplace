@@ -18,12 +18,14 @@ import MarkunreadIcon from "@mui/icons-material/Markunread";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ItemGrid from "../../components/dashboard/ItemGrid";
 import Link from "next/link";
-import { CollectionDs, ItemDs, ProfileDs } from "../../ds";
+import { ProfileDs } from "../../ds";
 import { ICollection } from "../../types/collection.interface";
 import HotCollectionCard from "../../components/HotCollectionsCard";
 import Collections from "../../components/dashboard/collections";
 import { AuthContext } from "../../contexts/AuthContext";
 import { GetServerSideProps } from "next";
+import { ILike } from "../../types/like.interface";
+import { IBid } from "../../types/bid.interface";
 import withAuth from "../../HOC/withAuth";
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -59,9 +61,13 @@ function a11yProps(index: number) {
 const Dashboard = ({
   items,
   collections,
+  likes,
+  bids,
 }: {
   items: IItem[];
   collections: ICollection[];
+  likes: ILike[];
+  bids: IBid[];
 }) => {
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -155,13 +161,16 @@ const Dashboard = ({
           <NoSsr>
             <div className={styles.bottom}>
               <div id="watchlist">
-                <ItemGrid items={items} title="watchlist" />
+                <ItemGrid
+                  items={likes?.map((item) => item.item!)}
+                  title="watchlist"
+                />
               </div>
-              <div id="itemsold">
+              {/* <div id="itemsold">
                 <ItemGrid items={items} title="Items Sold" />
-              </div>
+              </div> */}
               <div id="bids">
-                <CustomTable title="Bids" />
+                <CustomTable title="Bids" bids={bids} />
               </div>
             </div>
           </NoSsr>
@@ -171,18 +180,16 @@ const Dashboard = ({
   );
 };
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  // const { id }: any = ctx.params;
-  // const { items, bids, collections } = await ProfileDs.fetch(id);
-
-  let [collections, items] = await Promise.all([
-    CollectionDs.getCollections(),
-    ItemDs.getData(),
-  ]);
+  const { id }: any = ctx.params;
+  const { userWithoutPassword, bids } = await ProfileDs.getDashboradData(id);
+  const { items, collections, likes } = userWithoutPassword;
 
   return {
     props: {
       collections,
       items,
+      likes,
+      bids,
     },
   };
 };
