@@ -34,7 +34,7 @@ export default function MinkTokenDialog({
   handleSubmit,
 }: properties) {
   return (
-    <>
+    <div>
       <Dialog open={open} handleClose={handleClose} title={"Follow steps"}>
         <Steps
           handleClose={handleClose}
@@ -45,7 +45,7 @@ export default function MinkTokenDialog({
           handleSubmit={handleSubmit}
         />
       </Dialog>
-    </>
+    </div>
   );
 }
 
@@ -80,6 +80,7 @@ export const StepSection = ({
         onClick={onClick}
         disabled={disabled}
         className={loading ? styles.loading : ""}
+        data-cy="dialog-start-action"
       >
         <span>
           {loading ? (
@@ -148,6 +149,7 @@ export const Steps = ({
       <button
         onClick={handleSubmit}
         className={submitLoading ? styles.loading : ""}
+        data-cy="dialog-submit"
         disabled={!terms || step.count < 3 || submitLoading}
       >
         {submitLoading ? (
