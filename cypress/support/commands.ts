@@ -26,4 +26,45 @@ Cypress.Commands.add("restoreLocalStorage", () => {
   });
 });
 
+// @ts-ignore
+Cypress.Commands.add("signupUserAndLogin", () => {
+  // 1. Create a random data for our new user.
+  const user = {
+    email: "samuelnnj@gmail.com",
+    password: "password",
+    address: "0x3ba7568510BB3D9B59Db3cF3317B6fDC8D66a260",
+  };
+
+  // 2. Send sign up API call
+  return cy
+    .request({
+      url: "/api/user/signup",
+      method: "POST",
+      body: user,
+      failOnStatusCode: false,
+    })
+    .then(({ body }) => {
+      // 3. Send log in API call
+      console.log(body);
+      cy.request({
+        url: "/api/user/login",
+        method: "POST",
+        body: {
+          email: user.email,
+          password: user.password,
+        },
+      }).then(({ body }) => {
+        const { accessToken, user } = body;
+
+        localStorage.setItem("id", user.id);
+        localStorage.setItem("address", user.walletAddress);
+        localStorage.setItem("accessToken", accessToken);
+
+        document.cookie = `nextauth.token=${body.accessToken};path=/`;
+        document.cookie = `address=${user.walletAddress};path=/`;
+
+        return body.data;
+      });
+    });
+});
 export {};
