@@ -9,7 +9,7 @@ export default function withAuth(WrappedComponent: any) {
     const { user, isAuthenticated, loading } = useContext(AuthContext);
     useEffect(() => {
       if (!!loading) {
-        setVerified(true);
+        if (isAuthenticated) setVerified(true);
       } else {
         setVerified(false);
       }

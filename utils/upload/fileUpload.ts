@@ -5,6 +5,7 @@ export const getFileUploadURL = async (file: any, filepath: string) => {
     const key = filepath;
 
     const res = await api.post("/api/s3", { key });
+    console.log(res.data);
 
     await fetch(res.data, {
       method: "PUT",

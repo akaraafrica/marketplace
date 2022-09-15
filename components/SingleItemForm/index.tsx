@@ -244,17 +244,23 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       const mintedResp = await tokenContract?.createToken(uploadResp.url, {
         gasLimit: 3e6,
       });
-      console.log("mint Token resp ", mintedResp);
-      const status = await mintedResp?.wait();
-      console.log("mintedResp status", status?.status);
-      if (status?.status == 0) {
+      if (!mintedResp) {
         handleDialogClose();
-
+        console.log("mint Token resp ", mintedResp);
         toast.error("error minting token try again");
         setStep({ ...step, loading: false });
       } else {
-        await itemDs.updateStep({ id: uploadId, step: 3 });
-        setStep({ ...step, loading: false, count: 3 });
+        const status = await mintedResp?.wait();
+        console.log("mintedResp status", status?.status);
+        if (status?.status == 0) {
+          handleDialogClose();
+
+          toast.error("error minting token try again");
+          setStep({ ...step, loading: false });
+        } else {
+          await itemDs.updateStep({ id: uploadId, step: 3 });
+          setStep({ ...step, loading: false, count: 3 });
+        }
       }
     } catch (error) {
       handleDialogClose();
