@@ -17,8 +17,11 @@ const OnboardingInput: React.FC<Props> = ({
 }) => {
   return (
     <div className={styles.input}>
-      <label htmlFor={label}>{label}</label>
+      <label htmlFor={label} data-cy={`signup-label-${label}`}>
+        {label}
+      </label>
       <input
+        data-cy={`signup-${name}`}
         type={type}
         placeholder={placeholder}
         name={name}

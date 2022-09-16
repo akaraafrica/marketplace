@@ -82,7 +82,6 @@ const Index = () => {
     }
   };
 
-  //
   return (
     <OnboardingLayout>
       {verify ? (

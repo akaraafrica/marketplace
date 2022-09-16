@@ -7,7 +7,11 @@ interface Props {
 }
 const OnboardingButton: React.FC<Props> = ({ text, onClick }) => {
   return (
-    <button onClick={onClick} className={styles.button}>
+    <button
+      data-cy="signup-submit-button"
+      onClick={onClick}
+      className={styles.button}
+    >
       {text}
     </button>
   );
