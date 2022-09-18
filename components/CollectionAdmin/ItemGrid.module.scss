@@ -1,5 +1,7 @@
 .watchlist {
-  margin-top: 1rem;
+  @media screen and (max-width: 500px) {
+    margin: 1rem;
+  }
 
   h3 {
     color: white;
@@ -11,13 +13,26 @@
 .center {
   display: flex;
   max-width: 80rem;
-  flex-wrap: wrap;
   gap: 32px;
   margin-bottom: 2rem;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .cards {
     display: grid;
     gap: 24px;
+    width: 50rem;
+
+    button {
+      color: white;
+      border-radius: 20px;
+      border: 1px solid;
+      background: black;
+      padding: 8px;
+    }
 
     .cardImg {
       border-radius: 12px;
@@ -35,6 +50,7 @@
       display: flex;
       justify-content: space-between;
       gap: 16px;
+      width: 14rem;
 
       .cardName {
         font-style: normal;

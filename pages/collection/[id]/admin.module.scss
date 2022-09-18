@@ -3,108 +3,151 @@
 .container {
   margin: auto;
   margin-top: 10rem;
-  display: flex;
   padding: auto 10rem;
-  max-width: 70rem;
   position: relative;
 
   @media screen and (max-width: 500px) {
     max-width: 26rem;
   }
 
-  .heading {
-    padding-left: 1.2rem;
-    display: flex;
-    align-items: flex-start;
-    color: white;
-    justify-content: space-between;
-
-    h2 {
-      font-size: 3rem;
-      color: white;
-    }
-
-    span {
-      font-weight: 700;
-    }
-  }
-
-  .editCollection {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-    button {
-      color: white;
-      background: $grey2;
-      border: 0;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: auto;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1rem;
-      white-space: nowrap;
-      padding: 10px;
-    }
-  }
-
-  .bottom {
-    padding-left: 1.2rem;
+  main {
+    max-width: 80rem;
+    margin: 2rem;
     margin: auto;
+    // align-items: center;
   }
 
-  .tabs {
-    margin-left: 2rem;
-    transition: all;
-
-    @media screen and (max-width: 500px) {
-      margin-left: 10px;
-      overflow: auto;
-    }
-  }
-
-  .collections {
+  .top {
+    width: 98%;
+    position: relative;
     display: flex;
-    gap: 1rem;
-    max-width: 50rem;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    user-select: none;
+    justify-content: space-between;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    border-top: solid 1px $grey2;
+    border-bottom: solid 1px $grey2;
+    padding: 1rem;
 
-    &::-webkit-scrollbar {
-      display: none;
+    .right {
+      border: 2px solid $grey3;
+      display: flex;
+      gap: 5px;
+      border-radius: 20px;
+      padding: 5px 8px;
     }
 
-    .collection {
-      width: 50rem;
+    .left {
+      span:nth-child(1) {
+        color: $grey3;
+      }
+
+      display: flex;
+      gap: 20px;
+      align-items: center;
     }
   }
 
-  .sidebar {
-    width: 20rem;
-    color: $grey3;
-    margin-right: 4rem;
+  .heading {
+    display: flex;
+    padding: 1rem;
+    color: white;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: solid 1px $grey3;
 
-    @media screen and (max-width: 1000px) {
-      margin-right: 2rem;
-      margin-left: -1rem;
-      width: 10rem;
+    .left {
+      display: flex;
+      flex-direction: column;
+
+      span {
+        border: 2px solid $green;
+        color: $green;
+        width: fit-content;
+        border-radius: 2px;
+        padding: 2px 4px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+
+      h2 {
+        color: white;
+        text-transform: capitalize;
+        font-size: 3rem;
+        margin: 0;
+      }
     }
 
-    @media screen and (max-width: 640px) {
-      display: none;
-    }
-
-    li {
+    .right {
       display: flex;
       gap: 1rem;
-      width: 10rem;
-      list-style: none;
-      padding: 1rem;
+
+      button:nth-child(1) {
+        background: $secondary-color;
+        border: 1px solid $secondary-color;
+      }
+
+      button {
+        font-size: 11px;
+        border: 1px solid white;
+        color: white;
+        background: black;
+        padding: 9px;
+        font-weight: 600;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+  }
+}
+
+.nav {
+  color: white;
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 1rem;
+
+  .active {
+    color: $secondary-color;
+  }
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  @media only screen and (max-width: 500px) {
+    justify-content: center;
+  }
+
+  div {
+    background: $grey2;
+    border-radius: 10px;
+    padding: 2rem 3rem;
+    color: white;
+    text-align: center;
+
+    span {
       font-size: 1.2rem;
       font-weight: 600;
-      cursor: pointer;
+    }
+
+    h3 {
+      font-size: 12px;
+      margin: 0;
+      color: white;
+      width: 5rem;
     }
   }
 }

@@ -45,4 +45,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
-export default withAuth(Index);
+export default Index;
