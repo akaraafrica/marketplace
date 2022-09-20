@@ -26,7 +26,7 @@ const Index = ({
       {open === 0 ? (
         <div className={styles.root}>
           {items &&
-            items.map((item: any, idx) => (
+            items.map((item, idx) => (
               <ItemCard
                 key={idx}
                 id={item.id}
@@ -35,6 +35,8 @@ const Index = ({
                 price={item.price}
                 ownerAvatar={item.images[0]}
                 highestBid="0.001 ETH"
+                owner={item.owner}
+                isCollectionAdmin={true}
               />
             ))}
         </div>
@@ -56,7 +58,7 @@ const Index = ({
         </div>
       ) : open === 2 ? (
         <div className={styles.root}>
-          {likes &&
+          {likes?.length &&
             likes.map(({ item }) => (
               <ItemCard
                 key={item?.id}

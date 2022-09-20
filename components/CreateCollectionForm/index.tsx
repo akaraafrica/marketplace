@@ -76,7 +76,7 @@ const Index = ({
     if (userIndex[0]?.items.length > 0) {
       setItems([...userIndex[0].items]);
     }
-  }, [userIndex]);
+  }, []);
   useEffect(() => {
     if (collection) {
       setValue("title", collection.title);

@@ -20,17 +20,16 @@ import { useRouter } from "next/router";
 
 const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const [open, setOpen] = React.useState(0);
+
   const {
     walletAddress,
     createdAt,
     items,
     followedBy,
     following,
-    likes,
     collections,
   } = profile;
   const user = useContext(AuthContext).user;
-  // console.log(profile);
   const [isFollowing, setIsFollowing] = useState<any>(false);
   const router = useRouter();
   useEffect(() => {
@@ -53,6 +52,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
       setIsFollowing(res);
     }
   };
+
   return (
     <Layout>
       <div className={styles.root}>
@@ -115,46 +115,48 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
           </div>
           <div className={styles.right}>
             <div className={styles.nav}>
-              <span
-                onClick={() => setOpen(0)}
-                className={`${styles.navItem} ${
-                  open === 0 ? styles.active : ""
-                }`}
-              >
-                Gallery
-              </span>
-              <span
-                onClick={() => setOpen(1)}
-                className={`${styles.navItem} ${
-                  open === 1 ? styles.active : ""
-                }`}
-              >
-                Collections
-              </span>
-              <span
-                onClick={() => setOpen(2)}
-                className={`${styles.navItem} ${
-                  open === 2 ? styles.active : ""
-                }`}
-              >
-                Favourites
-              </span>
-              <span
-                onClick={() => setOpen(3)}
-                className={`${styles.navItem} ${
-                  open === 3 ? styles.active : ""
-                }`}
-              >
-                Followers
-              </span>
-              <span
-                onClick={() => setOpen(4)}
-                className={`${styles.navItem} ${
-                  open === 4 ? styles.active : ""
-                }`}
-              >
-                Following
-              </span>
+              <div>
+                <span
+                  onClick={() => setOpen(0)}
+                  className={`${styles.navItem} ${
+                    open === 0 ? styles.active : ""
+                  }`}
+                >
+                  Gallery
+                </span>
+                <span
+                  onClick={() => setOpen(1)}
+                  className={`${styles.navItem} ${
+                    open === 1 ? styles.active : ""
+                  }`}
+                >
+                  Collections
+                </span>
+                <span
+                  onClick={() => setOpen(2)}
+                  className={`${styles.navItem} ${
+                    open === 2 ? styles.active : ""
+                  }`}
+                >
+                  Favourites
+                </span>
+                <span
+                  onClick={() => setOpen(3)}
+                  className={`${styles.navItem} ${
+                    open === 3 ? styles.active : ""
+                  }`}
+                >
+                  Followers
+                </span>
+                <span
+                  onClick={() => setOpen(4)}
+                  className={`${styles.navItem} ${
+                    open === 4 ? styles.active : ""
+                  }`}
+                >
+                  Following
+                </span>
+              </div>
             </div>
             <div className={styles.sections}>
               <ProfileItem

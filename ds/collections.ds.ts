@@ -12,7 +12,14 @@ class Collection {
       console.log(error);
     }
   }
-
+  async getUserCollections(id: number) {
+    try {
+      const res = await api.get(`${url}/userCollections?id=${id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async getCollectionById(id: number) {
     try {
       const res = await api.get(`${url}/${id}`);
@@ -48,6 +55,17 @@ class Collection {
     try {
       const res = await api.patch(url + "/update", {
         ...data,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async addItem({ id, collection }: { id: number; collection: number }) {
+    try {
+      const res = await api.patch(url + "/addItem", {
+        id,
+        collection,
       });
       return res;
     } catch (error) {

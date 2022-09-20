@@ -16,13 +16,16 @@ export default function ItemGrid({
         {items.slice(0, 6).map((item) => {
           return (
             <div className={styles.cards} key={item.id}>
-              <NextImage
-                className={styles.cardImg}
-                src={item.images[0]}
-                width="160px"
-                height="148px"
-                alt="product"
-              />
+              {item.images[0] && (
+                <NextImage
+                  className={styles.cardImg}
+                  src={item.images[0]}
+                  width="160px"
+                  height="148px"
+                  alt="product"
+                />
+              )}
+
               <div className={styles.cardDetails}>
                 <span className={styles.cardName}>{item.title}</span>
                 {title == "watchlist" && (
