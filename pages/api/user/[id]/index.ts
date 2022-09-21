@@ -15,6 +15,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
         },
         include: {
           profile: true,
+          items: true,
         },
       });
       const userWithoutPassword = excludePassword(user);

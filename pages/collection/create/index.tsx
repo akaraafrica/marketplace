@@ -20,7 +20,6 @@ const Index: React.FC<CreateCollection> = (props: CreateCollection) => {
   return (
     <Layout>
       <CreateCollectionForm
-        users={props.users}
         collectionTypes={props.collectionTypes}
         collection={props.collection}
       />
@@ -42,10 +41,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      users,
       collectionTypes,
       collection: collection?.data,
     },
   };
 };
-export default withAuth(Index);
+export default Index;

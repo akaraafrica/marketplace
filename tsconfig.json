@@ -19,6 +19,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/**/*.ts",
     "pages/api/bio.ts",
     "store/reducers/userSlice.ts",
     "prisma/seed.js"
