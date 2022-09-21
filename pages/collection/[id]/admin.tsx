@@ -9,43 +9,142 @@ import { CollectionDs } from "../../../ds";
 import ContributorsGrid from "../../../components/CollectionAdmin/ContributorsGrid";
 import Link from "next/link";
 import withAuth from "../../../HOC/withAuth";
+import { BiArrowBack } from "react-icons/bi";
+import { BiRightArrowAlt } from "react-icons/bi";
+import { FiChevronRight } from "react-icons/fi";
 
-const CollectionAdmin = ({ collection }: { collection: ICollection }) => {
+// const CollectionAdmin = ({ collectionx }: { collectionx: ICollection }) => {
+const CollectionAdmin = () => {
+  const collection = {
+    title: "red x collection",
+    status: "READY",
+    items: [
+      {
+        title: "Amazing digital art",
+        price: 10.2,
+        images: [
+          "https://ak-marketplace.s3.eu-west-3.amazonaws.com/item/81/main",
+        ],
+      },
+      {
+        title: "Amazing digital art",
+        price: 10.2,
+        images: [
+          "https://ak-marketplace.s3.eu-west-3.amazonaws.com/item/81/main",
+        ],
+      },
+      {
+        images: [
+          "https://ak-marketplace.s3.eu-west-3.amazonaws.com/item/81/main",
+        ],
+        title: "Amazing digital art",
+        price: 10.2,
+      },
+      {
+        images: [
+          "https://ak-marketplace.s3.eu-west-3.amazonaws.com/item/81/main",
+        ],
+        title: "Amazing digital art",
+        price: 10.2,
+      },
+      {
+        images: [
+          "https://ak-marketplace.s3.eu-west-3.amazonaws.com/item/81/main",
+        ],
+        title: "Amazing digital art",
+        price: 10.2,
+      },
+      {
+        images: [
+          "https://ak-marketplace.s3.eu-west-3.amazonaws.com/item/81/main",
+        ],
+        title: "Amazing digital art",
+        price: 10.2,
+      },
+    ],
+    id: 1,
+  };
+  const total = collection.items.reduce((total, item) => total + item.price, 0);
   return (
     <Layout>
       <Box className={styles.container}>
-        <div>
+        <div className={styles.top}>
+          <span className={styles.right}>
+            <BiArrowBack size={10} />
+            {/* <BiRightArrowAlt size={10} /> */}
+            Back to collections
+          </span>
+          <section className={styles.left}>
+            <span>Home</span>
+            <FiChevronRight size={10} />
+            <span>Manage Collection</span>
+          </section>
+        </div>
+        <main>
           <div className={styles.heading}>
-            <h2>{collection?.title}</h2>
-            <div className={styles.editCollection}>
-              <span>status: {collection.status}</span>
-              <Link href={`/collection/create?id=${collection.id}`}>
-                <button>Edit Collection</button>
+            <div className={styles.left}>
+              <span> {collection?.status}</span>
+              <h2>{collection?.title}</h2>
+            </div>
+
+            <div className={styles.right}>
+              <button>Payount Funds</button>
+              <Link href={`/collection/create?id=${collection?.id}`}>
+                <button>
+                  Edit Collection Details <BiRightArrowAlt />
+                </button>
               </Link>
             </div>
           </div>
-          <div className={styles.bottom}>
+          <section className={styles.nav}>
+            <span className={styles.active}>Items</span>
+            <FiChevronRight size={12} />
+            <span>Contriburors</span>
+            <FiChevronRight size={12} />
+            <span>Whitelist</span>
+            <FiChevronRight size={12} />
+            <span>Beneficiary</span>
+          </section>
+          <section className={styles.stats}>
             <div>
-              <ContributorsGrid collection={collection} />
+              <span>{collection?.items?.length}</span>
+              <h3>Collection Items</h3>
             </div>
             <div>
-              <ItemGrid items={collection.items} title="Collection Items" />
+              <span>{total} ETH</span>
+              <h3>Total worth of Collection </h3>
             </div>
-          </div>
-        </div>
+            {/* <div>
+              <span>{sold} ETH</span>
+              <h3>Revenue from Items</h3>
+            </div> */}
+          </section>
+          <section>
+            <h2></h2>
+            <div className={styles.bottom}>
+              <div>{/* <ContributorsGrid collection={collection} /> */}</div>
+              <div>
+                <ItemGrid
+                  items={collection.items}
+                  title="Manage Collection Items"
+                />
+              </div>
+            </div>
+          </section>
+        </main>
       </Box>
     </Layout>
   );
 };
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { id }: any = ctx.params;
-  let collection = await CollectionDs.getCollectionById(id);
-  if (!collection) return { notFound: true };
+  // const { id }: any = ctx.params;
+  // let collection = await CollectionDs.getCollectionById(id);
+  // if (!collection) return { notFound: true };
 
   return {
     props: {
-      collection: collection.data,
+      // collection: collection.data,
     },
   };
 };
-export default withAuth(CollectionAdmin);
+export default CollectionAdmin;

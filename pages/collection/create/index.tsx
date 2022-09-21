@@ -20,7 +20,6 @@ const Index: React.FC<CreateCollection> = (props: CreateCollection) => {
   return (
     <Layout>
       <CreateCollectionForm
-        users={props.users}
         collectionTypes={props.collectionTypes}
         collection={props.collection}
       />
@@ -31,7 +30,7 @@ const Index: React.FC<CreateCollection> = (props: CreateCollection) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.query;
 
-  const [users, collectionTypes, collection] = await Promise.all([
+  const [collectionTypes, collection] = await Promise.all([
     UserDs.fetchAll(),
     CollectionTypeDs.fetchAll(),
     CollectionDs.getCollectionById(id),
@@ -39,10 +38,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      users,
       collectionTypes,
       collection: collection?.data,
     },
   };
 };
-export default withAuth(Index);
+export default Index;

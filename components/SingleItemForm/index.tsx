@@ -302,7 +302,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
     toast.success("successful");
     reset();
     clearState();
-    router.push(`item/${uploadId}`);
+    router.push(`${uploadId}`);
   };
   const handleDialogClose = () => setOpenDialog(false);
 

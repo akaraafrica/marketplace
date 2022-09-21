@@ -14,7 +14,7 @@ const SingleCollectibleItem = ({ item }: { item: IItem }) => {
   );
 };
 
-export default withAuth(SingleCollectibleItem);
+export default SingleCollectibleItem;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const itemId = ctx?.query?.id;

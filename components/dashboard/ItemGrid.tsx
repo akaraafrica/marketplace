@@ -28,14 +28,14 @@ export default function ItemGrid({
                 {title == "watchlist" && (
                   <>
                     <div className={styles.centerDiv}>
-                      <NextImage
+                      {/* <NextImage
                         className={styles.centerDivImg}
                         src="/assets/auctionAvatar.png"
                         width="24px"
                         height="24px"
                         alt="avatar"
-                      />
-                      <span>0.27 ETH</span>
+                      /> */}
+                      <span>{item.price} ETH</span>
                     </div>
                     <button>Place a bid</button>
                   </>

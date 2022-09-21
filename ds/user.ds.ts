@@ -21,6 +21,20 @@ class User {
       throw error;
     }
   }
+  async fetchOne(id: number) {
+    if (!id) {
+      console.log("id is missing");
+      return null;
+    }
+
+    try {
+      const response = await api.get(`${url}/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   async fetchAll() {
     try {
       const response = await api.get(`${url}/signup`);
@@ -36,6 +50,15 @@ class User {
   async fetchSellers() {
     try {
       const response = await api.get(`${url}/sellers`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  async fetchSearchedUsers(userString: string) {
+    try {
+      const response = await api.get(`${url}/search/${userString}`);
       return response.data;
     } catch (error) {
       console.log(error);

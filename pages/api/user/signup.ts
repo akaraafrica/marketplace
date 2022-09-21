@@ -17,7 +17,6 @@ export default async function Signup(
 ) {
   const { password, address } = req.body;
   const userEmail = await req.body.email;
-
   let link = "";
   // console.log('Welcome:', userEmail )
   switch (req.method) {
@@ -82,6 +81,7 @@ export default async function Signup(
 
         Sendmail(Emaildata);
         const newUserWithoutPassword = excludePassword(newUser);
+        console.log("user created");
         res.status(200).json({
           user: newUserWithoutPassword,
           token,

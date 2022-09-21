@@ -19,7 +19,7 @@ const handler = async (
       if (!user) return res.status(404).send("user not found");
       return res.status(200).json(user);
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       return res.status(500).json(error);
     }
   }

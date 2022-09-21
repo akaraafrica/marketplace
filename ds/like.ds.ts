@@ -1,6 +1,5 @@
 import { api } from "../services/apiClient";
 import { IItem } from "../types/item.interface";
-import { ILike } from "../types/like.interface";
 import { IUser } from "../types/user.interface";
 
 const url = `/api/like`;
