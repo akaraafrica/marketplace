@@ -15,6 +15,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ICollection } from "../../types/collection.interface";
 import { useRouter } from "next/router";
 import { Step } from "../SingleItemForm";
+import userDs from "../../ds/user.ds";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -33,11 +34,9 @@ const toolbarOptions = [
 ];
 
 const Index = ({
-  users,
   collectionTypes,
   collection,
 }: {
-  users: any[];
   collectionTypes: any[];
   collection: ICollection;
 }) => {
@@ -56,10 +55,11 @@ const Index = ({
   const [type, setType] = useState<number>();
   const [video, setVideo] = useState(null);
   const [searchUser, setSearchUser] = useState("");
+  const [searchedUser, setSearchedUser] = useState<IUser[]>([]);
   const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
   const [resultDisplay, setResultDisplay] = useState(false);
   const [itemResultDisplay, setItemResultDisplay] = useState(false);
-  const [items, setItems] = useState<IItem[]>([]);
+  const [items, setItems] = useState<any>([]);
   const [searchItem, setSearchItem] = useState("");
   const [selectedItems, setSelectedItems] = useState<IItem[]>([]);
   const [images, setImages] = useState({
@@ -71,12 +71,19 @@ const Index = ({
   });
   const [openDialog, setOpenDialog] = useState(false);
   const { user } = useContext(AuthContext);
-  const userIndex = users.filter((person) => person.id === user?.id);
+
+  const userID = user?.id as number;
   useEffect(() => {
-    if (userIndex[0]?.items.length > 0) {
-      setItems([...userIndex[0].items]);
+    const fetchUser = async () => {
+      const data = await userDs.fetchOne(userID);
+      console.log("user id", userID);
+      console.log("data", data);
+      setItems([...data.items]);
+    };
+    if (userID) {
+      fetchUser();
     }
-  }, [userIndex]);
+  }, [userID]);
   useEffect(() => {
     if (collection) {
       setValue("title", collection.title);
@@ -91,6 +98,25 @@ const Index = ({
       setSelectedItems(collection.items);
     }
   }, [collection, setValue]);
+
+  let queryCall = useRef<any>();
+
+  useEffect(() => {
+    clearTimeout(queryCall.current);
+
+    const fetchData = async () => {
+      const data = await userDs.fetchSearchedUsers(searchUser);
+      setSearchedUser(data.searchedUsersWithoutPassword);
+    };
+    if (!searchUser) return;
+
+    queryCall.current = setTimeout(() => {
+      console.log("query");
+      fetchData();
+    }, 600);
+  }, [searchUser]);
+
+  console.log(searchedUser);
   const router = useRouter();
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
@@ -260,7 +286,7 @@ const Index = ({
 
   const handleVideoChange = async (event: any) => {
     const file = event.target.files[0];
-    const MIN_FILE_SIZE = 1024; // 1MB
+    // const MIN_FILE_SIZE = 1024; // 1MB
     const MAX_FILE_SIZE = 5120; // 5MB
 
     // if (file.size / 1024 < MIN_FILE_SIZE) {
@@ -569,31 +595,27 @@ const Index = ({
                 className={styles.searchResults}
               >
                 {searchUser &&
-                  users &&
-                  users
-                    .filter((user) => user.walletAddress.includes(searchUser))
-                    .map((user, index) => (
-                      <span
-                        key={index}
-                        onClick={() => {
-                          for (let i = 0; i < selectedUser.length; i++) {
-                            if (
-                              selectedUser[i].walletAddress ===
-                              user.walletAddress
-                            ) {
-                              toast.warning("User already selected");
-                              return;
-                            }
+                  searchedUser?.map((user, index) => (
+                    <span
+                      key={index}
+                      onClick={() => {
+                        for (let i = 0; i < selectedUser.length; i++) {
+                          if (
+                            selectedUser[i].walletAddress === user.walletAddress
+                          ) {
+                            toast.warning("User already selected");
+                            return;
                           }
-                          setSelectedUser([...selectedUser, user]);
-                          setItems([...items, ...user.items]);
-                          setSearchUser("");
-                          setResultDisplay(false);
-                        }}
-                      >
-                        {user.walletAddress && user.walletAddress}
-                      </span>
-                    ))}
+                        }
+                        setSelectedUser([...selectedUser, user]);
+                        setItems([...items, user.items]);
+                        setSearchUser("");
+                        setResultDisplay(false);
+                      }}
+                    >
+                      {user.walletAddress && user.walletAddress}
+                    </span>
+                  ))}
               </div>
               <div className={styles.itemImagesDiv}>
                 {selectedUser.map((user, index) => (
@@ -644,8 +666,8 @@ const Index = ({
                 {searchItem &&
                   items &&
                   items
-                    .filter((item) => item.title.includes(searchItem))
-                    .map((item, index) => (
+                    ?.filter((item: any) => item?.title?.includes(searchItem))
+                    .map((item: any, index: number) => (
                       <span
                         key={index}
                         onClick={() => {
