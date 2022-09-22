@@ -18,6 +18,7 @@ export default async function profile(
           itemId: item.id,
         },
       });
+
       const updateItemOwner = prisma.item.update({
         where: {
           id: item.id,
@@ -29,13 +30,23 @@ export default async function profile(
           updatedAt: new Date(),
         },
       });
+
       const deleteBids = prisma.bid.deleteMany({
         where: {
           itemId: item.id,
         },
       });
-
-      await prisma.$transaction([deleteBids, updateItemOwner, createPurchase]);
+      const deleteAuction = prisma.auction.delete({
+        where: {
+          itemId: item.id,
+        },
+      });
+      await prisma.$transaction([
+        deleteBids,
+        deleteAuction,
+        updateItemOwner,
+        createPurchase,
+      ]);
       await TriggerAction({
         action: Actions.AcceptBid,
         user,
