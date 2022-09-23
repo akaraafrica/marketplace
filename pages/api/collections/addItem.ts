@@ -1,21 +1,29 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { Actions, TriggerAction } from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "PATCH") {
     try {
-      const { collection, id } = req.body;
+      const { collection, user, item } = req.body;
+
       await prisma.collection.update({
         where: {
-          id: collection,
+          id: collection.id,
         },
         data: {
           items: {
             connect: {
-              id: id,
+              id: item.id,
             },
           },
         },
+      });
+      await TriggerAction({
+        action: Actions.AddItem,
+        user,
+        collection,
+        item,
       });
       console.log("item added");
 

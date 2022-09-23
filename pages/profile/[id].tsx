@@ -29,6 +29,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
     following,
     collections,
   } = profile;
+
   const user = useContext(AuthContext).user;
   const [isFollowing, setIsFollowing] = useState<any>(false);
   const router = useRouter();

@@ -9,7 +9,7 @@ export default function AddToCollectionDialog({
   open,
   handleClose,
   owner,
-  name,
+  title,
   id,
 }: any) {
   const user = useContext(AuthContext).user;
@@ -21,18 +21,26 @@ export default function AddToCollectionDialog({
       CollectionDs.getUserCollections(user.id)
         .then(({ data }) => {
           setUserCollections(data);
-          setCollection(data[0].id);
+          setCollection(data[0]);
         })
         .catch((err) => {
           console.log(err);
         });
     }
   }, [user]);
+  const handleChange = (e: any) => {
+    console.log(e.target.value);
+  };
 
   const handleAddItem = async () => {
     try {
       if (collection) {
-        await CollectionDs.addItem({ id, collection });
+        const data = {
+          user,
+          collection,
+          item: { owner, id, title },
+        };
+        await CollectionDs.addItem(data);
         handleClose();
         toast.success("Item add successfully");
       }
@@ -46,11 +54,15 @@ export default function AddToCollectionDialog({
       <Dialog open={open} handleClose={handleClose}>
         <main className={styles.main}>
           <p>
-            {`You are have requested to add  ${name} from ${owner}
+            {`You are have requested to add  ${title} from ${
+              owner?.profile?.name
+                ? owner.profile.name
+                : owner?.walletAddress?.slice(0, 6)
+            }
             profile`}
           </p>
           <h4>Select collection</h4>
-          <select onChange={(e) => setCollection(Number(e.target.value))}>
+          <select onChange={handleChange}>
             {userCollections?.map((collection) => (
               <option key={collection.id} value={collection.id}>
                 {collection.title}

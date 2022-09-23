@@ -6,6 +6,7 @@ import styles from "./index.module.scss";
 import Link from "../Link";
 import AddToCollectionDialog from "../AddToCollectionDialog";
 import { IUser } from "../../types/user.interface";
+import { IItem } from "../../types/item.interface";
 
 interface ItemCardProps {
   id: number;
@@ -14,6 +15,7 @@ interface ItemCardProps {
   price: number;
   ownerAvatar: string;
   highestBid: string;
+  item?: IItem;
   collectionImages?: string[];
   owner?: IUser;
   isCollectionAdmin?: boolean;
@@ -36,13 +38,9 @@ function ItemCard(props: ItemCardProps) {
         open={openDialog}
         handleClose={handleDialogClose}
         handleRequest={addItems}
-        name={props.name}
+        title={props.name}
         id={props.id}
-        owner={
-          props.owner?.profile?.name
-            ? props.owner?.profile?.name
-            : props.owner?.walletAddress?.slice(0, 6)
-        }
+        owner={props.owner}
       />
 
       <div
@@ -80,11 +78,13 @@ function ItemCard(props: ItemCardProps) {
             </div>
           </a>
         </Link>
-        {!props.collectionImages && props.isCollectionAdmin && (
-          <button onClick={handleAddToCollection}>
-            Add item to collection
-          </button>
-        )}
+        {!props.collectionImages &&
+          props.isCollectionAdmin &&
+          !props?.item?.collectionId && (
+            <button onClick={handleAddToCollection}>
+              Add item to collection
+            </button>
+          )}
       </div>
     </div>
   );

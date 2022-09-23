@@ -7,6 +7,7 @@ export interface IItem {
   id: number;
   ownerId: number;
   tokenId: string;
+  collectionId: number;
   title: string;
   description: string;
   images: string[];

@@ -61,10 +61,11 @@ class Collection {
       console.log(error);
     }
   }
-  async addItem({ id, collection }: { id: number; collection: number }) {
+  async addItem({ user, item, collection }: any) {
     try {
       const res = await api.patch(url + "/addItem", {
-        id,
+        user,
+        item,
         collection,
       });
       return res;

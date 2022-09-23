@@ -36,6 +36,7 @@ const Index = ({
                 ownerAvatar={item.images[0]}
                 highestBid="0.001 ETH"
                 owner={item.owner}
+                item={item}
                 isCollectionAdmin={true}
               />
             ))}

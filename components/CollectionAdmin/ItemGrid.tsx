@@ -29,9 +29,9 @@ export default function ItemGrid({
               />
 
               <div className={styles.cardDetails}>
-                <span className={styles.cardName}>{item.title}</span>
+                <span className={styles.cardName}>{item?.title}</span>
                 <div className={styles.previewcardprice}>
-                  <span>{item.price} ETH</span>
+                  <span>{item?.price} ETH</span>
                 </div>
               </div>
               <button>Remove Item</button>
