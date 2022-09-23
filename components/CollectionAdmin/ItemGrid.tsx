@@ -13,7 +13,7 @@ export default function ItemGrid({
     <section className={styles.watchlist}>
       <h3>{title}</h3>
       <div className={styles.center}>
-        {items.slice(0, 6).map((item: any) => {
+        {items?.slice(0, 6).map((item: IItem) => {
           return (
             <div className={styles.cards} key={item.id}>
               <NextImage
