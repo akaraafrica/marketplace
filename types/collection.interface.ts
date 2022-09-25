@@ -30,9 +30,9 @@ export interface ICollection {
   status: CollectionStatus;
   contributors: IContributor[];
 }
-enum CollectionStatus {
-  CREATED,
-  VERIFIED,
-  READY,
-  PUBLISHED,
-}
+type CollectionStatus =
+  | "DRAFT"
+  | "CREATED"
+  | "VERIFIED"
+  | "READY"
+  | "PUBLISHED";

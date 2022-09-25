@@ -9,6 +9,7 @@
   @media screen and (max-width: 500px) {
     max-width: 26rem;
   }
+
   @media screen and (max-width: 1024px) {
     padding: 0 10%;
   }
@@ -143,6 +144,7 @@
         .left {
           display: flex;
           gap: 20px;
+
           @media screen and (max-width: 1024px) {
             order: 1;
           }
@@ -196,6 +198,7 @@
           // height: 88px;
           overflow-x: scroll;
           overflow-y: hidden;
+
           @media screen and (max-width: 1024px) {
             order: 3;
           }
@@ -229,6 +232,7 @@
           display: flex;
           flex-direction: column;
           gap: 12px;
+
           @media screen and (max-width: 1024px) {
             order: 2;
           }
@@ -270,6 +274,11 @@
         font-size: 12px;
         font-weight: 600;
         text-transform: capitalize;
+      }
+
+      .draft {
+        border: 2px solid $secondary-color;
+        color: $secondary-color;
       }
 
       h2 {
