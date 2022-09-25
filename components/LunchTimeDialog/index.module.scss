@@ -1,0 +1,63 @@
+@use "../../styles/colors" as *;
+
+.main {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  h4 {
+    color: white;
+    margin: 1rem;
+    font-weight: 600;
+    font-size: 1.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $grey2;
+  }
+
+  p {
+    margin: 1rem;
+    color: $grey3;
+    font-size: 1.1rem;
+  }
+
+  input {
+    margin: 1rem;
+    display: block;
+    background: $dialogbackground;
+    border: 2px solid $grey3;
+    font-size: large;
+    font-weight: 600;
+    padding: 8px 20px;
+    color: white;
+    width: 20rem;
+    border-radius: 10px;
+    color-scheme: dark;
+  }
+
+  .button {
+    margin-top: 2rem;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    button {
+      color: white;
+      background: $grey2;
+      border: 0;
+      border-radius: 30px;
+      padding: 12px 45px;
+      cursor: pointer;
+      margin: auto;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      white-space: nowrap;
+      width: 23rem;
+    }
+
+    .accept {
+      background: $secondary-color;
+    }
+  }
+}

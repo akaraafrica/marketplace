@@ -24,7 +24,8 @@
   .cards {
     display: grid;
     gap: 24px;
-    width: 50rem;
+    width: 18rem;
+    cursor: pointer;
 
     button {
       color: white;
@@ -50,7 +51,6 @@
       display: flex;
       justify-content: space-between;
       gap: 16px;
-      width: 14rem;
 
       .cardName {
         font-style: normal;
@@ -58,6 +58,9 @@
         font-size: 16px;
         line-height: 24px;
         color: #fcfcfd;
+        display: flex;
+        width: 18rem;
+        justify-content: space-between;
       }
 
       .centerDiv {
