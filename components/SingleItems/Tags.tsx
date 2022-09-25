@@ -61,7 +61,7 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
               {item?.auction?.open ? "edit auction" : `place on auction`}
             </button>
           )}
-          {item?.auction?.open && (
+          {item?.auction?.open && item.ownerId === user.id && (
             <button className={styles.close} onClick={handleDelete}>
               close auction
             </button>
