@@ -361,3 +361,19 @@
     }
   }
 }
+
+.verify {
+  font-size: 11px;
+  border: 1px solid white;
+  color: white;
+  margin: 1rem;
+  padding: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid $secondary-color;
+  background: $secondary-color;
+}

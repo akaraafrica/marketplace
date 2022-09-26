@@ -1,26 +1,21 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import { useContext } from "react";
 import styles from "./admin.module.scss";
 import Layout from "../../../components/Layout";
 import { GetServerSideProps } from "next";
 import { ICollection } from "../../../types/collection.interface";
 import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
 import { CollectionDs } from "../../../ds";
-import ContributorsGrid from "../../../components/CollectionAdmin/ContributorsGrid";
 import Link from "next/link";
 import withAuth from "../../../HOC/withAuth";
 import { BiArrowBack } from "react-icons/bi";
 import { BiRightArrowAlt } from "react-icons/bi";
-import { FiChevronRight } from "react-icons/fi";
 import { useRouter } from "next/router";
 import DefaultAvatar from "../../../components/DefaultAvatar";
-import { CollectionStatus } from "@prisma/client";
 import NextImage from "../../../components/Image";
 import CustomSelect from "../../../components/CustomSelect";
 import { IItem } from "../../../types/item.interface";
-
-// const CollectionAdmin = ({ collectionx }: { collectionx: ICollection }) => {
+import VerifyDialog from "../../../components/CollectionAdmin/VerifyDialog";
 
 interface Properties {
   collection: ICollection;
@@ -28,14 +23,26 @@ interface Properties {
 
 const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
   const [open, setOpen] = useState(1);
+  const [openVerifyDialog, setOpenVerifyDialog] = useState(false);
   const router = useRouter();
   const total = collection.items.reduce(
     (total: number, item: { price: number }) => total + item.price,
     0
   );
-  console.log("collection", collection);
+  const handleVerify = () => {
+    setOpenVerifyDialog(true);
+  };
+  const handleClose = () => {
+    setOpenVerifyDialog(false);
+  };
+
   return (
     <Layout>
+      <VerifyDialog
+        open={openVerifyDialog}
+        handleClose={handleClose}
+        collection={collection}
+      />
       <Box className={styles.container}>
         <div className={styles.breadcrumbWrap}>
           <div onClick={() => router.push("/")} className={styles.backButton}>
@@ -176,6 +183,9 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   </div>
                 ))}
               </div>
+              <button className={styles.verify} onClick={handleVerify}>
+                send request to contributors
+              </button>
             </div>
           )}
           {open === 3 && (

@@ -45,6 +45,16 @@ class Collection {
       console.log(error);
     }
   }
+  async sendRequestToContributors(data: any) {
+    try {
+      const res = await api.post(url + "/request", {
+        ...data,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async updateCollection(data: any) {
     try {
       const res = await api.patch(url + "/update", {
