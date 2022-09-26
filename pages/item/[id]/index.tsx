@@ -13,6 +13,7 @@ import ReactHtmlParser from "react-html-parser";
 import Link from "next/link";
 const Index = ({ item }: { item: IItem }) => {
   const { user } = useContext(AuthContext);
+
   const width = useWindowSize().width!;
   const isComingSoon = item?.openForBid;
   return (
@@ -61,10 +62,13 @@ const Index = ({ item }: { item: IItem }) => {
             more about UI8 please visit
           </p>
           <p>{ReactHtmlParser(item.description)}</p>
-          <Tags item={item} />
-          <Link href={`/item/create?id=${item.id}`}>
-            <button className={styles.edit}>Edit Item</button>
-          </Link>
+          {user && <Tags item={item} />}
+          {item.ownerId === user?.id && (
+            <Link href={`/item/create?id=${item.id}`}>
+              <button className={styles.edit}>Edit Item</button>
+            </Link>
+          )}
+
           {width > 800 && <QuickButtons desktop={true} item={item} />}
         </section>
       </main>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { IItem } from "../../types/item.interface";
 import NextImage from "../Image";
 import styles from "./ItemGrid.module.scss";
@@ -15,27 +16,29 @@ export default function ItemGrid({
       <div className={styles.center}>
         {items.slice(0, 6).map((item: any) => {
           return (
-            <div className={styles.cards} key={item.id}>
-              <NextImage
-                className={styles.cardImg}
-                src={
-                  item?.images
-                    ? item?.images[0]
-                    : `/assets/placeholder-image.jpg`
-                }
-                width="250px"
-                height="250px"
-                alt="product"
-              />
+            <Link key={item.id} href={`/item/${item.id}`}>
+              <div className={styles.cards} key={item.id}>
+                <NextImage
+                  className={styles.cardImg}
+                  src={
+                    item?.images
+                      ? item?.images[0]
+                      : `/assets/placeholder-image.jpg`
+                  }
+                  width="250px"
+                  height="250px"
+                  alt="product"
+                />
 
-              <div className={styles.cardDetails}>
-                <span className={styles.cardName}>{item?.title}</span>
-                <div className={styles.previewcardprice}>
-                  <span>{item?.price} ETH</span>
+                <div className={styles.cardDetails}>
+                  <span className={styles.cardName}>{item?.title}</span>
+                  <div className={styles.previewcardprice}>
+                    <span>{item?.price} ETH</span>
+                  </div>
                 </div>
+                <button>Remove Item</button>
               </div>
-              <button>Remove Item</button>
-            </div>
+            </Link>
           );
         })}
       </div>
