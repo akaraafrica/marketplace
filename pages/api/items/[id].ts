@@ -11,6 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           id: id,
         },
         include: {
+          auction: true,
           owner: {
             include: {
               profile: true,

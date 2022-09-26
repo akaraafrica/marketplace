@@ -83,9 +83,10 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
     handleSubmit,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm<form>();
-
+  const watchValues = watch();
   useEffect(() => {
     if (item) {
       setValue("image", item.images[0]);
@@ -243,17 +244,23 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       const mintedResp = await tokenContract?.createToken(uploadResp.url, {
         gasLimit: 3e6,
       });
-      console.log("mint Token resp ", mintedResp);
-      const status = await mintedResp?.wait();
-      console.log("mintedResp status", status?.status);
-      if (status?.status == 0) {
+      if (!mintedResp) {
         handleDialogClose();
-
+        console.log("mint Token resp ", mintedResp);
         toast.error("error minting token try again");
         setStep({ ...step, loading: false });
       } else {
-        await itemDs.updateStep({ id: uploadId, step: 3 });
-        setStep({ ...step, loading: false, count: 3 });
+        const status = await mintedResp?.wait();
+        console.log("mintedResp status", status?.status);
+        if (status?.status == 0) {
+          handleDialogClose();
+
+          toast.error("error minting token try again");
+          setStep({ ...step, loading: false });
+        } else {
+          await itemDs.updateStep({ id: uploadId, step: 3 });
+          setStep({ ...step, loading: false, count: 3 });
+        }
       }
     } catch (error) {
       handleDialogClose();
@@ -347,10 +354,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       <div className={styles.sciCon}>
         <div className={styles.sci}>
           <div className={styles.scihead}>
-            <h1>
-              {item ? "Edit" : "Create"}
-              <span>single item</span>
-            </h1>
+            {item ? <h1>Edit single item</h1> : <h1>Create single item</h1>}
           </div>
           <div className={styles.sciuploadseccon}>
             <div className={styles.uploadsechead}>
@@ -368,12 +372,15 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
             </div>
             <input
               style={{ display: "none" }}
+              data-cy="main-image-upload"
               type="file"
               {...register("image", { required: true })}
               ref={target}
               onChange={(e) => handleChnage(e, "main")}
             />
-            {errors.image && <span>This field is required</span>}
+            {errors.image && (
+              <span data-cy="image-error">This field is required</span>
+            )}
           </div>
           <div className={styles.sciuploadseccon}>
             <div className={styles.uploadsechead}>
@@ -404,6 +411,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                 <input
                   style={{ display: "none" }}
                   type="file"
+                  data-cy="optional1-image-upload"
                   ref={optional1}
                   onChange={(e) => handleOptional1(e)}
                 />
@@ -430,6 +438,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                 <input
                   style={{ display: "none" }}
                   type="file"
+                  data-cy="optional2-image-upload"
                   ref={optional2}
                   onChange={(e) => handleOptional2(e)}
                 />
@@ -456,6 +465,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                 <input
                   style={{ display: "none" }}
                   type="file"
+                  data-cy="optional3-image-upload"
                   ref={optional3}
                   onChange={(e) => handleOptional3(e)}
                 />
@@ -471,11 +481,14 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               <label>ITEM NAME</label>
               <input
                 type="text"
+                data-cy="title-input"
                 placeholder='e. g. "Redeemable Bitcoin Card with logo"'
                 {...register("title", { required: true })}
                 disabled={!!item?.title}
               />
-              {errors.title && <span>This field is required</span>}
+              {errors.title && (
+                <span data-cy="title-error">This field is required</span>
+              )}
             </div>
             <div className={styles.editor}>
               <label>DESCRIPTION</label>
@@ -488,6 +501,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                   style={{
                     height: "20rem",
                   }}
+                  id="description-input"
                   placeholder='e.g. “After purchasing you will able to receive the logo...”"'
                   value={getValues("description")}
                   onChange={(e: any) => {
@@ -511,7 +525,11 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
             <div className={styles.itemdetailformdropdownsCon}>
               <div className={styles.itemdetailsformdropdown}>
                 <label>ROYALTIES</label>
-                <select {...register("royalties")} disabled={!!item?.royalties}>
+                <select
+                  {...register("royalties")}
+                  disabled={!!item?.royalties}
+                  data-cy="royalties-select"
+                >
                   <option value="1">1%</option>
                   <option value="5">5%</option>
                   <option value="10">10%</option>
@@ -525,11 +543,14 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                   type="number"
                   placeholder="0.25 ETH"
                   className={styles.input}
+                  data-cy="price-input"
                   min="0"
                   step="0.01"
                   {...register("price", { required: true })}
                 />
-                {errors.price && <span>This field is required</span>}
+                {errors.price && (
+                  <span data-cy="price-error">This field is required</span>
+                )}
               </div>
             </div>
             <div className={styles.divider}></div>
@@ -540,17 +561,19 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               </div>
               <label className={styles.switch}>
                 <input type="checkbox" {...register("published", {})} />
-                <span className={`${styles.slider} ${styles.round}`}></span>
+                <span
+                  data-cy="published-checkbox"
+                  className={`${styles.slider} ${styles.round}`}
+                ></span>
               </label>
             </div>
             <div className={styles.putonscalebtnsec}>
-              <button type="submit">
+              <button type="submit" data-cy="submit-input">
                 {item ? "Edit " : "Create "}item
                 <span>
                   <img src={`/assets/arrow.svg`} alt="" />
                 </span>
               </button>
-              {/* <p>Auto saving</p> */}
             </div>
           </form>
         </div>
@@ -561,6 +584,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
           <div className={styles.previewcontent}>
             <img
               className={styles.previewimg}
+              data-cy="image-preview"
               src={
                 images.main
                   ? URL.createObjectURL(images.main)
@@ -571,9 +595,11 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               alt="preview"
             />
             <div className={styles.previewdiv}>
-              <div className={styles.previewtitle}>{getValues("title")}</div>
-              <span className={styles.previewprice}>
-                {getValues("price") || "0.00"} ETH
+              <div className={styles.previewtitle} data-cy="title-preview">
+                {watchValues.title}
+              </div>
+              <span data-cy="price-preview" className={styles.previewprice}>
+                {watchValues.price || "0.00"} ETH
               </span>
             </div>
             <hr />

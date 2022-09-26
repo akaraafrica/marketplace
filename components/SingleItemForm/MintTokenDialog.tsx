@@ -1,15 +1,5 @@
 import Image from "../../components/Image";
-import { useState, useContext } from "react";
-import { useWeb3React } from "@web3-react/core";
-import { useContract } from "../../hooks/web3";
-import {
-  CHAIN_TO_NFT_ADDRESS,
-  CHAIN_TO_MARKETPLACE_ADDRESS,
-  SupportedChainId,
-} from "../../constants";
-import token from "../../artifacts/nft.json";
-import { AuthContext } from "../../contexts/AuthContext";
-import ItemDs from "../../ds/item.ds";
+import { useState } from "react";
 import Dialog from "../global/Dialog";
 import styles from "./MintTokenDialog.module.scss";
 import { Step } from "./index";
@@ -34,7 +24,7 @@ export default function MinkTokenDialog({
   handleSubmit,
 }: properties) {
   return (
-    <>
+    <div>
       <Dialog open={open} handleClose={handleClose} title={"Follow steps"}>
         <Steps
           handleClose={handleClose}
@@ -45,7 +35,7 @@ export default function MinkTokenDialog({
           handleSubmit={handleSubmit}
         />
       </Dialog>
-    </>
+    </div>
   );
 }
 
@@ -80,6 +70,7 @@ export const StepSection = ({
         onClick={onClick}
         disabled={disabled}
         className={loading ? styles.loading : ""}
+        data-cy="dialog-start-action"
       >
         <span>
           {loading ? (
@@ -142,12 +133,17 @@ export const Steps = ({
         onClick={handleSignOrder}
       />
       <section className={styles.terms}>
-        <input type="checkbox" onChange={handleTerms} />
+        <input
+          data-cy="dialog-checkbox"
+          type="checkbox"
+          onChange={handleTerms}
+        />
         <span>Agree terms and condition</span>
       </section>
       <button
         onClick={handleSubmit}
         className={submitLoading ? styles.loading : ""}
+        data-cy="dialog-submit"
         disabled={!terms || step.count < 3 || submitLoading}
       >
         {submitLoading ? (

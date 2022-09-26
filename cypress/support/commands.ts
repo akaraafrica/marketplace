@@ -53,14 +53,16 @@ Cypress.Commands.add("signupUserAndLogin", () => {
           email: user.email,
           password: user.password,
         },
-        headers: {
-          Authorization: `Bearer ${body.accessToken}`,
-        },
       }).then(({ body }) => {
-        console.log(body);
+        const { accessToken, user } = body;
 
-        // Save received auth token to local storage
-        window.localStorage.setItem("accessToken", body.accessToken);
+        localStorage.setItem("id", user.id);
+        localStorage.setItem("address", user.walletAddress);
+        localStorage.setItem("accessToken", accessToken);
+
+        document.cookie = `nextauth.token=${body.accessToken};path=/`;
+        document.cookie = `address=${user.walletAddress};path=/`;
+
         return body.data;
       });
     });
