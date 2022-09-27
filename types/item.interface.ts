@@ -6,6 +6,7 @@ import { IUser } from "./user.interface";
 export interface IItem {
   id: number;
   ownerId: number;
+  collectionId: number;
   tokenId: string;
   title: string;
   description: string;

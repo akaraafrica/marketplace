@@ -141,10 +141,10 @@ model Collection {
   title            String
   tokenId          String             @unique
   collectionTypeId Int
+  lunchTime        String?
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
-  lunchTime        String?
   authorId         Int
   images           String[]
   videos           String[]
@@ -226,6 +226,7 @@ enum Gender {
 }
 
 enum CollectionStatus {
+  DRAFT
   CREATED
   VERIFIED
   READY

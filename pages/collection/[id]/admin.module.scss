@@ -299,6 +299,11 @@
         text-transform: capitalize;
       }
 
+      .draft {
+        border: 2px solid $secondary-color;
+        color: $secondary-color;
+      }
+
       h2 {
         color: white;
         text-transform: capitalize;

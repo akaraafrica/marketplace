@@ -69,7 +69,11 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
         <main>
           <div className={styles.heading}>
             <div className={styles.left}>
-              <span> {collection?.status}</span>
+              <span
+                className={collection?.status === "DRAFT" ? styles.draft : ""}
+              >
+                {collection?.status}
+              </span>
               <h2>{collection?.title}</h2>
               <div>Launches in {collection?.lunchTime}</div>
             </div>
