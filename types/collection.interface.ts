@@ -27,6 +27,7 @@ export interface ICollection {
   type: ICollectionType;
   owners: IUser[];
   visible: boolean;
+  lunchTime: string;
   status: CollectionStatus;
   contributors: IContributor[];
 }

@@ -147,8 +147,9 @@ model Collection {
   authorId         Int
   images           String[]
   videos           String[]
-  status           CollectionStatus?  @default(CREATED)
+  status           CollectionStatus?  @default(DRAFT)
   visible          Boolean            @default(false)
+  lunchTime        String?
   author           User               @relation(fields: [authorId], references: [id])
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
   ratings          CollectionRating[]
@@ -177,8 +178,8 @@ model User {
   purchases             Purchase[]
   ratings               Rating[]
   userRatings           UserRating[]
-  followedBy            User[]         @relation("UserFollows")
-  following             User[]         @relation("UserFollows")
+  followedBy                User[]         @relation("UserFollows")
+  following                User[]         @relation("UserFollows")
 }
 
 model UserRating {
@@ -229,6 +230,7 @@ enum CollectionStatus {
   VERIFIED
   READY
   PUBLISHED
+  DRAFT
 }
 
 enum ContributorStatus {

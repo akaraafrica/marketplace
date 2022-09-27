@@ -9,6 +9,7 @@
   @media screen and (max-width: 500px) {
     max-width: 26rem;
   }
+
   @media screen and (max-width: 1024px) {
     padding: 0 10%;
   }
@@ -143,6 +144,7 @@
         .left {
           display: flex;
           gap: 20px;
+
           @media screen and (max-width: 1024px) {
             order: 1;
           }
@@ -174,7 +176,17 @@
                 color: #777e91;
               }
             }
+            .btnDiv {
+              display: flex;
+              gap: 10px;
 
+              .btnRemove {
+                background-color: orangered;
+                color: #ffffff;
+                opacity: 1;
+                cursor: pointer;
+              }
+            }
             button {
               background: #23262f;
               opacity: 0.5;
@@ -196,6 +208,7 @@
           // height: 88px;
           overflow-x: scroll;
           overflow-y: hidden;
+
           @media screen and (max-width: 1024px) {
             order: 3;
           }
@@ -229,6 +242,7 @@
           display: flex;
           flex-direction: column;
           gap: 12px;
+
           @media screen and (max-width: 1024px) {
             order: 2;
           }
@@ -239,6 +253,19 @@
             font-size: 12px;
             line-height: 12px;
             color: #b1b5c4;
+          }
+
+          input {
+            height: 50px;
+            background-color: #000;
+            border: 1px solid #353945;
+            padding: 8px;
+            color: #fcfcfd;
+            border-radius: 12px;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            -ms-border-radius: 12px;
+            -o-border-radius: 12px;
           }
         }
       }
@@ -300,6 +327,12 @@
         display: flex;
         align-items: center;
         gap: 5px;
+      }
+      .btnSave {
+        border: 2px solid #f2994a;
+        color: #f2994a;
+        padding: 9px 20px;
+        cursor: pointer;
       }
     }
   }
