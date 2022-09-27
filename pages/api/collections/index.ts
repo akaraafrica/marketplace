@@ -28,7 +28,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   if (req.method === "POST") {
     const { data, user } = req.body;
-
     try {
       const response = await prisma.collection.create({
         data: {
@@ -50,12 +49,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
           items: {
-            connect: data.items.map((item: { id: number }) => ({
+            connect: data?.items.map((item: { id: number }) => ({
               id: item.id,
             })),
           },
           contributors: {
-            create: data.owners.map((user: { id: number }) => ({
+            create: data?.owners.map((user: { id: number }) => ({
               user: {
                 connect: {
                   id: user.id,
@@ -66,17 +65,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
 
-      await TriggerAction({
-        action: Actions.CreateCollection,
-        user,
-        collection: data,
-      });
+      // await TriggerAction({
+      //   action: Actions.CreateCollection,
+      //   user,
+      //   collection: data,
+      // });
+      console.log("Collection created");
 
       res.status(201).json({ id: response.id, message: "Collection created" });
     } catch (error) {
       console.log(error);
-
-      res.json({ error });
+      res.status(500).json({ error });
     }
   }
   if (req.method === "PATCH") {

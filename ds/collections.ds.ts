@@ -38,6 +38,7 @@ class Collection {
       return res;
     } catch (error) {
       console.log(error);
+      throw new Error("error");
     }
   }
   async updateData(data: any) {

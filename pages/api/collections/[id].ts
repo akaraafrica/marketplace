@@ -33,6 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         },
         ratings: true,
+        type: true,
       },
     });
     res.status(200).json({ data });

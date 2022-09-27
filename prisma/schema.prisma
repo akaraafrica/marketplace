@@ -141,14 +141,14 @@ model Collection {
   title            String
   tokenId          String             @unique
   collectionTypeId Int
+  lunchTime        String?
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
-  lunchTime        String?
   authorId         Int
   images           String[]
   videos           String[]
-  status           CollectionStatus?  @default(CREATED)
+  status           CollectionStatus?  @default(DRAFT)
   visible          Boolean            @default(false)
   author           User               @relation(fields: [authorId], references: [id])
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
@@ -178,8 +178,8 @@ model User {
   purchases             Purchase[]
   ratings               Rating[]
   userRatings           UserRating[]
-  followedBy            User[]         @relation("UserFollows")
-  following             User[]         @relation("UserFollows")
+  followedBy                User[]         @relation("UserFollows")
+  following                User[]         @relation("UserFollows")
 }
 
 model UserRating {
@@ -226,6 +226,7 @@ enum Gender {
 }
 
 enum CollectionStatus {
+  DRAFT
   CREATED
   VERIFIED
   READY

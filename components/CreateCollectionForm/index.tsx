@@ -40,8 +40,6 @@ const Index = ({
   collectionTypes: any[];
   collection: ICollection;
 }) => {
-  // console.log(collection);
-
   const {
     register,
     handleSubmit,
@@ -75,10 +73,12 @@ const Index = ({
   const userID = user?.id as number;
   useEffect(() => {
     const fetchUser = async () => {
-      const data = await userDs.fetchOne(userID);
-      console.log("user id", userID);
-      console.log("data", data);
-      setItems([...data.items]);
+      const data: IUser = await userDs.fetchOne(userID);
+
+      const itemsNotInCollection = data?.items?.filter(
+        (item) => !item.collectionId
+      );
+      setItems(itemsNotInCollection);
     };
     if (userID) {
       fetchUser();
@@ -116,7 +116,6 @@ const Index = ({
     }, 600);
   }, [searchUser]);
 
-  console.log(searchedUser);
   const router = useRouter();
   const targetVid = useRef<HTMLInputElement>(null);
   const target = useRef<HTMLInputElement>(null);
@@ -150,28 +149,36 @@ const Index = ({
     });
   };
 
-  const [step, setStep] = useState<Step>({
-    count: 1,
-    loading: false,
-    complete: false,
-  });
+  // const [step, setStep] = useState<Step>({
+  //   count: 1,
+  //   loading: false,
+  //   complete: false,
+  // });
 
   const title = watch("title", "");
   const countdown = watch("countdown", "");
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (collection) {
-      handleUpdateCollection();
+      setLoading(true);
+      await handleUpdateCollection();
+      setLoading(false);
     } else {
+      setLoading(true);
+
       if (!title || !desc || !type) {
         toast.error("Ensure required fields are not empty");
+        setLoading(false);
+
         return;
       }
-      setOpenDialog(true);
+      await handleUpload();
+      setLoading(false);
     }
+    // setLoading(false);
   };
   const handleUpload = async () => {
-    console.log("items", items);
     const data = getValues();
     data.description = desc;
     data.type = type;
@@ -182,6 +189,7 @@ const Index = ({
 
     try {
       const result = await CollectionDs.createData(data, user!, address);
+
       let imageArr = [];
       for (const image of Object.entries(images)) {
         imageArr.push({
@@ -210,8 +218,15 @@ const Index = ({
         images: imageURLs,
         videos: [videoUrl],
       });
+      toast.success("successful");
+      reset();
+      clearState();
+      setTimeout(() => {
+        router.push(`/collection/${result.data.id}`);
+      }, 3000);
     } catch (error) {
       console.log(error);
+      toast.error("error creating collection");
     }
   };
 
@@ -322,7 +337,7 @@ const Index = ({
   };
   return (
     <div className={styles.root}>
-      <MintTokenDialog
+      {/* <MintTokenDialog
         open={openDialog}
         handleSubmit={handleDialogSubmit}
         handleClose={handleDialogClose}
@@ -330,7 +345,7 @@ const Index = ({
         handleUpload={handleUpload}
         step={step}
         handleSignOrder={() => console.log("handing sell order")}
-      />
+      /> */}
       <div className={styles.sciCon}>
         <div className={styles.sci}>
           <div className={styles.scihead}>
@@ -746,15 +761,25 @@ const Index = ({
                   </span>
                 </button>
               ) : (
-                <button type="submit">
+                <button type="submit" disabled={loading}>
                   Create collection
                   <span>
-                    <Image
-                      width="20px"
-                      height="10px"
-                      src={`/assets/arrow.svg`}
-                      alt=""
-                    />
+                    {loading ? (
+                      <Image
+                        width="20px"
+                        height="20px"
+                        className={styles.spinner}
+                        src={`/assets/singleItem/spinner.svg`}
+                        alt=""
+                      />
+                    ) : (
+                      <Image
+                        width="20px"
+                        height="10px"
+                        src={`/assets/arrow.svg`}
+                        alt=""
+                      />
+                    )}
                   </span>
                 </button>
               )}

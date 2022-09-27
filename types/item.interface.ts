@@ -6,8 +6,8 @@ import { IUser } from "./user.interface";
 export interface IItem {
   id: number;
   ownerId: number;
-  tokenId: string;
   collectionId: number;
+  tokenId: string;
   title: string;
   description: string;
   images: string[];

@@ -9,9 +9,9 @@ import UserCard from "./UserCard";
 
 const ContributorsGrid = ({ collection }: { collection: ICollection }) => {
   const { user } = useContext(AuthContext);
-  const [contributors, setContributions] = useState(collection.contributors);
+  const [contributors, setContributions] = useState(collection?.contributors);
 
-  const isAuthor = user?.walletAddress === collection.author?.walletAddress;
+  const isAuthor = user?.walletAddress === collection?.author?.walletAddress;
   const handleDelete = async (id: number) => {
     await ContributorDs.deleteContributor({ id });
     const newContributors = contributors.filter(

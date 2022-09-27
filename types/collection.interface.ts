@@ -27,12 +27,13 @@ export interface ICollection {
   type: ICollectionType;
   owners: IUser[];
   visible: boolean;
+  lunchTime: string;
   status: CollectionStatus;
   contributors: IContributor[];
 }
-enum CollectionStatus {
-  CREATED,
-  VERIFIED,
-  READY,
-  PUBLISHED,
-}
+type CollectionStatus =
+  | "DRAFT"
+  | "CREATED"
+  | "VERIFIED"
+  | "READY"
+  | "PUBLISHED";
