@@ -39,11 +39,17 @@ export default async function profile(
           itemId: req.body.itemId,
         },
       });
+      const deleteAuction = prisma.auction.delete({
+        where: {
+          itemId: item.id,
+        },
+      });
       try {
         await prisma.$transaction([
           deleteBids,
           updateItemOwner,
           createPurchase,
+          deleteAuction,
         ]);
         await TriggerAction({
           action: Actions.Purchase,
