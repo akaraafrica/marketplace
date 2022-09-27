@@ -44,6 +44,7 @@ async function inApp(data: any) {
       data: [...data],
       skipDuplicates: true,
     });
+
     console.log("In App notification created");
   } catch (error) {
     console.log(error);
@@ -52,7 +53,6 @@ async function inApp(data: any) {
 
 async function email(data: any) {
   try {
-    console.log(data[0]);
     const res = await SendMail(data[0]);
     console.log(res);
   } catch (error) {
@@ -231,13 +231,15 @@ export async function TriggerAction(props: ActionProps) {
 
       collection.contributors.forEach((contributor) => {
         const data = {
-          receiverId: contributor.id,
+          receiverId: contributor.user.id,
           senderId: user.id,
           action: action,
-          title: `congratulation ${
+          title: ` ${
             contributor.user?.profile?.name ||
             contributor.user.walletAddress.slice(0, 6)
-          }  ${collection?.title} collection has been created`,
+          }  request your approval to add your item(s) to his ${
+            collection?.title
+          } collection`,
           itemType: ItemType.Collection,
         };
         const emailData = {
@@ -253,30 +255,6 @@ export async function TriggerAction(props: ActionProps) {
         }
       });
 
-      promise.push(
-        inApp([
-          {
-            receiverId: user.id,
-            senderId: user.id,
-            action: action,
-            title: `congratulation ${
-              user.profile?.name || user.walletAddress.slice(0, 6)
-            }  ${collection?.title} collection has been created`,
-            itemType: ItemType.Collection,
-          },
-        ])
-      );
-      promise.push(
-        email([
-          {
-            to: user.email,
-            from: "info@mbizi.org",
-            templateId: MailTemplateIDs.CreateCollection,
-            title: collection.title,
-            link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}`,
-          },
-        ])
-      );
       Promise.all(promise);
 
       break;

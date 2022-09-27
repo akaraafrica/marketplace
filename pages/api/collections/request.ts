@@ -1,16 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import {
-  Actions,
-  ItemType,
-  TriggerAction,
-} from "../../../services/action.service";
-import { randStr } from "../../../utils/helpers/randomStr";
-import prisma from "../../../utils/lib/prisma";
+import { Actions, TriggerAction } from "../../../services/action.service";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const { collection, user } = req.body;
-    console.log({ collection }, { user });
 
     try {
       await TriggerAction({
