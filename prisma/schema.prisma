@@ -144,12 +144,12 @@ model Collection {
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
+  lunchTime        String?
   authorId         Int
   images           String[]
   videos           String[]
   status           CollectionStatus?  @default(DRAFT)
   visible          Boolean            @default(false)
-  lunchTime        String?
   author           User               @relation(fields: [authorId], references: [id])
   type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
   ratings          CollectionRating[]
