@@ -1,6 +1,5 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styles from "./admin.module.scss";
 import Layout from "../../../components/Layout";
 import { GetServerSideProps } from "next";
@@ -20,6 +19,8 @@ import NextImage from "../../../components/Image";
 import CustomSelect from "../../../components/CustomSelect";
 import { IItem } from "../../../types/item.interface";
 import { AuthContext } from "../../../contexts/AuthContext";
+import LunchTimeDialog from "../../../components/LunchTimeDialog";
+import PayoutDialog from "../../../components/PayoutDialog";
 
 // const CollectionAdmin = ({ collectionx }: { collectionx: ICollection }) => {
 
@@ -36,8 +37,24 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
   );
   console.log("collection", collection);
   const { user } = useContext(AuthContext);
+  const [openLunchTime, setOpenLunchTime] = useState(false);
+  // const [openPayout, setOpenPayout] = useState(false);
+  const handleClose = () => {
+    setOpenLunchTime(false);
+    // setOpenPayout(false);
+  };
   return (
     <Layout>
+      <LunchTimeDialog
+        collectionId={collection.id}
+        handleClose={handleClose}
+        open={openLunchTime}
+      />
+      {/* <PayoutDialog
+        collection={collection}
+        handleClose={handleClose}
+        open={openPayout}
+      /> */}
       <Box className={styles.container}>
         <div className={styles.breadcrumbWrap}>
           <div onClick={() => router.push("/")} className={styles.backButton}>
@@ -216,7 +233,7 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   let collection = await CollectionDs.getCollectionById(id);
-  if (!collection) return { notFound: true };
+  if (!collection.data) return { notFound: true };
 
   return {
     props: {
