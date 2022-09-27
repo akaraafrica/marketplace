@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.query;
 
   const [collectionTypes, collection] = await Promise.all([
-    UserDs.fetchAll(),
+    // UserDs.fetchAll(),
     CollectionTypeDs.fetchAll(),
     CollectionDs.getCollectionById(id),
   ]);
