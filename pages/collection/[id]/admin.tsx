@@ -21,7 +21,6 @@ import { IItem } from "../../../types/item.interface";
 import { AuthContext } from "../../../contexts/AuthContext";
 import LunchTimeDialog from "../../../components/LunchTimeDialog";
 import PayoutDialog from "../../../components/PayoutDialog";
-
 // const CollectionAdmin = ({ collectionx }: { collectionx: ICollection }) => {
 
 interface Properties {
