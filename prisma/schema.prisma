@@ -145,7 +145,6 @@ model Collection {
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
-  lunchTime        String?
   authorId         Int
   images           String[]
   videos           String[]
@@ -179,8 +178,8 @@ model User {
   purchases             Purchase[]
   ratings               Rating[]
   userRatings           UserRating[]
-  followedBy                User[]         @relation("UserFollows")
-  following                User[]         @relation("UserFollows")
+  followedBy            User[]         @relation("UserFollows")
+  following             User[]         @relation("UserFollows")
 }
 
 model UserRating {
@@ -232,7 +231,6 @@ enum CollectionStatus {
   VERIFIED
   READY
   PUBLISHED
-  DRAFT
 }
 
 enum ContributorStatus {
