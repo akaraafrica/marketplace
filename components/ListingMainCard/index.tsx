@@ -37,7 +37,7 @@ function ListingMainCard() {
           items.slice(0, 1).map((item) => {
             return (
               <div key={item.id} className={styles.left}>
-                {item.images[0] && (
+                {item?.images[0] && (
                   <Link href={`item/${item.id}`}>
                     <NextImage
                       src={item.images[0]}
@@ -79,7 +79,7 @@ function ListingMainCard() {
           items.slice(1, 4).map((item) => {
             return (
               <div className={styles.cards} key={item.id}>
-                {item.images[0] && (
+                {item?.images[0] && (
                   <NextImage
                     className={styles.cardImg}
                     src={item.images[0]}
@@ -91,7 +91,7 @@ function ListingMainCard() {
 
                 <div className={styles.cardDetails}>
                   <Link href={`item/${item.id}`}>
-                    <span className={styles.cardName}>{item.title}</span>
+                    <span className={styles.cardName}>{item?.title}</span>
                   </Link>
                   <div className={styles.centerDiv}>
                     {item?.owner.profile?.avatar && (
@@ -105,7 +105,7 @@ function ListingMainCard() {
                         />
                       </Link>
                     )}
-                    <span>{item.price} ETH</span>
+                    <span>{item?.price} ETH</span>
                   </div>
                   <Link href={`item/${item.id}`}>
                     <button>Buy</button>
@@ -124,7 +124,7 @@ function ListingMainCard() {
               return (
                 <div key={item.id} className={styles.creator}>
                   <div className={styles.creatorImgDiv}>
-                    {item.images[0] && (
+                    {item?.images[0] && (
                       <Link href={`item/${item.id}`}>
                         <NextImage
                           src={item.images[0]}

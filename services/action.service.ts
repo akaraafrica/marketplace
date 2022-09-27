@@ -33,6 +33,7 @@ export const enum Actions {
   Purchase = "purchase",
   CreateItem = "create-item",
   CreateCollection = "create-collection",
+  AddItem = "add-item",
   Announcement = "announcement",
   UrgentAnnouncement = "urgent-announcement",
   Like = "like",
@@ -174,7 +175,6 @@ export async function TriggerAction(props: ActionProps) {
         await inApp(data);
       }
       break;
-
     case Actions.Purchase:
       if (!item) throw Error("invalid action");
       data.push({
@@ -198,6 +198,35 @@ export async function TriggerAction(props: ActionProps) {
       if (data && emailData) {
         await inApp(data);
         await email(emailData);
+      }
+      break;
+    case Actions.AddItem:
+      if (!item || !collection) throw Error("invalid action");
+      console.log(collection);
+
+      data.push({
+        receiverId: item.owner.id,
+        senderId: user.id,
+        action: action,
+        title: `${
+          user.profile?.name || user.walletAddress.slice(0, 6)
+        } is requesting to add ${item?.title} to ${
+          collection?.title
+        } collection `,
+        itemType: ItemType.Collection,
+        itemId: item.id,
+      });
+      // emailData.push({
+      //   to: user.email,
+      //   from: "info@mbizi.org",
+      //   templateId: MailTemplateIDs.Purchase,
+      //   title: item.title,
+      //   amount: item.price,
+      //   link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
+      // });
+      if (data) {
+        await inApp(data);
+        // await email(emailData);
       }
       break;
     case Actions.CreateItem:

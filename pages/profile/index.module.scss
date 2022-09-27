@@ -12,6 +12,7 @@
     align-items: flex-end;
     justify-content: flex-end;
     padding-bottom: 40px;
+
     // padding-right: 40px;
     @media (max-width: 640px) {
       padding-top: 40px;
@@ -40,6 +41,7 @@
       cursor: pointer;
     }
   }
+
   .bottom {
     padding: 0px;
     width: 100%;
@@ -50,6 +52,7 @@
       width: 70%;
       padding: 0px 15%;
     }
+
     @media (max-width: 640px) {
       padding: 10px 0;
       display: flex;
@@ -71,6 +74,7 @@
       margin-top: -150px;
       width: 256px;
       height: 689px;
+
       @media (max-width: 640px) {
         width: 100%;
         // margin-top: 20px;
@@ -94,6 +98,7 @@
           object-fit: cover;
           margin-bottom: 30px;
         }
+
         .name {
           font-style: normal;
           font-weight: 600;
@@ -101,6 +106,7 @@
           line-height: 32px;
           color: #fcfcfd;
         }
+
         .wallet2 {
           display: flex;
           align-items: center;
@@ -121,6 +127,7 @@
             text-overflow: ellipsis;
           }
         }
+
         .desc {
           font-family: "Poppins";
           font-style: normal;
@@ -132,6 +139,7 @@
           height: 60px;
           text-align: center;
         }
+
         .web {
           font-family: "DM Sans";
           font-style: normal;
@@ -142,6 +150,7 @@
           cursor: pointer;
         }
       }
+
       .leftCenter {
         display: flex;
         align-items: center;
@@ -162,6 +171,7 @@
           border: 1px solid #f2994a;
           cursor: pointer;
         }
+
         .icon {
           border: 2px solid #353945;
           border-radius: 40px;
@@ -176,6 +186,7 @@
           cursor: pointer;
         }
       }
+
       .social {
         display: flex;
         align-items: center;
@@ -183,12 +194,14 @@
         gap: 30px;
         cursor: pointer;
       }
+
       hr {
         width: 100%;
         height: 1px;
         border: 1px solid #353945;
         background: #353945;
       }
+
       .date {
         font-style: normal;
         font-weight: 400;
@@ -198,6 +211,7 @@
       }
     }
   }
+
   .right {
     display: flex;
     flex-direction: column;
@@ -207,21 +221,39 @@
 
     .nav {
       display: flex;
-      align-items: center;
-      gap: 36px;
+      justify-content: space-between;
 
-      span {
-        font-style: normal;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 16px;
-        color: #777e91;
+      button {
+        color: white;
+        background: #f2994a;
+        padding: 8px;
+        font-weight: 600;
         cursor: pointer;
+        border: 0;
+        border-radius: 20px;
       }
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+
+        span {
+          font-style: normal;
+          cursor: pointer;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 16px;
+          color: #777e91;
+          cursor: pointer;
+        }
+      }
+
       .active {
         color: #f2994a;
       }
     }
+
     .sections {
       width: 100%;
     }
