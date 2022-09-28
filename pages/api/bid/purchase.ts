@@ -23,6 +23,7 @@ export default async function profile(
           itemId: item.id,
         },
       });
+
       const updateItemOwner = prisma.item.update({
         where: {
           id: item.id,
@@ -51,6 +52,23 @@ export default async function profile(
           createPurchase,
           deleteAuction,
         ]);
+
+        if (item.collectionId) {
+          const collection = await prisma.collection.findUnique({
+            where: {
+              id: item.collectionId,
+            },
+          });
+          await prisma.collection.update({
+            where: {
+              id: item.collectionId,
+            },
+            data: {
+              revenue: collection?.revenue + item.price,
+            },
+          });
+        }
+        console.log("revenue updated");
         await TriggerAction({
           action: Actions.Purchase,
           user,
@@ -58,10 +76,12 @@ export default async function profile(
         });
       } catch (error) {
         console.log(error);
+        res.status(400).json("error");
       }
       res.status(200).json("successful");
     } catch (error) {
       console.log(error);
+      res.status(400).json("error");
       res.json({
         error: "There was an error",
       });

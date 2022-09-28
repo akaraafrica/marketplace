@@ -36,6 +36,10 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
     (total: number, item: { price: number }) => total + item.price,
     0
   );
+  const beneficiariesTotal = collection?.beneficiaries?.reduce(
+    (total: number, beneficiary) => total + beneficiary?.percentage,
+    0
+  );
   const handleVerify = () => {
     setOpenVerifyDialog(true);
   };
@@ -182,21 +186,24 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <h3>Total worth of Collection </h3>
                 </div>
                 <div>
-                  <span>200 ETH</span>
+                  <span>{collection.revenue} ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
-                {collection?.type?.name === "Beneficiaries" && (
-                  <>
-                    <div>
-                      <span>200 ETH</span>
-                      <h3>Amount paid to beneficiaries</h3>
-                    </div>
-                    <div>
-                      <span>200 ETH</span>
-                      <h3>Target amount for beneficiaries</h3>
-                    </div>
-                  </>
-                )}
+                {collection?.type?.name === "Beneficiaries" &&
+                  beneficiariesTotal && (
+                    <>
+                      <div>
+                        <span>{total / beneficiariesTotal || ""} ETH</span>
+                        <h3>Target amount for beneficiaries</h3>
+                      </div>
+                      <div>
+                        <span>
+                          {collection.revenue / beneficiariesTotal || ""} ETH
+                        </span>
+                        <h3>Totol amount raised beneficiaries</h3>
+                      </div>
+                    </>
+                  )}
               </section>
               <section>
                 <h2></h2>
