@@ -178,8 +178,8 @@ model User {
   purchases             Purchase[]
   ratings               Rating[]
   userRatings           UserRating[]
-  followedBy                User[]         @relation("UserFollows")
-  following                User[]         @relation("UserFollows")
+  followedBy            User[]         @relation("UserFollows")
+  following             User[]         @relation("UserFollows")
 }
 
 model UserRating {
