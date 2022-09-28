@@ -231,7 +231,6 @@ enum CollectionStatus {
   VERIFIED
   READY
   PUBLISHED
-  DRAFT
 }
 
 enum ContributorStatus {

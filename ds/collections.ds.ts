@@ -1,4 +1,5 @@
 import { api } from "../services/apiClient";
+import { IItem } from "../types/item.interface";
 import { IUser } from "../types/user.interface";
 
 const url = `/api/collections`;
@@ -76,6 +77,18 @@ class Collection {
     try {
       const res = await api.patch(url + "/update", {
         ...data,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async removeContributor(id: number, contributorId: number, items: IItem[]) {
+    try {
+      const res = await api.update("/api/contributor/remove", {
+        id,
+        contributorId,
+        items: items,
       });
       return res;
     } catch (error) {
