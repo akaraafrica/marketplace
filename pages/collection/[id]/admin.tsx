@@ -233,9 +233,9 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                           </span>
                           <span className={styles.number}>
                             {
-                              collection.items?.filter(
-                                (item) => item.ownerId === contributor.userId
-                              ).length
+                              collection.items?.filter((item) => {
+                                return item.ownerId === contributor.userId;
+                              }).length
                             }{" "}
                             Item(s) in collection
                           </span>
@@ -272,6 +272,7 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                                 </button>
                               </>
                             )}
+
                         </div>
                       </div>
                     </div>
