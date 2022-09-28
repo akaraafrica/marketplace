@@ -32,7 +32,11 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
     (total: number, item: { price: number }) => total + item.price,
     0
   );
-  console.log("collection", collection);
+  const beneficiariesTotal = collection?.beneficiaries?.reduce(
+    (total: number, beneficiary) => total + beneficiary?.percentage,
+    0
+  );
+
   const { user } = useContext(AuthContext);
   const [openLunchTime, setOpenLunchTime] = useState(false);
   // const [openPayout, setOpenPayout] = useState(false);
@@ -127,18 +131,21 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <span>{collection.revenue} ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
-                {collection?.type?.name === "Beneficiaries" && (
-                  <>
-                    <div>
-                      <span>200 ETH</span>
-                      <h3>Amount paid to beneficiaries</h3>
-                    </div>
-                    <div>
-                      <span>200 ETH</span>
-                      <h3>Target amount for beneficiaries</h3>
-                    </div>
-                  </>
-                )}
+                {collection?.type?.name === "Beneficiaries" &&
+                  beneficiariesTotal && (
+                    <>
+                      <div>
+                        <span>{total / beneficiariesTotal || ""} ETH</span>
+                        <h3>Target amount for beneficiaries</h3>
+                      </div>
+                      <div>
+                        <span>
+                          {collection.revenue / beneficiariesTotal || ""} ETH
+                        </span>
+                        <h3>Totol amount raised beneficiaries</h3>
+                      </div>
+                    </>
+                  )}
               </section>
               <section>
                 <h2></h2>
@@ -256,4 +263,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
-export default withAuth(CollectionAdmin);
+export default CollectionAdmin;
+// export default withAuth(CollectionAdmin);
