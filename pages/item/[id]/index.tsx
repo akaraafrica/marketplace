@@ -36,7 +36,7 @@ const Index = ({ item }: { item: IItem }) => {
         <section className={styles.sectiontwo}>
           <div className={styles.price}>
             <h3>{item.title}</h3>
-            <span>{item.price} ETH</span>
+            <span>{item?.price} ETH</span>
             {/* <span>$4,429.87</span> */}
           </div>
           <div className={styles.stats}>

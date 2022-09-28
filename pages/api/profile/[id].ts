@@ -1,10 +1,32 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../../utils/lib/prisma";
+import excludePassword from "../../../utils/helpers/excludePassword";
+import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
+import prisma, { Prisma } from "../../../utils/lib/prisma";
 import verifyToken from "../../../utils/middlewares/verifyToken";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = parseInt(req.query.id as string);
-
+  if (req.method === "GET") {
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          id: id,
+        },
+        include: {
+          profile: true,
+          items: true,
+          collections: true,
+          followedBy: true,
+          following: true,
+          likes: true,
+        },
+      });
+      const userWithoutPassword = excludePassword(user);
+      return res.status(200).json(userWithoutPassword);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  }
   if (req.method === "PUT") {
     try {
       await prisma.user.update({

@@ -35,11 +35,9 @@ export default function ItemGrid({
                 />
 
                 <div className={styles.cardDetails}>
-                  <div className={styles.cardName}>
-                    <span>{item.title}</span>
-                    <div className={styles.previewcardprice}>
-                      <span>{item.price} ETH</span>
-                    </div>
+                  <span className={styles.cardName}>{item?.title}</span>
+                  <div className={styles.previewcardprice}>
+                    <span>{item?.price} ETH</span>
                   </div>
                 </div>
                 {collection.author.id === user?.id && (

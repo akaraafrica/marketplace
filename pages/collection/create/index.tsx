@@ -30,10 +30,13 @@ const Index: React.FC<CreateCollection> = (props: CreateCollection) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.query;
 
-  const [collectionTypes, collection] = await Promise.all([
-    // UserDs.fetchAll(),
+  let collection;
+  if (id) {
+    collection = await CollectionDs.getCollectionById(id);
+  }
+  const [users, collectionTypes] = await Promise.all([
+    UserDs.fetchAll(),
     CollectionTypeDs.fetchAll(),
-    CollectionDs.getCollectionById(id),
   ]);
 
   return {

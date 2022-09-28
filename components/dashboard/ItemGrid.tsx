@@ -13,37 +13,41 @@ export default function ItemGrid({
     <section className={styles.watchlist}>
       <h3>{title}</h3>
       <div className={styles.center}>
-        {items.slice(0, 6).map((item) => {
-          return (
-            <div className={styles.cards} key={item.id}>
-              <NextImage
-                className={styles.cardImg}
-                src={item.images[0]}
-                width="160px"
-                height="148px"
-                alt="product"
-              />
-              <div className={styles.cardDetails}>
-                <span className={styles.cardName}>{item.title}</span>
-                {title == "watchlist" && (
-                  <>
-                    <div className={styles.centerDiv}>
-                      {/* <NextImage
+        {items &&
+          items.slice(0, 6).map((item) => {
+            return (
+              <div className={styles.cards} key={item?.id}>
+                {item?.images[0] && (
+                  <NextImage
+                    className={styles.cardImg}
+                    src={item.images[0]}
+                    width="160px"
+                    height="148px"
+                    alt="product"
+                  />
+                )}
+
+                <div className={styles.cardDetails}>
+                  <span className={styles.cardName}>{item?.title}</span>
+                  {title == "watchlist" && (
+                    <>
+                      <div className={styles.centerDiv}>
+                        {/* <NextImage
                         className={styles.centerDivImg}
                         src="/assets/auctionAvatar.png"
                         width="24px"
                         height="24px"
                         alt="avatar"
                       /> */}
-                      <span>{item.price} ETH</span>
-                    </div>
-                    <button>Place a bid</button>
-                  </>
-                )}
+                        <span>{item?.price} ETH</span>
+                      </div>
+                      <button>Place a bid</button>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </section>
   );
