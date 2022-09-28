@@ -14,7 +14,7 @@ export default function ItemGrid({
     <section className={styles.watchlist}>
       <h3>{title}</h3>
       <div className={styles.center}>
-        {items.map((item: any) => {
+        {items.slice(0, 6).map((item: any) => {
           return (
             <Link key={item.id} href={`/item/${item.id}`}>
               <div className={styles.cards} key={item.id}>
@@ -31,11 +31,9 @@ export default function ItemGrid({
                 />
 
                 <div className={styles.cardDetails}>
-                  <div className={styles.cardName}>
-                    <span>{item.title}</span>
-                    <div className={styles.previewcardprice}>
-                      <span>{item.price} ETH</span>
-                    </div>
+                  <span className={styles.cardName}>{item?.title}</span>
+                  <div className={styles.previewcardprice}>
+                    <span>{item?.price} ETH</span>
                   </div>
                 </div>
                 <button>Remove Item</button>

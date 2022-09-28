@@ -1,9 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import NextImage from "../Image";
 import styles from "./index.module.scss";
 import Link from "../Link";
+import AddToCollectionDialog from "../AddToCollectionDialog";
+import { IUser } from "../../types/user.interface";
+import { IItem } from "../../types/item.interface";
 
 interface ItemCardProps {
   id: number;
@@ -12,23 +15,41 @@ interface ItemCardProps {
   price: number;
   ownerAvatar: string;
   highestBid: string;
+  item?: IItem;
   collectionImages?: string[];
+  owner?: IUser;
+  isCollectionAdmin?: boolean;
 }
 
 function ItemCard(props: ItemCardProps) {
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+  const addItems = () => {};
+  const handleAddToCollection = () => {
+    setOpenDialog(true);
+  };
   const router = useRouter();
   const isMarketplace = router.pathname === "/marketplace";
   return (
     <div>
-      <Link href={`/item/${props.id}`}>
-        <a>
-          <div
-            className={
-              isMarketplace
-                ? styles.cardBackground
-                : styles.previewcardcontentcon
-            }
-          >
+      <AddToCollectionDialog
+        open={openDialog}
+        handleClose={handleDialogClose}
+        handleRequest={addItems}
+        title={props.name}
+        id={props.id}
+        owner={props.owner}
+      />
+
+      <div
+        className={
+          isMarketplace ? styles.cardBackground : styles.previewcardcontentcon
+        }
+      >
+        <Link href={`/item/${props.id}`}>
+          <a>
             <div className={styles.previewcardimg}>
               <Link href={`/item/${props.id}`}>
                 <img alt="product image" src={props.img} />
@@ -55,33 +76,16 @@ function ItemCard(props: ItemCardProps) {
                 </div>
               )}
             </div>
-            {!props.collectionImages && props.ownerAvatar != "undefined" && (
-              <div className={styles.previewstockcon}>
-                <div className={styles.avatars}>
-                  <img alt="avatar" src={props.ownerAvatar} />
-                  <img alt="avatar" src={props.ownerAvatar} />
-                  <img alt="avatar" src={props.ownerAvatar} />
-                </div>
-              </div>
-            )}
-            {!props.collectionImages && <hr />}
-
-            {!props.collectionImages && (
-              <div className={styles.bidsec}>
-                <div className={styles.bidsec1}>
-                  <img alt="bid icon" src={`/assets/bidicon.svg`} />
-                  <span>
-                    Highest bid <span> {props.highestBid}</span>
-                  </span>
-                </div>
-                <div className="bidsec2">
-                  <span>New bid</span>
-                </div>
-              </div>
-            )}
-          </div>
-        </a>
-      </Link>
+          </a>
+        </Link>
+        {!props.collectionImages &&
+          props.isCollectionAdmin &&
+          !props?.item?.collectionId && (
+            <button onClick={handleAddToCollection}>
+              Add item to collection
+            </button>
+          )}
+      </div>
     </div>
   );
 }
