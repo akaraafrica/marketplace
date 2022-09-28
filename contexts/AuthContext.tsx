@@ -16,6 +16,7 @@ type AuthContextData = {
   signOut: () => void;
   user: IUser | undefined;
   isAuthenticated: boolean;
+  loading: boolean;
 };
 
 type AuthProviderProps = {
@@ -38,7 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<IUser>();
   const { account, active, activate } = useWeb3React();
   const isAuthenticated = !!user;
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (isAuthenticated && account != user.walletAddress) signOut();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,8 +49,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const { "nextauth.token": token } = getCookies();
     api
       .get(`/api/me`)
-      .then((savedUser: { data: IUser }) => setUser(savedUser.data))
-      .catch((err: any) => console.log(err));
+      .then((savedUser: { data: IUser }) => {
+        setUser(savedUser.data);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        console.log(err);
+        setLoading(false);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -60,6 +67,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         case "signOut":
           Router.push("/");
           setUser(undefined);
+          setLoading(false);
+
           break;
 
         default:
@@ -109,6 +118,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         .get(`/api/me`, { headers: { Authorization: `Bearer ${accessToken}` } })
         .then((savedUser: { data: IUser }) => {
           setUser(savedUser.data);
+          setLoading(false);
         })
         .catch((err: any) => console.log(err));
 
@@ -120,7 +130,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, user, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{ signIn, signOut, user, isAuthenticated, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -10,8 +10,4 @@ export interface IContributor {
   user: IUser;
 }
 
-enum ContributorStatus {
-  PENDING,
-  ACCEPTED,
-  REJECTED,
-}
+type ContributorStatus = "PENDING" | "ACCEPTED" | "REJECTED";

@@ -3,7 +3,6 @@ import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const data = req.body;
-  console.log({ data });
 
   if (req.method === "PATCH") {
     try {
@@ -12,6 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           id: data.id,
         },
         data: {
+          status: "DRAFT",
           description: data.description,
           visible: data.visible,
           updatedAt: new Date(),
