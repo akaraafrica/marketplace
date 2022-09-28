@@ -141,6 +141,7 @@ model Collection {
   title            String
   tokenId          String             @unique
   collectionTypeId Int
+  revenue          Int?
   lunchTime        String?
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
@@ -156,6 +157,7 @@ model Collection {
   contributors     Contributor[]
   items            Item[]
   likes            Like[]
+  beneficiaries    Beneficiary[]
 }
 
 model User {
@@ -170,6 +172,7 @@ model User {
   bids                  Bid[]
   collections           Collection[]
   contributors          Contributor[]
+  beneficiaries         Beneficiary[]
   items                 Item[]
   likes                 Like[]
   receivedNotifications Notification[] @relation("receiver")
@@ -178,8 +181,8 @@ model User {
   purchases             Purchase[]
   ratings               Rating[]
   userRatings           UserRating[]
-  followedBy                User[]         @relation("UserFollows")
-  following                User[]         @relation("UserFollows")
+  followedBy            User[]         @relation("UserFollows")
+  following             User[]         @relation("UserFollows")
 }
 
 model UserRating {
@@ -210,6 +213,18 @@ model Contributor {
   percentage   Int               @default(0)
   collection   Collection        @relation(fields: [collectionId], references: [id])
   user         User              @relation(fields: [userId], references: [id])
+}
+
+model Beneficiary {
+  id            Int        @id @default(autoincrement())
+  beneficiaryId Int        @map("collectionId")
+  name          String
+  walletAddress String
+  description   String
+  userId        Int
+  percentage    Int        @default(0)
+  collection    Collection @relation(fields: [beneficiaryId], references: [id])
+  user          User?      @relation(fields: [userId], references: [id])
 }
 
 enum EntityType {

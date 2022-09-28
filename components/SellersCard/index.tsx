@@ -6,7 +6,6 @@ import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import styles from "./styles.module.scss";
 import { MdOutlineAddBox } from "react-icons/md";
-import { BsArrowUpRight } from "react-icons/bs";
 import { CgArrowTopRight } from "react-icons/cg";
 import DefaultAvatar from "../DefaultAvatar";
 
@@ -67,7 +66,6 @@ const SellersCard = ({ seller, index }: any) => {
                 backgroundColor: "#FF8060",
                 border: "1px solid #000",
                 clipPath: `polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`,
-                // padding: '-5px'
               }}
             />
           }

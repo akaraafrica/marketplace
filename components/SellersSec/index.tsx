@@ -1,10 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SellersCard from "../SellersCard";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import styles from "./styles.module.scss";
 // import Slider from "infinite-react-carousel";
 
@@ -17,27 +12,7 @@ import NextImage from "../Image";
 
 const SellersSec = (props: any) => {
   const [swiperRef, setSwiperRef] = useState<swiperClass>();
-  const names = [
-    "Oliver Hansen",
-    "Van Henry",
-    "April Tucker",
-    "Ralph Hubbard",
-    "Omar Alexander",
-    "Carlos Abbott",
-    "Miriam Wagner",
-    "Bradley Wilkerson",
-    "Virginia Andrews",
-    "Kelly Snyder",
-  ];
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        width: 250,
-        backgroundColor: "#777E91",
-        color: "white",
-      },
-    },
-  };
+
   const handleLeftClick = useCallback(() => {
     if (!swiperRef) return;
     swiperRef.slidePrev();
@@ -65,26 +40,6 @@ const SellersSec = (props: any) => {
               }}
             ></div>{" "}
           </span>
-        </div>
-        <div>
-          {/* <FormControl sx={{ m: 1, width: 300 }}>
-            <InputLabel id="demo-multiple-name-label">Name</InputLabel>
-            <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              multiple
-              value={[]}
-              // onChange={handleChange}
-              input={<OutlinedInput label="Name" />}
-              MenuProps={MenuProps}
-            >
-              {names.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
         </div>
       </div>
       <div className={styles.swiperWrapper}>

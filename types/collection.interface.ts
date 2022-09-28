@@ -20,6 +20,7 @@ export interface ICollection {
   description: string;
   createdAt: string;
   updatedAt: string;
+  revenue: number;
   author: IUser;
   images: string[];
   videos: string[];

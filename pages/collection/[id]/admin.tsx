@@ -11,10 +11,8 @@ import Link from "next/link";
 import withAuth from "../../../HOC/withAuth";
 import { BiArrowBack } from "react-icons/bi";
 import { BiRightArrowAlt } from "react-icons/bi";
-import { FiChevronRight } from "react-icons/fi";
 import { useRouter } from "next/router";
 import DefaultAvatar from "../../../components/DefaultAvatar";
-import { CollectionStatus } from "@prisma/client";
 import NextImage from "../../../components/Image";
 import CustomSelect from "../../../components/CustomSelect";
 import { IItem } from "../../../types/item.interface";
@@ -126,7 +124,7 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <h3>Total worth of Collection </h3>
                 </div>
                 <div>
-                  <span>200 ETH</span>
+                  <span>{collection.revenue} ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
                 {collection?.type?.name === "Beneficiaries" && (
@@ -258,4 +256,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
-export default CollectionAdmin;
+export default withAuth(CollectionAdmin);
