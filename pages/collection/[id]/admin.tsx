@@ -240,6 +240,34 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
           {open === 4 && (
             <div className={styles.section}>
               <h2>Beneficiary</h2>
+              <div className={styles.content}>
+                {collection?.contributors?.map((contributor) => (
+                  <div key={contributor.id} className={styles.row}>
+                    <div className={styles.left}>
+                      <DefaultAvatar
+                        url={contributor?.user?.profile?.avatar}
+                        width={"88px"}
+                        height={"88px"}
+                        walletAddress={contributor?.user.walletAddress}
+                        fontSize={"8px"}
+                      />
+                      <div className={styles.details}>
+                        <div className={styles.dtop}>
+                          <span className={styles.name}>
+                            {contributor.user.email}
+                          </span>
+                          <span className={styles.number}>Wallet address</span>
+                        </div>
+                        <div className={styles.btnDiv}>walletaddress</div>
+                      </div>
+                    </div>
+                    <div className={styles.right}>
+                      <label htmlFor="">PERCENTAGE</label>
+                      <input type="number" placeholder="10%" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </main>
