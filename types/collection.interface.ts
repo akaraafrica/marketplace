@@ -2,6 +2,17 @@ import { IUser } from "./user.interface";
 import { IItem } from "./item.interface";
 import { IContributor } from "./contributors.interface";
 
+export interface IBeneficiary {
+  id: number;
+  name: string;
+  walletAddress: string;
+  description: string;
+  percentage: number;
+  userId: number;
+  user: IUser;
+  collectionId: number;
+  collection: ICollection;
+}
 export interface ICollection {
   id: number;
   title: string;
@@ -20,6 +31,7 @@ export interface ICollection {
   lunchTime: string;
   status: CollectionStatus;
   contributors: IContributor[];
+  beneficiaries: IBeneficiary[];
 }
 type CollectionStatus =
   | "DRAFT"

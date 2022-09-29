@@ -107,5 +107,15 @@ class Collection {
       console.log(error);
     }
   }
+  async addBeneficiary(collectionId: number, data: any) {
+    try {
+      const res = await api.patch(url + "/addBeneficiary", {
+        collectionId,
+        ...data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 export default new Collection();

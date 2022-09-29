@@ -21,6 +21,7 @@ import { IItem } from "../../../types/item.interface";
 import { AuthContext } from "../../../contexts/AuthContext";
 import LunchTimeDialog from "../../../components/LunchTimeDialog";
 import PayoutDialog from "../../../components/PayoutDialog";
+import AddBeneficiaryDialog from "../../../components/AddBeneficiaryDialog";
 // const CollectionAdmin = ({ collectionx }: { collectionx: ICollection }) => {
 
 interface Properties {
@@ -37,6 +38,7 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
   console.log("collection", collection);
   const { user } = useContext(AuthContext);
   const [openLunchTime, setOpenLunchTime] = useState(false);
+  const [openAddBeneficiary, setOpenAddBeneficiary] = useState(false);
   // const [openPayout, setOpenPayout] = useState(false);
   const handleClose = () => {
     setOpenLunchTime(false);
@@ -48,6 +50,11 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
         collectionId={collection.id}
         handleClose={handleClose}
         open={openLunchTime}
+      />
+      <AddBeneficiaryDialog
+        collectionId={collection.id}
+        open={openAddBeneficiary}
+        handleClose={() => setOpenAddBeneficiary(false)}
       />
       {/* <PayoutDialog
         collection={collection}
@@ -105,14 +112,14 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
 
             {/* <span onClick={() => setOpen(3)} className={open === 3 ? styles.active : ''}>Whitelist</span> */}
 
-            {collection.type === "FUNDRAISING" && (
-              <span
-                onClick={() => setOpen(4)}
-                className={open === 4 ? styles.active : ""}
-              >
-                Beneficiary
-              </span>
-            )}
+            {/* {collection.type === "FUNDRAISING" && ( */}
+            <span
+              onClick={() => setOpen(4)}
+              className={open === 4 ? styles.active : ""}
+            >
+              Beneficiary
+            </span>
+            {/* )} */}
           </section>
           {open === 1 && (
             <div>
@@ -129,18 +136,18 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <span>200 ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
-                {collection.type === "FUNDRAISING" && (
-                  <>
-                    <div>
-                      <span>200 ETH</span>
-                      <h3>Amount paid to beneficiaries</h3>
-                    </div>
-                    <div>
-                      <span>200 ETH</span>
-                      <h3>Target amount for beneficiaries</h3>
-                    </div>
-                  </>
-                )}
+                {/* {collection.type === "FUNDRAISING" && ( */}
+                <>
+                  <div>
+                    <span>200 ETH</span>
+                    <h3>Amount paid to beneficiaries</h3>
+                  </div>
+                  <div>
+                    <span>200 ETH</span>
+                    <h3>Target amount for beneficiaries</h3>
+                  </div>
+                </>
+                {/* )} */}
               </section>
               <section>
                 <h2></h2>
@@ -239,31 +246,42 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
           )}
           {open === 4 && (
             <div className={styles.section}>
-              <h2>Beneficiary</h2>
+              <div className={styles.topB}>
+                <h2>Beneficiary</h2>
+                <button onClick={() => setOpenAddBeneficiary(true)}>
+                  Add Beneficiary
+                </button>
+              </div>
               <div className={styles.content}>
-                {collection?.contributors?.map((contributor) => (
-                  <div key={contributor.id} className={styles.row}>
+                {collection?.beneficiaries?.map((beneficiary) => (
+                  <div key={beneficiary.id} className={styles.row}>
                     <div className={styles.left}>
                       <DefaultAvatar
-                        url={contributor?.user?.profile?.avatar}
+                        url={""}
                         width={"88px"}
                         height={"88px"}
-                        walletAddress={contributor?.user.walletAddress}
+                        walletAddress={beneficiary.walletAddress}
                         fontSize={"8px"}
                       />
                       <div className={styles.details}>
                         <div className={styles.dtop}>
                           <span className={styles.name}>
-                            {contributor.user.email}
+                            {beneficiary.name}
                           </span>
                           <span className={styles.number}>Wallet address</span>
                         </div>
-                        <div className={styles.btnDiv}>walletaddress</div>
+                        <div className={styles.btnDiv}>
+                          {beneficiary.walletAddress}
+                        </div>
                       </div>
                     </div>
                     <div className={styles.right}>
                       <label htmlFor="">PERCENTAGE</label>
-                      <input type="number" placeholder="10%" />
+                      <input
+                        value={beneficiary.percentage}
+                        type="number"
+                        placeholder="10%"
+                      />
                     </div>
                   </div>
                 ))}

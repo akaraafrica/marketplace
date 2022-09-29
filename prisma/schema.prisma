@@ -141,7 +141,7 @@ model Collection {
   revenue          Int?
   author           User               @relation(fields: [authorId], references: [id])
   type             CollectionTypes     @default(ORDINARY)
-  Beneficiary      Beneficiary[]
+  beneficiaries      Beneficiary[]
   ratings          CollectionRating[]
   contributors     Contributor[]
   items            Item[]
@@ -157,7 +157,7 @@ model User {
   profileId             Int?
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
-  Beneficiary           Beneficiary[]
+  beneficiaries           Beneficiary[]
   bids                  Bid[]
   collections           Collection[]
   contributors          Contributor[]
