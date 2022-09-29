@@ -33,13 +33,7 @@ const toolbarOptions = [
   ["clean"],
 ];
 
-const Index = ({
-  collectionTypes,
-  collection,
-}: {
-  collectionTypes: any[];
-  collection: ICollection;
-}) => {
+const Index = ({ collection }: { collection: ICollection }) => {
   const {
     register,
     handleSubmit,
@@ -50,7 +44,7 @@ const Index = ({
     formState: { errors },
   } = useForm();
   const [desc, setDesc] = useState("");
-  const [type, setType] = useState<number>();
+  const [type, setType] = useState("");
   const [video, setVideo] = useState(null);
   const [searchUser, setSearchUser] = useState("");
   const [searchedUser, setSearchedUser] = useState<IUser[]>([]);
@@ -88,8 +82,6 @@ const Index = ({
     if (collection) {
       setValue("title", collection.title);
       setValue("visible", collection.visible);
-
-      setType(collection.collectionTypeId);
       setDesc(collection.description);
       const contributors = collection.contributors.map(
         (contributors) => contributors.user
@@ -573,12 +565,10 @@ const Index = ({
                 <option value="default" disabled>
                   Choose a Collection type
                 </option>
-                {collectionTypes &&
-                  collectionTypes.map((collectionType, index) => (
-                    <option key={index} value={collectionType.id}>
-                      {collectionType.name}
-                    </option>
-                  ))}
+                <option value="ORDINARY">Ordinary</option>
+                <option value="COLLABORATORS">Collaborators</option>
+                <option value="FUNDRAISING">Fund Raising</option>
+                <option value="LOCKSHARED">Lock Shared</option>
               </select>
             </div>
             <div className={styles.itemdetailformdropdownsCon}>

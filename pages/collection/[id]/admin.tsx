@@ -165,7 +165,7 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
 
             {/* <span onClick={() => setOpen(3)} className={open === 3 ? styles.active : ''}>Whitelist</span> */}
 
-            {collection?.type?.name === "Beneficiaries" && (
+            {collection.type === "FUNDRAISING" && (
               <span
                 onClick={() => setOpen(4)}
                 className={open === 4 ? styles.active : ""}
@@ -189,21 +189,20 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <span>{collection.revenue} ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
-                {collection?.type?.name === "Beneficiaries" &&
-                  beneficiariesTotal && (
-                    <>
-                      <div>
-                        <span>{total / beneficiariesTotal || ""} ETH</span>
-                        <h3>Target amount for beneficiaries</h3>
-                      </div>
-                      <div>
-                        <span>
-                          {collection.revenue / beneficiariesTotal || ""} ETH
-                        </span>
-                        <h3>Totol amount raised beneficiaries</h3>
-                      </div>
-                    </>
-                  )}
+                {collection.type === "FUNDRAISING" && (
+                  <>
+                    <div>
+                      <span>{total / beneficiariesTotal || ""} ETH</span>
+                      <h3>Amount paid to beneficiaries</h3>
+                    </div>
+                    <div>
+                      <span>
+                        {collection.revenue / beneficiariesTotal || ""} ETH
+                      </span>
+                      <h3>Target amount for beneficiaries</h3>
+                    </div>
+                  </>
+                )}
               </section>
               <section>
                 <h2></h2>
@@ -279,7 +278,6 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                                 </button>
                               </>
                             )}
-
                         </div>
                       </div>
                     </div>
@@ -324,6 +322,34 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
           {open === 4 && (
             <div className={styles.section}>
               <h2>Beneficiary</h2>
+              <div className={styles.content}>
+                {collection?.contributors?.map((contributor) => (
+                  <div key={contributor.id} className={styles.row}>
+                    <div className={styles.left}>
+                      <DefaultAvatar
+                        url={contributor?.user?.profile?.avatar}
+                        width={"88px"}
+                        height={"88px"}
+                        walletAddress={contributor?.user.walletAddress}
+                        fontSize={"8px"}
+                      />
+                      <div className={styles.details}>
+                        <div className={styles.dtop}>
+                          <span className={styles.name}>
+                            {contributor.user.email}
+                          </span>
+                          <span className={styles.number}>Wallet address</span>
+                        </div>
+                        <div className={styles.btnDiv}>walletaddress</div>
+                      </div>
+                    </div>
+                    <div className={styles.right}>
+                      <label htmlFor="">PERCENTAGE</label>
+                      <input type="number" placeholder="10%" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </main>

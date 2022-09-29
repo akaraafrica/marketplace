@@ -39,17 +39,6 @@ model CollectionRating {
   rating       Rating     @relation(fields: [ratingId], references: [id])
 }
 
-model CollectionType {
-  id              Int          @id @default(autoincrement())
-  name            String       @unique
-  minContributors Int
-  maxContributors Int
-  minItems        Int
-  maxItems        Int
-  typeId          String       @unique
-  collection      Collection[]
-}
-
 model Auction {
   id        Int     @id @default(autoincrement())
   open      Boolean @default(false)
@@ -140,9 +129,6 @@ model Collection {
   id               Int                @id @default(autoincrement())
   title            String
   tokenId          String             @unique
-  collectionTypeId Int
-  revenue          Int?
-  lunchTime        String?
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
@@ -151,8 +137,10 @@ model Collection {
   videos           String[]
   status           CollectionStatus?  @default(DRAFT)
   visible          Boolean            @default(false)
+  lunchTime        String?
+  revenue          Int?
   author           User               @relation(fields: [authorId], references: [id])
-  type             CollectionType     @relation(fields: [collectionTypeId], references: [id])
+  type             CollectionTypes     @default(ORDINARY)
   ratings          CollectionRating[]
   contributors     Contributor[]
   items            Item[]
@@ -217,14 +205,21 @@ model Contributor {
 
 model Beneficiary {
   id            Int        @id @default(autoincrement())
-  beneficiaryId Int        @map("collectionId")
+  collectionId  Int
+  userId        Int?
+  percentage    Int        @default(0)
+  description   String
   name          String
   walletAddress String
-  description   String
-  userId        Int
-  percentage    Int        @default(0)
-  collection    Collection @relation(fields: [beneficiaryId], references: [id])
-  user          User?      @relation(fields: [userId], references: [id])
+  Collection    Collection @relation(fields: [collectionId], references: [id])
+  User          User?       @relation(fields: [userId], references: [id])
+}
+
+enum CollectionTypes {
+  ORDINARY
+  COLLABORATORS
+  FUNDRAISING
+  LOCKSHARED
 }
 
 enum EntityType {
@@ -241,11 +236,11 @@ enum Gender {
 }
 
 enum CollectionStatus {
-  DRAFT
   CREATED
   VERIFIED
   READY
   PUBLISHED
+  DRAFT
 }
 
 enum ContributorStatus {
