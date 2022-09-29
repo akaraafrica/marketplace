@@ -1,6 +1,7 @@
 import { IUser } from "./user.interface";
 import { IItem } from "./item.interface";
 import { IContributor } from "./contributors.interface";
+import { IBeneficiary } from "./beneficiary.interface";
 
 export interface ICollection {
   id: number;
@@ -10,6 +11,7 @@ export interface ICollection {
   description: string;
   createdAt: string;
   updatedAt: string;
+  revenue: number;
   author: IUser;
   images: string[];
   videos: string[];
@@ -20,6 +22,7 @@ export interface ICollection {
   lunchTime: string;
   status: CollectionStatus;
   contributors: IContributor[];
+  beneficiaries: IBeneficiary[];
 }
 type CollectionStatus =
   | "DRAFT"

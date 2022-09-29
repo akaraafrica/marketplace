@@ -1,20 +1,24 @@
 import Link from "next/link";
+import { ICollection } from "../../types/collection.interface";
 import { IItem } from "../../types/item.interface";
+import { IUser } from "../../types/user.interface";
 import NextImage from "../Image";
 import styles from "./ItemGrid.module.scss";
 
 export default function ItemGrid({
-  items,
   title,
+  collection,
+  user,
 }: {
-  items: any;
+  user: IUser;
+  collection: ICollection;
   title: string;
 }) {
   return (
     <section className={styles.watchlist}>
       <h3>{title}</h3>
       <div className={styles.center}>
-        {items.slice(0, 6).map((item: any) => {
+        {collection.items.map((item: any) => {
           return (
             <Link key={item.id} href={`/item/${item.id}`}>
               <div className={styles.cards} key={item.id}>
@@ -36,7 +40,9 @@ export default function ItemGrid({
                     <span>{item?.price} ETH</span>
                   </div>
                 </div>
-                <button>Remove Item</button>
+                {collection.author.id === user?.id && (
+                  <button>Remove Item</button>
+                )}
               </div>
             </Link>
           );

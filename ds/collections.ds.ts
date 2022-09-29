@@ -53,6 +53,14 @@ class Collection {
       console.log(error);
     }
   }
+  async sendRequestToContributors(data: any) {
+    try {
+      const res = await api.post(url + "/request", {});
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async updateLunchTime(data: any) {
     try {
       const res = await api.post(url + "/update", {

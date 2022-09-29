@@ -1,19 +1,14 @@
 import Image from "../../components/Image";
 import { useState, useContext } from "react";
-import { useWeb3React } from "@web3-react/core";
-import { useContract } from "../../hooks/web3";
-import {
-  CHAIN_TO_NFT_ADDRESS,
-  CHAIN_TO_MARKETPLACE_ADDRESS,
-  SupportedChainId,
-} from "../../constants";
-import token from "../../artifacts/nft.json";
-import { AuthContext } from "../../contexts/AuthContext";
-import ItemDs from "../../ds/item.ds";
+
 import Dialog from "../global/Dialog";
 import styles from "./MintTokenDialog.module.scss";
-import { Step } from "./index";
 
+export interface Step {
+  count: number;
+  loading: boolean;
+  complete: boolean;
+}
 interface properties {
   open: boolean;
   handleMint: Function;
