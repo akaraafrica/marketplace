@@ -7,7 +7,6 @@ import ProfileDs from "./profile.ds";
 import BidDs from "./bid.ds";
 import LikeDs from "./like.ds";
 import AuctionDs from "./auction.ds";
-import CollectionTypeDs from "./collectiontype.ds";
 import ContributorDs from "./contributor.ds";
 export {
   NotificationDs,
@@ -20,5 +19,4 @@ export {
   BidDs,
   LikeDs,
   ContributorDs,
-  CollectionTypeDs,
 };

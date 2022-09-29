@@ -129,8 +129,6 @@ model Collection {
   id               Int                @id @default(autoincrement())
   title            String
   tokenId          String             @unique
-  collectionTypeId Int
-  lunchTime        String?
   description      String             @db.VarChar(250)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
@@ -139,8 +137,11 @@ model Collection {
   videos           String[]
   status           CollectionStatus?  @default(DRAFT)
   visible          Boolean            @default(false)
+  lunchTime        String?
+  revenue          Int?
   author           User               @relation(fields: [authorId], references: [id])
-  type             CollectionType
+  type             CollectionTypes     @default(ORDINARY)
+  Beneficiary      Beneficiary[]
   ratings          CollectionRating[]
   contributors     Contributor[]
   items            Item[]
@@ -156,6 +157,7 @@ model User {
   profileId             Int?
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
+  Beneficiary           Beneficiary[]
   bids                  Bid[]
   collections           Collection[]
   contributors          Contributor[]
@@ -201,6 +203,25 @@ model Contributor {
   user         User              @relation(fields: [userId], references: [id])
 }
 
+model Beneficiary {
+  id            Int        @id @default(autoincrement())
+  collectionId  Int
+  userId        Int?
+  percentage    Int        @default(0)
+  description   String
+  name          String
+  walletAddress String
+  Collection    Collection @relation(fields: [collectionId], references: [id])
+  User          User?       @relation(fields: [userId], references: [id])
+}
+
+enum CollectionTypes {
+  ORDINARY
+  COLLABORATORS
+  FUNDRAISING
+  LOCKSHARED
+}
+
 enum EntityType {
   User
   Single
@@ -215,22 +236,15 @@ enum Gender {
 }
 
 enum CollectionStatus {
-  DRAFT
   CREATED
   VERIFIED
   READY
   PUBLISHED
+  DRAFT
 }
 
 enum ContributorStatus {
   PENDING
   ACCEPTED
   REJECTED
-}
-
-enum CollectionType {
-  ORDINARY
-  COLLABORATORS
-  FUND_RAISING
-  LOCK_SHARED
 }

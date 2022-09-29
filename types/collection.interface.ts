@@ -2,20 +2,10 @@ import { IUser } from "./user.interface";
 import { IItem } from "./item.interface";
 import { IContributor } from "./contributors.interface";
 
-export interface ICollectionType {
-  id: number | string;
-  name: string;
-  minOwners: number;
-  maxOwners: number;
-  minItems: number;
-  maxItems: number;
-  typeId: string;
-}
 export interface ICollection {
   id: number;
   title: string;
   tokenId: string;
-  collectionTypeId: number;
   items: IItem[];
   description: string;
   createdAt: string;
@@ -24,7 +14,7 @@ export interface ICollection {
   images: string[];
   videos: string[];
   ratings: any[];
-  type: ICollectionType;
+  type: CollectionTypes;
   owners: IUser[];
   visible: boolean;
   lunchTime: string;
@@ -37,3 +27,9 @@ type CollectionStatus =
   | "VERIFIED"
   | "READY"
   | "PUBLISHED";
+
+type CollectionTypes =
+  | "ORDINARY"
+  | "COLLABORATORS"
+  | "FUNDRAISING"
+  | "LOCKSHARED";

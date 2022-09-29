@@ -105,7 +105,7 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
 
             {/* <span onClick={() => setOpen(3)} className={open === 3 ? styles.active : ''}>Whitelist</span> */}
 
-            {collection?.type?.name === "Beneficiaries" && (
+            {collection.type === "FUNDRAISING" && (
               <span
                 onClick={() => setOpen(4)}
                 className={open === 4 ? styles.active : ""}
@@ -129,7 +129,7 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <span>200 ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
-                {collection?.type?.name === "Beneficiaries" && (
+                {collection.type === "FUNDRAISING" && (
                   <>
                     <div>
                       <span>200 ETH</span>

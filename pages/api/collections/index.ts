@@ -36,11 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           tokenId: randStr(10),
           images: data.image,
           visible: data.visible,
-          type: {
-            connect: {
-              id: parseInt(data.type),
-            },
-          },
+          type: data.type,
           videos: data.videos,
           updatedAt: new Date(),
           author: {
