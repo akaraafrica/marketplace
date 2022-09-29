@@ -157,10 +157,10 @@ model User {
   profileId             Int?
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
-  beneficiaries           Beneficiary[]
   bids                  Bid[]
   collections           Collection[]
   contributors          Contributor[]
+  beneficiaries         Beneficiary[]
   items                 Item[]
   likes                 Like[]
   receivedNotifications Notification[] @relation("receiver")

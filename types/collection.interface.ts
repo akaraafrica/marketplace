@@ -1,6 +1,7 @@
 import { IUser } from "./user.interface";
 import { IItem } from "./item.interface";
 import { IContributor } from "./contributors.interface";
+import { IBeneficiary } from "./beneficiary.interface";
 
 export interface IBeneficiary {
   id: number;
@@ -21,6 +22,7 @@ export interface ICollection {
   description: string;
   createdAt: string;
   updatedAt: string;
+  revenue: number;
   author: IUser;
   images: string[];
   videos: string[];
