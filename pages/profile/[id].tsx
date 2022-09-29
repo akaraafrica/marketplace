@@ -17,6 +17,7 @@ import { UserDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IProfile } from "../../types/profile.interface";
 import { useRouter } from "next/router";
+import NextLink from "../../components/Link";
 
 const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const [open, setOpen] = React.useState(0);
@@ -33,9 +34,12 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const user = useContext(AuthContext).user;
   const [isFollowing, setIsFollowing] = useState<any>(false);
   const router = useRouter();
+
   useEffect(() => {
-    const isFollowing = followedBy?.find((follower) => follower.id == user?.id);
-    if (isFollowing?.id) {
+    const isFollowing = followedBy?.find(
+      (follower) => follower.followerId == user?.id
+    );
+    if (isFollowing?.followerId == user?.id) {
       setIsFollowing(isFollowing);
     }
   }, [followedBy, user]);
@@ -46,7 +50,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
     }
     if (isFollowing) {
       setIsFollowing(false);
-      await UserDs.unfollow(user.id, isFollowing.id);
+      await UserDs.unfollow(isFollowing.id);
     } else {
       setIsFollowing(true);
       const res = await UserDs.follow(profile, user);
@@ -61,9 +65,11 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
           className={styles.top}
           style={{ backgroundImage: `url(/assets/profilebg.png)` }}
         >
-          <button>
-            Edit profile <AiTwotoneEdit size={15} />
-          </button>
+          <NextLink href={"/settings"}>
+            <button>
+              Edit profile <AiTwotoneEdit size={15} />
+            </button>
+          </NextLink>
         </div>
         <div className={styles.bottom}>
           <div className={styles.left}>
@@ -178,7 +184,6 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
-
   const profile = await ProfileDs.fetch(id);
   if (!profile) return { notFound: true };
 

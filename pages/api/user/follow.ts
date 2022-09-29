@@ -10,38 +10,19 @@ export default async function profile(
     const { profile, user } = req.body;
 
     try {
-      const data = await prisma.user.update({
-        where: {
-          id: profile.id,
-        },
+      await prisma.follows.create({
         data: {
-          followedBy: {
-            connect: {
-              id: user.id,
-            },
-          },
+          followerId: user.id,
+          followingId: profile.id,
         },
       });
-      await prisma.user.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          following: {
-            connect: {
-              id: profile.id,
-            },
-          },
-        },
-      });
-
       console.log("user followed");
       await TriggerAction({
         action: Actions.Follow,
         user,
         profile,
       });
-      res.status(200).send(data);
+      res.status(200).send("user followed");
     } catch (error) {
       console.log(error);
       res.json({

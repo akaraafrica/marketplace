@@ -71,9 +71,9 @@ class User {
       return response.data;
     } catch (error) {}
   }
-  async unfollow(userId: number, id: number) {
+  async unfollow(id: number) {
     try {
-      const response = await api.post(`${url}/unfollow`, { userId, id });
+      const response = await api.post(`${url}/unfollow`, { id });
       return response.data;
     } catch (error) {}
   }

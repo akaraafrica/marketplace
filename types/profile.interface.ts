@@ -13,10 +13,12 @@ export interface IProfile {
   likes?: ILike[];
   collections?: ICollection;
   following?: {
-    id: number;
+    followerId: number;
+    followingId: number;
   }[];
   followedBy?: {
-    id: number;
+    followerId: number;
+    followingId: number;
   }[];
 }
 
