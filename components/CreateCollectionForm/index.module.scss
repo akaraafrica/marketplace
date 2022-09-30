@@ -17,8 +17,13 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
-    flex: 1;
-    width: 100%;
+    // flex: 1;
+    width: 60%;
+
+    @media screen and (max-width: 1440px) {
+      flex-direction: column;
+      width: 100%;
+    }
 
     .scihead {
       h1 {
@@ -74,6 +79,11 @@
         background: #23262f;
         border-radius: 16px;
       }
+      .sciuploadbox:hover,
+      .sciuploadvideobox:hover {
+        z-index: 99;
+        cursor: pointer;
+      }
     }
 
     .editor {
@@ -102,6 +112,9 @@
         border-radius: 16px;
         object-fit: cover;
       }
+      :hover {
+        z-index: 99;
+      }
     }
 
     .optional {
@@ -114,6 +127,9 @@
       gap: 10px;
       background: #23262f;
       border-radius: 16px;
+      :hover {
+        z-index: 99;
+      }
     }
 
     .itemdetailsformcon {
@@ -140,6 +156,15 @@
         gap: 10px;
         background: #23262f;
         border-radius: 16px;
+      }
+      .sciuploadvideobox:hover {
+        z-index: 99;
+        cursor: pointer;
+      }
+      video {
+        :hover {
+          z-index: 99;
+        }
       }
 
       .itemdetailsforminput {
@@ -484,6 +509,9 @@
   }
 
   .previewCard {
+    position: fixed;
+    top: 150px;
+    right: 15%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -498,6 +526,7 @@
     @media screen and (max-width: 640px) {
       width: 70%;
       margin: 0 auto;
+      right: 20px;
     }
 
     h1 {
