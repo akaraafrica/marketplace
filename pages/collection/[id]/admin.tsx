@@ -386,6 +386,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const isContributor = collection.data.contributors.find((contributor) => {
     return contributor.user.walletAddress == cookie.address;
   });
+  if (!isContributor) return { notFound: true };
   if (!Object.keys(isContributor!).length) return { notFound: true };
 
   return {
