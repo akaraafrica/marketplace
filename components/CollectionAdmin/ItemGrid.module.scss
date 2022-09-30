@@ -12,6 +12,7 @@
 
 .center {
   display: flex;
+  flex-wrap: wrap;
   max-width: 80rem;
   gap: 32px;
   margin-bottom: 2rem;
@@ -22,7 +23,8 @@
   }
 
   .cards {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 24px;
     width: 18rem;
     cursor: pointer;
@@ -50,17 +52,13 @@
     .cardDetails {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      height: fit-content;
 
       .cardName {
         font-style: normal;
         font-weight: 500;
         font-size: 16px;
-        line-height: 24px;
         color: #fcfcfd;
-        display: flex;
-        width: 18rem;
-        justify-content: space-between;
       }
 
       .centerDiv {

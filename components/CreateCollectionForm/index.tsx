@@ -73,6 +73,8 @@ const Index = ({ collection }: { collection: ICollection }) => {
       const itemsNotInCollection = data?.items?.filter(
         (item) => !item.collectionId
       );
+      console.log(data);
+      setSelectedUser([data]);
       setItems(itemsNotInCollection);
     };
     if (userID) {
@@ -551,7 +553,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 disabled={!!collection}
                 value={type}
               >
-                <option value="" disabled selected hidden>
+                <option value="" disabled hidden>
                   Choose a Collection type
                 </option>
                 <option value="ORDINARY">Ordinary</option>
@@ -616,7 +618,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     ))}
               </div>
               <div className={styles.itemImagesDiv}>
-                {selectedUser.map((user, index) => (
+                {selectedUser.map((selUser, index) => (
                   <div key={index} className={styles.userImage}>
                     <div
                       className={styles.closeIcon}
@@ -626,6 +628,9 @@ const Index = ({ collection }: { collection: ICollection }) => {
                           ...selectedUser.slice(index + 1, selectedUser.length),
                         ])
                       }
+                      style={{
+                        display: selUser.id === user?.id ? "none" : "block",
+                      }}
                     >
                       <Image
                         width="30px"
@@ -637,7 +642,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     <DefaultAvatar
                       fontSize=".6rem"
                       url={user?.profile?.avatar}
-                      walletAddress={user.walletAddress}
+                      walletAddress={selUser.walletAddress}
                       width="56px"
                       height="56px"
                     />
