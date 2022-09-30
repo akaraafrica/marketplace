@@ -3,7 +3,7 @@ import excludePassword from "../../../../utils/helpers/excludePassword";
 import prisma from "../../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const userString = req.query.user as string;
+  const user = req.query.user as string;
   if (req.method === "GET") {
     try {
       const searchedUsers = await prisma.user.findMany({
@@ -11,18 +11,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           OR: [
             {
               email: {
-                contains: userString,
+                contains: user,
               },
             },
             {
               walletAddress: {
-                contains: userString,
+                contains: user,
               },
             },
             {
               profile: {
                 name: {
-                  contains: userString,
+                  contains: user,
                 },
               },
             },
