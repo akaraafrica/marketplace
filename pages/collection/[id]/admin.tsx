@@ -268,8 +268,8 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                           {!respond &&
                             collection.status === "DRAFT" &&
                             contributor.confirmation === "PENDING" &&
-                            contributor.userId === user?.id &&
-                            collection.author.id == user?.id && (
+                            contributor.userId !== user?.id &&
+                            collection.author.id !== user?.id && (
                               <>
                                 <button
                                   className={styles.btnAccept}
