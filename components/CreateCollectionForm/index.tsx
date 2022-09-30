@@ -16,6 +16,7 @@ import { ICollection } from "../../types/collection.interface";
 import { useRouter } from "next/router";
 import { Step } from "../SingleItemForm";
 import userDs from "../../ds/user.ds";
+import withAuth from "../../HOC/withAuth";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -140,12 +141,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
       optional4: e.target.files[0],
     });
   };
-
-  // const [step, setStep] = useState<Step>({
-  //   count: 1,
-  //   loading: false,
-  //   complete: false,
-  // });
 
   const title = watch("title", "");
   const countdown = watch("countdown", "");
@@ -293,13 +288,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
 
   const handleVideoChange = async (event: any) => {
     const file = event.target.files[0];
-    // const MIN_FILE_SIZE = 1024; // 1MB
     const MAX_FILE_SIZE = 5120; // 5MB
-
-    // if (file.size / 1024 < MIN_FILE_SIZE) {
-    //   toast.warning("uploaded video file is too small");
-    //   return;
-    // }
 
     if (file.size / 1024 > MAX_FILE_SIZE) {
       toast.warning("uploaded video file is too big");
@@ -562,7 +551,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 disabled={!!collection}
                 value={type}
               >
-                <option value="default" disabled>
+                <option value="" disabled selected hidden>
                   Choose a Collection type
                 </option>
                 <option value="ORDINARY">Ordinary</option>
@@ -600,27 +589,31 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 className={styles.searchResults}
               >
                 {searchUser &&
-                  searchedUser?.map((user, index) => (
-                    <span
-                      key={index}
-                      onClick={() => {
-                        for (let i = 0; i < selectedUser.length; i++) {
-                          if (
-                            selectedUser[i].walletAddress === user.walletAddress
-                          ) {
-                            toast.warning("User already selected");
-                            return;
+                  searchedUser
+                    ?.filter((userS) => userS.id !== user?.id)
+                    .map((user, index) => (
+                      <span
+                        key={index}
+                        onClick={() => {
+                          const userItems: IItem[] = user.items!;
+                          for (let i = 0; i < selectedUser.length; i++) {
+                            if (
+                              selectedUser[i].walletAddress ===
+                              user.walletAddress
+                            ) {
+                              toast.warning("User already selected");
+                              return;
+                            }
                           }
-                        }
-                        setSelectedUser([...selectedUser, user]);
-                        setItems([...items, user.items]);
-                        setSearchUser("");
-                        setResultDisplay(false);
-                      }}
-                    >
-                      {user.walletAddress && user.walletAddress}
-                    </span>
-                  ))}
+                          setSelectedUser([...selectedUser, user]);
+                          setItems([...items, ...userItems]);
+                          setSearchUser("");
+                          setResultDisplay(false);
+                        }}
+                      >
+                        {user.email && user.email}
+                      </span>
+                    ))}
               </div>
               <div className={styles.itemImagesDiv}>
                 {selectedUser.map((user, index) => (
@@ -671,7 +664,11 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 {searchItem &&
                   items &&
                   items
-                    ?.filter((item: any) => item?.title?.includes(searchItem))
+                    ?.filter((item: any) =>
+                      item?.title
+                        ?.toLowerCase()
+                        .includes(searchItem.toLowerCase())
+                    )
                     .map((item: any, index: number) => (
                       <span
                         key={index}
@@ -692,7 +689,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     ))}
               </div>
               <div className={styles.itemImagesDiv}>
-                {selectedItems.map((user, index) => (
+                {selectedItems.map((item, index) => (
                   <div key={index} className={styles.userImage}>
                     <div
                       className={styles.closeIcon}
@@ -714,7 +711,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                       />
                     </div>
                     <Image
-                      src="/assets/productimg3.png"
+                      src={item.images[0]}
                       width="112px"
                       height="88px"
                       alt=""
@@ -722,20 +719,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
                   </div>
                 ))}
               </div>
-            </div>
-            <div className={styles.addItem}>
-              <h4>Add to Collection</h4>
-              <span>Upload New Items to Collection</span>
-            </div>
-            <div className={styles.putonscalesec}>
-              <div className={styles.putonscalesec1}>
-                <h4>Publish</h4>
-                <p>You’ll receive bids on this item</p>
-              </div>
-              <label className={styles.switch}>
-                <input type="checkbox" {...register("visible", {})} />
-                <span className={`${styles.slider} ${styles.round}`}></span>
-              </label>
             </div>
             <div className={styles.putonscalebtnsec}>
               {collection ? (
@@ -877,4 +860,4 @@ const Index = ({ collection }: { collection: ICollection }) => {
   );
 };
 
-export default Index;
+export default withAuth(Index);

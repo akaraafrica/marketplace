@@ -1,0 +1,53 @@
+@use "../../styles/colors" as *;
+
+.main {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .inputDiv {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      input {
+        height: 40px;
+        outline: none;
+        border: none;
+        background-color: $grey;
+        color: $white-color;
+        padding: 8px;
+        border-radius: 12px;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        -ms-border-radius: 12px;
+        -o-border-radius: 12px;
+      }
+    }
+    button {
+      height: 40px;
+      border: 1px solid $secondary-color;
+      color: $white-color;
+      background-color: $secondary-color;
+      border-radius: 12px;
+      -webkit-border-radius: 12px;
+      -moz-border-radius: 12px;
+      -ms-border-radius: 12px;
+      -o-border-radius: 12px;
+    }
+  }
+
+  h4 {
+    text-align: center;
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+}
