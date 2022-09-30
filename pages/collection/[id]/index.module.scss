@@ -4,6 +4,7 @@ $grey: #23262f;
 $grey2: #353945;
 $grey3: #777e90;
 $green: #45b26b;
+
 .main {
   max-width: 60rem;
 
@@ -12,6 +13,7 @@ $green: #45b26b;
   display: flex;
   justify-content: center;
   gap: 5vw;
+
   @media only screen and (max-width: 780px) {
     flex-wrap: wrap;
   }
@@ -21,15 +23,18 @@ $green: #45b26b;
   position: relative;
   width: fit-content;
   margin-bottom: 2rem;
+
   .tags {
     position: absolute;
     top: 15px;
     left: 30px;
     display: flex;
     gap: 5px;
+
     @media only screen and (max-width: 780px) {
       left: 80px;
     }
+
     span {
       position: relative;
       padding: 3px;
@@ -41,12 +46,14 @@ $green: #45b26b;
       font-weight: 700;
       font-size: 12px;
     }
+
     span:nth-child(2) {
       background: $secondary-color;
       color: $white-color;
       font-weight: 600;
     }
   }
+
   .img {
     position: relative;
     z-index: 1;
@@ -68,6 +75,7 @@ $green: #45b26b;
   position: relative;
   min-width: 18rem;
   max-width: 30rem;
+
   .price {
     h3 {
       color: $white-color;
@@ -76,6 +84,7 @@ $green: #45b26b;
       display: flex;
       line-height: 3rem;
     }
+
     h4 {
       color: $white-color;
       font-weight: 700;
@@ -83,6 +92,7 @@ $green: #45b26b;
       display: flex;
       line-height: 3rem;
     }
+
     span {
       font-weight: 400;
       color: $grey3;
@@ -96,17 +106,20 @@ $green: #45b26b;
       border: 2px solid $green;
       border-radius: 4px;
     }
+
     span:nth-child(3) {
       border: 2px solid $grey2;
       border-radius: 4px;
     }
   }
+
   p {
     color: $grey3;
     margin-top: 2rem;
     font-size: larger;
     font-weight: 500;
     text-transform: capitalize;
+
     span {
       color: white;
     }
@@ -119,36 +132,48 @@ $green: #45b26b;
   margin-top: 1rem;
   font-weight: 600;
   gap: 1.5rem;
+
   div {
     display: flex;
     flex-direction: column;
   }
+
   span {
     text-align: center;
   }
 }
+
 .swiper_container {
   margin-top: 1rem;
   width: 100%;
+
   .image {
     border-radius: 10px;
     cursor: pointer;
   }
 }
+
 .profileInfoCard {
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
+  align-items: center;
+
+  .owner {
+    color: white;
+  }
 
   span {
     display: block;
     font-size: 1.1rem;
     color: $grey3;
   }
+
   span:nth-child(2) {
     color: white;
   }
 }
+
 .images {
   width: calc(311px + 10vw);
 }

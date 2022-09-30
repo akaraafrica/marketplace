@@ -5,19 +5,19 @@ import CircleType from "circletype";
 
 interface AvatarProps {
   url: string | undefined;
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
   walletAddress: string;
-  fontSize: string;
+  fontSize?: string;
   length?: number;
 }
 const Index: React.FC<AvatarProps> = ({
   url,
   walletAddress,
-  width,
-  height,
-  fontSize,
-  length,
+  width = "40px",
+  height = "40px",
+  fontSize = " 0.7em",
+  length = 2,
 }) => {
   const circleInstance = useRef();
   const colors = [
@@ -35,7 +35,7 @@ const Index: React.FC<AvatarProps> = ({
 
   if (url === undefined || url === null || url === "") {
     const len = length && length > 0 ? length : 3;
-    const lastThree = walletAddress.length - len;
+    const lastThree = walletAddress?.length - len;
     const walletFirstThree = walletAddress.slice(0, len);
     const walletLastThree = walletAddress.slice(lastThree);
 

@@ -196,19 +196,20 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <span>{collection.revenue} ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
-                 {collection.type === "FUNDRAISING" && (
-                <>
-                  <div>
-                    <span>{total / beneficiariesTotal || ""} ETH</span>
-                    <h3>Amount paid to beneficiaries</h3>
-                  </div>
-                  <div>
-                    <span>{collection.revenue / beneficiariesTotal || ""} ETH</span>
-                    <h3>Target amount for beneficiaries</h3>
-                  </div>
-                </>
-                 )} 
-
+                {collection.type === "FUNDRAISING" && (
+                  <>
+                    <div>
+                      <span>{total / beneficiariesTotal || ""} ETH</span>
+                      <h3>Amount paid to beneficiaries</h3>
+                    </div>
+                    <div>
+                      <span>
+                        {collection.revenue / beneficiariesTotal || ""} ETH
+                      </span>
+                      <h3>Target amount for beneficiaries</h3>
+                    </div>
+                  </>
+                )}
               </section>
               <section>
                 <h2></h2>

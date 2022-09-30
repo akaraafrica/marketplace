@@ -126,26 +126,26 @@ model Rating {
 }
 
 model Collection {
-  id               Int                @id @default(autoincrement())
-  title            String
-  tokenId          String             @unique
-  description      String             @db.VarChar(250)
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  authorId         Int
-  images           String[]
-  videos           String[]
-  status           CollectionStatus?  @default(DRAFT)
-  visible          Boolean            @default(false)
-  lunchTime        String?
-  revenue          Int?
-  author           User               @relation(fields: [authorId], references: [id])
-  type             CollectionTypes     @default(ORDINARY)
-  beneficiaries      Beneficiary[]
-  ratings          CollectionRating[]
-  contributors     Contributor[]
-  items            Item[]
-  likes            Like[]
+  id            Int                @id @default(autoincrement())
+  title         String
+  tokenId       String             @unique
+  description   String             @db.VarChar(250)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  authorId      Int
+  images        String[]
+  videos        String[]
+  status        CollectionStatus?  @default(DRAFT)
+  visible       Boolean            @default(false)
+  lunchTime     String?
+  revenue       Int?
+  type          CollectionTypes    @default(ORDINARY)
+  author        User               @relation(fields: [authorId], references: [id])
+  beneficiaries Beneficiary[]
+  ratings       CollectionRating[]
+  contributors  Contributor[]
+  items         Item[]
+  likes         Like[]
 }
 
 model User {
@@ -161,8 +161,6 @@ model User {
   bids                  Bid[]
   collections           Collection[]
   contributors          Contributor[]
-  following             Follows[]      @relation("follower")
-  followedBy            Follows[]      @relation("following")
   items                 Item[]
   likes                 Like[]
   receivedNotifications Notification[] @relation("receiver")
@@ -171,16 +169,8 @@ model User {
   purchases             Purchase[]
   ratings               Rating[]
   userRatings           UserRating[]
-}
-
-model Follows {
-  id          Int  @unique @default(autoincrement())
-  followerId  Int
-  followingId Int
-  follower    User @relation("follower", fields: [followerId], references: [id])
-  following   User @relation("following", fields: [followingId], references: [id])
-
-  @@id([followerId, followingId])
+  User_B                User[]         @relation("UserFollows")
+  User_A                User[]         @relation("UserFollows")
 }
 
 model UserRating {

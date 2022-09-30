@@ -22,7 +22,7 @@ const Index = ({ item }: { item: IItem }) => {
         <section className={styles.sectionone}>
           <div className={styles.tags}>
             {/* TODO: change to item category */}
-            <span>ART</span>
+            {/* <span>ART</span> */}
             {isComingSoon && <span>coming soon</span>}
           </div>
 
@@ -58,8 +58,7 @@ const Index = ({ item }: { item: IItem }) => {
             </div>
           </div>
           <p>
-            This NFT Card will give you Access to Special Airdrops. To learn
-            more about UI8 please visit
+            <p>{ReactHtmlParser(item.description)}</p>
           </p>
           <p>{ReactHtmlParser(item.description)}</p>
           {user && <Tags item={item} />}
