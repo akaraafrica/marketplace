@@ -3,6 +3,17 @@ import { IItem } from "./item.interface";
 import { IContributor } from "./contributors.interface";
 import { IBeneficiary } from "./beneficiary.interface";
 
+export interface IBeneficiary {
+  id: number;
+  name: string;
+  walletAddress: string;
+  description: string;
+  percentage: number;
+  userId: number;
+  user: IUser;
+  collectionId: number;
+  collection: ICollection;
+}
 export interface ICollection {
   id: number;
   title: string;

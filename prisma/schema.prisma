@@ -141,11 +141,11 @@ model Collection {
   revenue          Int?
   author           User               @relation(fields: [authorId], references: [id])
   type             CollectionTypes     @default(ORDINARY)
+  beneficiaries      Beneficiary[]
   ratings          CollectionRating[]
   contributors     Contributor[]
   items            Item[]
   likes            Like[]
-  beneficiaries    Beneficiary[]
 }
 
 model User {
