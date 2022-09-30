@@ -52,7 +52,13 @@ function ItemCard(props: ItemCardProps) {
           <a>
             <div className={styles.previewcardimg}>
               <Link href={`/item/${props.id}`}>
-                <img alt="product image" src={props.img} />
+                <NextImage
+                  alt={props.name}
+                  src={props.img}
+                  height="100rem"
+                  width="100%"
+                  layout="responsive"
+                />
               </Link>
             </div>
             {props.collectionImages && (

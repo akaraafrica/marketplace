@@ -11,6 +11,7 @@ import { GetServerSideProps } from "next";
 import { IItem } from "../../../types/item.interface";
 import ReactHtmlParser from "react-html-parser";
 import withAuth from "../../../HOC/withAuth";
+import DefaultAvatar from "../../../components/DefaultAvatar";
 
 interface properties {
   collection: ICollection;
@@ -82,17 +83,14 @@ const Index = ({ collection }: properties) => {
             {/* <span>{item.price} 2.5 ETH</span> */}
             {/* <span>$4,429.87</span> */}
           </div>
-          <div className={styles.stats}>
-            <div>
-              <span>Likes</span>
-              <span>110</span>
+          {collection?.likes?.length && (
+            <div className={styles.stats}>
+              <div>
+                <span>Likes</span>
+                <span>{collection?.likes?.length || 0}</span>
+              </div>
             </div>
-
-            <div>
-              <span>Rating</span>
-              <span>{collection?.ratings?.length || 0}</span>
-            </div>
-          </div>
+          )}
           <p>{ReactHtmlParser(collection.description)}</p>
 
           {width > 800 && (
@@ -107,7 +105,7 @@ const Index = ({ collection }: properties) => {
                 <div className={styles.stats}>
                   <div>
                     <span>Likes</span>
-                    <span>110</span>
+                    <span>{selectedItem?.bids?.length || 0}</span>
                   </div>
                   <div>
                     <span>Offers</span>
@@ -128,21 +126,24 @@ const Index = ({ collection }: properties) => {
                 }`}
               >
                 <div className={styles.profileInfoCard}>
-                  <NextImage
-                    className={styles.image}
-                    src={
-                      (selectedItem
-                        ? selectedItem.owner?.profile?.avatar
-                        : collection?.author?.profile?.avatar) || ""
+                  <DefaultAvatar
+                    walletAddress={
+                      selectedItem
+                        ? selectedItem.owner.walletAddress!
+                        : collection.author.walletAddress!
                     }
-                    width="50px"
-                    height="50px"
+                    url={
+                      selectedItem
+                        ? selectedItem.owner.profile?.avatar
+                        : collection.author.profile?.avatar
+                    }
                   />
                   <div className={styles.owner}>
-                    By{" "}
                     {selectedItem
-                      ? selectedItem.owner?.profile?.name
-                      : collection?.author?.profile?.name}
+                      ? selectedItem.owner?.profile?.name ||
+                        selectedItem.owner.walletAddress.slice(0, 6)
+                      : collection.author.profile?.name ||
+                        collection.author.walletAddress.slice(0, 6)}
                   </div>
                 </div>
               </a>

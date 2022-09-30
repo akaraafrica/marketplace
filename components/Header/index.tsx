@@ -124,21 +124,21 @@ function Header() {
                 <span>Collections</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link href={`#subscribe`}>
                 <span>Subscribe</span>
               </Link>
-            </li>
+            </li> */}
             {/* <li>
               <Link href={`#howitworks`}>
                 <span>More</span>
               </Link>
             </li> */}
-            <li>
+            {/* <li>
               <a href="http://akara.com.co" target="_blank" rel="noreferrer">
                 <span>Community</span>
               </a>
-            </li>
+            </li> */}
             {/* <li>How it works</li> */}
           </ul>
         </div>

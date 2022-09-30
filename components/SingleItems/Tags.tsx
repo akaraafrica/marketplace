@@ -10,6 +10,7 @@ import { IItem } from "../../types/item.interface";
 import AuctionDialog from "./AuctionDialog";
 import { AuctionDs } from "../../ds";
 import { toast } from "react-toastify";
+import DefaultAvatar from "../../components/DefaultAvatar";
 
 interface infoProperties {
   user: IUser;
@@ -42,15 +43,17 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
         />
       )}
       <div>
-        <Avatar
-          src={Itemuser.profile?.avatar}
-          alt="creator-photo"
-          sx={{ width: 50, height: 50 }}
-        />
         <Link href={`/profile/${Itemuser.id}`}>
-          <div>
-            <span>Creator</span>
-            <span>{Itemuser.profile?.name}</span>
+          <div className={styles.avatar}>
+            <DefaultAvatar
+              walletAddress={Itemuser.walletAddress!}
+              url={Itemuser.profile?.avatar}
+            />
+            <div>
+              <span>
+                {Itemuser.profile?.name || Itemuser.walletAddress.slice(0, 6)}
+              </span>
+            </div>
           </div>
         </Link>
       </div>

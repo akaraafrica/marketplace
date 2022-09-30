@@ -185,7 +185,9 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   const profile = await ProfileDs.fetch(id);
-  if (!profile) return { notFound: true };
+  console.log(profile);
+
+  // if (!profile) return { notFound: true };
 
   return {
     props: {

@@ -1,5 +1,16 @@
 @use "../../styles/colors" as *;
 
+.avatar {
+  display: flex;
+  align-items: center;
+
+  div {
+    span {
+      color: white;
+    }
+  }
+}
+
 .main {
   display: flex;
   width: fit-content;
