@@ -12,24 +12,36 @@ import { NoSsr } from "@mui/material";
 
 interface properties {
   items: IItem[];
+  auction?: boolean;
 }
 
-function Items({ items }: properties) {
+function Items({ items, auction }: properties) {
   return (
     <div className={styles.container}>
       {items &&
-        items.map((item: any, idx) => (
-          <ItemCard
-            key={idx}
-            id={item.id}
-            img={item.images[0]}
-            name={item.title}
-            price={item.price}
-            stock={item.stock}
-            ownerAvatar={`${item.owner?.profile?.avatar}`}
-            highestBid={item.highestbid}
-          />
-        ))}
+        items.map((item, idx) => {
+          return auction ? (
+            item?.auction?.open && (
+              <ItemCard
+                key={idx}
+                id={item.id}
+                img={item.images[0]}
+                name={item.title}
+                price={item.price}
+                ownerAvatar={`${item.owner?.profile?.avatar}`}
+              />
+            )
+          ) : (
+            <ItemCard
+              key={idx}
+              id={item.id}
+              img={item.images[0]}
+              name={item.title}
+              price={item.price}
+              ownerAvatar={`${item.owner?.profile?.avatar}`}
+            />
+          );
+        })}
     </div>
   );
 }

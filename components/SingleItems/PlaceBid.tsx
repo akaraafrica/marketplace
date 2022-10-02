@@ -41,7 +41,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
       setAmount(0);
       setTimeout(() => {
         router.reload();
-      }, 3000);
+      }, 2000);
     } catch (error) {
       toast.error("Error Placing Bid");
     }

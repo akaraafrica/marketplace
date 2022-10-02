@@ -11,7 +11,7 @@ export default function AuctionDialog({ open, handleClose, item, edit }: any) {
     item?.auction?.startTime
   );
   const [endTime, setEndTime] = useState<null | string>(item?.auction?.endTime);
-
+  const router = useRouter();
   const handleSubmit = async () => {
     if (edit) {
       try {
@@ -34,10 +34,13 @@ export default function AuctionDialog({ open, handleClose, item, edit }: any) {
           startTime,
           endTime,
         });
-        toast.success("placed on Auction");
+        toast.success("placed on auction");
+        setTimeout(() => {
+          router.reload();
+        }, 2000);
         handleClose();
       } catch (error) {
-        toast.error("Error Placing auction");
+        toast.error("error placing auction");
       }
     }
   };
