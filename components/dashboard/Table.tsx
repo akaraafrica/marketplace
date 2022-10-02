@@ -20,6 +20,7 @@ import NextImage from "../Image";
 import Image from "next/image";
 import { IItem } from "../../types/item.interface";
 import { IBid } from "../../types/bid.interface";
+import { getUserName } from "../../utils/helpers/getUserName";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -133,9 +134,7 @@ export default function PaginationTable({
             : rows
           ).map((row) => (
             <TableRow key={row.id}>
-              <TableCell align="left">
-                {row.user.profile?.name || row.user.walletAddress.slice(0, 6)}
-              </TableCell>
+              <TableCell align="left">{getUserName(row.user)}</TableCell>
 
               <TableCell align="left" className={styles.item}>
                 {row.item.title}

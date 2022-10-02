@@ -4,6 +4,7 @@ import Image from "next/image";
 import { AuthContext } from "../../contexts/AuthContext";
 import Dialog from "../global/Dialog";
 import styles from "./PlaceBidDialog.module.scss";
+import { getUserName } from "../../utils/helpers/getUserName";
 
 export default function PlaceBidDialog({
   open,
@@ -42,7 +43,7 @@ export default function PlaceBidDialog({
           <main className={styles.main}>
             <p>
               You are about to purchase <strong>{item.title} </strong>
-              from <strong> {item?.owner?.walletAddress?.slice(0, 6)}</strong>
+              from <strong>${getUserName(item?.owner)}</strong>
             </p>
 
             <h3>Your bid</h3>

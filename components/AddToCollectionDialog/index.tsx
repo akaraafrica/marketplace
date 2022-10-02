@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../contexts/AuthContext";
 import { CollectionDs } from "../../ds";
+import { getUserName } from "../../utils/helpers/getUserName";
 import Dialog from "../global/Dialog";
 import styles from "./styles.module.scss";
 
@@ -54,11 +55,7 @@ export default function AddToCollectionDialog({
       <Dialog open={open} handleClose={handleClose}>
         <main className={styles.main}>
           <p>
-            {`You are have requested to add  ${title} from ${
-              owner?.profile?.name
-                ? owner.profile.name
-                : owner?.walletAddress?.slice(0, 6)
-            }
+            {`You are have requested to add  ${title} from ${getUserName(owner)}
             profile`}
           </p>
           <h4>Select collection</h4>
