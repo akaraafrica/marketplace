@@ -39,10 +39,11 @@ const Index = ({ balance }: properties) => {
           fontSize="0.7em"
           length={2}
         />
-        <Link href={`/dashboard/${user?.id}`}>
-          <span>My Profile</span>
+        <Link href={`/profile/${user?.id}`}>
+          <span>Profile</span>
         </Link>
       </div>
+
       <div className={styles.line}></div>
       <div className={styles.list}>
         <NextImage
@@ -51,8 +52,19 @@ const Index = ({ balance }: properties) => {
           alt="user icon"
           src="/assets/collectionicon.svg"
         />
+        <Link href={`/dashboard/${user?.id}`}>
+          <span>Dashboard</span>
+        </Link>
+      </div>
+      <div className={styles.list}>
+        <NextImage
+          width="20px"
+          height="20px"
+          alt="user icon"
+          src="/assets/collectionicon.svg"
+        />
         <Link href={`/collections`}>
-          <span>My Collections</span>
+          <span>Collections</span>
         </Link>
       </div>
       <div className={styles.line}></div>
