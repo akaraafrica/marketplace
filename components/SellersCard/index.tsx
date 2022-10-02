@@ -79,6 +79,7 @@ const SellersCard = ({ seller, index }: any) => {
           ) : (
             <div className={styles.defaultAvatar}>
               <DefaultAvatar
+                id={seller.id}
                 url={seller.profile && seller.profile.avatar}
                 width="80px"
                 height="80px"

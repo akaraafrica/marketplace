@@ -47,6 +47,7 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
         <Link href={`/profile/${Itemuser.id}`}>
           <div className={styles.avatar}>
             <DefaultAvatar
+              id={Itemuser.id}
               walletAddress={Itemuser.walletAddress!}
               url={Itemuser.profile?.avatar}
             />
