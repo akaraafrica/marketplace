@@ -3,9 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import web3 from "web3";
 import styles from "./index.module.scss";
-// import NotificationModal from "../NotificationModal/index";
-// import ProfileModal from "../ProfileModal/index";
-// import MobileHeader from "../MobileHeader/index";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useWeb3React } from "@web3-react/core";
@@ -124,22 +121,6 @@ function Header() {
                 <span>Collections</span>
               </Link>
             </li>
-            {/* <li>
-              <Link href={`#subscribe`}>
-                <span>Subscribe</span>
-              </Link>
-            </li> */}
-            {/* <li>
-              <Link href={`#howitworks`}>
-                <span>More</span>
-              </Link>
-            </li> */}
-            {/* <li>
-              <a href="http://akara.com.co" target="_blank" rel="noreferrer">
-                <span>Community</span>
-              </a>
-            </li> */}
-            {/* <li>How it works</li> */}
           </ul>
         </div>
         <div className={styles.right}>

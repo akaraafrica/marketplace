@@ -161,8 +161,8 @@ model User {
   bids                  Bid[]
   collections           Collection[]
   contributors          Contributor[]
-  followedBy            Follows[]      @relation("following")
-  following             Follows[]      @relation("follower")
+  followedBy            Follows[]      @relation("Follows_followerIdToUser")
+  following             Follows[]      @relation("Follows_followingIdToUser")
   items                 Item[]
   likes                 Like[]
   receivedNotifications Notification[] @relation("receiver")
@@ -171,7 +171,6 @@ model User {
   purchases             Purchase[]
   ratings               Rating[]
   userRatings           UserRating[]
-  Follows               Follows[]
 }
 
 model UserRating {
@@ -217,13 +216,11 @@ model Beneficiary {
 }
 
 model Follows {
-  id          Int   @unique @default(autoincrement())
+  id          Int  @unique @default(autoincrement())
   followerId  Int
   followingId Int
-  follower    User  @relation("follower", fields: [followerId], references: [id])
-  following   User  @relation("following", fields: [followingId], references: [id])
-  User        User? @relation(fields: [userId], references: [id])
-  userId      Int?
+  follower    User @relation("Follows_followerIdToUser", fields: [followerId], references: [id])
+  following   User @relation("Follows_followingIdToUser", fields: [followingId], references: [id])
 
   @@id([followerId, followingId])
 }

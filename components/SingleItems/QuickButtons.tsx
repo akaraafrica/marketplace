@@ -60,16 +60,6 @@ export default function QuickButtons({
 
     setIsLiked(!isLiked);
 
-    let data = {
-      itemId: item?.id,
-      userId: user!.id,
-      collectionId: collection?.id,
-      ownerId: item?.ownerId,
-      notificationTitle: `${
-        user.profile?.name || user.walletAddress.slice(0, 6)
-      } likes ${item?.title}`,
-    };
-
     try {
       setLoading(true);
       if (item) await LikeDs.postData(item, user);

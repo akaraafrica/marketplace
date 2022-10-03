@@ -5,6 +5,7 @@ import { IUser } from "../types/user.interface";
 import { ICollection } from "../types/collection.interface";
 import SendMail from "../utils/sendgrid/sendmail";
 import { IProfile } from "../types/profile.interface";
+import { getUserName } from "../utils/helpers/getUserName";
 
 const key = process.env.SENDGRID_API_KEY;
 mail.setApiKey(key || "");
@@ -96,9 +97,9 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: item.owner.id,
         senderId: user.id,
         action: action,
-        title: `${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        } place ${bidAmount} ETH bid on ${item?.title}`,
+        title: `${getUserName(user)} place ${bidAmount} ETH bid on ${
+          item?.title
+        }`,
         itemType: ItemType.Bid,
         itemId: item.id,
       });
@@ -108,7 +109,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.PlaceBid,
         title: item.title,
         amount: bidAmount,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN} / item / ${item.id}`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -122,9 +123,9 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: item.owner.id,
         senderId: user.id,
         action: action,
-        title: `congratulation ${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        } your bid on ${item?.title} for ${item.price} ETH is accepted`,
+        title: `congratulation 
+        ${getUserName(user)}
+         your bid on ${item?.title} for ${item.price} ETH is accepted`,
         itemType: ItemType.Bid,
         itemId: item.id,
       });
@@ -135,7 +136,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.AcceptBid,
         title: item.title,
         amount: bidAmount,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN} /item/${item.id} `,
       });
       if (data && emailData) {
         await inApp(data);
@@ -149,9 +150,8 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: profile.id,
         senderId: user.id,
         action: action,
-        title: ` ${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        }  follows you`,
+        title: `${getUserName(user)}
+  follows you`,
       });
 
       if (data) {
@@ -164,9 +164,8 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: item.owner.id,
         senderId: user.id,
         action: action,
-        title: `${user.profile?.name || user.walletAddress.slice(0, 6)} likes ${
-          item?.title
-        }`,
+        title: `
+        ${getUserName(user)}likes ${item?.title} `,
         itemType: ItemType.Item,
         itemId: item.id,
       });
@@ -181,9 +180,9 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: item.owner.id,
         senderId: user.id,
         action: action,
-        title: `${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        } purchase ${item?.title} for ${item.price} ETH `,
+        title: `${getUserName(user)} purchase ${item?.title} for ${
+          item.price
+        } ETH`,
         itemType: ItemType.Bid,
         itemId: item.id,
       });
@@ -193,7 +192,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.Purchase,
         title: item.title,
         amount: item.price,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN} /item/${item.id} `,
       });
       if (data && emailData) {
         await inApp(data);
@@ -208,9 +207,7 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: item.owner.id,
         senderId: user.id,
         action: action,
-        title: `${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        } is requesting to add ${item?.title} to ${
+        title: ` ${getUserName(user)} is requesting to add ${item?.title} to ${
           collection?.title
         } collection `,
         itemType: ItemType.Collection,
@@ -222,7 +219,7 @@ export async function TriggerAction(props: ActionProps) {
       //   templateId: MailTemplateIDs.Purchase,
       //   title: item.title,
       //   amount: item.price,
-      //   link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
+      //   link: `${ process.env.NEXT_PUBLIC_DOMAIN } /item/${ item.id } `,
       // });
       if (data) {
         await inApp(data);
@@ -235,9 +232,9 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: user.id,
         senderId: user.id,
         action: action,
-        title: `congratulation ${
-          user.profile?.name || user.walletAddress.slice(0, 6)
-        }  ${item?.title} has been minted`,
+        title: `congratulation ${getUserName(user)} ${
+          item?.title
+        } has been minted`,
         itemType: ItemType.Item,
         itemId: item.id,
       });
@@ -247,7 +244,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.CreateItem,
         title: item.title,
         amount: item.price,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN} /item/${item.id} `,
       });
       if (data && emailData) {
         await inApp(data);
@@ -263,10 +260,9 @@ export async function TriggerAction(props: ActionProps) {
           receiverId: contributor.user.id,
           senderId: user.id,
           action: action,
-          title: ` ${
-            contributor.user?.profile?.name ||
-            contributor.user.walletAddress.slice(0, 6)
-          }  request your approval to add your item(s) to his ${
+          title: ` ${getUserName(
+            user
+          )} request your approval to add your item(s) to his ${
             collection?.title
           } collection`,
           itemType: ItemType.Collection,
@@ -276,7 +272,7 @@ export async function TriggerAction(props: ActionProps) {
           from: "info@mbizi.org",
           templateId: MailTemplateIDs.CreateCollection,
           title: collection.title,
-          link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}`,
+          link: `${process.env.NEXT_PUBLIC_DOMAIN} /collection/${collection.id} `,
         };
         if (data && emailData) {
           promise.push(inApp([data]));

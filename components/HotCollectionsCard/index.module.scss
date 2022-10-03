@@ -5,6 +5,8 @@
   justify-content: center;
   gap: 10px 0;
   width: 100%;
+  min-width: 23rem;
+  cursor: pointer;
 
   .mainImgdiv {
     width: 100%;
@@ -52,6 +54,7 @@
       text-align: left;
       color: #fcfcfd;
     }
+
     .bottom {
       display: flex;
       justify-content: space-between;
@@ -63,6 +66,7 @@
         .image {
           border-radius: 50%;
         }
+
         .owner {
           font-style: normal;
           font-weight: 500;

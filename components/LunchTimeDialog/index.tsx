@@ -22,8 +22,6 @@ export default function LunchTimeDialog({
     }
   };
   const [date, setDate] = useState<null | string>(null);
-  console.log(date);
-
   return (
     <>
       <Dialog open={open} handleClose={handleClose}>

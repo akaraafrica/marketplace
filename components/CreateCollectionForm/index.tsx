@@ -9,14 +9,13 @@ import { IItem } from "../../types/item.interface";
 import { RiVideoUploadLine } from "react-icons/ri";
 import dynamic from "next/dynamic";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
-import MintTokenDialog from "../SingleItemForm/MintTokenDialog";
 import { CollectionDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ICollection } from "../../types/collection.interface";
 import { useRouter } from "next/router";
-import { Step } from "../SingleItemForm";
 import userDs from "../../ds/user.ds";
 import withAuth from "../../HOC/withAuth";
+import { getUserName } from "../../utils/helpers/getUserName";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -62,7 +61,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
     optional3: null,
     optional4: null,
   });
-  const [openDialog, setOpenDialog] = useState(false);
   const { user } = useContext(AuthContext);
 
   const userID = user?.id as number;
@@ -73,7 +71,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
       const itemsNotInCollection = data?.items?.filter(
         (item) => !item.collectionId
       );
-      console.log(data);
       setSelectedUser([data]);
       setItems(itemsNotInCollection);
     };
@@ -145,7 +142,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
   };
 
   const title = watch("title", "");
-  const countdown = watch("countdown", "");
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
@@ -165,7 +161,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
       await handleUpload();
       setLoading(false);
     }
-    // setLoading(false);
   };
   const handleUpload = async () => {
     const data = getValues();
@@ -181,11 +176,14 @@ const Index = ({ collection }: { collection: ICollection }) => {
 
       let imageArr = [];
       for (const image of Object.entries(images)) {
-        imageArr.push({
-          name: image[0],
-          file: image[1],
-        });
+        if (image[1]) {
+          imageArr.push({
+            name: image[0],
+            file: image[1],
+          });
+        }
       }
+
       let promise: any = [];
       imageArr.forEach((image) => {
         promise.push(
@@ -207,7 +205,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
         images: imageURLs,
         videos: [videoUrl],
       });
-      toast.success("successful");
+      toast.success("collection created successful");
       reset();
       clearState();
       setTimeout(() => {
@@ -219,15 +217,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
     }
   };
 
-  const handleDialogSubmit = () => {
-    toast.success("successful");
-    reset();
-    clearState();
-    setOpenDialog(false);
-    setTimeout(() => {
-      router.push("/collections");
-    }, 3000);
-  };
   const handleUpdateCollection = async () => {
     const data = getValues();
     data.description = desc;
@@ -286,7 +275,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
       console.log(error);
     }
   };
-  const handleDialogClose = () => setOpenDialog(false);
 
   const handleVideoChange = async (event: any) => {
     const file = event.target.files[0];
@@ -320,15 +308,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
   };
   return (
     <div className={styles.root}>
-      {/* <MintTokenDialog
-        open={openDialog}
-        handleSubmit={handleDialogSubmit}
-        handleClose={handleDialogClose}
-        handleMint={() => console.log("handling mint")}
-        handleUpload={handleUpload}
-        step={step}
-        handleSignOrder={() => console.log("handing sell order")}
-      /> */}
       <div className={styles.sciCon}>
         <div className={styles.sci}>
           <div className={styles.scihead}>
@@ -343,7 +322,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
             className={styles.itemdetailsformcon}
           >
             <div className={styles.uploadsechead}>
-              <h4 className={styles.upload}>Upload Video (required)</h4>
+              <h4 className={styles.upload}>Upload Video </h4>
               <span className={styles.drag}>
                 Drag or choose your file to upload
               </span>
@@ -641,6 +620,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
+                      id={user!.id}
                       url={user?.profile?.avatar}
                       walletAddress={selUser.walletAddress}
                       width="56px"
@@ -742,22 +722,17 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 <button type="submit" disabled={loading}>
                   Create collection
                   <span>
-                    {loading ? (
-                      <Image
-                        width="20px"
-                        height="20px"
-                        className={styles.spinner}
-                        src={`/assets/singleItem/spinner.svg`}
-                        alt=""
-                      />
-                    ) : (
-                      <Image
-                        width="20px"
-                        height="10px"
-                        src={`/assets/arrow.svg`}
-                        alt=""
-                      />
-                    )}
+                    <Image
+                      width="20px"
+                      height="20px"
+                      className={loading ? styles.spinner : ""}
+                      src={
+                        loading
+                          ? `/assets/singleItem/spinner.svg`
+                          : `/assets/arrow.svg`
+                      }
+                      alt=""
+                    />
                   </span>
                 </button>
               )}
@@ -841,8 +816,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     />
 
                     <div className={styles.owner}>
-                      {collection?.author?.profile?.name ||
-                        user?.walletAddress.slice(0, 6)}
+                      {getUserName(collection?.author)}
                     </div>
                   </div>
                   <span>{selectedItems && selectedItems.length} Items</span>
