@@ -161,6 +161,8 @@ model User {
   bids                  Bid[]
   collections           Collection[]
   contributors          Contributor[]
+  followedBy            Follows[]      @relation("following")
+  following             Follows[]      @relation("follower")
   items                 Item[]
   likes                 Like[]
   receivedNotifications Notification[] @relation("receiver")
@@ -169,8 +171,7 @@ model User {
   purchases             Purchase[]
   ratings               Rating[]
   userRatings           UserRating[]
-  User_B                User[]         @relation("UserFollows")
-  User_A                User[]         @relation("UserFollows")
+  Follows               Follows[]
 }
 
 model UserRating {
@@ -213,6 +214,18 @@ model Beneficiary {
   walletAddress String
   Collection    Collection @relation(fields: [collectionId], references: [id])
   User          User?      @relation(fields: [userId], references: [id])
+}
+
+model Follows {
+  id          Int   @unique @default(autoincrement())
+  followerId  Int
+  followingId Int
+  follower    User  @relation("follower", fields: [followerId], references: [id])
+  following   User  @relation("following", fields: [followingId], references: [id])
+  User        User? @relation(fields: [userId], references: [id])
+  userId      Int?
+
+  @@id([followerId, followingId])
 }
 
 enum CollectionTypes {

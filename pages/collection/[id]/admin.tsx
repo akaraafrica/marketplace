@@ -172,14 +172,14 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
 
             {/* <span onClick={() => setOpen(3)} className={open === 3 ? styles.active : ''}>Whitelist</span> */}
 
-            {/* {collection.type === "FUNDRAISING" && ( */}
-            <span
-              onClick={() => setOpen(4)}
-              className={open === 4 ? styles.active : ""}
-            >
-              Beneficiary
-            </span>
-            {/* )} */}
+            {collection.type === "FUNDRAISING" && (
+              <span
+                onClick={() => setOpen(4)}
+                className={open === 4 ? styles.active : ""}
+              >
+                Beneficiary
+              </span>
+            )}
           </section>
           {open === 1 && (
             <div>

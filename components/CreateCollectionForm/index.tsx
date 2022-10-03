@@ -865,4 +865,4 @@ const Index = ({ collection }: { collection: ICollection }) => {
   );
 };
 
-export default withAuth(Index);
+export default Index;
