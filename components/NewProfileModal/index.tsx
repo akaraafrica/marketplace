@@ -5,6 +5,7 @@ import Link from "../Link";
 import styles from "./index.module.scss";
 import { maskWallet } from "../../utils/helpers/maskWallet";
 import DefaultAvatar from "../../components/DefaultAvatar";
+import { getUserName } from "../../utils/helpers/getUserName";
 
 interface properties {
   balance: string;
@@ -14,7 +15,7 @@ const Index = ({ balance }: properties) => {
 
   return (
     <div className={styles.root}>
-      <span className={styles.name}> {user?.profile?.name}</span>
+      <span className={styles.name}> {user && getUserName(user)}</span>
       <div className={styles.wallet}>
         <span>{maskWallet(user?.walletAddress || "")}</span>
         <NextImage width="30px" height="30px" src="/assets/copyicon.svg" />

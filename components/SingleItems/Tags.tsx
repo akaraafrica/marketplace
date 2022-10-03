@@ -11,6 +11,7 @@ import AuctionDialog from "./AuctionDialog";
 import { AuctionDs } from "../../ds";
 import { toast } from "react-toastify";
 import DefaultAvatar from "../../components/DefaultAvatar";
+import { getUserName } from "../../utils/helpers/getUserName";
 
 interface infoProperties {
   user: IUser;
@@ -50,9 +51,7 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
               url={Itemuser.profile?.avatar}
             />
             <div>
-              <span>
-                {Itemuser.profile?.name || Itemuser.walletAddress.slice(0, 6)}
-              </span>
+              <span>{getUserName(Itemuser)}</span>
             </div>
           </div>
         </Link>

@@ -12,6 +12,7 @@ import { IItem } from "../../../types/item.interface";
 import ReactHtmlParser from "react-html-parser";
 import withAuth from "../../../HOC/withAuth";
 import DefaultAvatar from "../../../components/DefaultAvatar";
+import { getUserName } from "../../../utils/helpers/getUserName";
 
 interface properties {
   collection: ICollection;
@@ -139,11 +140,9 @@ const Index = ({ collection }: properties) => {
                     }
                   />
                   <div className={styles.owner}>
-                    {selectedItem
-                      ? selectedItem.owner?.profile?.name ||
-                        selectedItem.owner.walletAddress.slice(0, 6)
-                      : collection.author.profile?.name ||
-                        collection.author.walletAddress.slice(0, 6)}
+                    {getUserName(
+                      selectedItem ? selectedItem.owner : collection.author
+                    )}
                   </div>
                 </div>
               </a>

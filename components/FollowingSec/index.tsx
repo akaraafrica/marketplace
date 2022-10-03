@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
 import React from "react";
+import { getUserName } from "../../utils/helpers/getUserName";
 import styles from "./index.module.scss";
 
 function FollowingSec({ person }: any) {
@@ -12,7 +13,7 @@ function FollowingSec({ person }: any) {
           src={person?.profile?.image || `/assets/profilephoto.png`}
         />
         <div className={styles.followingsec1content}>
-          <h4>{person?.profile?.name || person.walletAddress?.slice(0, 6)}</h4>
+          <h4>{getUserName(person)}</h4>
           <p>
             {person?.followedBy?.length} <span> followers</span>
           </p>
