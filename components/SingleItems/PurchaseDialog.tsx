@@ -1,6 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import Dialog from "../global/Dialog";
 import styles from "./PurchaseDialog.module.scss";
 
@@ -45,10 +46,10 @@ export default function PurchaseDialog({
                 <span>Your balance </span>
                 <strong>{balance} ETH</strong>
               </div>
-              <div>
+              {/* <div>
                 <span>Service fee</span>
                 <strong>0 ETH</strong>
-              </div>
+              </div> */}
               <div>
                 <span>You will pay</span>
                 <strong>{item.price} ETH</strong>
@@ -108,8 +109,6 @@ export default function PurchaseDialog({
                   </div>
                 </section>
               )}
-
-              <button>I understand, continue</button>
             </section>
           </div>
         )}

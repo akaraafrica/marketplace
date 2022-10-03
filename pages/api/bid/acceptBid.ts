@@ -8,11 +8,12 @@ export default async function profile(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { user, item, amount } = req.body;
+    const { user, item, bid } = req.body;
+
     try {
       const createPurchase = prisma.purchase.create({
         data: {
-          amount: amount,
+          amount: bid.amount,
           userId: user.id,
           transactionId: randStr(10),
           itemId: item.id,
@@ -23,9 +24,8 @@ export default async function profile(
         where: {
           id: item.id,
         },
-
         data: {
-          ownerId: user.id,
+          ownerId: bid.bidderId,
           acceptedBid: 1,
           updatedAt: new Date(),
         },
@@ -51,7 +51,7 @@ export default async function profile(
         action: Actions.AcceptBid,
         user,
         item,
-        bidAmount: amount,
+        bidAmount: bid.amount,
       });
       res.status(200).json("successful");
     } catch (error) {
