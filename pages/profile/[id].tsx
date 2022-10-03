@@ -75,6 +75,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
           <div className={styles.left}>
             <div className={styles.leftTop}>
               <DefaultAvatar
+                id={profile!.id}
                 url={profile && profile.avatar}
                 width="160px"
                 height="160px"

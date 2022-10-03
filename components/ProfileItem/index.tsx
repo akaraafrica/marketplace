@@ -4,13 +4,16 @@ import ItemCard from "../ItemCard";
 import styles from "./index.module.scss";
 import { IItem } from "../../types/item.interface";
 import { ILike } from "../../types/like.interface";
+import Collections from "../dashboard/collections";
+import HotCollectionCard from "../HotCollectionsCard";
+import { ICollection } from "../../types/collection.interface";
 
 interface ProfileItemProps {
   items: IItem[];
   open: number;
   following: any;
   followBy: any;
-  collections: any;
+  collections: ICollection[] | undefined;
   likes: ILike[] | undefined;
 }
 const Index = ({
@@ -44,17 +47,8 @@ const Index = ({
       ) : open === 1 ? (
         <div className={styles.root}>
           {collections &&
-            collections.map((item: any, idx: number) => (
-              <ItemCard
-                key={idx}
-                id={item.id}
-                img={item.images[0]}
-                name={item.title}
-                price={item.price}
-                ownerAvatar={item.images[0]}
-                highestBid=""
-                collectionImages={item.images}
-              />
+            collections.map((collection) => (
+              <HotCollectionCard key={collection.id} collection={collection} />
             ))}
         </div>
       ) : open === 2 ? (

@@ -39,7 +39,7 @@ function HotCollectionCard(props: properties) {
       <div className={styles.infoDiv}>
         <h4>{title && title}</h4>
         <div className={styles.bottom}>
-          <Link href={`/profile/${author.id}`}>
+          <Link href={`/profile/${author?.id}`}>
             <div className={styles.left}>
               {author?.profile?.avatar && (
                 <NextImage

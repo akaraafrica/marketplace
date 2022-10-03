@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import NextImage from "../Image";
 import styles from "./index.module.scss";
 import CircleType from "circletype";
+import Link from "next/link";
 
 interface AvatarProps {
   url: string | undefined;
@@ -10,16 +11,17 @@ interface AvatarProps {
   walletAddress: string;
   fontSize?: string;
   length?: number;
+  id?: number;
 }
 const Index: React.FC<AvatarProps> = ({
   url,
+  id,
   walletAddress,
   width = "40px",
   height = "40px",
   fontSize = " 0.7em",
   length = 2,
 }) => {
-  const circleInstance = useRef();
   const colors = [
     "Aqua",
     "Red",
@@ -44,13 +46,16 @@ const Index: React.FC<AvatarProps> = ({
         style={{ width: width, height: height, backgroundColor: randomColor }}
         className={styles.default}
       >
-        <div
-          style={{ fontSize: fontSize }}
-          /* @ts-ignore: Unreachable code error */
-          // ref={circleInstance}
-        >
-          {walletFirstThree + walletLastThree}
-        </div>
+        <Link href={id ? `/profile/${id}` : ""}>
+          <a>
+            <div
+              style={{ fontSize: fontSize }}
+              /* @ts-ignore: Unreachable code error */
+            >
+              {walletFirstThree + walletLastThree}
+            </div>
+          </a>
+        </Link>
       </div>
     );
   }

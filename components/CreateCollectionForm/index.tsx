@@ -620,6 +620,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
+                      id={user!.id}
                       url={user?.profile?.avatar}
                       walletAddress={selUser.walletAddress}
                       width="56px"

@@ -128,6 +128,7 @@ const Index = ({ collection }: properties) => {
               >
                 <div className={styles.profileInfoCard}>
                   <DefaultAvatar
+                    id={selectedItem ? selectedItem.id : collection.author.id}
                     walletAddress={
                       selectedItem
                         ? selectedItem.owner.walletAddress!
