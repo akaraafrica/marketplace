@@ -5,6 +5,18 @@
   justify-content: center;
   gap: 10px 0;
   width: 23rem;
+  cursor: pointer;
+
+  a {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
 
   .mainImgdiv {
     width: 100%;

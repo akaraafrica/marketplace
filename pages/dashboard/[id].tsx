@@ -142,7 +142,7 @@ const Dashboard = ({
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Items items={items} />
+              <Items items={items} auction={true} />
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Items items={items} />
@@ -160,14 +160,11 @@ const Dashboard = ({
 
           <NoSsr>
             <div className={styles.bottom}>
-              <div id="watchlist">
+              {/* <div id="watchlist">
                 <ItemGrid
                   items={likes?.map((item) => item.item!)}
                   title="watchlist"
                 />
-              </div>
-              {/* <div id="itemsold">
-                <ItemGrid items={items} title="Items Sold" />
               </div> */}
               <div id="bids">
                 <CustomTable title="Bids" bids={bids} />

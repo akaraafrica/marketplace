@@ -118,7 +118,7 @@ export default function PaginationTable({
   };
 
   return (
-    <TableContainer component={Paper} className={styles.container}>
+    <TableContainer className={styles.container}>
       <Table aria-label="custom pagination table">
         <TableRow className={styles.head}>
           <h1>{title}</h1>
