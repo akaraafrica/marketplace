@@ -340,9 +340,12 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
             <div className={styles.section}>
               <div className={styles.topB}>
                 <h2>Beneficiary</h2>
-                <button onClick={() => setOpenAddBeneficiary(true)}>
-                  Add Beneficiary
-                </button>
+                <div className={styles.sectionTop}>
+                  <button onClick={() => setOpenAddBeneficiary(true)}>
+                    Add Beneficiary
+                  </button>
+                  <button className={styles.btnSave}>Save</button>
+                </div>
               </div>
               <div className={styles.content}>
                 {collection?.beneficiaries?.map((beneficiary) => (
