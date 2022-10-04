@@ -21,28 +21,25 @@ import NextLink from "../../components/Link";
 
 const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const [open, setOpen] = React.useState(0);
-
-  const {
-    walletAddress,
-    createdAt,
-    items,
-    followedBy,
-    following,
-    collections,
-  } = profile;
+  const { walletAddress, createdAt, items, followers, following, collections } =
+    profile;
 
   const user = useContext(AuthContext).user;
   const [isFollowing, setIsFollowing] = useState<any>(false);
   const router = useRouter();
-
   useEffect(() => {
-    const isFollowing = followedBy?.find(
-      (follower) => follower.followerId == user?.id
+    if (router.query.open) {
+      setOpen(Number(router.query.open));
+    }
+  }, []);
+  useEffect(() => {
+    const isFollowing = followers?.find(
+      (follower) => follower.followingId == user?.id
     );
-    if (isFollowing?.followerId == user?.id) {
+    if (isFollowing?.followingId == user?.id) {
       setIsFollowing(isFollowing);
     }
-  }, [followedBy, user]);
+  }, [followers, user]);
 
   const handleFollow = async () => {
     if (!user) {
@@ -65,11 +62,13 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
           className={styles.top}
           style={{ backgroundImage: `url(/assets/profilebg.png)` }}
         >
-          <NextLink href={"/settings"}>
-            <button>
-              Edit profile <AiTwotoneEdit size={15} />
-            </button>
-          </NextLink>
+          {user?.walletAddress === walletAddress && (
+            <NextLink href={"/settings"}>
+              <button>
+                Edit profile <AiTwotoneEdit size={15} />
+              </button>
+            </NextLink>
+          )}
         </div>
         <div className={styles.bottom}>
           <div className={styles.left}>
@@ -101,9 +100,11 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
               </span>
             </div>
             <div className={styles.leftCenter}>
-              <button className={styles.btn} onClick={handleFollow}>
-                {isFollowing ? "unfollow" : "follow"}
-              </button>
+              {user && user?.walletAddress != walletAddress && (
+                <button className={styles.btn} onClick={handleFollow}>
+                  {isFollowing ? "unfollow" : "follow"}
+                </button>
+              )}
               <span className={styles.icon}>
                 <IoShareOutline />
               </span>
@@ -170,7 +171,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
               <ProfileItem
                 items={items!}
                 open={open}
-                followBy={followedBy}
+                followers={followers}
                 following={following}
                 likes={profile.likes}
                 collections={collections}
@@ -186,9 +187,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   const profile = await ProfileDs.fetch(id);
-  console.log(profile);
-
-  // if (!profile) return { notFound: true };
+  if (!profile) return { notFound: true };
 
   return {
     props: {

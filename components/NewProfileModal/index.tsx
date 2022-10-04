@@ -32,14 +32,18 @@ const Index = ({ balance }: properties) => {
         </div>
       </div>
       <div className={styles.list}>
-        <DefaultAvatar
-          url={user?.profile?.avatar}
-          width="40px"
-          height="40px"
-          walletAddress={user?.walletAddress || ""}
-          fontSize="0.7em"
-          length={2}
-        />
+        {user && (
+          <DefaultAvatar
+            id={user.id}
+            url={user?.profile?.avatar}
+            width="40px"
+            height="40px"
+            walletAddress={user?.walletAddress || ""}
+            fontSize="0.7em"
+            length={2}
+          />
+        )}
+
         <Link href={`/profile/${user?.id}`}>
           <span>Profile</span>
         </Link>
@@ -64,7 +68,7 @@ const Index = ({ balance }: properties) => {
           alt="user icon"
           src="/assets/collectionicon.svg"
         />
-        <Link href={`/collections`}>
+        <Link href={`/profile/${user?.id}?open=1`}>
           <span>Collections</span>
         </Link>
       </div>

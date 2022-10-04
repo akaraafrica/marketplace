@@ -3,14 +3,20 @@
 import React from "react";
 import { getUserName } from "../../utils/helpers/getUserName";
 import styles from "./index.module.scss";
+import DefaultAvatar from "../../components/DefaultAvatar";
+import Link from "next/link";
 
 function FollowingSec({ person }: any) {
   return (
     <div className={styles.followingsec}>
       <div className={styles.followingsec1con}>
-        <img
-          alt="profile photo"
-          src={person?.profile?.image || `/assets/profilephoto.png`}
+        <DefaultAvatar
+          id={person?.id}
+          url={person?.profile?.avatar}
+          width="100px"
+          height="100px"
+          walletAddress={person?.walletAddress!}
+          fontSize="1.2em"
         />
         <div className={styles.followingsec1content}>
           <h4>{getUserName(person)}</h4>
@@ -20,8 +26,12 @@ function FollowingSec({ person }: any) {
         </div>
       </div>
       <div className={styles.followingsec2con}>
-        {person.items.slice(0, 4).map((item: any) => (
-          <img key={item.id} alt="follower image" src={item.images[0]} />
+        {person?.items?.slice(0, 4)?.map((item: any) => (
+          <Link href={`/item/${item.id}`} key={item.id}>
+            <a>
+              <img key={item.id} alt="follower image" src={item.images[0]} />
+            </a>
+          </Link>
         ))}
       </div>
     </div>

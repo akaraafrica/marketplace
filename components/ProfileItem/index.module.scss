@@ -2,6 +2,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 32px;
 
   &::-webkit-scrollbar {
@@ -18,5 +19,22 @@
 
   @media screen and (max-width: 640px) {
     grid-template-columns: 1fr;
+  }
+}
+
+.btn {
+  color: white;
+  background: black;
+  border: 1px solid white;
+  border-radius: 10px;
+  font-size: 13px;
+  padding: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 1rem;
+
+  button:hover {
+    background: gray;
   }
 }

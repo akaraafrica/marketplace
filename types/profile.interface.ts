@@ -16,7 +16,7 @@ export interface IProfile {
     followerId: number;
     followingId: number;
   }[];
-  followedBy?: {
+  followers?: {
     followerId: number;
     followingId: number;
   }[];

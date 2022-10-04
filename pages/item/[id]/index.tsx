@@ -45,7 +45,7 @@ const Index = ({ item }: { item: IItem }) => {
           <div className={styles.stats}>
             <div>
               <span>Likes</span>
-              <span>{item?.ratings?.length || 0}</span>
+              <span>{item?.likes?.length || 0}</span>
             </div>
             <div>
               <span>Offers</span>

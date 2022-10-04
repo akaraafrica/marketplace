@@ -9,6 +9,7 @@
   width: fit-content;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   gap: 15px;
 
@@ -29,6 +30,7 @@
   width: fit-content;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 15px;
 
   span:hover {
@@ -36,17 +38,12 @@
   }
 }
 
-.love {
-  border: 1px $grey2 solid;
-  border-radius: 50%;
-  padding: 7px;
-  height: fit-content;
-  display: flex;
-  align-items: center;
+.settings {
+  cursor: pointer;
+}
 
-  svg {
-    cursor: pointer;
-  }
+.love {
+  cursor: pointer;
 
   @media only screen and (min-width: 800px) {
     padding: 2px;
