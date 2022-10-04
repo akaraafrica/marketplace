@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Avatar } from "@mui/material";
 import { BidDs } from "../../ds";
 import styles from "./PlaceBid.module.scss";
 import { toast } from "react-toastify";
@@ -9,7 +8,6 @@ import PlaceBidDialog from "./PlaceBidDialog";
 import PurchaseDialog from "./PurchaseDialog";
 import SuccessDialog from "./SuccessDialog";
 import { IItem } from "../../types/item.interface";
-import { randStr } from "../../utils/helpers/randomStr";
 
 export default function PlaceBid({ item }: { item: IItem }) {
   const router = useRouter();
@@ -60,7 +58,8 @@ export default function PlaceBid({ item }: { item: IItem }) {
     }
   };
 
-  const itemUserBid = user?.bids?.filter((x) => x.itemId === item.id);
+  const itemUserBid = item?.bids?.filter((x) => x.bidderId === user?.id);
+
   return (
     <>
       {openPlaceBidDialog && (
@@ -86,31 +85,26 @@ export default function PlaceBid({ item }: { item: IItem }) {
         <SuccessDialog
           open={openSucceesDialog}
           handleClose={handleSuccessClose}
+          item={item}
         />
       )}
       <div className={styles.placebid}>
         <section className={styles.top}>
-          <Avatar
-            src={`/assets/auctionAvatar.png`}
-            alt="creator-photo"
-            sx={{ width: 50, height: 50 }}
-          />
-          <div>
-            {itemUserBid?.length && (
+          {itemUserBid?.length > 0 && (
+            <div>
               <h2 className={styles.userbid}>Your Bids</h2>
-            )}
-            {itemUserBid?.map((bid, index) => {
-              return (
-                <>
-                  <h5>
-                    <span>{index + 1} - </span>
-                    {bid.amount} ETH{" "}
-                  </h5>
-                </>
-              );
-            })}
-            {!itemUserBid?.length && <h5>No Bids</h5>}
-          </div>
+              {itemUserBid?.map((bid, index) => {
+                return (
+                  <>
+                    <h5>
+                      <span>{index + 1} - </span>
+                      {bid.amount} ETH{" "}
+                    </h5>
+                  </>
+                );
+              })}
+            </div>
+          )}
         </section>
         <section className={styles.button}>
           <button
@@ -136,11 +130,11 @@ export default function PlaceBid({ item }: { item: IItem }) {
             place a bid
           </button>
         </section>
-        <p>
+        {/* <p>
           <strong>Service fee</strong>
           <span>{item?.price} ETH</span>
           <span>$4,540.62</span>
-        </p>
+        </p> */}
       </div>
     </>
   );

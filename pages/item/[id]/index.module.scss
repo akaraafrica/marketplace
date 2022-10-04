@@ -68,6 +68,24 @@
   min-width: 18rem;
   max-width: 30rem;
 
+  .title {
+    button:hover {
+      background: $grey;
+    }
+
+    .edit {
+      color: white;
+      background: black;
+      border-radius: 5px;
+      height: fit-content;
+      padding: 2px 10px;
+      margin-bottom: 13px;
+      margin-left: 5px;
+      cursor: pointer;
+      border: 1px solid $grey3;
+    }
+  }
+
   .price {
     h3 {
       color: $white-color;
@@ -110,19 +128,6 @@
       color: white;
     }
   }
-}
-
-.edit {
-  color: white;
-  background: $secondary-color;
-  border-radius: 30px;
-  padding: 18px 20px;
-  cursor: pointer;
-  margin-top: 1rem;
-  font-weight: 700;
-  font-size: 1rem;
-  width: 12rem;
-  border: 0px;
 }
 
 .stats {

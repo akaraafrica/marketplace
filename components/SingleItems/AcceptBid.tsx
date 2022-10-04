@@ -7,6 +7,9 @@ import { IItem } from "../../types/item.interface";
 import styles from "./AcceptBid.module.scss";
 import AcceptBidDialog from "./AcceptBidDialog";
 import { BidDs } from "../../ds";
+import DefaultAvatar from "../DefaultAvatar";
+import { getUserName } from "../../utils/helpers/getUserName";
+import { IBid } from "../../types/bid.interface";
 
 export default function AcceptBid({
   viewall,
@@ -17,7 +20,11 @@ export default function AcceptBid({
   item: IItem;
   setTag?: Dispatch<SetStateAction<number>>;
 }) {
-  const highestBid = item?.bids[0]?.amount;
+  const highestBid = item?.bids?.reduce(
+    (prev, current) => (prev.amount > current.amount ? prev : current),
+    { amount: 1 } as IBid
+  );
+
   const { user } = useContext(AuthContext);
   const router = useRouter();
   const handleAcceptBid = async () => {
@@ -25,7 +32,13 @@ export default function AcceptBid({
       return;
     }
     try {
-      await BidDs.postData("acceptBid", item, user, highestBid);
+      await BidDs.postData(
+        "acceptBid",
+        item,
+        user,
+        highestBid.amount,
+        highestBid
+      );
       toast.success("Bid Accepted Successfully");
       handleClose();
       setTimeout(() => {
@@ -39,68 +52,79 @@ export default function AcceptBid({
   const handleClose = () => setOpen(false);
 
   return (
-    <div className={styles.acceptbid}>
-      {open && (
-        <AcceptBidDialog
-          open={open}
-          handleAcceptBid={handleAcceptBid}
-          handleClose={handleClose}
-          item={item}
-        />
-      )}
-      {viewall &&
-        item?.bids?.map((bid, index) => {
-          return (
-            <div key={index} className={styles.section}>
+    highestBid.user && (
+      <div className={styles.acceptbid}>
+        {open && (
+          <AcceptBidDialog
+            open={open}
+            handleAcceptBid={handleAcceptBid}
+            handleClose={handleClose}
+            item={item}
+          />
+        )}
+        {viewall &&
+          item?.bids?.map((bid, index) => {
+            return (
+              <div key={index} className={styles.section}>
+                <section className={styles.top}>
+                  <DefaultAvatar
+                    url={bid.user?.profile?.avatar}
+                    width="40px"
+                    height="40px"
+                    fontSize="8px"
+                    walletAddress={bid.user.walletAddress}
+                  />
+                  <div>
+                    <h5>
+                      <span>By {getUserName(bid.user)}</span>
+                    </h5>
+                    <h3>
+                      <span>{bid.amount} ETH</span>
+                    </h3>
+                  </div>
+                </section>
+                <section className={styles.button}>
+                  <button
+                    className={styles.accept}
+                    onClick={() => setOpen(true)}
+                  >
+                    Accept
+                  </button>
+                </section>
+              </div>
+            );
+          })}
+        {!viewall && highestBid && (
+          <div className={styles.section}>
+            {highestBid.user && (
               <section className={styles.top}>
-                <Avatar
-                  src={`/assets/auctionAvatar.png`}
-                  alt="creator-photo"
-                  sx={{ width: 50, height: 50 }}
+                <DefaultAvatar
+                  url={highestBid.user?.profile?.avatar}
+                  width="40px"
+                  height="40px"
+                  fontSize="8px"
+                  walletAddress={highestBid?.user?.walletAddress}
                 />
                 <div>
                   <h5>
-                    <span>By Kohaku Tora</span>
+                    Highest bid by
+                    <span> {getUserName(highestBid.user)}</span>
                   </h5>
                   <h3>
-                    <span>{bid.amount} ETH</span>
+                    <span>{highestBid.amount} ETH</span>
                   </h3>
                 </div>
               </section>
-              <section className={styles.button}>
-                <button className={styles.accept} onClick={() => setOpen(true)}>
-                  Accept
-                </button>
-              </section>
-            </div>
-          );
-        })}
-      {!viewall && highestBid && (
-        <div className={styles.section}>
-          <section className={styles.top}>
-            <Avatar
-              src={`/assets/auctionAvatar.png`}
-              alt="creator-photo"
-              sx={{ width: 50, height: 50 }}
-            />
-            <div>
-              <h5>
-                Highest bid by
-                <span> Kohaku Tora</span>
-              </h5>
-              <h3>
-                <span>{highestBid} ETH</span>
-              </h3>
-            </div>
-          </section>
-          <section className={styles.button}>
-            <button onClick={() => setTag && setTag(3)}>View all</button>
-            <button className={styles.accept} onClick={() => setOpen(true)}>
-              Accept
-            </button>
-          </section>
-        </div>
-      )}
-    </div>
+            )}{" "}
+            <section className={styles.button}>
+              <button onClick={() => setTag && setTag(3)}>View all</button>
+              <button className={styles.accept} onClick={() => setOpen(true)}>
+                Accept
+              </button>
+            </section>
+          </div>
+        )}
+      </div>
+    )
   );
 }
