@@ -2,6 +2,22 @@ import React, { useState } from "react";
 import { CollectionDs } from "../../ds";
 import Dialog from "../global/Dialog";
 import styles from "./styles.module.scss";
+import dynamic from "next/dynamic";
+const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
+const toolbarOptions = [
+  ["bold", "italic", "underline", "strike"],
+  ["blockquote", "code-block"],
+  [{ header: 1 }, { header: 2 }],
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ script: "sub" }, { script: "super" }],
+  [{ indent: "-1" }, { indent: "+1" }],
+  [{ direction: "rtl" }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ color: ["#353945"] }, { background: [] }],
+  [{ font: [] }],
+  [{ align: [] }],
+  ["clean"],
+];
 
 interface Properties {
   open: boolean;
@@ -36,7 +52,7 @@ const Index: React.FC<Properties> = ({ open, handleClose, collectionId }) => {
             <input
               onChange={(e) => setName(e.target.value)}
               type="text"
-              placeholder="Enter beneficiary name"
+              placeholder="John Doe"
             />
           </div>
           <div className={styles.inputDiv}>
@@ -44,15 +60,30 @@ const Index: React.FC<Properties> = ({ open, handleClose, collectionId }) => {
             <input
               onChange={(e) => setWallet(e.target.value)}
               type="text"
-              placeholder="Enter beneficiary wallet"
+              placeholder="0x00000000000..."
             />
           </div>
           <div className={styles.inputDiv}>
             <label>Description</label>
-            <input
+            {/* <input
               onChange={(e) => setDescription(e.target.value)}
               type="text"
               placeholder="Enter beneficiary description"
+            /> */}
+            <ReactQuill
+              modules={{
+                toolbar: toolbarOptions,
+              }}
+              theme="snow"
+              style={{
+                height: "10rem",
+                marginBottom: "100px",
+              }}
+              placeholder='e.g. “Funds will be sent to beneficiary...”"'
+              value={description}
+              onChange={(e: any) => {
+                setDescription(e);
+              }}
             />
           </div>
           <div className={styles.inputDiv}>
@@ -60,7 +91,7 @@ const Index: React.FC<Properties> = ({ open, handleClose, collectionId }) => {
             <input
               onChange={(e) => setPercent(parseInt(e.target.value))}
               type="number"
-              placeholder="Enter beneficiary percentage"
+              placeholder="10%"
             />
           </div>
           <button type="submit">Submit</button>
