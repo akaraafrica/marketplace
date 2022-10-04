@@ -1,7 +1,6 @@
 import prisma, { Prisma } from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
-import Items from "../../../components/dashboard/Items";
 
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "PUT") {
