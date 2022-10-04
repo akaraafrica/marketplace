@@ -4,6 +4,7 @@ import styles from "./styles.module.scss";
 import { ICollection } from "../../types/collection.interface";
 import { Router } from "next/router";
 import Link from "../Link";
+import { getUserName } from "../../utils/helpers/getUserName";
 interface properties {
   collection: ICollection;
 }
@@ -24,7 +25,7 @@ const BidCard = ({ collection }: properties) => {
               <span className={styles.profileInfo}>
                 <span className={styles.profileInfoClass}>Creator</span>
                 <span className={styles.profileInfoDesc}>
-                  {collection?.author?.profile?.name}
+                  {getUserName(collection?.author)}
                 </span>
               </span>
             </div>

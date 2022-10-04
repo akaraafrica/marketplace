@@ -3,7 +3,7 @@ import { IItem } from "./item.interface";
 import { ILike } from "./like.interface";
 
 export interface IProfile {
-  id?: number;
+  id: number;
   avatar?: string;
   bio?: string;
   name?: string;
@@ -11,7 +11,7 @@ export interface IProfile {
   createdAt?: string;
   items?: IItem[];
   likes?: ILike[];
-  collections?: ICollection;
+  collections?: ICollection[];
   following?: {
     followerId: number;
     followingId: number;

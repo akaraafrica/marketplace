@@ -32,6 +32,9 @@ body {
 // * {
 //   border: 2px solid red;
 // }
+a:hover {
+  text-decoration: none;
+}
 
 ::-webkit-scrollbar {
   width: 8px;

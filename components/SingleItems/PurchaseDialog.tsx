@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useState } from "react";
+import { getUserName } from "../../utils/helpers/getUserName";
 import Dialog from "../global/Dialog";
 import styles from "./PurchaseDialog.module.scss";
 
@@ -33,7 +33,7 @@ export default function PurchaseDialog({
             <div>
               <p>
                 You are about to purchase <strong>{item.title} </strong>
-                from <strong> {item?.owner?.walletAddress?.slice(0, 6)}</strong>
+                from <strong>${getUserName(item?.owner)}</strong>
               </p>
             </div>
             <div className={styles.price}>

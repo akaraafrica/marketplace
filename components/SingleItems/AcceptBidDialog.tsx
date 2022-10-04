@@ -1,6 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
+import { getUserName } from "../../utils/helpers/getUserName";
 import Dialog from "../global/Dialog";
 import styles from "./AcceptBidDialog.module.scss";
 
@@ -36,7 +37,7 @@ export default function AcceptBidDialog({
               />
               <p>
                 You are about to purchase <strong>{item.title} </strong>
-                from <strong> {item?.owner?.walletAddress?.slice(0, 6)}</strong>
+                from <strong> ${getUserName(item?.owner)}</strong>
               </p>
             </div>
             <div className={styles.price}>
