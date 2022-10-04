@@ -3,13 +3,13 @@ import styles from "./index.module.scss";
 import NextImage from "../Image";
 import { ICollection } from "../../types/collection.interface";
 import Link from "../Link";
+import { getUserName } from "../../utils/helpers/getUserName";
 interface properties {
   collection: ICollection;
 }
 
 function HotCollectionCard(props: properties) {
   const { id, images, title, author, items } = props.collection;
-  console.log(props);
 
   return images.length ? (
     <div className={styles.root}>
@@ -39,7 +39,7 @@ function HotCollectionCard(props: properties) {
       <div className={styles.infoDiv}>
         <h4>{title && title}</h4>
         <div className={styles.bottom}>
-          <Link href={`/profile/${author.id}`}>
+          <Link href={`/profile/${author?.id}`}>
             <div className={styles.left}>
               {author?.profile?.avatar && (
                 <NextImage
@@ -49,9 +49,7 @@ function HotCollectionCard(props: properties) {
                   height="50px"
                 />
               )}
-              <div className={styles.owner}>
-                By {author?.profile?.name && author.profile.name}
-              </div>
+              <div className={styles.owner}>By {getUserName(author)}</div>
             </div>
           </Link>
           <span>{items && items.length} Items</span>

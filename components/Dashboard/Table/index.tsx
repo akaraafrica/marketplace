@@ -8,17 +8,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
 import styles from "./index.module.scss";
-import { TableHead } from "@mui/material";
-import NextImage from "../../Image";
 import Image from "next/image";
-import { IItem } from "../../../types/item.interface";
+import { getUserName } from "../../../utils/helpers/getUserName";
 import { IBid } from "../../../types/bid.interface";
 
 interface TablePaginationActionsProps {
@@ -133,9 +128,7 @@ export default function PaginationTable({
             : rows
           ).map((row) => (
             <TableRow key={row.id}>
-              <TableCell align="left">
-                {row.user.profile?.name || row.user.walletAddress.slice(0, 6)}
-              </TableCell>
+              <TableCell align="left">{getUserName(row.user)}</TableCell>
 
               <TableCell align="left" className={styles.item}>
                 {row.item.title}

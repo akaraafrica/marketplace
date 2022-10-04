@@ -9,7 +9,6 @@ interface properties {
 
 function Collections(props: properties) {
   const { id, images, title, author, items } = props.collection;
-
   return (
     <div className={styles.root}>
       <Link href={`/collection/${id}/admin`} passHref>

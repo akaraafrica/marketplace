@@ -146,7 +146,6 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                     Edit Collection Details <BiRightArrowAlt />
                   </button>
                 </Link>
-                <button className={styles.btnSave}>Save</button>
                 {collection.status === "READY" && (
                   <button className={styles.btnPublish} onClick={handlePublish}>
                     publish
@@ -172,14 +171,14 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
 
             {/* <span onClick={() => setOpen(3)} className={open === 3 ? styles.active : ''}>Whitelist</span> */}
 
-            {/* {collection.type === "FUNDRAISING" && ( */}
-            <span
-              onClick={() => setOpen(4)}
-              className={open === 4 ? styles.active : ""}
-            >
-              Beneficiary
-            </span>
-            {/* )} */}
+            {collection.type === "FUNDRAISING" && (
+              <span
+                onClick={() => setOpen(4)}
+                className={open === 4 ? styles.active : ""}
+              >
+                Beneficiary
+              </span>
+            )}
           </section>
           {open === 1 && (
             <div>
@@ -193,18 +192,18 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <h3>Total worth of Collection </h3>
                 </div>
                 <div>
-                  <span>{collection.revenue} ETH</span>
+                  <span>{collection.revenue || "0"} ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
                 {collection.type === "FUNDRAISING" && (
                   <>
                     <div>
-                      <span>{total / beneficiariesTotal || ""} ETH</span>
+                      <span>{total / beneficiariesTotal || "0"} ETH</span>
                       <h3>Amount paid to beneficiaries</h3>
                     </div>
                     <div>
                       <span>
-                        {collection.revenue / beneficiariesTotal || ""} ETH
+                        {collection.revenue / beneficiariesTotal || "0"} ETH
                       </span>
                       <h3>Target amount for beneficiaries</h3>
                     </div>
@@ -227,91 +226,110 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
           )}
           {open === 2 && (
             <div className={styles.section}>
-              <h2>Manage Contributors</h2>
+              <div className={styles.sectionTop}>
+                <h2>Manage Contributors</h2>
+                <button className={styles.btnSave}>Save</button>
+              </div>
               <div className={styles.content}>
-                {collection?.contributors?.map((contributor) => (
-                  <div key={contributor.id} className={styles.row}>
-                    <div className={styles.left}>
-                      <DefaultAvatar
-                        url={contributor?.user?.profile?.avatar}
-                        width={"88px"}
-                        height={"88px"}
-                        walletAddress={contributor?.user.walletAddress}
-                        fontSize={"8px"}
-                      />
-                      <div className={styles.details}>
-                        <div className={styles.dtop}>
-                          <span className={styles.name}>
-                            {contributor.user.email}
-                          </span>
-                          <span className={styles.number}>
-                            {
-                              collection.items?.filter((item) => {
-                                return item.ownerId === contributor.userId;
-                              }).length
-                            }{" "}
-                            Item(s) in collection
-                          </span>
-                        </div>
-                        <div className={styles.btnDiv}>
-                          {contributor.userId != user?.id &&
-                            collection.author.id === user?.id && (
-                              <>
-                                <button>{contributor.confirmation}</button>
-                                <button className={styles.btnRemove}>
-                                  Remove
-                                </button>
-                              </>
-                            )}
-                        </div>
-                        <div className={styles.btnDiv}>
-                          {!respond &&
-                            collection.status === "DRAFT" &&
-                            contributor.confirmation === "PENDING" &&
-                            contributor.userId !== user?.id &&
-                            collection.author.id !== user?.id && (
-                              <>
-                                <button
-                                  className={styles.btnAccept}
-                                  onClick={handleAcceptRequest}
-                                >
-                                  Accept
-                                </button>
-                                <button
-                                  className={styles.btnRemove}
-                                  onClick={handleRejectRequest}
-                                >
-                                  Reject
-                                </button>
-                              </>
-                            )}
+                {collection?.contributors
+                  ?.sort((a, b) => {
+                    if (a.userId === user?.id) {
+                      return -1;
+                    } else {
+                      return 1;
+                    }
+                  })
+                  .map((contributor) => (
+                    <div key={contributor.id} className={styles.row}>
+                      <div className={styles.left}>
+                        {contributor && (
+                          <DefaultAvatar
+                            url={contributor?.user?.profile?.avatar}
+                            id={contributor.user.id}
+                            width={"88px"}
+                            height={"88px"}
+                            walletAddress={contributor?.user.walletAddress}
+                            fontSize={"8px"}
+                          />
+                        )}
+                        <div className={styles.details}>
+                          <div className={styles.dtop}>
+                            <span className={styles.name}>
+                              {contributor.user.email}
+                            </span>
+                            <span className={styles.number}>
+                              {
+                                collection.items?.filter((item) => {
+                                  return item.ownerId === contributor.userId;
+                                }).length
+                              }{" "}
+                              Item(s) in collection
+                            </span>
+                          </div>
+                          <div className={styles.btnDiv}>
+                            {contributor.userId != user?.id &&
+                              collection.author.id === user?.id && (
+                                <>
+                                  <button>{contributor.confirmation}</button>
+                                  <button className={styles.btnRemove}>
+                                    Remove
+                                  </button>
+                                </>
+                              )}
+                          </div>
+                          <div className={styles.btnDiv}>
+                            {!respond &&
+                              collection.status === "DRAFT" &&
+                              contributor.confirmation === "PENDING" &&
+                              contributor.userId !== user?.id &&
+                              collection.author.id !== user?.id && (
+                                <>
+                                  <button
+                                    className={styles.btnAccept}
+                                    onClick={handleAcceptRequest}
+                                  >
+                                    Accept
+                                  </button>
+                                  <button
+                                    className={styles.btnRemove}
+                                    onClick={handleRejectRequest}
+                                  >
+                                    Reject
+                                  </button>
+                                </>
+                              )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className={styles.center}>
-                      <div className={styles.scroll}>
-                        {collection.items
-                          ?.filter(
-                            (item) => item.ownerId === contributor.userId
-                          )
-                          .map((item: IItem, idx: number) => (
-                            <div key={idx} className={styles.centerItem}>
-                              <NextImage
-                                className={styles.image}
-                                src={item.images[0]}
-                                width="112px"
-                                height="88px"
-                              />
-                            </div>
-                          ))}
+                      <div className={styles.center}>
+                        <div className={styles.scroll}>
+                          {collection.items
+                            ?.filter(
+                              (item) => item.ownerId === contributor.userId
+                            )
+                            .map((item: IItem, idx: number) => (
+                              <div key={idx} className={styles.centerItem}>
+                                <NextImage
+                                  className={styles.image}
+                                  src={item.images[0]}
+                                  width="112px"
+                                  height="88px"
+                                />
+                              </div>
+                            ))}
+                        </div>
                       </div>
+                      {collection.type === "FUNDRAISING" ||
+                      collection.type === "COLLABORATORS" ? (
+                        <div className={styles.right}>
+                          <label htmlFor="">PERCENTAGE</label>
+                          <input type="number" placeholder="10%" />
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
-                    <div className={styles.right}>
-                      <label htmlFor="">PERCENTAGE</label>
-                      <input type="number" placeholder="10%" />
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
               {collection.author.id === user?.id &&
                 collection.status === "VERIFIED" && (
@@ -330,9 +348,12 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
             <div className={styles.section}>
               <div className={styles.topB}>
                 <h2>Beneficiary</h2>
-                <button onClick={() => setOpenAddBeneficiary(true)}>
-                  Add Beneficiary
-                </button>
+                <div className={styles.sectionTop}>
+                  <button onClick={() => setOpenAddBeneficiary(true)}>
+                    Add Beneficiary
+                  </button>
+                  <button className={styles.btnSave}>Save</button>
+                </div>
               </div>
               <div className={styles.content}>
                 {collection?.beneficiaries?.map((beneficiary) => (

@@ -151,6 +151,10 @@
       align-items: center;
       gap: 50px;
 
+      button {
+        cursor: pointer;
+      }
+
       .search {
         box-sizing: border-box;
         display: flex;

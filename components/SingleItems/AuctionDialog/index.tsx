@@ -23,6 +23,7 @@ export default function Index({ open, handleClose, item, edit }: any) {
         });
         toast.success("Auction updated");
         handleClose();
+        router.reload();
       } catch (error) {
         toast.error("Error updating auction");
       }
@@ -39,6 +40,7 @@ export default function Index({ open, handleClose, item, edit }: any) {
           router.reload();
         }, 2000);
         handleClose();
+        router.reload();
       } catch (error) {
         toast.error("error placing auction");
       }

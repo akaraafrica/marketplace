@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Dialog from "../../global/Dialog";
 import styles from "./index.module.scss";
+import { getUserName } from "../../../utils/helpers/getUserName";
 
 export default function AcceptBidDialog({
   open,
@@ -36,7 +37,7 @@ export default function AcceptBidDialog({
               />
               <p>
                 You are about to purchase <strong>{item.title} </strong>
-                from <strong> {item?.owner?.walletAddress?.slice(0, 6)}</strong>
+                from <strong> ${getUserName(item?.owner)}</strong>
               </p>
             </div>
             <div className={styles.price}>

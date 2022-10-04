@@ -1,8 +1,9 @@
 import Image from "next/image";
+import { getUserName } from "../../../utils/helpers/getUserName";
 import Dialog from "../../global/Dialog";
 import styles from "./index.module.scss";
 
-export const SuccessDialog = ({ open, handleClose }: any) => {
+export const SuccessDialog = ({ open, handleClose, item }: any) => {
   setTimeout(() => {
     handleClose();
   }, 5000);
@@ -11,7 +12,8 @@ export const SuccessDialog = ({ open, handleClose }: any) => {
       <div className={styles.success}>
         <h2>Yay! 🎉</h2>
         <p>
-          You successfully purchased <span>COINZ</span> from sarah shaibu
+          You successfully purchased <span>{item.title}</span> from{" "}
+          {getUserName(item.owner)}
         </p>
 
         <section>

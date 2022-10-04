@@ -46,7 +46,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [account]);
 
   useEffect(() => {
-    const { "nextauth.token": token } = getCookies();
     api
       .get(`/api/me`)
       .then((savedUser: { data: IUser }) => {
