@@ -146,7 +146,6 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                     Edit Collection Details <BiRightArrowAlt />
                   </button>
                 </Link>
-                <button className={styles.btnSave}>Save</button>
                 {collection.status === "READY" && (
                   <button className={styles.btnPublish} onClick={handlePublish}>
                     publish
@@ -193,18 +192,18 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                   <h3>Total worth of Collection </h3>
                 </div>
                 <div>
-                  <span>{collection.revenue} ETH</span>
+                  <span>{collection.revenue || "0"} ETH</span>
                   <h3>Revenue from Items</h3>
                 </div>
                 {collection.type === "FUNDRAISING" && (
                   <>
                     <div>
-                      <span>{total / beneficiariesTotal || ""} ETH</span>
+                      <span>{total / beneficiariesTotal || "0"} ETH</span>
                       <h3>Amount paid to beneficiaries</h3>
                     </div>
                     <div>
                       <span>
-                        {collection.revenue / beneficiariesTotal || ""} ETH
+                        {collection.revenue / beneficiariesTotal || "0"} ETH
                       </span>
                       <h3>Target amount for beneficiaries</h3>
                     </div>
@@ -227,7 +226,10 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
           )}
           {open === 2 && (
             <div className={styles.section}>
-              <h2>Manage Contributors</h2>
+              <div className={styles.sectionTop}>
+                <h2>Manage Contributors</h2>
+                <button className={styles.btnSave}>Save</button>
+              </div>
               <div className={styles.content}>
                 {collection?.contributors?.map((contributor) => (
                   <div key={contributor.id} className={styles.row}>
@@ -309,10 +311,15 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                           ))}
                       </div>
                     </div>
-                    <div className={styles.right}>
-                      <label htmlFor="">PERCENTAGE</label>
-                      <input type="number" placeholder="10%" />
-                    </div>
+                    {collection.type === "FUNDRAISING" ||
+                    collection.type === "COLLABORATORS" ? (
+                      <div className={styles.right}>
+                        <label htmlFor="">PERCENTAGE</label>
+                        <input type="number" placeholder="10%" />
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 ))}
               </div>
