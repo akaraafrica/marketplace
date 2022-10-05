@@ -93,7 +93,7 @@ class Collection {
   }
   async removeContributor(id: number, contributorId: number, items: IItem[]) {
     try {
-      const res = await api.update("/api/contributor/remove", {
+      const res = await api.put("/api/contributor/remove", {
         id,
         contributorId,
         items: items,

@@ -48,6 +48,7 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
     setOpenVerifyDialog(false);
   };
 
+  const [percentages, setPercentages] = useState({});
   const { user } = useContext(AuthContext);
   const [openLunchTime, setOpenLunchTime] = useState(false);
   const [openAddBeneficiary, setOpenAddBeneficiary] = useState(false);
@@ -85,6 +86,37 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
       console.log(error);
       toast.error("error");
     }
+  };
+  const handleRemoveContributor = async (
+    contributorId: number,
+    items: IItem[]
+  ) => {
+    try {
+      await CollectionDs.removeContributor(collection.id, contributorId, items);
+    } catch (error) {
+      console.log(error);
+      toast.error("error");
+    }
+  };
+  const handleChangePercent = (e: any) => {
+    setPercentages({
+      ...percentages,
+      [e.target.name]: parseInt(e.target.value),
+    });
+  };
+  console.log("percentages", percentages);
+
+  const handlePercentCheck = () => {
+    const totalPercentage = Object.values(percentages);
+    const result = totalPercentage.reduce((a: any, b: any) => a + b, 0);
+    return result;
+  };
+  const handleSave = () => {
+    if (handlePercentCheck() !== 100) {
+      return;
+    }
+    console.log(handlePercentCheck());
+    // Save to the DB the contributors percentages
   };
   return (
     <Layout>
@@ -135,7 +167,9 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                 {collection?.status}
               </span>
               <h2>{collection?.title}</h2>
-              <div>Launches in {collection?.lunchTime}</div>
+              {collection?.lunchTime && (
+                <div>Launches in {collection?.lunchTime}</div>
+              )}
             </div>
 
             {collection.author.id === user?.id && (
@@ -228,7 +262,15 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
             <div className={styles.section}>
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
-                <button className={styles.btnSave}>Save</button>
+                {collection.type !== "ORDINARY" && (
+                  <button
+                    className={styles.btnSave}
+                    onClick={handleSave}
+                    disabled={handlePercentCheck() !== 100}
+                  >
+                    Save
+                  </button>
+                )}
               </div>
               <div className={styles.content}>
                 {collection?.contributors
@@ -271,7 +313,19 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                               collection.author.id === user?.id && (
                                 <>
                                   <button>{contributor.confirmation}</button>
-                                  <button className={styles.btnRemove}>
+                                  <button
+                                    onClick={() =>
+                                      handleRemoveContributor(
+                                        contributor.id,
+                                        collection.items?.filter((item) => {
+                                          return (
+                                            item.ownerId === contributor.userId
+                                          );
+                                        })
+                                      )
+                                    }
+                                    className={styles.btnRemove}
+                                  >
                                     Remove
                                   </button>
                                 </>
@@ -323,7 +377,12 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
                       collection.type === "COLLABORATORS" ? (
                         <div className={styles.right}>
                           <label htmlFor="">PERCENTAGE</label>
-                          <input type="number" placeholder="10%" />
+                          <input
+                            type="number"
+                            name={contributor?.user.email}
+                            onChange={handleChangePercent}
+                            placeholder="10%"
+                          />
                         </div>
                       ) : (
                         ""
