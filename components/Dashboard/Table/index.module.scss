@@ -3,7 +3,6 @@
 .container {
   background: $dialogbackground;
   color: white;
-  width: fit-content;
   padding: 3rem;
   border: 20px;
   margin: auto;
@@ -54,6 +53,7 @@
 
   table {
     border: 0px;
+    width: 30vw;
   }
 
   td {
@@ -64,6 +64,7 @@
   th {
     padding: 2px 4px;
     color: white;
+    border: 0px;
   }
 
   button {

@@ -15,6 +15,7 @@ import styles from "./index.module.scss";
 import Image from "next/image";
 import { getUserName } from "../../../utils/helpers/getUserName";
 import { IBid } from "../../../types/bid.interface";
+import { TableHead } from "@mui/material";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -114,14 +115,20 @@ export default function PaginationTable({
   return (
     <TableContainer className={styles.container}>
       <Table aria-label="custom pagination table">
-        <TableRow className={styles.head}>
-          <h1>{title}</h1>
-        </TableRow>
-        <TableRow className={styles.head}>
-          <TableCell align="left">By</TableCell>
-          <TableCell align="left">Item</TableCell>
-          <TableCell align="left">Amount</TableCell>
-        </TableRow>
+        <TableHead className={styles.head}>
+          <TableRow>
+            <TableCell>
+              <h1>{title}</h1>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableHead>
+          <TableRow className={styles.head}>
+            <TableCell align="left">By</TableCell>
+            <TableCell align="left">Item</TableCell>
+            <TableCell align="left">Amount</TableCell>
+          </TableRow>
+        </TableHead>
         <TableBody>
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -150,23 +157,25 @@ export default function PaginationTable({
           )}
         </TableBody>
         <TableFooter>
-          <TablePagination
-            // rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-            rowsPerPageOptions={[]}
-            colSpan={3}
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            SelectProps={{
-              inputProps: {
-                "aria-label": "rows per page",
-              },
-              native: true,
-            }}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            ActionsComponent={TablePaginationActions}
-          />
+          <TableRow>
+            <TablePagination
+              // rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+              rowsPerPageOptions={[]}
+              colSpan={3}
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  "aria-label": "rows per page",
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
         </TableFooter>
       </Table>
     </TableContainer>
