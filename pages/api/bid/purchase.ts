@@ -28,30 +28,32 @@ export default async function profile(
         where: {
           id: item.id,
         },
-
         data: {
           ownerId: user.id,
           acceptedBid: 1,
           updatedAt: new Date(),
         },
       });
-      const deleteBids = prisma.bid.deleteMany({
-        where: {
-          itemId: req.body.itemId,
-        },
-      });
-      const deleteAuction = prisma.auction.delete({
-        where: {
-          itemId: item.id,
-        },
-      });
       try {
-        await prisma.$transaction([
-          deleteBids,
-          updateItemOwner,
-          createPurchase,
-          deleteAuction,
-        ]);
+        await prisma.bid.deleteMany({
+          where: {
+            itemId: req.body.itemId,
+          },
+        });
+      } catch (error) {
+        console.log("error");
+      }
+      try {
+        await prisma.auction.delete({
+          where: {
+            itemId: item.id,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        await prisma.$transaction([updateItemOwner, createPurchase]);
 
         if (item.collectionId) {
           const collection = await prisma.collection.findUnique({

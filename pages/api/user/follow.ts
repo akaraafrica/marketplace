@@ -12,8 +12,8 @@ export default async function profile(
     try {
       await prisma.follows.create({
         data: {
-          followerId: user.id,
-          followingId: profile.id,
+          followerId: profile.id,
+          followingId: user.id,
         },
       });
       console.log("user followed");

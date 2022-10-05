@@ -1,0 +1,83 @@
+@use "../../../styles/colors" as *;
+
+.horizontal {
+  position: absolute;
+  right: -15px;
+  top: 0px;
+  border-radius: 20px;
+  padding: 5px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+
+  span:hover {
+    cursor: pointer;
+  }
+}
+
+.main {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  background-color: $grey;
+  border-radius: 20px;
+  padding: 5px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+
+  span:hover {
+    cursor: pointer;
+  }
+}
+
+.settings {
+  cursor: pointer;
+}
+
+.love {
+  cursor: pointer;
+
+  @media only screen and (min-width: 800px) {
+    padding: 2px;
+    padding-top: 8px;
+    padding-left: 6.5px;
+  }
+}
+
+.close {
+  @media only screen and (max-width: 800px) {
+    display: none;
+  }
+}
+
+.share {
+  position: relative;
+
+  section {
+    position: absolute;
+    display: flex;
+    height: 50px;
+    width: 200px;
+    gap: 10px;
+    bottom: 2px;
+    left: 50px;
+    cursor: pointer;
+
+    @media only screen and (max-width: 1400px) {
+      left: -220px;
+    }
+
+    @media only screen and (max-width: 800px) {
+      bottom: 50px;
+      left: -30px;
+    }
+  }
+}
