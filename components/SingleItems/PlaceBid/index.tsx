@@ -15,7 +15,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
   const [openPlaceBidDialog, setOpenPlaceBidDialog] = useState(false);
   const [openPurchaseDialog, setOpenPurchaseDialog] = useState(false);
   const [openSucceesDialog, setOpenSuccessDialog] = useState(false);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number | null>(null);
   const { user } = useContext(AuthContext);
 
   const handleBidClose = () => {
@@ -34,10 +34,10 @@ export default function PlaceBid({ item }: { item: IItem }) {
     }
 
     try {
-      await BidDs.postData("placeBid", item, user, amount);
+      if (amount) await BidDs.postData("placeBid", item, user, amount);
       toast.success("Bid Placed Successfully");
       handleBidClose();
-      setAmount(0);
+      setAmount(null);
       setTimeout(() => {
         router.reload();
       }, 2000);
@@ -90,23 +90,24 @@ export default function PlaceBid({ item }: { item: IItem }) {
         />
       )}
       <div className={styles.placebid}>
-        <section className={styles.top}>
-          {itemUserBid?.length > 0 && (
-            <div>
-              <h2 className={styles.userbid}>Your Bids</h2>
-              {itemUserBid?.map((bid, index) => {
-                return (
-                  <>
-                    <h5>
+        {item?.auction?.open && (
+          <section className={styles.top}>
+            {itemUserBid?.length > 0 && (
+              <div>
+                <h2 className={styles.userbid}>Your Bids</h2>
+                {itemUserBid?.map((bid, index) => {
+                  return (
+                    <h5 key={index}>
                       <span>{index + 1} - </span>
                       {bid.amount} ETH{" "}
                     </h5>
-                  </>
-                );
-              })}
-            </div>
-          )}
-        </section>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+        )}
+
         <section className={styles.button}>
           <button
             onClick={() => {
@@ -119,17 +120,19 @@ export default function PlaceBid({ item }: { item: IItem }) {
           >
             Purchase now
           </button>
-          <button
-            onClick={() => {
-              if (!user) {
-                toast.error("please login first");
-                return;
-              }
-              setOpenPlaceBidDialog(true);
-            }}
-          >
-            place a bid
-          </button>
+          {item?.auction?.open && (
+            <button
+              onClick={() => {
+                if (!user) {
+                  toast.error("please login first");
+                  return;
+                }
+                setOpenPlaceBidDialog(true);
+              }}
+            >
+              place a bid
+            </button>
+          )}{" "}
         </section>
         {/* <p>
           <strong>Service fee</strong>

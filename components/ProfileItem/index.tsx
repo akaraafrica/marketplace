@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import FollowingSec from "../FollowingSec";
 import ItemCard from "../ItemCard";
 import styles from "./index.module.scss";
@@ -7,6 +7,7 @@ import { ILike } from "../../types/like.interface";
 import HotCollectionCard from "../HotCollectionsCard";
 import { ICollection } from "../../types/collection.interface";
 import Link from "next/link";
+import { AuthContext } from "../../contexts/AuthContext";
 
 interface ProfileItemProps {
   items: IItem[];
@@ -24,6 +25,8 @@ const Index = ({
   likes,
   collections,
 }: ProfileItemProps) => {
+  const { user } = useContext(AuthContext);
+
   return (
     <div>
       {open === 0 ? (
@@ -46,13 +49,15 @@ const Index = ({
         </div>
       ) : open === 1 ? (
         <div>
-          <div>
-            <Link href={`/collection/create`}>
-              <a>
-                <button className={styles.btn}>Create Collection</button>
-              </a>
-            </Link>
-          </div>
+          {user && (
+            <div>
+              <Link href={`/collection/create`}>
+                <a>
+                  <button className={styles.btn}>Create Collection</button>
+                </a>
+              </Link>
+            </div>
+          )}
           <div className={styles.root}>
             {collections &&
               collections.map((collection) => (

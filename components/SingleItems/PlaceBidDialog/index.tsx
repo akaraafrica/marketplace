@@ -15,9 +15,7 @@ export default function Index({
   handlePlaceBid,
 }: any) {
   const [followSteps, setFollowSteps] = useState(false);
-  const balanceValue = 10;
-  const [balance, setBalance] = useState(balanceValue);
-  const { user, isAuthenticated, signIn } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const router = useRouter();
 
@@ -28,9 +26,7 @@ export default function Index({
   const handleChange = (e: any) => {
     const value = Number(e.target.value);
     setAmount(value);
-    setBalance(balanceValue - value);
   };
-  console.log(item);
 
   return (
     <>
@@ -50,7 +46,7 @@ export default function Index({
             <div className={styles.bidinput}>
               <input
                 type="number"
-                value={amount}
+                value={amount || ""}
                 placeholder="Enter bid"
                 onChange={handleChange}
               />
@@ -58,10 +54,6 @@ export default function Index({
             </div>
 
             <section>
-              <div>
-                <span>Your balance </span>
-                <strong>{balance} ETH</strong>
-              </div>
               <div>
                 <span>Service fee</span>
                 <strong>0 ETH</strong>
@@ -72,11 +64,7 @@ export default function Index({
               </div>
             </section>
             <section className={styles.button}>
-              <button
-                className={styles.accept}
-                disabled={amount <= 0 || balance < 0}
-                onClick={() => startSteps()}
-              >
+              <button className={styles.accept} onClick={handlePlaceBid}>
                 Place Bid
               </button>
               <button onClick={handleClose}>Cancel</button>

@@ -115,10 +115,12 @@ export default function QuickButtons({
           height={40}
         />
       </div>
-      <div className={styles.love} onClick={handleLike}>
-        <AiFillHeart size={30} color={isLiked ? "#EF466F" : "grey"} />
-      </div>
-      {collection && (
+      {user && (
+        <div className={styles.love} onClick={handleLike}>
+          <AiFillHeart size={30} color={isLiked ? "#EF466F" : "grey"} />
+        </div>
+      )}
+      {collection && user?.id === collection?.author.id && (
         <div className={styles.settings}>
           <Link href={`/collection/${collection.id}/admin`}>
             <AiOutlineSetting size={30} height={20} />

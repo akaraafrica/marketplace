@@ -13,7 +13,6 @@ export default function PurchaseDialog({
 }: any) {
   const isVerified = item.owner.verified;
   const [followSteps, setFollowSteps] = useState(false);
-  const balance = 10;
 
   const handlePurchase = () => {
     setFollowSteps(true);
@@ -41,20 +40,6 @@ export default function PurchaseDialog({
               <strong>ETH</strong>
             </div>
 
-            <section>
-              <div>
-                <span>Your balance </span>
-                <strong>{balance} ETH</strong>
-              </div>
-              {/* <div>
-                <span>Service fee</span>
-                <strong>0 ETH</strong>
-              </div> */}
-              <div>
-                <span>You will pay</span>
-                <strong>{item.price} ETH</strong>
-              </div>
-            </section>
             {!isVerified && (
               <section className={styles.notverified}>
                 <Image
@@ -71,11 +56,7 @@ export default function PurchaseDialog({
             )}
 
             <section className={styles.button}>
-              <button
-                className={styles.accept}
-                disabled={balance < item.price}
-                onClick={handlePurchase}
-              >
+              <button className={styles.accept} onClick={handlePurchase}>
                 I understand, continue
               </button>
               <button onClick={handleClose}>Cancel</button>

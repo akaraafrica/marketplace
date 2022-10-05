@@ -114,12 +114,9 @@ export default function Tags({ item }: { item: IItem }) {
         <>
           <InfoComponent user={item.owner} item={item} />
 
-          {item?.auction?.open &&
-            (isOwner ? (
-              <AcceptBid item={item} setTag={setTag} />
-            ) : (
-              <PlaceBid item={item} />
-            ))}
+          {isOwner
+            ? item?.auction?.open && <AcceptBid item={item} setTag={setTag} />
+            : user && <PlaceBid item={item} />}
         </>
       )}
       {tag === 3 && isOwner && <AcceptBid viewall={true} item={item} />}

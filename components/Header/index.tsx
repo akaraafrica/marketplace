@@ -64,13 +64,15 @@ function Header() {
     <div className={styles.headerCon}>
       <div className={styles.mobile}>
         <div className={styles.mobileTop}>
-          <Link href={`/`}>
-            <NextImage
-              alt="logo"
-              src="/assets/Logo.png"
-              width="70px"
-              height="30px"
-            />
+          <Link href="/">
+            <a>
+              <NextImage
+                alt="logo"
+                src="/assets/Logo.png"
+                width="70px"
+                height="30px"
+              />
+            </a>
           </Link>
           {mobile ? (
             <IoClose onClick={() => setMobile(false)} size={40} />

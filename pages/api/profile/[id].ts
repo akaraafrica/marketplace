@@ -16,8 +16,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           profile: true,
           items: true,
           collections: true,
-          followers: true,
-          following: true,
+          followers: {
+            include: {
+              followers: true,
+              following: true,
+            },
+          },
+          following: {
+            include: {
+              followers: true,
+              following: true,
+            },
+          },
           likes: true,
         },
       });

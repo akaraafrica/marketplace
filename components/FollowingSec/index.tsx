@@ -21,7 +21,7 @@ function FollowingSec({ person }: any) {
         <div className={styles.followingsec1content}>
           <h4>{getUserName(person)}</h4>
           <p>
-            {person?.followedBy?.length} <span> followers</span>
+            {person?.followers?.length} <span> followers</span>
           </p>
         </div>
       </div>

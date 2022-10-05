@@ -28,6 +28,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
   const [isFollowing, setIsFollowing] = useState<any>(false);
   const router = useRouter();
   useEffect(() => {
+    setOpen(0);
     if (router.query.open) {
       setOpen(Number(router.query.open));
     }

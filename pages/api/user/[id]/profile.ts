@@ -26,11 +26,13 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
               followers: {
                 include: {
                   items: true,
+                  followers: true,
                 },
               },
               following: {
                 include: {
                   items: true,
+                  followers: true,
                 },
               },
             },
@@ -40,11 +42,13 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
               following: {
                 include: {
                   items: true,
+                  followers: true,
                 },
               },
               followers: {
                 include: {
                   items: true,
+                  followers: true,
                 },
               },
             },
