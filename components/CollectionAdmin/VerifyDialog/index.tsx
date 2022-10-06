@@ -5,12 +5,18 @@ import { CollectionDs } from "../../../ds";
 import Dialog from "../../global/Dialog";
 import styles from "./index.module.scss";
 
-export default function VerifyDialog({ open, handleClose, collection }: any) {
+export default function VerifyDialog({
+  open,
+  handleClose,
+  collection,
+  mutate,
+}: any) {
   const user = useContext(AuthContext).user;
 
   const handleSendRequest = async () => {
     try {
       await CollectionDs.sendRequestToContributors({ collection, user });
+      mutate();
       handleClose();
       toast.success("request sent successfully");
     } catch (error) {

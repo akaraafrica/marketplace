@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       const sellersWithoutPassword = excludePassword(sellers);
-      res.status(200).json({ sellersWithoutPassword });
+      res.status(200).json(sellersWithoutPassword);
     } catch (error) {
       console.log(error);
     }
