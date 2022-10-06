@@ -12,18 +12,21 @@ import { ProfileDs } from "../../ds";
 import { GetServerSideProps } from "next";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import ProfileItem from "../../components/ProfileItem";
-import DefaultAvatar from "../../components/DefaultAvatar";
 import { UserDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IProfile } from "../../types/profile.interface";
 import { useRouter } from "next/router";
 import NextLink from "../../components/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import dynamic from "next/dynamic";
+
+const DefaultAvatar = dynamic(() => import("../../components/DefaultAvatar"), {
+  ssr: false,
+});
 
 const Index = () => {
-  const user = useContext(AuthContext).user;
-
   const [open, setOpen] = React.useState(0);
+  const user = useContext(AuthContext).user;
   const router = useRouter();
   const id = router.query.id as unknown as number;
 
@@ -87,14 +90,16 @@ const Index = () => {
         <div className={styles.bottom}>
           <div className={styles.left}>
             <div className={styles.leftTop}>
-              <DefaultAvatar
-                id={profile!.id}
-                url={profile && profile.avatar}
-                width="160px"
-                height="160px"
-                walletAddress={walletAddress!}
-                fontSize="1.2em"
-              />
+              {profile && (
+                <DefaultAvatar
+                  id={profile!.id}
+                  url={profile && profile.avatar}
+                  width="160px"
+                  height="160px"
+                  walletAddress={walletAddress!}
+                  fontSize="1.2em"
+                />
+              )}
               <span className={styles.name}>
                 {profile && profile.name && profile.name}
               </span>

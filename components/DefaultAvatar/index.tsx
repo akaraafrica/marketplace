@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import NextImage from "../Image";
 import styles from "./index.module.scss";
-import CircleType from "circletype";
 import Link from "next/link";
 
 interface AvatarProps {
@@ -47,14 +46,12 @@ const Index: React.FC<AvatarProps> = ({
         className={styles.default}
       >
         <Link href={id ? `/profile/${id}` : ""}>
-          <a>
-            <div
-              style={{ fontSize: fontSize }}
-              /* @ts-ignore: Unreachable code error */
-            >
-              {walletFirstThree + walletLastThree}
-            </div>
-          </a>
+          <div
+            style={{ fontSize: fontSize }}
+            /* @ts-ignore: Unreachable code error */
+          >
+            {walletFirstThree + walletLastThree}
+          </div>
         </Link>
       </div>
     );

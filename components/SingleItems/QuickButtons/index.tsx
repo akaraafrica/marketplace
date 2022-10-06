@@ -129,7 +129,9 @@ export default function QuickButtons({
       {collection && user?.id === collection?.author.id && (
         <div className={styles.settings}>
           <Link href={`/collection/${collection.id}/admin`}>
-            <AiOutlineSetting size={30} height={20} />
+            <div>
+              <AiOutlineSetting size={30} height={20} />
+            </div>
           </Link>
         </div>
       )}
