@@ -11,10 +11,22 @@ import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
 import Link from "next/link";
 import parse from "html-react-parser";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import { useRouter } from "next/router";
 
-const Index = ({ item }: { item: IItem }) => {
+const Index = () => {
+  const router = useRouter();
+  const itemId = router.query.id;
+
   const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
+  const { data: item } = useSWR<IItem>(["item", itemId], () =>
+    ItemDs.getItem(itemId)
+  );
+  if (!item) {
+    return <h1>404</h1>;
+  }
+
   return (
     <Layout>
       <main className={styles.main}>
@@ -65,21 +77,27 @@ const Index = ({ item }: { item: IItem }) => {
     </Layout>
   );
 };
-
+export default function Page({ fallback }: any) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+}
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const itemId = ctx.params?.id;
   let item = await ItemDs.getItem(itemId);
-
   if (!item) {
     return {
       notFound: true,
     };
   }
+
   return {
     props: {
-      item,
+      fallback: {
+        [unstable_serialize(["item", itemId])]: item,
+      },
     },
   };
 };
-
-export default Index;

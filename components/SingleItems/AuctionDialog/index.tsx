@@ -4,6 +4,7 @@ import Dialog from "../../global/Dialog";
 import styles from "./index.module.scss";
 import { AuctionDs } from "../../../ds";
 import { toast } from "react-toastify";
+import { useSWRConfig } from "swr";
 
 export default function Index({ open, handleClose, item, edit }: any) {
   const [startPrice, setStartPrice] = useState(item?.auction?.openPrice);
@@ -11,7 +12,8 @@ export default function Index({ open, handleClose, item, edit }: any) {
     item?.auction?.startTime
   );
   const [endTime, setEndTime] = useState<null | string>(item?.auction?.endTime);
-  const router = useRouter();
+  const { mutate } = useSWRConfig();
+
   const handleSubmit = async () => {
     if (edit) {
       try {
@@ -21,9 +23,10 @@ export default function Index({ open, handleClose, item, edit }: any) {
           startTime,
           endTime,
         });
+        mutate(["item", item.id]);
+
         toast.success("Auction updated");
         handleClose();
-        router.reload();
       } catch (error) {
         toast.error("Error updating auction");
       }
@@ -35,12 +38,10 @@ export default function Index({ open, handleClose, item, edit }: any) {
           startTime,
           endTime,
         });
+        mutate(["item", item.id]);
         toast.success("placed on auction");
-        setTimeout(() => {
-          router.reload();
-        }, 2000);
+        setTimeout(() => {}, 2000);
         handleClose();
-        router.reload();
       } catch (error) {
         toast.error("error placing auction");
       }

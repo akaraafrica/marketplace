@@ -9,6 +9,7 @@ import { BidDs } from "../../../ds";
 import { IBid } from "../../../types/bid.interface";
 import { getUserName } from "../../../utils/helpers/getUserName";
 import DefaultAvatar from "../../DefaultAvatar";
+import { useSWRConfig } from "swr";
 
 export default function AcceptBid({
   viewall,
@@ -25,7 +26,8 @@ export default function AcceptBid({
   );
 
   const { user } = useContext(AuthContext);
-  const router = useRouter();
+  const { mutate } = useSWRConfig();
+
   const handleAcceptBid = async () => {
     if (!user) {
       return;
@@ -38,11 +40,9 @@ export default function AcceptBid({
         highestBid.amount,
         highestBid
       );
+      mutate(["item", item.id]);
       toast.success("Bid Accepted Successfully");
       handleClose();
-      setTimeout(() => {
-        router.reload();
-      }, 3000);
     } catch (error) {
       toast.error("Error Placing Bid");
     }

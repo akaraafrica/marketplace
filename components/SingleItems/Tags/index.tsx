@@ -12,6 +12,7 @@ import { AuctionDs } from "../../../ds";
 import { toast } from "react-toastify";
 import DefaultAvatar from "../../DefaultAvatar";
 import { getUserName } from "../../../utils/helpers/getUserName";
+import { useSWRConfig } from "swr";
 
 interface infoProperties {
   user: IUser;
@@ -21,12 +22,15 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const { user } = useContext(AuthContext);
+  const { mutate } = useSWRConfig();
 
   const handleDelete = async () => {
     try {
       await AuctionDs.deleteData({
         id: item.auction.id,
       });
+      mutate(["item", item.id]);
+
       toast.success("Auction deleted");
       handleClose();
     } catch (error) {

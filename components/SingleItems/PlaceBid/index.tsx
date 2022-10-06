@@ -9,6 +9,7 @@ import PlaceBidDialog from "../PlaceBidDialog";
 import PurchaseDialog from "../PurchaseDialog";
 import SuccessDialog from "../SuccessDialog";
 import { IItem } from "../../../types/item.interface";
+import { useSWRConfig } from "swr";
 
 export default function PlaceBid({ item }: { item: IItem }) {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
   const [openSucceesDialog, setOpenSuccessDialog] = useState(false);
   const [amount, setAmount] = useState<number | null>(null);
   const { user } = useContext(AuthContext);
+  const { mutate } = useSWRConfig();
 
   const handleBidClose = () => {
     setOpenPlaceBidDialog(false);
@@ -32,15 +34,12 @@ export default function PlaceBid({ item }: { item: IItem }) {
     if (!user) {
       return;
     }
-
     try {
       if (amount) await BidDs.postData("placeBid", item, user, amount);
+      mutate(["item", item.id]);
       toast.success("Bid Placed Successfully");
       handleBidClose();
       setAmount(null);
-      setTimeout(() => {
-        router.reload();
-      }, 2000);
     } catch (error) {
       toast.error("Error Placing Bid");
     }
@@ -51,9 +50,9 @@ export default function PlaceBid({ item }: { item: IItem }) {
     }
     try {
       await BidDs.postData("purchase", item, user);
+      mutate(["item", item.id]);
       setOpenSuccessDialog(true);
       handlePurchaseClose();
-      router.reload();
     } catch (error) {
       toast.error("purchasing Bid");
     }

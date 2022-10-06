@@ -21,6 +21,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { AiFillHeart, AiOutlineSetting } from "react-icons/ai";
 import Link from "next/link";
+import { useSWRConfig } from "swr";
 interface IQuickButtons {
   desktop?: boolean;
   item?: IItem;
@@ -35,6 +36,7 @@ export default function QuickButtons({
   const url = `${process.env.NEXT_PUBLIC_DOMAIN}${router.asPath}`;
   const [showSocial, setShowSocial] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { mutate } = useSWRConfig();
 
   const handleShare = () => {
     setShowSocial(!showSocial);
@@ -52,6 +54,10 @@ export default function QuickButtons({
   }, [like]);
   const handleLike = async () => {
     if (loading) return;
+    if (!item) {
+      return;
+    }
+
     if (!user) {
       toast.error("please login first");
       return;
@@ -63,7 +69,7 @@ export default function QuickButtons({
       setLoading(true);
       if (item) await LikeDs.postData(item, user);
       setLoading(false);
-      router.reload();
+      mutate(["item", item.id]);
       console.log("success!");
     } catch (error) {
       console.log(error);
