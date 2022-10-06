@@ -18,15 +18,20 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { IProfile } from "../../types/profile.interface";
 import { useRouter } from "next/router";
 import NextLink from "../../components/Link";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
-const ProfilePage = ({ profile }: { profile: IProfile }) => {
-  const [open, setOpen] = React.useState(0);
-  const { walletAddress, createdAt, items, followers, following, collections } =
-    profile;
-
+const Index = () => {
   const user = useContext(AuthContext).user;
-  const [isFollowing, setIsFollowing] = useState<any>(false);
+
+  const [open, setOpen] = React.useState(0);
   const router = useRouter();
+  const id = router.query.id as unknown as number;
+
+  const { data: profile, mutate } = useSWR<IProfile>(["profile", id], () =>
+    ProfileDs.fetch(id)
+  );
+  const [isFollowing, setIsFollowing] = useState<any>(false);
+
   useEffect(() => {
     setOpen(0);
     if (router.query.open) {
@@ -40,7 +45,13 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
     if (isFollowing?.followingId == user?.id) {
       setIsFollowing(isFollowing);
     }
-  }, [followers, user]);
+  }, [profile?.followers, user]);
+
+  if (!profile) {
+    return <h1>404</h1>;
+  }
+  const { walletAddress, createdAt, items, followers, following, collections } =
+    profile;
 
   const handleFollow = async () => {
     if (!user) {
@@ -49,9 +60,11 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
     if (isFollowing) {
       setIsFollowing(false);
       await UserDs.unfollow(isFollowing.id);
+      mutate();
     } else {
       setIsFollowing(true);
       const res = await UserDs.follow(profile, user);
+      mutate();
       setIsFollowing(res);
     }
   };
@@ -192,8 +205,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      profile,
+      fallback: {
+        [unstable_serialize(["profile", id])]: profile,
+      },
     },
   };
 };
-export default ProfilePage;
+export default function Page({ fallback }: any) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+}
