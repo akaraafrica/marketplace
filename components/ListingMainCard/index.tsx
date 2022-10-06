@@ -39,13 +39,15 @@ function ListingMainCard() {
               <div key={item.id} className={styles.left}>
                 {item?.images[0] && (
                   <Link href={`item/${item.id}`}>
-                    <NextImage
-                      src={item.images[0]}
-                      width="100%"
-                      height="446px"
-                      className={styles.image}
-                      alt="product"
-                    />
+                    <a>
+                      <NextImage
+                        src={item.images[0]}
+                        width="800px"
+                        height="600px"
+                        className={styles.image}
+                        alt="product"
+                      />
+                    </a>
                   </Link>
                 )}
 
@@ -126,13 +128,15 @@ function ListingMainCard() {
                   <div className={styles.creatorImgDiv}>
                     {item?.images[0] && (
                       <Link href={`item/${item.id}`}>
-                        <NextImage
-                          src={item.images[0]}
-                          width="56px"
-                          height="56px"
-                          className={styles.creatorImg}
-                          alt="product"
-                        />
+                        <a>
+                          <NextImage
+                            src={item.images[0]}
+                            width="56px"
+                            height="56px"
+                            className={styles.creatorImg}
+                            alt="product"
+                          />
+                        </a>
                       </Link>
                     )}
                   </div>

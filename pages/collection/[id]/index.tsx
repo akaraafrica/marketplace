@@ -92,7 +92,7 @@ const Index = ({ collection }: properties) => {
               </div>
             </div>
           )}
-          <p>{ReactHtmlParser(collection.description)}</p>
+          <div>{ReactHtmlParser(collection.description)}</div>
 
           {width > 800 && (
             <QuickButtons desktop={true} collection={collection} />

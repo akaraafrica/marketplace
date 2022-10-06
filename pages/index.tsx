@@ -17,7 +17,6 @@ import { CollectionDs, DiscoveryDs, ItemDs, UserDs } from "../ds/index";
 
 const Home = (props: any) => {
   SwiperCore.use([Pagination, Autoplay]);
-  console.log("sellers", props.sellers);
   return (
     <Layout>
       <div className={styles.styles}>

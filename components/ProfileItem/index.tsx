@@ -61,12 +61,12 @@ const Index = ({
           <div className={styles.root}>
             {collections &&
               collections.map((collection) => (
-                <>
+                <div key={collection.id}>
                   <HotCollectionCard
                     key={collection.id}
                     collection={collection}
                   />
-                </>
+                </div>
               ))}
           </div>
         </div>
