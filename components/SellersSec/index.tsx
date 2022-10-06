@@ -23,7 +23,6 @@ const SellersSec = (props: any) => {
     swiperRef.slideNext();
   }, [swiperRef]);
 
-  console.log(props.sellers.sellers);
   return (
     <div className={styles.root}>
       <div className={styles.popularHeader}>
@@ -77,7 +76,7 @@ const SellersSec = (props: any) => {
           modules={[Navigation]}
           className={styles.swiper_container}
         >
-          {props.sellers.sellers
+          {props.sellers
             ?.filter((seller: any) => seller._count.items > 0)
             .sort((a: any, b: any) =>
               a._count.items > b._count.items ? -1 : 1

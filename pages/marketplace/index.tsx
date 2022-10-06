@@ -13,17 +13,18 @@ import {
 } from "../../components/DiscoverSection/utils";
 import CustomSelect from "../../components/CustomSelect";
 import { IItem } from "../../types/item.interface";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
-interface properties {
-  items: IItem[];
-}
-const Index = ({ items }: properties) => {
+const Index = () => {
+  const { data: items } = useSWR<IItem[]>(["discovery"], () =>
+    Discovery.getData(Filter.All)
+  );
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState(items);
   const handleSearch = (e: any) => {
     const value: string = e.target.value;
 
-    const newData = items.filter((item: any) => {
+    const newData = items?.filter((item: any) => {
       const words: string[] = item.title.toLocaleLowerCase().split(" ");
       const isWord = words.find((word) => word === value.toLocaleLowerCase());
 
@@ -31,8 +32,10 @@ const Index = ({ items }: properties) => {
         return item;
       }
     });
-    setData([...newData]);
-    if (value === "") {
+    if (newData) {
+      setData([...newData]);
+    }
+    if (value === "" && items) {
       setData([...items]);
     }
   };
@@ -154,7 +157,7 @@ const Index = ({ items }: properties) => {
               </span>
             </div>
             <div>
-              <DiscoveryItems filterBy={open} initialItems={data} />
+              {data && <DiscoveryItems filterBy={open} initialItems={data} />}
             </div>
           </div>
         </div>
@@ -163,12 +166,20 @@ const Index = ({ items }: properties) => {
   );
 };
 export async function getServerSideProps() {
-  let data = await Discovery.getData(Filter.All);
+  let discovery = await Discovery.getData(Filter.All);
   return {
     props: {
-      items: data,
+      fallback: {
+        [unstable_serialize(["discovery"])]: discovery,
+      },
     },
   };
 }
-
-export default Index;
+const Page = ({ fallback }: any) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+};
+export default Page;

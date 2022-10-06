@@ -5,16 +5,20 @@ import { CollectionDs } from "../../ds";
 import HotCollectionCard from "../../components/HotCollectionsCard";
 import { ICollection } from "../../types/collection.interface";
 import { BiSearch } from "react-icons/bi";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
 interface properties {
   collections: ICollection[];
 }
-const Index = ({ collections }: properties) => {
+const Index = () => {
+  const { data: collections } = useSWR<ICollection[]>(["collection"], () =>
+    CollectionDs.getCollections()
+  );
   const [data, setData] = useState(collections);
   const handleSearch = (e: any) => {
     const value: string = e.target.value;
 
-    const newData = collections.filter((collection: any) => {
+    const newData = collections?.filter((collection: any) => {
       const words: string[] = collection.title.toLocaleLowerCase().split(" ");
       const isWord = words.find((word) => word === value.toLocaleLowerCase());
 
@@ -22,8 +26,11 @@ const Index = ({ collections }: properties) => {
         return collection;
       }
     });
-    setData([...newData]);
-    if (value === "") {
+    if (newData) {
+      setData([...newData]);
+    }
+
+    if (value === "" && collections) {
       setData([...collections]);
     }
   };
@@ -61,8 +68,17 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      collections,
+      fallback: {
+        [unstable_serialize(["collection"])]: collections,
+      },
     },
   };
 }
-export default Index;
+const Page = ({ fallback }: any) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+};
+export default Page;

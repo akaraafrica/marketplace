@@ -24,12 +24,14 @@ interface properties {
   open: boolean;
   handleClose: Function;
   collection: ICollection;
+  mutate: any;
 }
 
 export default function MintCollectionDialog({
   open,
   handleClose,
   collection,
+  mutate,
 }: properties) {
   const [step, setStep] = useState<Step>({
     count: 1,
@@ -69,6 +71,7 @@ export default function MintCollectionDialog({
   };
   const handleSubmit = async () => {
     setStep({ ...step, complete: true });
+    mutate();
     handleClose();
     toast.success("successful");
   };

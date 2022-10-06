@@ -23,6 +23,8 @@ import { GetServerSideProps } from "next";
 import { ILike } from "../../types/like.interface";
 import { IBid } from "../../types/bid.interface";
 import withAuth from "../../HOC/withAuth";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import { useRouter } from "next/router";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -54,17 +56,19 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const Dashboard = ({
-  items,
-  collections,
-  likes,
-  bids,
-}: {
-  items: IItem[];
-  collections: ICollection[];
-  likes: ILike[];
-  bids: IBid[];
-}) => {
+const Dashboard = () => {
+  const router = useRouter();
+  const id = router.query.id as unknown as number;
+
+  const { data, mutate } = useSWR(["dashboard", id], () =>
+    ProfileDs.getDashboradData(id)
+  );
+  const { items, collections, likes, bids } = data as {
+    items: IItem[];
+    collections: ICollection[];
+    likes: ILike[];
+    bids: IBid[];
+  };
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -174,16 +178,21 @@ const Dashboard = ({
 };
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
-  const { userWithoutPassword, bids } = await ProfileDs.getDashboradData(id);
-  const { items, collections, likes } = userWithoutPassword;
+  const data = await ProfileDs.getDashboradData(id);
 
   return {
     props: {
-      collections,
-      items,
-      likes,
-      bids,
+      fallback: {
+        [unstable_serialize(["dashboard", id])]: data,
+      },
     },
   };
 };
-export default withAuth(Dashboard);
+const Page = ({ fallback }: any) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Dashboard />
+    </SWRConfig>
+  );
+};
+export default withAuth(Page);
