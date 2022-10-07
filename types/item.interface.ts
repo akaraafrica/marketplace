@@ -26,4 +26,5 @@ export interface IItem {
   auction: IAuction;
   step: number;
   royalties: number;
+  category: "ART" | "GAME" | "PHOTOGRAPHY" | "MUSIC" | "VIDEO";
 }

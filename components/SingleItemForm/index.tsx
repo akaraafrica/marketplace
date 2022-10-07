@@ -73,6 +73,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
     title: string;
     description: string;
     price: string;
+    category: "ART" | "GAME" | "PHOTOGRAPHY" | "MUSIC" | "VIDEO";
     published: boolean;
     royalties: number;
     image: any;
@@ -194,7 +195,6 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       setStep({ ...step, loading: true });
       data.description = state.description;
       const result = await ItemDs.createData(data, user);
-      console.log("item result id " + result.data.id);
 
       setUploadId(result.data.id);
       setUploadId(result.data.id);
@@ -217,7 +217,6 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
         id: result.data.id,
         images: imageURLs,
       });
-      console.log({ uploadId });
       await itemDs.updateStep({ id: result.data.id, step: 2 });
       setStep({ ...step, loading: false, count: 2 });
     } catch (error) {
@@ -462,41 +461,41 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               </div>
             </section>
           </div>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={styles.itemdetailsformcon}
-          >
-            <h4>Item Details</h4>
-            <div className={styles.itemdetailsforminput}>
-              <label>ITEM NAME</label>
-              <input
-                type="text"
-                placeholder='e. g. "Redeemable Bitcoin Card with logo"'
-                {...register("title", { required: true })}
-                disabled={!!item?.title}
-              />
-              {errors.title && <span>This field is required</span>}
-            </div>
-            <div className={styles.editor}>
-              <label>DESCRIPTION</label>
-              <div className={styles.editor}>
-                <ReactQuill
-                  modules={{
-                    toolbar: toolbarOptions,
-                  }}
-                  theme="snow"
-                  style={{
-                    height: "20rem",
-                  }}
-                  placeholder='e.g. “After purchasing you will able to receive the logo...”"'
-                  value={getValues("description")}
-                  onChange={(e: any) => {
-                    setValue("description", e);
-                  }}
+          {!item && (
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className={styles.itemdetailsformcon}
+            >
+              <h4>Item Details</h4>
+              <div className={styles.itemdetailsforminput}>
+                <label>ITEM NAME</label>
+                <input
+                  type="text"
+                  placeholder='e. g. "Redeemable Bitcoin Card with logo"'
+                  {...register("title", { required: true })}
                 />
+                {errors.title && <span>This field is required</span>}
               </div>
-            </div>
-            {/* <div className={styles.itemdetailsforminput}>
+              <div className={styles.editor}>
+                <label>DESCRIPTION</label>
+                <div className={styles.editor}>
+                  <ReactQuill
+                    modules={{
+                      toolbar: toolbarOptions,
+                    }}
+                    theme="snow"
+                    style={{
+                      height: "20rem",
+                    }}
+                    placeholder='e.g. “After purchasing you will able to receive the logo...”"'
+                    value={getValues("description")}
+                    onChange={(e: any) => {
+                      setValue("description", e);
+                    }}
+                  />
+                </div>
+              </div>
+              {/* <div className={styles.itemdetailsforminput}>
               <label>BLOCKCHAIN</label>
               <select
                 {...register("blockchain", { required: true })}
@@ -508,51 +507,72 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                 <option>Solana</option>
               </select>
             </div> */}
-            <div className={styles.itemdetailformdropdownsCon}>
-              <div className={styles.itemdetailsformdropdown}>
-                <label>ROYALTIES</label>
-                <select {...register("royalties")} disabled={!!item?.royalties}>
-                  <option value="1">1%</option>
-                  <option value="5">5%</option>
-                  <option value="10">10%</option>
-                  <option value="15">15%</option>
-                  <option value="20">20%</option>
-                </select>
+              <div className={styles.itemdetailformdropdownsCon}>
+                <div className={styles.itemdetailsformdropdown}>
+                  <label>CATEGORY</label>
+                  <select {...register("category")}>
+                    <option value="ART">ART</option>
+                    <option value="GAME">GAME</option>
+                    <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+                    <option value="MUSIC">MUSIC</option>
+                    <option value="VIDEO">VIDEO</option>
+                  </select>
+                </div>
+                <div className={styles.itemdetailsformdropdown}>
+                  <label>ROYALTIES</label>
+                  <select {...register("royalties")}>
+                    <option value="1">1%</option>
+                    <option value="5">5%</option>
+                    <option value="10">10%</option>
+                    <option value="15">15%</option>
+                    <option value="20">20%</option>
+                  </select>
+                </div>
+                <div className={styles.itemdetailsforminput1}>
+                  <label>PRICE</label>
+                  <input
+                    type="number"
+                    placeholder="0.25 ETH"
+                    className={styles.input}
+                    min="0"
+                    step="0.01"
+                    {...register("price", { required: true })}
+                  />
+                  {errors.price && <span>This field is required</span>}
+                </div>
               </div>
-              <div className={styles.itemdetailsforminput1}>
-                <label>PRICE</label>
-                <input
-                  type="number"
-                  placeholder="0.25 ETH"
-                  className={styles.input}
-                  min="0"
-                  step="0.01"
-                  {...register("price", { required: true })}
-                />
-                {errors.price && <span>This field is required</span>}
+              <div className={styles.divider}></div>
+              <div className={styles.putonscalesec}>
+                <div className={styles.putonscalesec1}>
+                  <h4>Put on sale</h4>
+                  <p>You’ll receive bids on this item</p>
+                </div>
+                <label className={styles.switch}>
+                  <input type="checkbox" {...register("published", {})} />
+                  <span className={`${styles.slider} ${styles.round}`}></span>
+                </label>
               </div>
-            </div>
-            <div className={styles.divider}></div>
-            <div className={styles.putonscalesec}>
-              <div className={styles.putonscalesec1}>
-                <h4>Put on sale</h4>
-                <p>You’ll receive bids on this item</p>
+              <div className={styles.putonscalebtnsec}>
+                <button type="submit">
+                  {item ? "Edit " : "Create "}item
+                  <span>
+                    <img src={`/assets/arrow.svg`} alt="" />
+                  </span>
+                </button>
+                {/* <p>Auto saving</p> */}
               </div>
-              <label className={styles.switch}>
-                <input type="checkbox" {...register("published", {})} />
-                <span className={`${styles.slider} ${styles.round}`}></span>
-              </label>
-            </div>
+            </form>
+          )}
+          {item && (
             <div className={styles.putonscalebtnsec}>
-              <button type="submit">
-                {item ? "Edit " : "Create "}item
+              <button type="submit" onClick={handleEditItem}>
+                Edit item
                 <span>
                   <img src={`/assets/arrow.svg`} alt="" />
                 </span>
               </button>
-              {/* <p>Auto saving</p> */}
             </div>
-          </form>
+          )}
         </div>
         <div className={styles.previewCard}>
           <div className={styles.previewheading}>

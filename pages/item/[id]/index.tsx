@@ -32,7 +32,7 @@ const Index = () => {
       <main className={styles.main}>
         <section className={styles.sectionone}>
           <div className={styles.tags}>
-            {/* TODO: change to item category */}
+            <span>{item.category}</span>
           </div>
           <div className={styles.img}>
             {item?.images[0] && (
