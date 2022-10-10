@@ -106,7 +106,7 @@ const Index = ({ collection }: properties) => {
                 <div className={styles.stats}>
                   <div>
                     <span>Likes</span>
-                    <span>{selectedItem?.bids?.length || 0}</span>
+                    <span>{selectedItem?.likes?.length || 0}</span>
                   </div>
                   <div>
                     <span>Offers</span>
@@ -158,9 +158,6 @@ const Index = ({ collection }: properties) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   let collection = await CollectionDs.getCollectionById(id);
-  console.log({ collection });
-
-  // /  if (!collection) return { notFound: true };
 
   return {
     props: {
