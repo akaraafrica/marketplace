@@ -21,19 +21,6 @@ const Index: React.FC<AvatarProps> = ({
   fontSize = " 0.7em",
   length = 2,
 }) => {
-  const colors = [
-    "Aqua",
-    "Red",
-    "Green",
-    "Yellow",
-    "Blue",
-    "Khaki",
-    "Cyan",
-    "White",
-  ];
-
-  const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
   if (url === undefined || url === null || url === "") {
     const len = length && length > 0 ? length : 3;
     const lastThree = walletAddress?.length - len;
@@ -42,10 +29,10 @@ const Index: React.FC<AvatarProps> = ({
 
     return (
       <div
-        style={{ width: width, height: height, backgroundColor: randomColor }}
+        style={{ width: width, height: height, backgroundColor: "Khaki" }}
         className={styles.default}
       >
-        <Link href={id ? `/profile/${id}` : ""}>
+        <Link href={id ? `/profile/${id}` : "#"}>
           <div
             style={{ fontSize: fontSize }}
             /* @ts-ignore: Unreachable code error */
