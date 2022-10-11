@@ -12,7 +12,7 @@ const Index: React.FC<Verify> = ({ title, text }) => {
       <NextImage
         className={styles.image}
         width={200}
-        height={100}
+        height={200}
         src="/assets/checkmail.png"
         alt="verify email"
       />
