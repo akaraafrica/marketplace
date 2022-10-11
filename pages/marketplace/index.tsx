@@ -7,6 +7,7 @@ import Discovery, { Filter } from "../../ds/discovery.ds";
 import { MdCancel } from "react-icons/md";
 import DiscoveryItems from "../../components/DiscoveryItems";
 import {
+  handleCategoryChange,
   handleChange,
   handleResetFilter,
   handleSliderChange,
@@ -39,6 +40,7 @@ const Index = () => {
       setData([...items]);
     }
   };
+
   return (
     <Layout>
       <div className={styles.root}>
@@ -108,7 +110,9 @@ const Index = () => {
           <div className={styles.right}>
             <div className={styles.navs}>
               <span
-                onClick={() => setOpen(0)}
+                onClick={() => {
+                  setOpen(0), handleCategoryChange("ALL", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 0 ? styles.active : ""
                 }`}
@@ -116,7 +120,10 @@ const Index = () => {
                 All items
               </span>
               <span
-                onClick={() => setOpen(1)}
+                onClick={() => {
+                  setOpen(1);
+                  handleCategoryChange("ART", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 1 ? styles.active : ""
                 }`}
@@ -124,7 +131,10 @@ const Index = () => {
                 Art
               </span>
               <span
-                onClick={() => setOpen(2)}
+                onClick={() => {
+                  setOpen(2);
+                  handleCategoryChange("GAME", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 2 ? styles.active : ""
                 }`}
@@ -132,7 +142,10 @@ const Index = () => {
                 Game
               </span>
               <span
-                onClick={() => setOpen(3)}
+                onClick={() => {
+                  setOpen(3);
+                  handleCategoryChange("PHOTOGRAPHY", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 3 ? styles.active : ""
                 }`}
@@ -140,7 +153,10 @@ const Index = () => {
                 Photography
               </span>
               <span
-                onClick={() => setOpen(4)}
+                onClick={() => {
+                  setOpen(4);
+                  handleCategoryChange("MUSIC", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 4 ? styles.active : ""
                 }`}
@@ -148,7 +164,10 @@ const Index = () => {
                 Music
               </span>
               <span
-                onClick={() => setOpen(5)}
+                onClick={() => {
+                  setOpen(5);
+                  handleCategoryChange("VIDEO", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 5 ? styles.active : ""
                 }`}

@@ -1,3 +1,5 @@
+import { IItem } from "../../types/item.interface";
+
 export const sortItem = (
   data: any[],
   value: string,
@@ -96,4 +98,18 @@ export const handleSliderChange = (e: any, setData: any, items: any) => {
 
   const newData = items.filter((item: any) => Math.floor(item.price) <= value);
   setData([...newData]);
+};
+
+type category = "ART" | "GAME" | "PHOTOGRAPHY" | "MUSIC" | "VIDEO" | "ALL";
+export const handleCategoryChange = (
+  category: category,
+  setData: React.Dispatch<React.SetStateAction<IItem[] | undefined>>,
+  items: IItem[] | undefined
+) => {
+  if (category === "ALL") {
+    setData(items);
+    return;
+  }
+  const newData = items?.filter((item) => item.category === category);
+  setData(newData);
 };

@@ -65,6 +65,7 @@ model Item {
   published    Boolean
   publishedAt  DateTime?
   updatedAt    DateTime       @updatedAt
+  category     Category?      @default(ART)
   step         Int?
   royalties    Int?
   terms        Boolean?
@@ -230,6 +231,14 @@ enum CollectionTypes {
   COLLABORATORS
   FUNDRAISING
   LOCKSHARED
+}
+
+enum Category {
+  ART
+  GAME
+  PHOTOGRAPHY
+  MUSIC
+  VIDEO
 }
 
 enum EntityType {
