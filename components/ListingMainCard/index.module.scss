@@ -1,6 +1,6 @@
 .root {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 0.7fr;
+  grid-template-columns: 1.5fr 0.8fr 0.8fr;
   gap: 30px;
 
   @media screen and (max-width: 800px) {
@@ -84,6 +84,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
+      cursor: pointer;
 
       .cardImg {
         border-radius: 12px;
@@ -168,6 +169,7 @@
       .creator {
         display: flex;
         gap: 16px;
+        align-items: center;
 
         .creatorImgDiv {
           position: relative;
@@ -206,7 +208,7 @@
           .name {
             font-style: normal;
             font-weight: 500;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 24px;
             color: #fcfcfd;
           }
@@ -237,6 +239,7 @@
         border: 2px solid #777e91;
         border-radius: 90px;
         padding: 12px 16px;
+        margin-top: 1rem;
         width: fit-content;
         color: #fcfcfd;
         cursor: pointer;

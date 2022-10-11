@@ -1,13 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import NextImage from "../../components/Image";
 import { ItemDs } from "../../ds";
+import userDs from "../../ds/user.ds";
 import { IItem } from "../../types/item.interface";
+import { IUser } from "../../types/user.interface";
+import { getUserName } from "../../utils/helpers/getUserName";
 import styles from "./index.module.scss";
+const DefaultAvatar = dynamic(() => import("../DefaultAvatar"), {
+  ssr: false,
+});
 
 function ListingMainCard() {
   const [items, setItem] = useState<IItem[] | null>(null);
+  const [users, setUsers] = useState<IUser[] | null>(null);
+
   const [lastestItems, setLastestItem] = useState<IItem[] | null>(null);
   useEffect(() => {
     (async () => {
@@ -20,14 +29,8 @@ function ListingMainCard() {
 
   useEffect(() => {
     (async () => {
-      let data: IItem[] = await ItemDs.getData();
-
-      data = data.sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      );
-
-      setLastestItem(data);
+      let data: IUser[] = await userDs.fetchlatestUsers();
+      setUsers(data);
     })();
   }, []);
   return (
@@ -80,77 +83,74 @@ function ListingMainCard() {
         {items &&
           items.slice(1, 4).map((item) => {
             return (
-              <div className={styles.cards} key={item.id}>
-                {item?.images[0] && (
-                  <NextImage
-                    className={styles.cardImg}
-                    src={item.images[0]}
-                    width="160px"
-                    height="148px"
-                    alt="product"
-                  />
-                )}
-
-                <div className={styles.cardDetails}>
-                  <Link href={`item/${item.id}`}>
-                    <span className={styles.cardName}>{item?.title}</span>
-                  </Link>
-                  <div className={styles.centerDiv}>
-                    {item?.owner.profile?.avatar && (
-                      <Link href={`item/${item.id}`}>
-                        <NextImage
-                          className={styles.centerDivImg}
-                          src={item?.owner.profile?.avatar}
-                          width="24px"
-                          height="24px"
-                          alt="avatar"
-                        />
-                      </Link>
+              <Link href={`item/${item.id}`} key={item.id}>
+                <a>
+                  <div className={styles.cards} key={item.id}>
+                    {item?.images[0] && (
+                      <NextImage
+                        className={styles.cardImg}
+                        src={item.images[0]}
+                        width="160px"
+                        height="148px"
+                        alt="product"
+                      />
                     )}
-                    <span>{item?.price} ETH</span>
-                  </div>
-                  <Link href={`item/${item.id}`}>
+
+                    <div className={styles.cardDetails}>
+                      <Link href={`item/${item.id}`}>
+                        <span className={styles.cardName}>{item?.title}</span>
+                      </Link>
+                      <div className={styles.centerDiv}>
+                        {item?.owner.profile?.avatar && (
+                          <Link href={`item/${item.id}`}>
+                            <NextImage
+                              className={styles.centerDivImg}
+                              src={item?.owner.profile?.avatar}
+                              width="24px"
+                              height="24px"
+                              alt="avatar"
+                            />
+                          </Link>
+                        )}
+                        <span>{item?.price} ETH</span>
+                      </div>
+                      {/* <Link href={`item/${item.id}`}>
                     <button>Buy</button>
-                  </Link>
-                </div>
-              </div>
+                  </Link> */}
+                    </div>
+                  </div>
+                </a>
+              </Link>
             );
           })}
       </div>
       <div className={styles.right}>
         <hr />
         <div className={styles.rightContainer}>
-          <h5>Latest upload from creators 🔥</h5>
-          {lastestItems &&
-            lastestItems.slice(0, 5).map((item) => {
+          <h5>Latest creators 🔥</h5>
+          {users &&
+            users.slice(0, 5).map((user) => {
               return (
-                <div key={item.id} className={styles.creator}>
-                  <div className={styles.creatorImgDiv}>
-                    {item?.images[0] && (
-                      <Link href={`item/${item.id}`}>
-                        <a>
-                          <NextImage
-                            src={item.images[0]}
-                            width="56px"
-                            height="56px"
-                            className={styles.creatorImg}
-                            alt="product"
-                          />
-                        </a>
-                      </Link>
-                    )}
-                  </div>
-                  <div className={styles.creatorNameDiv}>
-                    <span className={styles.name}>{item.title}</span>
-                    <span className={styles.eth}>
-                      {item.price} <span>ETH</span>
-                    </span>
-                  </div>
-                </div>
+                <Link href={`/profile/${user.id}`} key={user.id}>
+                  <a>
+                    <div key={user.id} className={styles.creator}>
+                      <div className={styles.creatorImgDiv}>
+                        <DefaultAvatar
+                          id={user.id}
+                          url={user.profile?.avatar}
+                          walletAddress={user.walletAddress}
+                          width="4rem"
+                          height="4rem"
+                        />
+                      </div>
+                      <div className={styles.creatorNameDiv}>
+                        <span className={styles.name}>{getUserName(user)}</span>
+                      </div>
+                    </div>
+                  </a>
+                </Link>
               );
             })}
-
-          <hr />
 
           <Link href="/marketplace">
             <div className={styles.btn}>Discover more </div>

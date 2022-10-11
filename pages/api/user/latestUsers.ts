@@ -6,17 +6,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const sellers = await prisma.user.findMany({
+        take: 5,
         orderBy: {
-          items: {
-            _count: "desc",
-          },
+          createdAt: "asc",
         },
         include: {
-          _count: {
-            select: {
-              items: true,
-            },
-          },
           profile: true,
         },
       });

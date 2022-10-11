@@ -5,6 +5,11 @@ import { ICollection } from "../../types/collection.interface";
 import { Router } from "next/router";
 import Link from "../Link";
 import { getUserName } from "../../utils/helpers/getUserName";
+import dynamic from "next/dynamic";
+const DefaultAvatar = dynamic(() => import("../DefaultAvatar"), {
+  ssr: false,
+});
+
 interface properties {
   collection: ICollection;
 }
@@ -16,11 +21,10 @@ const BidCard = ({ collection }: properties) => {
           <span className={styles.auctionHeading}>{collection?.title}</span>
           <div className={styles.profileInfoCardCon}>
             <div className={styles.profileInfoCard}>
-              <Avatar
-                src={`/assets/auctionAvatar.png`}
-                alt="creator-photo"
-                // style={{ width: "2.5vw", height: "2.5vw" }}
-                className={styles.profileInfoAvatar}
+              <DefaultAvatar
+                id={collection.author.id}
+                url={collection.author.profile?.avatar}
+                walletAddress={collection.author.walletAddress}
               />
               <span className={styles.profileInfo}>
                 <span className={styles.profileInfoClass}>Creator</span>

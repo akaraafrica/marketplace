@@ -11,7 +11,7 @@ interface properties {
 function HotCollectionCard(props: properties) {
   const { id, images, title, author, items } = props.collection;
 
-  return images.length ? (
+  return (
     <div className={styles.root}>
       <div className={styles.mainImgdiv}>
         {images[0] && (
@@ -62,8 +62,6 @@ function HotCollectionCard(props: properties) {
         </div>
       </div>
     </div>
-  ) : (
-    <></>
   );
 }
 export default HotCollectionCard;

@@ -29,7 +29,7 @@ const SellersSec = (props: any) => {
         <div className={styles.popularCon}>
           <span className={styles.popularText}>Popular</span>
           <span className={styles.sellersText}>
-            Sellers{" "}
+            Sellers
             <div
               style={{
                 width: "2vw",
@@ -76,16 +76,11 @@ const SellersSec = (props: any) => {
           modules={[Navigation]}
           className={styles.swiper_container}
         >
-          {props.sellers
-            ?.filter((seller: any) => seller._count.items > 0)
-            .sort((a: any, b: any) =>
-              a._count.items > b._count.items ? -1 : 1
-            )
-            .map((seller: any, idx: number) => (
-              <SwiperSlide key={seller.id} className={styles.slide}>
-                <SellersCard seller={seller} index={idx} />
-              </SwiperSlide>
-            ))}
+          {props.sellers.map((seller: any, idx: number) => (
+            <SwiperSlide key={seller.id} className={styles.slide}>
+              <SellersCard seller={seller} index={idx} />
+            </SwiperSlide>
+          ))}
         </Swiper>
         <button className={styles.right} onClick={handleRightClick}>
           <span>
