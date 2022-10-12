@@ -9,10 +9,10 @@ import { useRouter } from "next/router";
 
 interface properties {
   initialItems: IItem[];
-  filterBy: Filter;
+  filter: any;
 }
 
-function DiscoveryItems({ initialItems, filterBy }: properties) {
+function DiscoveryItems({ initialItems, filter }: properties) {
   const [items, setItems] = useState(initialItems);
   const [hasMore, setHasMore] = useState(true);
   const router = useRouter();
@@ -24,7 +24,7 @@ function DiscoveryItems({ initialItems, filterBy }: properties) {
   }, [initialItems]);
 
   const fetchMoreData = async () => {
-    let data = await ItemDs.getMore(items.length);
+    let data = await ItemDs.getMore(items.length, filter);
     setItems([...items, ...data]);
     if (data.length == 0) {
       setHasMore(false);

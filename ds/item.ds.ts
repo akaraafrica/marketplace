@@ -68,6 +68,16 @@ class Item {
       console.log(error);
     }
   }
+  async search(text: string) {
+    try {
+      const res = await api.post(`${url}/search`, {
+        text,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async getData() {
     try {
@@ -78,14 +88,28 @@ class Item {
     }
   }
 
-  async getMore(lastIndex: number) {
+  async getFilterData(filter: any, value: any) {
     try {
-      const items = await api.get(`${url}/fetchmore?lastIndex=${lastIndex}`);
+      const items = await api.get(`${url}/filter?${filter}=${value}`);
       return items.data;
     } catch (error) {
       console.log(error);
     }
   }
+
+  async getMore(lastIndex: number, filter: any) {
+    const { priceRange, priceOrder, createdOrder, likesOrder, creatorOrder } =
+      filter;
+    try {
+      const items = await api.get(
+        `${url}/fetchmore?lastIndex=${lastIndex}&&priceRange=${priceRange}&likesOrder=${likesOrder}&createdOrder=${createdOrder}&priceOrder=${priceOrder}&creatorOrder=${creatorOrder}`
+      );
+      return items.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async getItem(index: any) {
     try {
       const items = await api.get(`${url}/${index}`);

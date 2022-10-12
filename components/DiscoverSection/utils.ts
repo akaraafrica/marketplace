@@ -1,3 +1,5 @@
+import { TbRuler } from "react-icons/tb";
+import itemDs from "../../ds/item.ds";
 import { IItem } from "../../types/item.interface";
 
 export const sortItem = (
@@ -12,7 +14,7 @@ export const sortItem = (
   if (compareValue === "ratings") {
     const itemsRating = data
       .map((item) => {
-        if (item.ratings.length) {
+        if (item?.ratings?.length) {
           const reducer = (accumulator: number, curr: number) =>
             accumulator + curr;
           const { rating } = item.ratings.reduce(reducer);
@@ -55,61 +57,79 @@ export const sortItem = (
   return newData;
 };
 
-export const handleChange = (
+export const handleChange = async (
   e: React.ChangeEvent<HTMLSelectElement>,
   param: string,
   setData: any,
-  data: any
+  setFilter: any,
+  setLoading: any
 ) => {
-  if (!data || data.length === 0) return;
-
   let value = e?.target?.value;
-  let newData;
 
-  switch (param) {
-    case "RECENT":
-      newData = sortItem(data, value, "First added", "id");
-      setData([...newData]);
-      break;
-    case "PRICE":
-      newData = sortItem(data, value, "Lowest price", "price");
-      setData([...newData]);
-      break;
-    case "LIKES":
-      newData = sortItem(data, value, "Least liked", "ratings");
-      setData([...newData]);
-      break;
-    case "CREATORS":
-      newData = sortItem(data, value, "Non verified only", "verified");
-      setData([...newData]);
-      break;
-
-    default:
-      break;
+  if (param === "RECENT") {
+    const val = value === "Recently added" ? "desc" : "asc";
+    setFilter({ createdOrder: val });
+    setLoading(TbRuler);
+    const res = await itemDs.getFilterData("createdOrder", val);
+    setLoading(false);
+    setData(res);
+  }
+  if (param === "PRICE") {
+    const val = value === "Highest price" ? "desc" : "asc";
+    setFilter({ priceOrder: val });
+    setLoading(true);
+    const res = await itemDs.getFilterData("priceOrder", val);
+    setLoading(false);
+    setData(res);
+  }
+  if (param === "LIKES") {
+    const val = value === "Most liked" ? "desc" : "asc";
+    setFilter({ likesOrder: val });
+    setLoading(true);
+    const res = await itemDs.getFilterData("likesOrder", val);
+    setLoading(false);
+    setData(res);
+  }
+  if (param === "CREATORS") {
+    const val = value === "Verified only" ? false : true;
+    setFilter({ likesOrder: val });
+    setLoading(true);
+    const res = await itemDs.getFilterData("creatorOrder", val);
+    setLoading(false);
+    setData(res);
   }
 };
 
 export const handleResetFilter = (setData: any, items: any) => {
   setData([...items]);
 };
-export const handleSliderChange = (e: any, setData: any, items: any) => {
-  if (!items || items.length === 0) return;
+export const handleSliderChange = async (
+  e: any,
+  setData: any,
+  setFilter: any,
+  setLoading: any
+) => {
   const value = e.target.value;
-
-  const newData = items.filter((item: any) => Math.floor(item.price) <= value);
-  setData([...newData]);
+  setFilter({ priceRange: value });
+  setLoading(true);
+  const res = await itemDs.getFilterData("priceRange", value);
+  setData(res);
+  setLoading(false);
 };
 
 type category = "ART" | "GAME" | "PHOTOGRAPHY" | "MUSIC" | "VIDEO" | "ALL";
-export const handleCategoryChange = (
+export const handleCategoryChange = async (
   category: category,
   setData: React.Dispatch<React.SetStateAction<IItem[] | undefined>>,
-  items: IItem[] | undefined
+  items: IItem[] | undefined,
+  setLoading: any
 ) => {
   if (category === "ALL") {
     setData(items);
     return;
   }
-  const newData = items?.filter((item) => item.category === category);
-  setData(newData);
+  setLoading(true);
+  const res = await itemDs.getFilterData("category", category);
+  setData(res);
+  setLoading(false);
 };
