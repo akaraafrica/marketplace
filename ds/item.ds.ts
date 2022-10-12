@@ -78,6 +78,17 @@ class Item {
       console.log(error);
     }
   }
+  async searchUserItem(text: string, userIds: any) {
+    try {
+      const res = await api.post(`${url}/searchUserItem`, {
+        text,
+        userIds,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async getData() {
     try {
