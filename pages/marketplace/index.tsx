@@ -30,15 +30,24 @@ const Index = () => {
   const debouncedSearchTerm: string = useDebounce(searchTerm, 250);
   const handleSearch = async (e: any) => {
     const value: string = e.target.value.toLowerCase();
-    if (value.length > 1) {
-      setSearchTerm(value);
+
+    setSearchTerm(value);
+    if (value.length < 1) {
+      setData(items);
     }
   };
   useEffect(() => {
     (async () => {
       if (debouncedSearchTerm.length > 1) {
-        const results = await itemDs.search(searchTerm);
-        setData(results.data);
+        setLoading(true);
+        try {
+          const results = await itemDs.search(searchTerm);
+          setData(results.data);
+          setLoading(false);
+        } catch (error) {
+          setData([]);
+          setLoading(false);
+        }
       }
     })();
   }, [debouncedSearchTerm]);

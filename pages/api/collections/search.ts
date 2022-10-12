@@ -5,7 +5,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const text: string = req.body.text;
     try {
-      const items = await prisma.item.findMany({
+      const items = await prisma.collection.findMany({
         where: {
           OR: [
             {
