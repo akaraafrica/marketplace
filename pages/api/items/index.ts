@@ -22,6 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           likes: true,
         },
       });
+
       return res.status(200).json(items);
     } catch (error) {
       console.log(error);
@@ -47,11 +48,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           updatedAt: new Date(),
         },
       });
+      console.log("email action");
 
       await TriggerAction({
         action: Actions.CreateItem,
         user,
-        item,
+        item: response as any,
       });
 
       res.status(201).json({ id: response.id, message: "Item created" });
