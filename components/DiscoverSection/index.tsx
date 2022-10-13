@@ -20,7 +20,8 @@ interface properties {
 function Discover({ items }: properties) {
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState<IItem[] | undefined>(items);
-
+  const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState(null);
   return (
     <div className={styles.root}>
       <h1>Discover</h1>
@@ -28,14 +29,26 @@ function Discover({ items }: properties) {
         <div className={styles.recent}>
           <CustomSelect
             placeholder="Recently added"
-            onChange={(e) => handleChange(e, "RECENT", setData, data)}
+            onChange={(e) =>
+              handleChange(e, "RECENT", setData, setFilter, setLoading)
+            }
             options={["Recently added", "First added"]}
           />
+          {/*           
+
+          <CustomSelect
+            placeholder="Recently added"
+            onChange={(e) =>
+              handleChange(e, "RECENT", setData, setFilter, setLoading)
+            }
+            options={["Recently added", "First added"]}
+          /> */}
         </div>
         <div className={styles.navs}>
           <span
             onClick={() => {
-              setOpen(0), handleCategoryChange("ALL", setData, items);
+              setOpen(0),
+                handleCategoryChange("ALL", setData, items, setLoading);
             }}
             className={`${styles.navItem} ${open === 0 ? styles.active : ""}`}
           >
@@ -44,7 +57,7 @@ function Discover({ items }: properties) {
           <span
             onClick={() => {
               setOpen(1);
-              handleCategoryChange("ART", setData, items);
+              handleCategoryChange("ART", setData, items, setLoading);
             }}
             className={`${styles.navItem} ${open === 1 ? styles.active : ""}`}
           >
@@ -53,7 +66,7 @@ function Discover({ items }: properties) {
           <span
             onClick={() => {
               setOpen(2);
-              handleCategoryChange("GAME", setData, items);
+              handleCategoryChange("GAME", setData, items, setLoading);
             }}
             className={`${styles.navItem} ${open === 2 ? styles.active : ""}`}
           >
@@ -62,7 +75,7 @@ function Discover({ items }: properties) {
           <span
             onClick={() => {
               setOpen(3);
-              handleCategoryChange("PHOTOGRAPHY", setData, items);
+              handleCategoryChange("PHOTOGRAPHY", setData, items, setLoading);
             }}
             className={`${styles.navItem} ${open === 3 ? styles.active : ""}`}
           >
@@ -71,7 +84,7 @@ function Discover({ items }: properties) {
           <span
             onClick={() => {
               setOpen(4);
-              handleCategoryChange("MUSIC", setData, items);
+              handleCategoryChange("MUSIC", setData, items, setLoading);
             }}
             className={`${styles.navItem} ${open === 4 ? styles.active : ""}`}
           >
@@ -80,7 +93,7 @@ function Discover({ items }: properties) {
           <span
             onClick={() => {
               setOpen(5);
-              handleCategoryChange("VIDEO", setData, items);
+              handleCategoryChange("VIDEO", setData, items, setLoading);
             }}
             className={`${styles.navItem} ${open === 5 ? styles.active : ""}`}
           >
@@ -101,7 +114,9 @@ function Discover({ items }: properties) {
           <span>PRICE</span>
           <CustomSelect
             placeholder="Highest price"
-            onChange={(e) => handleChange(e, "PRICE", setData, data)}
+            onChange={(e) =>
+              handleChange(e, "PRICE", setData, setFilter, setLoading)
+            }
             options={["Highest price", "Lowest price"]}
           />
         </div>
@@ -109,7 +124,9 @@ function Discover({ items }: properties) {
           <span>LIKES</span>
           <CustomSelect
             placeholder="Most liked"
-            onChange={(e) => handleChange(e, "LIKES", setData, data)}
+            onChange={(e) =>
+              handleChange(e, "LIKES", setData, setFilter, setLoading)
+            }
             options={["Most liked", "Least liked"]}
           />
         </div>
@@ -117,14 +134,18 @@ function Discover({ items }: properties) {
           <span>CREATOR</span>
           <CustomSelect
             placeholder="Verified only"
-            onChange={(e) => handleChange(e, "CREATORS", setData, data)}
+            onChange={(e) =>
+              handleChange(e, "CREATORS", setData, setFilter, setLoading)
+            }
             options={["Verified only", "Non verified only"]}
           />
         </div>
         <div className={styles.filter}>
           <span>PRICE RANGE</span>
           <ProgressBar
-            onChange={(e) => handleSliderChange(e, setData, items)}
+            onChange={(e) =>
+              handleSliderChange(e, setData, setFilter, setLoading)
+            }
           />
           <div className={styles.eth}>
             <span>0.01 ETH</span>
@@ -133,7 +154,13 @@ function Discover({ items }: properties) {
         </div>
       </div>
       <div className={styles.discoverCont}>
-        {data && <DiscoveryItems filterBy={open} initialItems={data} />}
+        {loading ? (
+          <h3 className={styles.found}>loading...</h3>
+        ) : data?.length ? (
+          <DiscoveryItems initialItems={data} filter={filter} />
+        ) : (
+          <h3 className={styles.found}>No item found</h3>
+        )}
       </div>
     </div>
   );

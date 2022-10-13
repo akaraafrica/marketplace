@@ -3,80 +3,114 @@ import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
+    const priceRange = req.query.priceRange;
+    const priceOrder = req.query.priceOrder as "asc" | "desc";
+    const createdOrder = req.query.createdOrder as "asc" | "desc";
+    const likesOrder = req.query.likesOrder as "asc" | "desc";
+    const creatorOrder = req.query.creatorOrder as unknown as string;
+    const category = req.query.category as unknown as string;
+
     try {
-      const id = parseInt(req.query.id as string);
-      const items = await prisma.item.aggregate({
-        // where:{ id: id},
-        _avg: {
-          id: true,
-        },
-        orderBy: { createdAt: "desc" },
-        // include: {
-        //   owner: {
-        //     select: {
-        //       profile: true,
-        //     },
-        //   },
-        //   bids: {
-        //     include: {
-        //       user: true,
-        //     },
-        //   },
-        //   ratings: {
-        //     select: {
-        //       rating: true,
-        //     },
-        //    // as: 'rating'
-        //   },
-        //   likes: true,
-        // },
+      if (priceRange) {
+        const items = await prisma.item.findMany({
+          where: {
+            price: {
+              lte: Number(priceRange),
+            },
+          },
+          take: 50,
+        });
+        return res.status(200).json(items);
+      }
+      if (creatorOrder) {
+        const items = await prisma.item.findMany({
+          take: 50,
+          where: {
+            owner: {
+              verified: creatorOrder.toLowerCase() === "true",
+            },
+          },
+        });
+        return res.status(200).json(items);
+      }
+      if (priceOrder) {
+        const items = await prisma.item.findMany({
+          take: 50,
+          orderBy: {
+            price: priceOrder,
+          },
+        });
 
-        // take: 10,
-      });
-
-      return res.status(200).json(items);
+        return res.status(200).json(items);
+      }
+      if (createdOrder) {
+        const items = await prisma.item.findMany({
+          take: 50,
+          orderBy: {
+            createdAt: createdOrder,
+          },
+        });
+        return res.status(200).json(items);
+      }
+      if (likesOrder) {
+        const items = await prisma.item.findMany({
+          take: 50,
+          orderBy: {
+            likes: {
+              _count: likesOrder,
+            },
+          },
+        });
+        return res.status(200).json(items);
+      }
+      if (category === "ART") {
+        const items = await prisma.item.findMany({
+          where: {
+            category: "ART",
+          },
+          take: 50,
+        });
+        return res.status(200).json(items);
+      }
+      if (category === "GAME") {
+        const items = await prisma.item.findMany({
+          where: {
+            category: "GAME",
+          },
+          take: 50,
+        });
+        return res.status(200).json(items);
+      }
+      if (category === "MUSIC") {
+        const items = await prisma.item.findMany({
+          where: {
+            category: "MUSIC",
+          },
+          take: 50,
+        });
+        return res.status(200).json(items);
+      }
+      if (category === "PHOTOGRAPHY") {
+        const items = await prisma.item.findMany({
+          where: {
+            category: "PHOTOGRAPHY",
+          },
+          take: 50,
+        });
+        return res.status(200).json(items);
+      }
+      if (category === "VIDEO") {
+        const items = await prisma.item.findMany({
+          where: {
+            category: "VIDEO",
+          },
+          take: 50,
+        });
+        return res.status(200).json(items);
+      }
     } catch (error) {
       console.log(error);
-    }
-  }
-  if (req.method === "POST") {
-    try {
-      const response = await prisma.item.create({
-        data: {
-          title: req.body.title,
-          description: req.body.description,
-          price: Number(req.body.price),
-          ownerId: req.body.ownerId,
-          tokenId: req.body.tokenId,
-          published: req.body.published,
-          acceptedBid: req.body.acceptedBid,
-          openForBid: req.body.published,
-          images: req.body.image,
-          video: req.body.video,
-          updatedAt: new Date(),
-        },
-      });
-      res.status(201).json({ id: response.id, message: "Item created" });
-    } catch (error) {
-      console.log(error);
-
-      res.json({ error });
-    }
-  }
-  if (req.method === "PATCH") {
-    try {
-      await prisma.item.update({
-        where: {
-          id: req.body.id,
-        },
-        data: {
-          images: req.body.images,
-        },
-      });
-      res.status(201).json({ message: "Item images updated" });
-    } catch (error) {
-      console.log(error);
-      res.json({ error });
+      res.status(400).json("error");
     }
   }
 };

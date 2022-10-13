@@ -7,6 +7,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const searchedUsers = await prisma.user.findMany({
+        take: 5,
         where: {
           OR: [
             {
@@ -29,7 +30,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           ],
         },
         include: {
-          items: true,
           profile: true,
         },
       });
