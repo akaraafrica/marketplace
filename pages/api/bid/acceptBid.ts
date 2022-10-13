@@ -49,7 +49,7 @@ export default async function profile(
       ]);
       await TriggerAction({
         action: Actions.AcceptBid,
-        user,
+        user: bid.user,
         item,
         bidAmount: bid.amount,
       });
