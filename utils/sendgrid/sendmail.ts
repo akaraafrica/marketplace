@@ -30,6 +30,9 @@ export default async function SendMail({
   templateId,
   link,
   subject,
+  title,
+  amount,
+  author,
 }: any) {
   try {
     if (!to) return "Reciever's email is needed";
@@ -41,6 +44,9 @@ export default async function SendMail({
       subject,
       link,
       firstname,
+      title,
+      amount,
+      author,
     };
     await mail.send({ to, from, templateId, dynamicTemplateData, subject });
     return "email sent";

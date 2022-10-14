@@ -4,29 +4,33 @@ import prisma from "../../../utils/lib/prisma";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const lastIndex = req.query.lastIndex;
+    const priceRange = req.query.priceRange;
+    const priceOrder = req.query.priceOrder as "asc" | "desc";
+    const createdOrder = req.query.createdOrder as "asc" | "desc";
+    const likesOrder = req.query.likesOrder as "asc" | "desc";
 
     try {
       const items = await prisma.item.findMany({
+        where: {
+          price: {
+            gt: Number(priceRange) || 0,
+          },
+        },
         skip: Number(lastIndex),
         take: 50,
-        include: {
-          owner: {
-            include: {
-              profile: true,
+        orderBy: [
+          {
+            price: priceOrder || "asc",
+          },
+          {
+            createdAt: createdOrder || "asc",
+          },
+          {
+            likes: {
+              _count: likesOrder || "asc",
             },
           },
-          bids: {
-            include: {
-              user: true,
-            },
-          },
-          ratings: {
-            select: {
-              rating: true,
-            },
-          },
-          likes: true,
-        },
+        ],
       });
       return res.status(200).json(items);
     } catch (error) {

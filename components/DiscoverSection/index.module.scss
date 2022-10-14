@@ -2,11 +2,18 @@
   @media screen and (max-width: 640px) {
     padding: 100px 20px;
   }
+
   @media screen and (min-width: 1440px) {
     padding: 100px 15%;
   }
+
   @media screen and (max-width: 1024px) {
     padding: 100px 20px;
+  }
+
+  .found {
+    text-align: center;
+    color: #777e91;
   }
 
   h1 {
@@ -22,6 +29,7 @@
       margin-bottom: 40px;
     }
   }
+
   .customInput {
     display: flex;
     flex-direction: row;
@@ -33,6 +41,7 @@
     border-radius: 12px;
     box-sizing: border-box;
     width: 100%;
+
     select {
       appearance: none;
       border: none;
@@ -45,11 +54,13 @@
       background-color: #000;
     }
   }
+
   .active {
     background: #353945;
     border-radius: 100px;
     padding: 6px 12px;
   }
+
   .navbar {
     display: flex;
     align-items: center;
@@ -60,13 +71,16 @@
       gap: 20px;
       grid-template-columns: 1fr;
     }
+
     @media screen and (max-width: 800px) {
       grid-template-columns: 1fr;
     }
+
     @media screen and (max-width: 640px) {
       gap: 20px 0;
       grid-template-columns: 1fr;
     }
+
     @media screen and (max-width: 400px) {
       .navs {
         flex-wrap: wrap;
@@ -102,10 +116,12 @@
       cursor: pointer;
     }
   }
+
   hr {
     color: #353945;
     border: 1px solid #353945;
   }
+
   .filters {
     display: flex;
     flex-direction: row;
@@ -118,10 +134,12 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
     }
+
     @media screen and (max-width: 800px) {
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
+
     @media screen and (max-width: 600px) {
       display: grid;
       grid-template-columns: 1fr;

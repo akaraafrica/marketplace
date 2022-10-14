@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import userDs from "../../ds/user.ds";
 import withAuth from "../../HOC/withAuth";
 import { getUserName } from "../../utils/helpers/getUserName";
+import itemDs from "../../ds/item.ds";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -63,21 +64,11 @@ const Index = ({ collection }: { collection: ICollection }) => {
   });
   const { user } = useContext(AuthContext);
 
-  const userID = user?.id as number;
   useEffect(() => {
-    const fetchUser = async () => {
-      const data: IUser = await userDs.fetchOne(userID);
-
-      const itemsNotInCollection = data?.items?.filter(
-        (item) => !item.collectionId
-      );
-      setSelectedUser([data]);
-      setItems(itemsNotInCollection);
-    };
-    if (userID) {
-      fetchUser();
+    if (user) {
+      setSelectedUser([...selectedUser, user]);
     }
-  }, [userID]);
+  }, [user]);
   useEffect(() => {
     if (collection) {
       setValue("title", collection.title);
@@ -103,10 +94,25 @@ const Index = ({ collection }: { collection: ICollection }) => {
     if (!searchUser) return;
 
     queryCall.current = setTimeout(() => {
-      console.log("query");
       fetchData();
-    }, 600);
+    }, 250);
   }, [searchUser]);
+
+  useEffect(() => {
+    if (selectedUser) {
+      clearTimeout(queryCall.current);
+      const userIds = selectedUser.map((user) => user.id);
+      const fetchData = async () => {
+        const data = await itemDs.searchUserItem(searchItem, userIds);
+        setItems(data);
+      };
+      if (!searchItem) return;
+
+      queryCall.current = setTimeout(() => {
+        fetchData();
+      }, 250);
+    }
+  }, [searchItem]);
 
   const router = useRouter();
   const targetVid = useRef<HTMLInputElement>(null);
@@ -587,7 +593,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                             }
                           }
                           setSelectedUser([...selectedUser, user]);
-                          setItems([...items, ...userItems]);
+                          // setItems([...items, ...userItems]);
                           setSearchUser("");
                           setResultDisplay(false);
                         }}
@@ -636,6 +642,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 type="text"
                 name="Search"
                 placeholder="Search items"
+                disabled={!selectedUser.length}
                 value={searchItem}
                 onChange={(e) => {
                   setItemResultDisplay(true);
@@ -648,30 +655,24 @@ const Index = ({ collection }: { collection: ICollection }) => {
               >
                 {searchItem &&
                   items &&
-                  items
-                    ?.filter((item: any) =>
-                      item?.title
-                        ?.toLowerCase()
-                        .includes(searchItem.toLowerCase())
-                    )
-                    .map((item: any, index: number) => (
-                      <span
-                        key={index}
-                        onClick={() => {
-                          for (let i = 0; i < selectedItems.length; i++) {
-                            if (selectedItems[i].title === item.title) {
-                              toast.warning("Item already selected");
-                              return;
-                            }
+                  items.map((item: any, index: number) => (
+                    <span
+                      key={index}
+                      onClick={() => {
+                        for (let i = 0; i < selectedItems.length; i++) {
+                          if (selectedItems[i].title === item.title) {
+                            toast.warning("Item already selected");
+                            return;
                           }
-                          setSelectedItems([...selectedItems, item]);
-                          setSearchItem("");
-                          setItemResultDisplay(false);
-                        }}
-                      >
-                        {item.title && item.title}
-                      </span>
-                    ))}
+                        }
+                        setSelectedItems([...selectedItems, item]);
+                        setSearchItem("");
+                        setItemResultDisplay(false);
+                      }}
+                    >
+                      {item.title && item.title}
+                    </span>
+                  ))}
               </div>
               <div className={styles.itemImagesDiv}>
                 {selectedItems.map((item, index) => (

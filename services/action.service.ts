@@ -25,6 +25,7 @@ export const enum MailTemplateIDs {
   Purchase = "d-dd6a356d09a5451bbefed7a80d39e8fb",
   CreateItem = "d-c682315847e647ec9aed19d0178d7836",
   CreateCollection = "d-d0ee395b7aa1424fa0a7d55d11e15d95",
+  contributorNotice = "d-105c1e4ff3604744b70492b9959c2602 ",
 }
 
 export const enum Actions {
@@ -34,6 +35,7 @@ export const enum Actions {
   Purchase = "purchase",
   CreateItem = "create-item",
   CreateCollection = "create-collection",
+  contributorNotice = "contributor-notice",
   AddItem = "add-item",
   Announcement = "announcement",
   UrgentAnnouncement = "urgent-announcement",
@@ -72,17 +74,6 @@ export interface ActionProps {
   content?: string;
 }
 
-async function getItem(type: ItemType, id: number) {
-  let item;
-  if (type === ItemType.Item) {
-    item = await prisma.item.findFirstOrThrow({ where: { id } });
-  }
-  if (type === ItemType.Collection)
-    return await prisma.collection.findFirstOrThrow({ where: { id } });
-  if (type === ItemType.Bid)
-    return await prisma.bid.findFirstOrThrow({ where: { id } });
-}
-
 export async function TriggerAction(props: ActionProps) {
   const { action, user, item, collection, bidAmount, profile, title, content } =
     props;
@@ -104,12 +95,12 @@ export async function TriggerAction(props: ActionProps) {
         itemId: item.id,
       });
       emailData.push({
-        to: user.email,
+        to: item.owner.email,
         from: "info@mbizi.org",
         templateId: MailTemplateIDs.PlaceBid,
         title: item.title,
         amount: bidAmount,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN} / item / ${item.id}`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -120,8 +111,8 @@ export async function TriggerAction(props: ActionProps) {
       if (!item || !bidAmount) throw Error("invalid action");
 
       data.push({
-        receiverId: item.owner.id,
-        senderId: user.id,
+        receiverId: user.id,
+        senderId: item.owner.id,
         action: action,
         title: `congratulation 
         ${getUserName(user)}
@@ -131,12 +122,12 @@ export async function TriggerAction(props: ActionProps) {
       });
 
       emailData.push({
-        to: item.owner.email,
+        to: user.email,
         from: "info@mbizi.org",
         templateId: MailTemplateIDs.AcceptBid,
         title: item.title,
         amount: bidAmount,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN} /item/${item.id} `,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
       });
       if (data && emailData) {
         await inApp(data);
@@ -187,12 +178,12 @@ export async function TriggerAction(props: ActionProps) {
         itemId: item.id,
       });
       emailData.push({
-        to: user.email,
+        to: item.owner.email,
         from: "info@mbizi.org",
         templateId: MailTemplateIDs.Purchase,
         title: item.title,
         amount: item.price,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN} /item/${item.id} `,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
       });
       if (data && emailData) {
         await inApp(data);
@@ -213,21 +204,22 @@ export async function TriggerAction(props: ActionProps) {
         itemType: ItemType.Collection,
         itemId: item.id,
       });
-      // emailData.push({
-      //   to: user.email,
-      //   from: "info@mbizi.org",
-      //   templateId: MailTemplateIDs.Purchase,
-      //   title: item.title,
-      //   amount: item.price,
-      //   link: `${ process.env.NEXT_PUBLIC_DOMAIN } /item/${ item.id } `,
-      // });
+      emailData.push({
+        to: user.email,
+        from: "info@mbizi.org",
+        templateId: MailTemplateIDs.Purchase,
+        title: item.title,
+        amount: item.price,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
+      });
       if (data) {
         await inApp(data);
-        // await email(emailData);
+        await email(emailData);
       }
       break;
     case Actions.CreateItem:
       if (!item) throw Error("invalid action");
+
       data.push({
         receiverId: user.id,
         senderId: user.id,
@@ -244,16 +236,16 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.CreateItem,
         title: item.title,
         amount: item.price,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN} /item/${item.id} `,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
       });
       if (data && emailData) {
         await inApp(data);
         await email(emailData);
       }
       break;
-    case Actions.CreateCollection:
+    case Actions.contributorNotice:
       if (!collection) throw Error("invalid action");
-      let promise: any = [];
+      const promise: any = [];
 
       collection.contributors.forEach((contributor) => {
         const data = {
@@ -264,15 +256,16 @@ export async function TriggerAction(props: ActionProps) {
             user
           )} request your approval to add your item(s) to his ${
             collection?.title
-          } collection`,
+          } collection. Check the collection dashboard and approve or decline.`,
           itemType: ItemType.Collection,
         };
         const emailData = {
           to: contributor.user.email,
           from: "info@mbizi.org",
-          templateId: MailTemplateIDs.CreateCollection,
+          templateId: MailTemplateIDs.contributorNotice,
           title: collection.title,
-          link: `${process.env.NEXT_PUBLIC_DOMAIN} /collection/${collection.id} `,
+          author: getUserName(user),
+          link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin `,
         };
         if (data && emailData) {
           promise.push(inApp([data]));
@@ -283,6 +276,39 @@ export async function TriggerAction(props: ActionProps) {
       Promise.all(promise);
 
       break;
+
+    // case Actions.CreateCollection:
+    //   if (!collection) throw Error("invalid action");
+    //   const promise: any = [];
+
+    //   collection.contributors.forEach((contributor) => {
+    //     const data = {
+    //       receiverId: contributor.user.id,
+    //       senderId: user.id,
+    //       action: action,
+    //       title: ` ${getUserName(
+    //         user
+    //       )} request your approval to add your item(s) to his ${collection?.title
+    //         } collection`,
+    //       itemType: ItemType.Collection,
+    //     };
+    //     const emailData = {
+    //       to: contributor.user.email,
+    //       from: "info@mbizi.org",
+    //       templateId: MailTemplateIDs.CreateCollection,
+    //       title: collection.title,
+    //       link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id} `,
+    //     };
+    //     if (data && emailData) {
+    //       promise.push(inApp([data]));
+    //       promise.push(email([emailData]));
+    //     }
+    //   });
+
+    //   Promise.all(promise);
+
+    //   break;
+
     case Actions.Announcement:
       if (!title || !content) throw Error("invalid action");
       let users = await prisma.user.findMany({

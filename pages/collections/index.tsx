@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import LandingLayout from "../../components/Layout/index";
 import { CollectionDs } from "../../ds";
@@ -6,34 +6,40 @@ import HotCollectionCard from "../../components/HotCollectionsCard";
 import { ICollection } from "../../types/collection.interface";
 import { BiSearch } from "react-icons/bi";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import useDebounce from "../../hooks/useDebounce";
 
-interface properties {
-  collections: ICollection[];
-}
 const Index = () => {
   const { data: collections } = useSWR<ICollection[]>(["collection"], () =>
     CollectionDs.getCollections()
   );
   const [data, setData] = useState(collections);
-  const handleSearch = (e: any) => {
-    const value: string = e.target.value;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const debouncedSearchTerm: string = useDebounce(searchTerm, 250);
 
-    const newData = collections?.filter((collection: any) => {
-      const words: string[] = collection.title.toLocaleLowerCase().split(" ");
-      const isWord = words.find((word) => word === value.toLocaleLowerCase());
-
-      if (isWord) {
-        return collection;
-      }
-    });
-    if (newData) {
-      setData([...newData]);
-    }
-
-    if (value === "" && collections) {
-      setData([...collections]);
+  const handleSearch = async (e: any) => {
+    const value: string = e.target.value.toLowerCase();
+    setSearchTerm(value);
+    if (value.length < 1) {
+      setData(collections);
     }
   };
+  useEffect(() => {
+    (async () => {
+      if (debouncedSearchTerm.length > 1) {
+        setLoading(true);
+        setData([]);
+        try {
+          const results = await CollectionDs.search(searchTerm);
+          setData(results.data);
+          setLoading(false);
+        } catch (error) {
+          setData([]);
+          setLoading(false);
+        }
+      }
+    })();
+  }, [debouncedSearchTerm]);
   return (
     <LandingLayout>
       <div className={styles.root}>
@@ -51,9 +57,13 @@ const Index = () => {
         <hr />
         {data ? (
           <div className={styles.collections}>
+            {loading && <h3 className={styles.found}>loading...</h3>}
             {data?.map((collection) => (
               <HotCollectionCard key={collection.id} collection={collection} />
             ))}
+            {!loading && !data.length && (
+              <h3 className={styles.found}>No item found</h3>
+            )}
           </div>
         ) : (
           <div className={styles.noData}>No Data</div>

@@ -91,6 +91,16 @@ class Collection {
       console.log(error);
     }
   }
+  async search(text: string) {
+    try {
+      const res = await api.post(url + "/search", {
+        text,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async removeContributor(id: number, contributorId: number, items: IItem[]) {
     try {
       const res = await api.put("/api/contributor/remove", {
