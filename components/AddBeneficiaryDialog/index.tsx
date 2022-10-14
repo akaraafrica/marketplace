@@ -23,8 +23,14 @@ interface Properties {
   open: boolean;
   handleClose: () => void;
   collectionId: number;
+  mutate: any;
 }
-const Index: React.FC<Properties> = ({ open, handleClose, collectionId }) => {
+const Index: React.FC<Properties> = ({
+  open,
+  handleClose,
+  collectionId,
+  mutate,
+}) => {
   const [name, setName] = useState("");
   const [wallet, setWallet] = useState("");
   const [description, setDescription] = useState("");
@@ -41,6 +47,7 @@ const Index: React.FC<Properties> = ({ open, handleClose, collectionId }) => {
       percentage: percent,
     };
     await CollectionDs.addBeneficiary(collectionId, data);
+    mutate();
   };
   return (
     <Dialog open={open} handleClose={handleClose}>

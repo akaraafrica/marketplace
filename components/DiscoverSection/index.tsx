@@ -6,7 +6,12 @@ import ProgressBar from "../ProgressBar/index";
 import DiscoveryItems from "../DiscoveryItems/index";
 import { Filter } from "../../ds/discovery.ds";
 import CustomSelect from "../CustomSelect";
-import { handleChange, handleResetFilter, handleSliderChange } from "./utils";
+import {
+  handleCategoryChange,
+  handleChange,
+  handleResetFilter,
+  handleSliderChange,
+} from "./utils";
 import { IItem } from "../../types/item.interface";
 
 interface properties {
@@ -14,7 +19,7 @@ interface properties {
 }
 function Discover({ items }: properties) {
   const [open, setOpen] = useState(Filter.All);
-  const [data, setData] = useState(items);
+  const [data, setData] = useState<IItem[] | undefined>(items);
 
   return (
     <div className={styles.root}>
@@ -29,37 +34,54 @@ function Discover({ items }: properties) {
         </div>
         <div className={styles.navs}>
           <span
-            onClick={() => setOpen(0)}
+            onClick={() => {
+              setOpen(0), handleCategoryChange("ALL", setData, items);
+            }}
             className={`${styles.navItem} ${open === 0 ? styles.active : ""}`}
           >
             All items
           </span>
           <span
-            onClick={() => setOpen(1)}
+            onClick={() => {
+              setOpen(1);
+              handleCategoryChange("ART", setData, items);
+            }}
             className={`${styles.navItem} ${open === 1 ? styles.active : ""}`}
           >
             Art
           </span>
           <span
-            onClick={() => setOpen(2)}
+            onClick={() => {
+              setOpen(2);
+              handleCategoryChange("GAME", setData, items);
+            }}
             className={`${styles.navItem} ${open === 2 ? styles.active : ""}`}
           >
             Game
           </span>
           <span
-            onClick={() => setOpen(3)}
+            onClick={() => {
+              setOpen(3);
+              handleCategoryChange("PHOTOGRAPHY", setData, items);
+            }}
             className={`${styles.navItem} ${open === 3 ? styles.active : ""}`}
           >
             Photography
           </span>
           <span
-            onClick={() => setOpen(4)}
+            onClick={() => {
+              setOpen(4);
+              handleCategoryChange("MUSIC", setData, items);
+            }}
             className={`${styles.navItem} ${open === 4 ? styles.active : ""}`}
           >
             Music
           </span>
           <span
-            onClick={() => setOpen(5)}
+            onClick={() => {
+              setOpen(5);
+              handleCategoryChange("VIDEO", setData, items);
+            }}
             className={`${styles.navItem} ${open === 5 ? styles.active : ""}`}
           >
             Video
@@ -111,7 +133,7 @@ function Discover({ items }: properties) {
         </div>
       </div>
       <div className={styles.discoverCont}>
-        <DiscoveryItems filterBy={open} initialItems={data} />
+        {data && <DiscoveryItems filterBy={open} initialItems={data} />}
       </div>
     </div>
   );

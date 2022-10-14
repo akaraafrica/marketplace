@@ -22,25 +22,20 @@ import AddBeneficiaryDialog from "../../../components/AddBeneficiaryDialog";
 import MintCollectionDialog from "../../../components/CollectionAdmin/MintCollectionDialog";
 import { getCookies } from "cookies-next";
 import { toast } from "react-toastify";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
-// const CollectionAdmin = ({ collectionx }: { collectionx: ICollection }) => {
+const Index = () => {
+  const router = useRouter();
+  const id = router.query.id as unknown as number;
 
-interface Properties {
-  collection: ICollection;
-}
+  const { data, mutate } = useSWR<{ data: ICollection }>(["admin", id], () =>
+    CollectionDs.getCollectionById(id)
+  );
+  const collection = data?.data;
 
-const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
   const [open, setOpen] = useState(1);
   const [openVerifyDialog, setOpenVerifyDialog] = useState(false);
-  const router = useRouter();
-  const total = collection?.items.reduce(
-    (total: number, item: { price: number }) => total + item.price,
-    0
-  );
-  const beneficiariesTotal = collection?.beneficiaries?.reduce(
-    (total: number, beneficiary) => total + beneficiary?.percentage,
-    0
-  );
+
   const handleVerify = () => {
     setOpenVerifyDialog(true);
   };
@@ -66,10 +61,11 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
   };
   const [respond, setRespond] = useState(false);
 
-  const id = user?.id;
   const handleRejectRequest = async () => {
+    const id = user?.id;
     try {
       await ContributorDs.updateStatus({ id, status: "REJECTED" });
+      mutate();
       toast.success("successful");
       setRespond(true);
     } catch (error) {
@@ -80,6 +76,8 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
   const handleAcceptRequest = async () => {
     try {
       await ContributorDs.updateStatus({ id, status: "REJECTED" });
+      mutate();
+
       toast.success("successful");
       setRespond(true);
     } catch (error) {
@@ -92,7 +90,11 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
     items: IItem[]
   ) => {
     try {
-      await CollectionDs.removeContributor(collection.id, contributorId, items);
+      await CollectionDs.removeContributor(
+        collection?.id as number,
+        contributorId,
+        items
+      );
     } catch (error) {
       console.log(error);
       toast.error("error");
@@ -118,28 +120,43 @@ const CollectionAdmin: React.FC<Properties> = ({ collection }) => {
     console.log(handlePercentCheck());
     // Save to the DB the contributors percentages
   };
+  if (!collection) {
+    return <h1>404</h1>;
+  }
+  const total = collection.items.reduce(
+    (total: number, item: { price: number }) => total + item.price,
+    0
+  );
+  const beneficiariesTotal = collection.beneficiaries?.reduce(
+    (total: number, beneficiary) => total + beneficiary?.percentage,
+    0
+  );
   return (
     <Layout>
       <MintCollectionDialog
         open={openPublish}
         handleClose={handleClosePublish}
         collection={collection}
+        mutate={mutate}
       />
       <VerifyDialog
         open={openVerifyDialog}
         handleClose={handleVerifyClose}
         collection={collection}
+        mutate={mutate}
       />
 
       <LunchTimeDialog
         collectionId={collection.id}
         handleClose={handleVerifyClose}
         open={openLunchTime}
+        mutate={mutate}
       />
       <AddBeneficiaryDialog
         collectionId={collection.id}
         open={openAddBeneficiary}
         handleClose={() => setOpenAddBeneficiary(false)}
+        mutate={mutate}
       />
       {/* <PayoutDialog
         collection={collection}
@@ -472,8 +489,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      collection: collection.data,
+      fallback: {
+        [unstable_serialize(["admin", id])]: collection,
+      },
     },
   };
 };
-export default withAuth(CollectionAdmin);
+const Page = ({ fallback }: any) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+};
+export default withAuth(Page);

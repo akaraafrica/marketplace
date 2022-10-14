@@ -14,10 +14,24 @@ import LandingMainSection from "../components/LandingMainSection";
 import Layout from "../components/Layout";
 import HotCollectionsSection from "../components/HotCollectionsSection";
 import { CollectionDs, DiscoveryDs, ItemDs, UserDs } from "../ds/index";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import { ICollection } from "../types/collection.interface";
+import { IItem } from "../types/item.interface";
+import { IUser } from "../types/user.interface";
 
-const Home = (props: any) => {
+const Home = () => {
+  const { data: collection } = useSWR<ICollection[]>(["collection"], () =>
+    CollectionDs.getCollections()
+  );
+  const { data: discovery } = useSWR<IItem[]>(["discovery"], () =>
+    DiscoveryDs.getData(Filter.All)
+  );
+  const { data: item } = useSWR<IItem[]>(["item"], () => ItemDs.getData());
+  const { data: sellers } = useSWR<IUser[]>(["sellers"], () =>
+    UserDs.fetchSellers()
+  );
+
   SwiperCore.use([Pagination, Autoplay]);
-  console.log("sellers", props.sellers);
   return (
     <Layout>
       <div className={styles.styles}>
@@ -36,15 +50,11 @@ const Home = (props: any) => {
           />
         </div>
       </div>
-      {props.collection[0] && (
-        <LandingMainSection collection={props.collection[0]} />
-      )}
-      {props.sellers && <SellersSec sellers={props.sellers} />}
-      <HotItems items={props.item} />
-      {props.collection && (
-        <HotCollectionsSection collections={props.collection} />
-      )}
-      <Discover items={props.discovery} />
+      {collection ? <LandingMainSection collection={collection[0]} /> : <></>}
+      {sellers ? <SellersSec sellers={sellers} /> : <></>}
+      {item ? <HotItems items={item} /> : <></>}
+      {collection ? <HotCollectionsSection collections={collection} /> : <></>}
+      {discovery ? <Discover items={discovery} /> : <></>}
       <div className={styles.discoverdividercon}></div>
       <div id="subscribe">
         <SubscribeModal />
@@ -65,12 +75,20 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      discovery,
-      collection,
-      item,
-      sellers,
+      fallback: {
+        [unstable_serialize(["discovery"])]: discovery,
+        [unstable_serialize(["collection"])]: collection,
+        [unstable_serialize(["item"])]: item,
+        [unstable_serialize(["sellers"])]: sellers,
+      },
     },
   };
 }
-
-export default Home;
+const Page = ({ fallback }: any) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Home />
+    </SWRConfig>
+  );
+};
+export default Page;

@@ -56,6 +56,15 @@ class User {
       throw error;
     }
   }
+  async fetchlatestUsers() {
+    try {
+      const response = await api.get(`${url}/latestUsers`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   async fetchSearchedUsers(userString: string) {
     try {
       const response = await api.get(`${url}/search/${userString}`);

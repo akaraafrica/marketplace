@@ -1,32 +1,30 @@
-import Items from "../../components/dashboard/Items";
+import Items from "../../components/Dashboard/Items";
 import Layout from "../../components/Layout";
-import discoveryDs, { Filter } from "../../ds/discovery.ds";
 import { IItem } from "../../types/item.interface";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useContext, useState } from "react";
 import styles from "./dashboard.module.scss";
-import CustomTable from "../../components/dashboard/Table";
+import CustomTable from "../../components/Dashboard/Table";
 import { NoSsr } from "@mui/material";
 import { IoMdListBox } from "react-icons/io";
 import { CgArrowsExchangeV } from "react-icons/cg";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
-
 import MarkunreadIcon from "@mui/icons-material/Markunread";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ItemGrid from "../../components/dashboard/ItemGrid";
 import Link from "next/link";
 import { ProfileDs } from "../../ds";
 import { ICollection } from "../../types/collection.interface";
-import HotCollectionCard from "../../components/HotCollectionsCard";
-import Collections from "../../components/dashboard/collections";
+import Collections from "../../components/Dashboard/Collections";
 import { AuthContext } from "../../contexts/AuthContext";
 import { GetServerSideProps } from "next";
 import { ILike } from "../../types/like.interface";
 import { IBid } from "../../types/bid.interface";
 import withAuth from "../../HOC/withAuth";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import { useRouter } from "next/router";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -58,17 +56,19 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const Dashboard = ({
-  items,
-  collections,
-  likes,
-  bids,
-}: {
-  items: IItem[];
-  collections: ICollection[];
-  likes: ILike[];
-  bids: IBid[];
-}) => {
+const Dashboard = () => {
+  const router = useRouter();
+  const id = router.query.id as unknown as number;
+
+  const { data, mutate } = useSWR(["dashboard", id], () =>
+    ProfileDs.getDashboradData(id)
+  );
+  const { items, collections, likes, bids } = data as {
+    items: IItem[];
+    collections: ICollection[];
+    likes: ILike[];
+    bids: IBid[];
+  };
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -142,7 +142,7 @@ const Dashboard = ({
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Items items={items} />
+              <Items items={items} auction={true} />
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Items items={items} />
@@ -160,14 +160,11 @@ const Dashboard = ({
 
           <NoSsr>
             <div className={styles.bottom}>
-              <div id="watchlist">
+              {/* <div id="watchlist">
                 <ItemGrid
                   items={likes?.map((item) => item.item!)}
                   title="watchlist"
                 />
-              </div>
-              {/* <div id="itemsold">
-                <ItemGrid items={items} title="Items Sold" />
               </div> */}
               <div id="bids">
                 <CustomTable title="Bids" bids={bids} />
@@ -181,16 +178,21 @@ const Dashboard = ({
 };
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
-  const { userWithoutPassword, bids } = await ProfileDs.getDashboradData(id);
-  const { items, collections, likes } = userWithoutPassword;
+  const data = await ProfileDs.getDashboradData(id);
 
   return {
     props: {
-      collections,
-      items,
-      likes,
-      bids,
+      fallback: {
+        [unstable_serialize(["dashboard", id])]: data,
+      },
     },
   };
 };
-export default withAuth(Dashboard);
+const Page = ({ fallback }: any) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Dashboard />
+    </SWRConfig>
+  );
+};
+export default withAuth(Page);

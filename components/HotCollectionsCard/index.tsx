@@ -11,16 +11,18 @@ interface properties {
 function HotCollectionCard(props: properties) {
   const { id, images, title, author, items } = props.collection;
 
-  return images.length ? (
+  return (
     <div className={styles.root}>
       <div className={styles.mainImgdiv}>
         {images[0] && (
           <Link href={`/collection/${id}`}>
-            <NextImage
-              className={styles.mainImg}
-              src={images[0] || ""}
-              layout="fill"
-            />
+            <a>
+              <NextImage
+                className={styles.mainImg}
+                src={images[0] || ""}
+                layout="fill"
+              />
+            </a>
           </Link>
         )}
       </div>
@@ -28,11 +30,13 @@ function HotCollectionCard(props: properties) {
         {images &&
           images.map((image: string, idx: number) => (
             <div key={idx} className={styles.images}>
-              <NextImage
-                className={styles.subImg}
-                src={image || ""}
-                layout="fill"
-              />
+              <a>
+                <NextImage
+                  className={styles.subImg}
+                  src={image || ""}
+                  layout="fill"
+                />
+              </a>
             </div>
           ))}
       </div>
@@ -42,12 +46,14 @@ function HotCollectionCard(props: properties) {
           <Link href={`/profile/${author?.id}`}>
             <div className={styles.left}>
               {author?.profile?.avatar && (
-                <NextImage
-                  className={styles.image}
-                  src={author.profile.avatar}
-                  width="50px"
-                  height="50px"
-                />
+                <a>
+                  <NextImage
+                    className={styles.image}
+                    src={author.profile.avatar}
+                    width="50px"
+                    height="50px"
+                  />
+                </a>
               )}
               <div className={styles.owner}>By {getUserName(author)}</div>
             </div>
@@ -56,8 +62,6 @@ function HotCollectionCard(props: properties) {
         </div>
       </div>
     </div>
-  ) : (
-    <></>
   );
 }
 export default HotCollectionCard;

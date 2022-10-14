@@ -9,23 +9,31 @@ import { ItemDs } from "../../../ds";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
-import ReactHtmlParser from "react-html-parser";
 import Link from "next/link";
-const Index = ({ item }: { item: IItem }) => {
-  const { user } = useContext(AuthContext);
+import parse from "html-react-parser";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import { useRouter } from "next/router";
 
+const Index = () => {
+  const router = useRouter();
+  const itemId = router.query.id;
+
+  const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
-  const isComingSoon = item?.openForBid;
+  const { data: item } = useSWR<IItem>(["item", itemId], () =>
+    ItemDs.getItem(itemId)
+  );
+  if (!item) {
+    return <h1>404</h1>;
+  }
+
   return (
     <Layout>
       <main className={styles.main}>
         <section className={styles.sectionone}>
           <div className={styles.tags}>
-            {/* TODO: change to item category */}
-            {/* <span>ART</span> */}
-            {isComingSoon && <span>coming soon</span>}
+            <span>{item.category}</span>
           </div>
-
           <div className={styles.img}>
             {item?.images[0] && (
               <NextImage alt={item.title} src={item.images[0]} layout="fill" />
@@ -35,38 +43,33 @@ const Index = ({ item }: { item: IItem }) => {
         </section>
         <section className={styles.sectiontwo}>
           <div className={styles.price}>
-            <h3>{item.title}</h3>
+            <div className={styles.title}>
+              <h3>{item.title}</h3>
+              {item.ownerId === user?.id && (
+                <Link href={`/item/create?id=${item.id}`}>
+                  <button className={styles.edit}>Edit Item</button>
+                </Link>
+              )}
+            </div>
+
             <span>{item?.price} ETH</span>
-            {/* <span>$4,429.87</span> */}
           </div>
           <div className={styles.stats}>
             <div>
               <span>Likes</span>
-              <span>{item?.ratings?.length || 0}</span>
+              <span>{item?.likes?.length || 0}</span>
             </div>
             <div>
               <span>Offers</span>
               <span>{item?.bids?.length || 0}</span>
             </div>
-            {/* <div>
-              <span>Views</span>
-              <span>2345</span>
-            </div> */}
             <div>
               <span>Rating</span>
               <span>{item?.ratings?.length || 0}</span>
             </div>
           </div>
-          <p>
-            <p>{ReactHtmlParser(item.description)}</p>
-          </p>
-          <p>{ReactHtmlParser(item.description)}</p>
+          <p>{user && parse(item.description)}</p>
           {user && <Tags item={item} />}
-          {item.ownerId === user?.id && (
-            <Link href={`/item/create?id=${item.id}`}>
-              <button className={styles.edit}>Edit Item</button>
-            </Link>
-          )}
 
           {width > 800 && <QuickButtons desktop={true} item={item} />}
         </section>
@@ -74,21 +77,27 @@ const Index = ({ item }: { item: IItem }) => {
     </Layout>
   );
 };
-
+export default function Page({ fallback }: any) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+}
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const itemId = ctx.params?.id;
   let item = await ItemDs.getItem(itemId);
-
   if (!item) {
     return {
       notFound: true,
     };
   }
+
   return {
     props: {
-      item,
+      fallback: {
+        [unstable_serialize(["item", itemId])]: item,
+      },
     },
   };
 };
-
-export default Index;

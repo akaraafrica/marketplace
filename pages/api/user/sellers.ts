@@ -6,6 +6,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const sellers = await prisma.user.findMany({
+        orderBy: {
+          items: {
+            _count: "desc",
+          },
+        },
         include: {
           _count: {
             select: {
@@ -17,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       const sellersWithoutPassword = excludePassword(sellers);
-      res.status(200).json({ sellersWithoutPassword });
+      res.status(200).json(sellersWithoutPassword);
     } catch (error) {
       console.log(error);
     }

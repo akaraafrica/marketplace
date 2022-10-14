@@ -7,23 +7,25 @@ import Discovery, { Filter } from "../../ds/discovery.ds";
 import { MdCancel } from "react-icons/md";
 import DiscoveryItems from "../../components/DiscoveryItems";
 import {
+  handleCategoryChange,
   handleChange,
   handleResetFilter,
   handleSliderChange,
 } from "../../components/DiscoverSection/utils";
 import CustomSelect from "../../components/CustomSelect";
 import { IItem } from "../../types/item.interface";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
-interface properties {
-  items: IItem[];
-}
-const Index = ({ items }: properties) => {
+const Index = () => {
+  const { data: items } = useSWR<IItem[]>(["discovery"], () =>
+    Discovery.getData(Filter.All)
+  );
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState(items);
   const handleSearch = (e: any) => {
     const value: string = e.target.value;
 
-    const newData = items.filter((item: any) => {
+    const newData = items?.filter((item: any) => {
       const words: string[] = item.title.toLocaleLowerCase().split(" ");
       const isWord = words.find((word) => word === value.toLocaleLowerCase());
 
@@ -31,11 +33,14 @@ const Index = ({ items }: properties) => {
         return item;
       }
     });
-    setData([...newData]);
-    if (value === "") {
+    if (newData) {
+      setData([...newData]);
+    }
+    if (value === "" && items) {
       setData([...items]);
     }
   };
+
   return (
     <Layout>
       <div className={styles.root}>
@@ -105,7 +110,9 @@ const Index = ({ items }: properties) => {
           <div className={styles.right}>
             <div className={styles.navs}>
               <span
-                onClick={() => setOpen(0)}
+                onClick={() => {
+                  setOpen(0), handleCategoryChange("ALL", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 0 ? styles.active : ""
                 }`}
@@ -113,7 +120,10 @@ const Index = ({ items }: properties) => {
                 All items
               </span>
               <span
-                onClick={() => setOpen(1)}
+                onClick={() => {
+                  setOpen(1);
+                  handleCategoryChange("ART", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 1 ? styles.active : ""
                 }`}
@@ -121,7 +131,10 @@ const Index = ({ items }: properties) => {
                 Art
               </span>
               <span
-                onClick={() => setOpen(2)}
+                onClick={() => {
+                  setOpen(2);
+                  handleCategoryChange("GAME", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 2 ? styles.active : ""
                 }`}
@@ -129,7 +142,10 @@ const Index = ({ items }: properties) => {
                 Game
               </span>
               <span
-                onClick={() => setOpen(3)}
+                onClick={() => {
+                  setOpen(3);
+                  handleCategoryChange("PHOTOGRAPHY", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 3 ? styles.active : ""
                 }`}
@@ -137,7 +153,10 @@ const Index = ({ items }: properties) => {
                 Photography
               </span>
               <span
-                onClick={() => setOpen(4)}
+                onClick={() => {
+                  setOpen(4);
+                  handleCategoryChange("MUSIC", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 4 ? styles.active : ""
                 }`}
@@ -145,7 +164,10 @@ const Index = ({ items }: properties) => {
                 Music
               </span>
               <span
-                onClick={() => setOpen(5)}
+                onClick={() => {
+                  setOpen(5);
+                  handleCategoryChange("VIDEO", setData, items);
+                }}
                 className={`${styles.navItem} ${
                   open === 5 ? styles.active : ""
                 }`}
@@ -154,7 +176,7 @@ const Index = ({ items }: properties) => {
               </span>
             </div>
             <div>
-              <DiscoveryItems filterBy={open} initialItems={data} />
+              {data && <DiscoveryItems filterBy={open} initialItems={data} />}
             </div>
           </div>
         </div>
@@ -163,12 +185,20 @@ const Index = ({ items }: properties) => {
   );
 };
 export async function getServerSideProps() {
-  let data = await Discovery.getData(Filter.All);
+  let discovery = await Discovery.getData(Filter.All);
   return {
     props: {
-      items: data,
+      fallback: {
+        [unstable_serialize(["discovery"])]: discovery,
+      },
     },
   };
 }
-
-export default Index;
+const Page = ({ fallback }: any) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+};
+export default Page;

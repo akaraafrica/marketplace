@@ -3,7 +3,7 @@ import { IItem } from "./item.interface";
 import { ICollection } from "./collection.interface";
 
 export interface ILike {
-  id?: number;
+  id: number;
   itemId?: number | null;
   collectionId?: number | null;
   userId: number;

@@ -21,9 +21,43 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
             },
           },
           collections: true,
-          followedBy: true,
-          following: true,
-          likes: true,
+          followers: {
+            include: {
+              followers: {
+                include: {
+                  items: true,
+                  followers: true,
+                },
+              },
+              following: {
+                include: {
+                  items: true,
+                  followers: true,
+                },
+              },
+            },
+          },
+          following: {
+            include: {
+              following: {
+                include: {
+                  items: true,
+                  followers: true,
+                },
+              },
+              followers: {
+                include: {
+                  items: true,
+                  followers: true,
+                },
+              },
+            },
+          },
+          likes: {
+            include: {
+              item: true,
+            },
+          },
         },
       });
       const userWithoutPassword = excludePassword(user);

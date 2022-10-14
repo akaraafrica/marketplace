@@ -8,11 +8,13 @@ export default function LunchTimeDialog({
   open,
   handleClose,
   collectionId,
+  mutate,
 }: any) {
   const handleLunchTime = async () => {
     if (date) {
       try {
         await collectionsDs.updateLunchTime({ id: collectionId, date });
+        mutate();
         handleClose();
         toast.success("collection lunch time updated");
       } catch (error) {

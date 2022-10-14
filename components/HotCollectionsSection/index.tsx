@@ -42,9 +42,13 @@ const Index = ({ collections }: properties) => {
       >
         {collections &&
           collections.map((c: ICollection, idx) => (
-            <SwiperSlide key={idx}>
-              <HotCollectionCard collection={c} />
-            </SwiperSlide>
+            <>
+              {c.images.length > 0 && (
+                <SwiperSlide key={idx}>
+                  <HotCollectionCard collection={c} />
+                </SwiperSlide>
+              )}
+            </>
           ))}
       </Swiper>
     </div>

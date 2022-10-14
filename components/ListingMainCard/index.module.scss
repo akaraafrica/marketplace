@@ -1,11 +1,12 @@
 .root {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 0.7fr;
+  grid-template-columns: 1.5fr 0.8fr 0.8fr;
   gap: 30px;
 
   @media screen and (max-width: 800px) {
     grid-template-columns: 1fr;
   }
+
   .left {
     display: flex;
     flex-direction: column;
@@ -15,6 +16,7 @@
       border-radius: 12px;
       object-fit: cover;
     }
+
     .leftBottom {
       display: flex;
       justify-content: space-between;
@@ -26,6 +28,7 @@
         .avatar {
           border-radius: 50%;
         }
+
         .name {
           display: flex;
           flex-direction: column;
@@ -38,6 +41,7 @@
             line-height: 32px;
             color: #fcfcfd;
           }
+
           .stock {
             font-style: normal;
             font-weight: 500;
@@ -47,6 +51,7 @@
           }
         }
       }
+
       .high {
         display: flex;
         flex-direction: column;
@@ -58,6 +63,7 @@
           line-height: 20px;
           color: #777e91;
         }
+
         .highEth {
           border: 2px solid #45b36b;
           border-radius: 4px;
@@ -68,6 +74,7 @@
       }
     }
   }
+
   .center {
     display: flex;
     flex-direction: column;
@@ -77,10 +84,12 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
+      cursor: pointer;
 
       .cardImg {
         border-radius: 12px;
       }
+
       .cardDetails {
         display: flex;
         flex-direction: column;
@@ -94,6 +103,7 @@
           line-height: 24px;
           color: #fcfcfd;
         }
+
         .centerDiv {
           display: flex;
           align-items: center;
@@ -113,6 +123,7 @@
             line-height: 12px;
           }
         }
+
         button {
           background: transparent;
           border-radius: 90px;
@@ -121,6 +132,7 @@
           border: 2px solid #777e91;
           cursor: pointer;
         }
+
         button:hover {
           background-color: #f2994a;
           border: 2px solid #f2994a;
@@ -128,6 +140,7 @@
       }
     }
   }
+
   .right {
     display: flex;
     gap: 32px;
@@ -138,6 +151,7 @@
       background: #353945;
       border: 1px solid #353945;
     }
+
     .rightContainer {
       display: flex;
       flex-direction: column;
@@ -151,12 +165,15 @@
         line-height: 20px;
         color: #777e91;
       }
+
       .creator {
         display: flex;
         gap: 16px;
+        align-items: center;
 
         .creatorImgDiv {
           position: relative;
+
           p {
             position: absolute;
             top: -15px;
@@ -175,6 +192,7 @@
             color: #23262f;
             z-index: 1;
           }
+
           .creatorImg {
             border-radius: 50%;
             width: 56px;
@@ -182,6 +200,7 @@
             z-index: 0;
           }
         }
+
         .creatorNameDiv {
           display: flex;
           flex-direction: column;
@@ -189,10 +208,11 @@
           .name {
             font-style: normal;
             font-weight: 500;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 24px;
             color: #fcfcfd;
           }
+
           .eth {
             font-style: normal;
             font-weight: 600;
@@ -206,6 +226,7 @@
           }
         }
       }
+
       hr {
         width: 100%;
         height: 0px;
@@ -213,14 +234,17 @@
         color: #353945;
         border: 1px solid #353945;
       }
+
       .btn {
         border: 2px solid #777e91;
         border-radius: 90px;
         padding: 12px 16px;
+        margin-top: 1rem;
         width: fit-content;
         color: #fcfcfd;
         cursor: pointer;
       }
+
       .btn:hover {
         background-color: #f2994a;
         border: 2px solid #f2994a;

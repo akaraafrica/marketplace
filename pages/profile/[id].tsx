@@ -12,37 +12,49 @@ import { ProfileDs } from "../../ds";
 import { GetServerSideProps } from "next";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import ProfileItem from "../../components/ProfileItem";
-import DefaultAvatar from "../../components/DefaultAvatar";
 import { UserDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IProfile } from "../../types/profile.interface";
 import { useRouter } from "next/router";
 import NextLink from "../../components/Link";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import dynamic from "next/dynamic";
 
-const ProfilePage = ({ profile }: { profile: IProfile }) => {
+const DefaultAvatar = dynamic(() => import("../../components/DefaultAvatar"), {
+  ssr: false,
+});
+
+const Index = () => {
   const [open, setOpen] = React.useState(0);
-
-  const {
-    walletAddress,
-    createdAt,
-    items,
-    followedBy,
-    following,
-    collections,
-  } = profile;
-
   const user = useContext(AuthContext).user;
-  const [isFollowing, setIsFollowing] = useState<any>(false);
   const router = useRouter();
+  const id = router.query.id as unknown as number;
+
+  const { data: profile, mutate } = useSWR<IProfile>(["profile", id], () =>
+    ProfileDs.fetch(id)
+  );
+  const [isFollowing, setIsFollowing] = useState<any>(false);
 
   useEffect(() => {
-    const isFollowing = followedBy?.find(
-      (follower) => follower.followerId == user?.id
+    setOpen(0);
+    if (router.query.open) {
+      setOpen(Number(router.query.open));
+    }
+  }, []);
+  useEffect(() => {
+    const isFollowing = followers?.find(
+      (follower) => follower.followingId == user?.id
     );
-    if (isFollowing?.followerId == user?.id) {
+    if (isFollowing?.followingId == user?.id) {
       setIsFollowing(isFollowing);
     }
-  }, [followedBy, user]);
+  }, [profile?.followers, user]);
+
+  if (!profile) {
+    return <h1>404</h1>;
+  }
+  const { walletAddress, createdAt, items, followers, following, collections } =
+    profile;
 
   const handleFollow = async () => {
     if (!user) {
@@ -51,9 +63,11 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
     if (isFollowing) {
       setIsFollowing(false);
       await UserDs.unfollow(isFollowing.id);
+      mutate();
     } else {
       setIsFollowing(true);
       const res = await UserDs.follow(profile, user);
+      mutate();
       setIsFollowing(res);
     }
   };
@@ -65,23 +79,27 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
           className={styles.top}
           style={{ backgroundImage: `url(/assets/profilebg.png)` }}
         >
-          <NextLink href={"/settings"}>
-            <button>
-              Edit profile <AiTwotoneEdit size={15} />
-            </button>
-          </NextLink>
+          {user?.walletAddress === walletAddress && (
+            <NextLink href={"/settings"}>
+              <button>
+                Edit profile <AiTwotoneEdit size={15} />
+              </button>
+            </NextLink>
+          )}
         </div>
         <div className={styles.bottom}>
           <div className={styles.left}>
             <div className={styles.leftTop}>
-              <DefaultAvatar
-                id={profile!.id}
-                url={profile && profile.avatar}
-                width="160px"
-                height="160px"
-                walletAddress={walletAddress!}
-                fontSize="1.2em"
-              />
+              {profile && (
+                <DefaultAvatar
+                  id={profile!.id}
+                  url={profile && profile.avatar}
+                  width="160px"
+                  height="160px"
+                  walletAddress={walletAddress!}
+                  fontSize="1.2em"
+                />
+              )}
               <span className={styles.name}>
                 {profile && profile.name && profile.name}
               </span>
@@ -101,9 +119,11 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
               </span>
             </div>
             <div className={styles.leftCenter}>
-              <button className={styles.btn} onClick={handleFollow}>
-                {isFollowing ? "unfollow" : "follow"}
-              </button>
+              {user && user?.walletAddress != walletAddress && (
+                <button className={styles.btn} onClick={handleFollow}>
+                  {isFollowing ? "unfollow" : "follow"}
+                </button>
+              )}
               <span className={styles.icon}>
                 <IoShareOutline />
               </span>
@@ -170,7 +190,7 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
               <ProfileItem
                 items={items!}
                 open={open}
-                followBy={followedBy}
+                followers={followers}
                 following={following}
                 likes={profile.likes}
                 collections={collections}
@@ -186,14 +206,20 @@ const ProfilePage = ({ profile }: { profile: IProfile }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   const profile = await ProfileDs.fetch(id);
-  console.log(profile);
-
-  // if (!profile) return { notFound: true };
+  if (!profile) return { notFound: true };
 
   return {
     props: {
-      profile,
+      fallback: {
+        [unstable_serialize(["profile", id])]: profile,
+      },
     },
   };
 };
-export default ProfilePage;
+export default function Page({ fallback }: any) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+}
