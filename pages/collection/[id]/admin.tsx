@@ -8,8 +8,8 @@ import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
 import { CollectionDs, ContributorDs } from "../../../ds";
 import Link from "next/link";
 import withAuth from "../../../HOC/withAuth";
-import { BiArrowBack } from "react-icons/bi";
-import { BiRightArrowAlt } from "react-icons/bi";
+import { BiArrowBack, BiRightArrowAlt } from "react-icons/bi";
+import { MdCancel, MdEdit } from "react-icons/md";
 import { useRouter } from "next/router";
 import DefaultAvatar from "../../../components/DefaultAvatar";
 import NextImage from "../../../components/Image";
@@ -106,18 +106,35 @@ const Index = () => {
       [e.target.name]: parseInt(e.target.value),
     });
   };
-  console.log("percentages", percentages);
+  // console.log("percentages", percentages);
 
   const handlePercentCheck = () => {
-    const totalPercentage = Object.values(percentages);
-    const result = totalPercentage.reduce((a: any, b: any) => a + b, 0);
+    let result;
+    const contributorsPercentage = Object.values(percentages);
+    if (collection?.type === "FUNDRAISING") {
+      const beneficiariesPercentage = collection?.beneficiaries?.reduce(
+        (total: number, beneficiary) => total + beneficiary?.percentage,
+        0
+      );
+      const contributorsTotal = contributorsPercentage.reduce(
+        (a: any, b: any) => a + b,
+        0
+      ) as number;
+      result = beneficiariesPercentage + contributorsTotal;
+    }
+    if (collection?.type === "COLLABORATORS") {
+      result = contributorsPercentage.reduce((a: any, b: any) => a + b, 0);
+    }
+    // console.log('result', result);
     return result;
   };
   const handleSave = () => {
     if (handlePercentCheck() !== 100) {
+      // console.log('disabled')
       return;
     }
-    console.log(handlePercentCheck());
+    // console.log(handlePercentCheck());
+    console.log("sending to db");
     // Save to the DB the contributors percentages
   };
   if (!collection) {
@@ -131,6 +148,7 @@ const Index = () => {
     (total: number, beneficiary) => total + beneficiary?.percentage,
     0
   );
+  console.log(collection.beneficiaries);
   return (
     <Layout>
       <MintCollectionDialog
@@ -428,7 +446,11 @@ const Index = () => {
                   <button onClick={() => setOpenAddBeneficiary(true)}>
                     Add Beneficiary
                   </button>
-                  <button className={styles.btnSave}>Save</button>
+                  {/* <button 
+                    className={styles.btnSave}
+                    onClick={handleSave}
+                    disabled={handlePercentCheck() !== 100}
+                  >Save</button> */}
                 </div>
               </div>
               <div className={styles.content}>
@@ -450,7 +472,7 @@ const Index = () => {
                           <span className={styles.number}>Wallet address</span>
                         </div>
                         <div className={styles.btnDiv}>
-                          {beneficiary.walletAddress}
+                          <p>{beneficiary.walletAddress}</p>
                         </div>
                       </div>
                     </div>
@@ -459,8 +481,14 @@ const Index = () => {
                       <input
                         value={beneficiary.percentage}
                         type="number"
+                        name={beneficiary.name}
                         placeholder="10%"
+                        disabled
                       />
+                    </div>
+                    <div className={styles.actionBtns}>
+                      <MdEdit size={30} color="#fff" />
+                      <MdCancel size={30} color="orangered" />
                     </div>
                   </div>
                 ))}

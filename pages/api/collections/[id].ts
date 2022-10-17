@@ -35,6 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
         },
+        beneficiaries: true,
         ratings: true,
       },
     });

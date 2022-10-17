@@ -32,16 +32,19 @@ const Index: React.FC<Properties> = ({
   mutate,
 }) => {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [wallet, setWallet] = useState("");
   const [description, setDescription] = useState("");
   const [percent, setPercent] = useState(0);
 
-  const handleSubmit = async () => {
-    if (!name || !wallet || !description || !percent) {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!name || !email || !wallet || !description || !percent) {
       return;
     }
     const data = {
       name: name,
+      email: email,
       walletAddress: wallet,
       description: description,
       percentage: percent,
@@ -59,7 +62,15 @@ const Index: React.FC<Properties> = ({
             <input
               onChange={(e) => setName(e.target.value)}
               type="text"
-              placeholder="John Doe"
+              placeholder="John doe"
+            />
+          </div>
+          <div className={styles.inputDiv}>
+            <label>Email</label>
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              placeholder="example@gmail.com"
             />
           </div>
           <div className={styles.inputDiv}>

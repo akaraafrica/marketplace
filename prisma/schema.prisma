@@ -221,6 +221,7 @@ model Beneficiary {
   percentage    Int        @default(0)
   description   String
   name          String
+  email         String
   walletAddress String
   Collection    Collection @relation(fields: [collectionId], references: [id])
   User          User?      @relation(fields: [userId], references: [id])

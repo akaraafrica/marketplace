@@ -124,16 +124,23 @@
 
       .btnSave {
         border: 2px solid #f2994a;
+        background-color: #f2994a;
         color: #fff;
         padding: 9px 20px;
         cursor: pointer;
-        background: #000;
+        // background: #000;
         border-radius: 24px;
         -webkit-border-radius: 24px;
         -moz-border-radius: 24px;
         -ms-border-radius: 24px;
         -o-border-radius: 24px;
       }
+    }
+
+    .btnSave:disabled {
+      color: #777e91;
+      border: 2px solid #353945;
+      background-color: #353945;
     }
 
     h2,
@@ -221,6 +228,12 @@
               display: flex;
               gap: 10px;
               border: 0;
+
+              p {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
 
               .btnRemove {
                 background-color: orangered;
@@ -316,8 +329,19 @@
             -ms-border-radius: 12px;
             -o-border-radius: 12px;
           }
+
           input[type="number"]::-webkit-inner-spin-button {
+            appearance: none;
             -webkit-appearance: none;
+          }
+        }
+        .actionBtns {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          svg {
+            cursor: pointer;
           }
         }
       }
