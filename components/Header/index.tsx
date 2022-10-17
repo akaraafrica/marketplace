@@ -18,6 +18,9 @@ import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
 import Link from "../Link";
 import DefaultAvatar from "../../components/DefaultAvatar";
+import useSWR from "swr";
+import { NotificationDs } from "../../ds";
+import { INotification } from "../../types/notification.interface";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
@@ -60,6 +63,11 @@ function Header() {
       ? router.push("/item/create")
       : toast.info("You must be logged in to create an item.");
   }
+  const { data: notifications } = useSWR<{ data: INotification[] }>(
+    ["notifications", user?.id],
+    () => NotificationDs.fetch(user!.id)
+  );
+
   return (
     <div className={styles.headerCon}>
       <div className={styles.mobile}>
@@ -130,23 +138,22 @@ function Header() {
             <input type="text" placeholder="Search" />
             <img alt="search icon" src={`/assets/searchIcon.svg`} />
           </div>
-          <div
-            className={styles.notification}
-            onClick={() => {
-              !user
-                ? router.push("/login")
-                : setNotificationOpen(!notificationOpen);
-              setProfileOpen(false);
-            }}
-          >
-            <div className={styles.active}></div>
-            <MdNotificationsNone size={40} />
-            {notificationOpen && (
-              <div className={styles.dialog}>
-                <NewNotificationModal />
-              </div>
-            )}
-          </div>
+          {user && notifications && (
+            <div
+              className={styles.notification}
+              onClick={() => {
+                setNotificationOpen(!notificationOpen);
+              }}
+            >
+              <div className={styles.active}></div>
+              <MdNotificationsNone size={40} />
+              {notificationOpen && notifications && (
+                <div className={styles.dialog}>
+                  <NewNotificationModal data={notifications.data} />
+                </div>
+              )}
+            </div>
+          )}
           <button
             type="button"
             className={user ? styles.btnLight : styles.btn}

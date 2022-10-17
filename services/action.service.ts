@@ -141,8 +141,7 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: profile.id,
         senderId: user.id,
         action: action,
-        title: `${getUserName(user)}
-  follows you`,
+        title: `${getUserName(user)} follows you`,
       });
 
       if (data) {
@@ -156,7 +155,7 @@ export async function TriggerAction(props: ActionProps) {
         senderId: user.id,
         action: action,
         title: `
-        ${getUserName(user)}likes ${item?.title} `,
+        ${getUserName(user)} likes ${item?.title} `,
         itemType: ItemType.Item,
         itemId: item.id,
       });
