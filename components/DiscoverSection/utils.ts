@@ -61,6 +61,7 @@ export const handleChange = async (
   e: React.ChangeEvent<HTMLSelectElement>,
   param: string,
   setData: any,
+  filter: any,
   setFilter: any,
   setLoading: any
 ) => {
@@ -68,33 +69,33 @@ export const handleChange = async (
 
   if (param === "RECENT") {
     const val = value === "Recently added" ? "desc" : "asc";
-    setFilter({ createdOrder: val });
+    setFilter({ ...filter, createdOrder: val });
     setLoading(TbRuler);
-    const res = await itemDs.getFilterData("createdOrder", val);
+    const res = await itemDs.getFilterData({ ...filter, createdOrder: val });
     setLoading(false);
     setData(res);
   }
   if (param === "PRICE") {
     const val = value === "Highest price" ? "desc" : "asc";
-    setFilter({ priceOrder: val });
+    setFilter({ ...filter, priceOrder: val });
     setLoading(true);
-    const res = await itemDs.getFilterData("priceOrder", val);
+    const res = await itemDs.getFilterData({ ...filter, priceOrder: val });
     setLoading(false);
     setData(res);
   }
   if (param === "LIKES") {
     const val = value === "Most liked" ? "desc" : "asc";
-    setFilter({ likesOrder: val });
+    setFilter({ ...filter, likesOrder: val });
     setLoading(true);
-    const res = await itemDs.getFilterData("likesOrder", val);
+    const res = await itemDs.getFilterData({ ...filter, likesOrder: val });
     setLoading(false);
     setData(res);
   }
   if (param === "CREATORS") {
-    const val = value === "Verified only" ? false : true;
-    setFilter({ likesOrder: val });
+    const val = value === "Verified only" ? true : false;
+    setFilter({ ...filter, verifiedCreator: val });
     setLoading(true);
-    const res = await itemDs.getFilterData("creatorOrder", val);
+    const res = await itemDs.getFilterData({ ...filter, verifiedCreator: val });
     setLoading(false);
     setData(res);
   }
@@ -106,13 +107,20 @@ export const handleResetFilter = (setData: any, items: any) => {
 export const handleSliderChange = async (
   e: any,
   setData: any,
+  filter: any,
   setFilter: any,
   setLoading: any
 ) => {
   const value = e.target.value;
-  setFilter({ priceRange: value });
+  setFilter({
+    ...filter,
+    priceRange: value,
+  });
   setLoading(true);
-  const res = await itemDs.getFilterData("priceRange", value);
+  const res = await itemDs.getFilterData({
+    ...filter,
+    priceRange: value,
+  });
   setData(res);
   setLoading(false);
 };
@@ -122,14 +130,17 @@ export const handleCategoryChange = async (
   category: category,
   setData: React.Dispatch<React.SetStateAction<IItem[] | undefined>>,
   items: IItem[] | undefined,
-  setLoading: any
+  setLoading: any,
+  filter: any,
+  setFilter: any
 ) => {
-  if (category === "ALL") {
-    setData(items);
-    return;
-  }
+  // if (category === "ALL") {
+  //   setData(items);
+  //   return;
+  // }
+  setFilter({ ...filter, category });
   setLoading(true);
-  const res = await itemDs.getFilterData("category", category);
+  const res = await itemDs.getFilterData({ ...filter, category: category });
   setData(res);
   setLoading(false);
 };

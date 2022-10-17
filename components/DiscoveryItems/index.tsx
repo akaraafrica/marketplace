@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.scss";
 import ItemCard from "../ItemCard/index";
-import Discovery, { Filter } from "../../ds/discovery.ds";
 import { IItem } from "../../types/item.interface";
 import { ItemDs } from "../../ds";
 import { useRouter } from "next/router";

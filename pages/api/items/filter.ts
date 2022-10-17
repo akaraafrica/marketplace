@@ -7,110 +7,86 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const priceOrder = req.query.priceOrder as "asc" | "desc";
     const createdOrder = req.query.createdOrder as "asc" | "desc";
     const likesOrder = req.query.likesOrder as "asc" | "desc";
-    const creatorOrder = req.query.creatorOrder as unknown as string;
-    const category = req.query.category as unknown as string;
-
-    try {
-      if (priceRange) {
+    const verifiedCreator = req.query.verifiedCreator as unknown as string;
+    const category = req.query.category as unknown as any;
+    console.log({
+      category,
+      verifiedCreator,
+      likesOrder,
+      createdOrder,
+      priceOrder,
+      priceRange,
+    });
+    if (category === "ALL") {
+      try {
         const items = await prisma.item.findMany({
+          take: 20,
+          include: {
+            likes: true,
+          },
           where: {
             price: {
               lte: Number(priceRange),
             },
-          },
-          take: 50,
-        });
-        return res.status(200).json(items);
-      }
-      if (creatorOrder) {
-        const items = await prisma.item.findMany({
-          take: 50,
-          where: {
             owner: {
-              verified: creatorOrder.toLowerCase() === "true",
+              verified: verifiedCreator.toLowerCase() === "true",
             },
           },
-        });
-        return res.status(200).json(items);
-      }
-      if (priceOrder) {
-        const items = await prisma.item.findMany({
-          take: 50,
-          orderBy: {
-            price: priceOrder,
-          },
+          orderBy: [
+            {
+              createdAt: createdOrder,
+            },
+            {
+              price: priceOrder,
+            },
+            {
+              likes: {
+                _count: likesOrder || "asc",
+              },
+            },
+          ],
         });
 
         return res.status(200).json(items);
+      } catch (error) {
+        res.status(400).json("error");
+        console.log(error);
       }
-      if (createdOrder) {
+    } else {
+      try {
         const items = await prisma.item.findMany({
-          take: 50,
-          orderBy: {
-            createdAt: createdOrder,
+          take: 20,
+          include: {
+            likes: true,
           },
-        });
-        return res.status(200).json(items);
-      }
-      if (likesOrder) {
-        const items = await prisma.item.findMany({
-          take: 50,
-          orderBy: {
-            likes: {
-              _count: likesOrder,
+          where: {
+            price: {
+              lte: Number(priceRange) || 0,
             },
+            owner: {
+              verified: verifiedCreator.toLowerCase() === "true",
+            },
+            category: category,
           },
+          orderBy: [
+            {
+              price: priceOrder || "asc",
+            },
+            {
+              createdAt: createdOrder || "asc",
+            },
+            {
+              likes: {
+                _count: likesOrder || "asc",
+              },
+            },
+          ],
         });
         return res.status(200).json(items);
+      } catch (error) {
+        res.status(400).json("error");
+        console.log(error);
       }
-      if (category === "ART") {
-        const items = await prisma.item.findMany({
-          where: {
-            category: "ART",
-          },
-          take: 50,
-        });
-        return res.status(200).json(items);
-      }
-      if (category === "GAME") {
-        const items = await prisma.item.findMany({
-          where: {
-            category: "GAME",
-          },
-          take: 50,
-        });
-        return res.status(200).json(items);
-      }
-      if (category === "MUSIC") {
-        const items = await prisma.item.findMany({
-          where: {
-            category: "MUSIC",
-          },
-          take: 50,
-        });
-        return res.status(200).json(items);
-      }
-      if (category === "PHOTOGRAPHY") {
-        const items = await prisma.item.findMany({
-          where: {
-            category: "PHOTOGRAPHY",
-          },
-          take: 50,
-        });
-        return res.status(200).json(items);
-      }
-      if (category === "VIDEO") {
-        const items = await prisma.item.findMany({
-          where: {
-            category: "VIDEO",
-          },
-          take: 50,
-        });
-        return res.status(200).json(items);
-      }
-    } catch (error) {
-      console.log(error);
-      res.status(400).json("error");
     }
   }
 };

@@ -25,7 +25,14 @@ const Index = () => {
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState(items);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState(null);
+  const [filter, setFilter] = useState({
+    category: "ALL",
+    verifiedCreator: false,
+    likesOrder: "asc",
+    createdOrder: "asc",
+    priceOrder: "desc",
+    priceRange: 1000,
+  });
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm: string = useDebounce(searchTerm, 250);
   const handleSearch = async (e: any) => {
@@ -72,19 +79,22 @@ const Index = () => {
               <span>PRICE RANGE</span>
               <ProgressBar
                 onChange={(e) =>
-                  handleSliderChange(e, setData, setFilter, setLoading)
+                  handleSliderChange(e, setData, filter, setFilter, setLoading)
                 }
               />
-              <div className={styles.eth}>
-                <span>0.01 ETH</span>
-                <span>10 ETH</span>
-              </div>
-            </div>{" "}
+            </div>
             <div className={styles.recent}>
               <CustomSelect
                 placeholder="Recently added"
                 onChange={(e) =>
-                  handleChange(e, "RECENT", setData, setFilter, setLoading)
+                  handleChange(
+                    e,
+                    "RECENT",
+                    setData,
+                    filter,
+                    setFilter,
+                    setLoading
+                  )
                 }
                 options={["Recently added", "First added"]}
               />
@@ -94,7 +104,14 @@ const Index = () => {
               <CustomSelect
                 placeholder="Highest price"
                 onChange={(e) =>
-                  handleChange(e, "PRICE", setData, setFilter, setLoading)
+                  handleChange(
+                    e,
+                    "PRICE",
+                    setData,
+                    filter,
+                    setFilter,
+                    setLoading
+                  )
                 }
                 options={["Highest price", "Lowest price"]}
               />
@@ -104,7 +121,14 @@ const Index = () => {
               <CustomSelect
                 placeholder="Most liked"
                 onChange={(e) =>
-                  handleChange(e, "LIKES", setData, setFilter, setLoading)
+                  handleChange(
+                    e,
+                    "LIKES",
+                    setData,
+                    filter,
+                    setFilter,
+                    setLoading
+                  )
                 }
                 options={["Most liked", "Least liked"]}
               />
@@ -112,11 +136,18 @@ const Index = () => {
             <div className={styles.filter}>
               <span>CREATOR</span>
               <CustomSelect
-                placeholder="Verified only"
+                placeholder="Non verified only"
                 onChange={(e) =>
-                  handleChange(e, "CREATORS", setData, setFilter, setLoading)
+                  handleChange(
+                    e,
+                    "CREATORS",
+                    setData,
+                    filter,
+                    setFilter,
+                    setLoading
+                  )
                 }
-                options={["Verified only", "Non verified only"]}
+                options={["Non verified only", "Verified only"]}
               />
             </div>
             <hr />
@@ -133,7 +164,14 @@ const Index = () => {
               <span
                 onClick={() => {
                   setOpen(0),
-                    handleCategoryChange("ALL", setData, items, setLoading);
+                    handleCategoryChange(
+                      "ALL",
+                      setData,
+                      items,
+                      setLoading,
+                      filter,
+                      setFilter
+                    );
                 }}
                 className={`${styles.navItem} ${
                   open === 0 ? styles.active : ""
@@ -144,7 +182,14 @@ const Index = () => {
               <span
                 onClick={() => {
                   setOpen(1);
-                  handleCategoryChange("ART", setData, items, setLoading);
+                  handleCategoryChange(
+                    "ART",
+                    setData,
+                    items,
+                    setLoading,
+                    filter,
+                    setFilter
+                  );
                 }}
                 className={`${styles.navItem} ${
                   open === 1 ? styles.active : ""
@@ -155,7 +200,14 @@ const Index = () => {
               <span
                 onClick={() => {
                   setOpen(2);
-                  handleCategoryChange("GAME", setData, items, setLoading);
+                  handleCategoryChange(
+                    "GAME",
+                    setData,
+                    items,
+                    setLoading,
+                    filter,
+                    setFilter
+                  );
                 }}
                 className={`${styles.navItem} ${
                   open === 2 ? styles.active : ""
@@ -170,7 +222,9 @@ const Index = () => {
                     "PHOTOGRAPHY",
                     setData,
                     items,
-                    setLoading
+                    setLoading,
+                    filter,
+                    setFilter
                   );
                 }}
                 className={`${styles.navItem} ${
@@ -182,7 +236,14 @@ const Index = () => {
               <span
                 onClick={() => {
                   setOpen(4);
-                  handleCategoryChange("MUSIC", setData, items, setLoading);
+                  handleCategoryChange(
+                    "MUSIC",
+                    setData,
+                    items,
+                    setLoading,
+                    filter,
+                    setFilter
+                  );
                 }}
                 className={`${styles.navItem} ${
                   open === 4 ? styles.active : ""
@@ -193,7 +254,14 @@ const Index = () => {
               <span
                 onClick={() => {
                   setOpen(5);
-                  handleCategoryChange("VIDEO", setData, items, setLoading);
+                  handleCategoryChange(
+                    "VIDEO",
+                    setData,
+                    items,
+                    setLoading,
+                    filter,
+                    setFilter
+                  );
                 }}
                 className={`${styles.navItem} ${
                   open === 5 ? styles.active : ""

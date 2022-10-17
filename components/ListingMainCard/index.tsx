@@ -132,7 +132,7 @@ function ListingMainCard() {
             users.slice(0, 5).map((user) => {
               return (
                 <Link href={`/profile/${user.id}`} key={user.id}>
-                  <a>
+                  <a key={user.id}>
                     <div key={user.id} className={styles.creator}>
                       <div className={styles.creatorImgDiv}>
                         <DefaultAvatar
