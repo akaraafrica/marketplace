@@ -14,5 +14,5 @@ export interface INotification {
   item?: IItem;
   receiver: IUser;
   sender?: IUser;
-  createdAt: Date;
+  createdAt: string;
 }
