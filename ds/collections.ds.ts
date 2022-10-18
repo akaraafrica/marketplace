@@ -71,6 +71,16 @@ class Collection {
       console.log(error);
     }
   }
+  async updateStatus(data: any) {
+    try {
+      const res = await api.post(url + "/status", {
+        ...data,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async payout(data: any) {
     try {
       const res = await api.post(url + "/update", {

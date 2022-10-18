@@ -23,6 +23,7 @@ import MintCollectionDialog from "../../../components/CollectionAdmin/MintCollec
 import { getCookies } from "cookies-next";
 import { toast } from "react-toastify";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import collectionsDs from "../../../ds/collections.ds";
 
 const Index = () => {
   const router = useRouter();
@@ -148,7 +149,10 @@ const Index = () => {
           });
         }
       );
-      await Promise.all([BatchUpdate]);
+      await Promise.all([
+        BatchUpdate,
+        collectionsDs.updateStatus({ id: collection?.id, status: "READY" }),
+      ]);
     } catch (error) {
       console.log(error);
     }
