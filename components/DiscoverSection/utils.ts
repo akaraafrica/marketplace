@@ -66,28 +66,12 @@ export const handleChange = async (
   setLoading: any
 ) => {
   let value = e?.target?.value;
+  if (param === "SORT") {
+    console.log(value);
 
-  if (param === "RECENT") {
-    const val = value === "Recently added" ? "desc" : "asc";
-    setFilter({ ...filter, createdOrder: val });
+    setFilter({ ...filter, sort: value });
     setLoading(TbRuler);
-    const res = await itemDs.getFilterData({ ...filter, createdOrder: val });
-    setLoading(false);
-    setData(res);
-  }
-  if (param === "PRICE") {
-    const val = value === "Highest price" ? "desc" : "asc";
-    setFilter({ ...filter, priceOrder: val });
-    setLoading(true);
-    const res = await itemDs.getFilterData({ ...filter, priceOrder: val });
-    setLoading(false);
-    setData(res);
-  }
-  if (param === "LIKES") {
-    const val = value === "Most liked" ? "desc" : "asc";
-    setFilter({ ...filter, likesOrder: val });
-    setLoading(true);
-    const res = await itemDs.getFilterData({ ...filter, likesOrder: val });
+    const res = await itemDs.getFilterData({ ...filter, sort: value });
     setLoading(false);
     setData(res);
   }
