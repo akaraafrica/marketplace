@@ -3,17 +3,26 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === "POST") {
-    const { id, percentage } = req.body;
-
+  if (req.method === "PUT") {
+    const { id, percent } = req.body;
+    console.log("id:", id);
+    console.log("percent:", percent);
     if (!id) return res.status(404);
     try {
+      // await prisma.collection.update({
+      //   where: {
+      //     id: id,
+      //   },
+      //   data: {
+      //     status: 'READY'
+      //   },
+      // });
       await prisma.contributor.update({
         where: {
           id: id,
         },
         data: {
-          percentage,
+          percentage: percent,
         },
       });
       return res.status(200).send("contributor percentage updated");

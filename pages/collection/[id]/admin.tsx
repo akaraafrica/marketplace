@@ -43,7 +43,7 @@ const Index = () => {
     setOpenVerifyDialog(false);
   };
 
-  const [percentages, setPercentages] = useState({});
+  const [percentages, setPercentages] = useState<any>({});
   const { user } = useContext(AuthContext);
   const [openLunchTime, setOpenLunchTime] = useState(false);
   const [openAddBeneficiary, setOpenAddBeneficiary] = useState(false);
@@ -103,10 +103,9 @@ const Index = () => {
   const handleChangePercent = (e: any) => {
     setPercentages({
       ...percentages,
-      [e.target.name]: parseInt(e.target.value),
+      [parseInt(e.target.name)]: parseInt(e.target.value),
     });
   };
-  // console.log("percentages", percentages);
 
   const handlePercentCheck = () => {
     let result;
@@ -125,17 +124,35 @@ const Index = () => {
     if (collection?.type === "COLLABORATORS") {
       result = contributorsPercentage.reduce((a: any, b: any) => a + b, 0);
     }
-    // console.log('result', result);
+
     return result;
   };
-  const handleSave = () => {
+  const handleSave = async (e: any) => {
+    e.preventDefault();
     if (handlePercentCheck() !== 100) {
-      // console.log('disabled')
       return;
     }
-    // console.log(handlePercentCheck());
     console.log("sending to db");
     // Save to the DB the contributors percentages
+    const contributorsPercent = Object.entries(percentages);
+    console.log("contributors: ", contributorsPercent);
+
+    try {
+      // ts-ignore
+      const BatchUpdate = collection?.contributors.forEach(
+        (contributor: { id: string | number }) => {
+          // const contributorId = contributor.id;
+          ContributorDs.updatePercentage({
+            id: contributor.id,
+            percent: percentages[contributor.id],
+          });
+        }
+      );
+      await Promise.all([BatchUpdate]);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(percentages);
   };
   if (!collection) {
     return <h1>404</h1>;
@@ -148,7 +165,8 @@ const Index = () => {
     (total: number, beneficiary) => total + beneficiary?.percentage,
     0
   );
-  console.log(collection.beneficiaries);
+
+  console.log(collection);
   return (
     <Layout>
       <MintCollectionDialog
@@ -266,13 +284,14 @@ const Index = () => {
                 </div>
                 {collection.type === "FUNDRAISING" && (
                   <>
-                    <div>
-                      <span>{total / beneficiariesTotal || "0"} ETH</span>
+                    {/* <div>
+                      <span>{(total / beneficiariesTotal).toFixed(3) || "0"} ETH</span>
                       <h3>Amount paid to beneficiaries</h3>
-                    </div>
+                    </div> */}
                     <div>
                       <span>
-                        {collection.revenue / beneficiariesTotal || "0"} ETH
+                        {((beneficiariesTotal / 100) * total).toFixed(3) || "0"}{" "}
+                        ETH
                       </span>
                       <h3>Target amount for beneficiaries</h3>
                     </div>
@@ -414,7 +433,7 @@ const Index = () => {
                           <label htmlFor="">PERCENTAGE</label>
                           <input
                             type="number"
-                            name={contributor?.user.email}
+                            name={(contributor?.id).toString()}
                             onChange={handleChangePercent}
                             placeholder="10%"
                           />

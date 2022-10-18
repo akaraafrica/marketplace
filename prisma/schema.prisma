@@ -256,11 +256,11 @@ enum Gender {
 }
 
 enum CollectionStatus {
-  CREATED
-  VERIFIED
-  READY
-  PUBLISHED
   DRAFT
+  READY
+  PENDING
+  VERIFIED
+  PUBLISHED
 }
 
 enum ContributorStatus {
