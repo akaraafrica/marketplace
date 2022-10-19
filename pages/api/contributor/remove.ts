@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
 
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
+  console.log(req.body.items);
   if (req.method === "PUT") {
     try {
       await prisma.collection.update({
@@ -14,9 +15,9 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
             delete: { id: req.body.contributorId },
           },
           items: {
-            disconnect: req.body.items.map((item: { id: number }) => {
-              id: item.id;
-            }),
+            disconnect: req.body.items.map((item: { id: number }) => ({
+              id: item.id,
+            })),
           },
         },
       });

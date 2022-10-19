@@ -237,7 +237,7 @@ const Index = () => {
                     Edit Collection Details <BiRightArrowAlt />
                   </button>
                 </Link>
-                {collection.status === "READY" && (
+                {collection.status === "VERIFIED" && (
                   <button className={styles.btnPublish} onClick={handlePublish}>
                     publish
                   </button>
