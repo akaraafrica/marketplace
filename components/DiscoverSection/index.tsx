@@ -21,29 +21,17 @@ function Discover({ items }: properties) {
   const [open, setOpen] = useState(Filter.All);
   const [data, setData] = useState<IItem[] | undefined>(items);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState(null);
+  const [filter, setFilter] = useState({
+    category: "ALL",
+    verifiedCreator: false,
+    sort: "Most liked",
+    priceRange: 1000,
+  });
   return (
     <div className={styles.root}>
       <h1>Discover</h1>
       <div className={styles.navbar}>
-        <div className={styles.recent}>
-          <CustomSelect
-            placeholder="Recently added"
-            onChange={(e) =>
-              handleChange(e, "RECENT", setData, setLoading, filter, setFilter)
-            }
-            options={["Recently added", "First added"]}
-          />
-          {/*           
-
-          <CustomSelect
-            placeholder="Recently added"
-            onChange={(e) =>
-              handleChange(e, "RECENT", setData, setFilter, setLoading)
-            }
-            options={["Recently added", "First added"]}
-          /> */}
-        </div>
+        <div className={styles.recent}></div>
         <div className={styles.navs}>
           <span
             onClick={() => {
@@ -153,25 +141,23 @@ function Discover({ items }: properties) {
       <hr />
       <div className={styles.filters}>
         <div className={styles.filter}>
-          <span>PRICE</span>
+          <span>SORT BY</span>
           <CustomSelect
-            placeholder="Highest price"
+            placeholder="Sort By"
             onChange={(e) =>
-              handleChange(e, "PRICE", setData, filter, setFilter, setLoading)
+              handleChange(e, "SORT", setData, filter, setFilter, setLoading)
             }
-            options={["Highest price", "Lowest price"]}
+            options={[
+              "Most liked",
+              "Least liked",
+              "Highest price",
+              "Lowest price",
+              "Recently added",
+              "First added",
+            ]}
           />
         </div>
-        <div className={styles.filter}>
-          <span>LIKES</span>
-          <CustomSelect
-            placeholder="Most liked"
-            onChange={(e) =>
-              handleChange(e, "LIKES", setData, filter, setFilter, setLoading)
-            }
-            options={["Most liked", "Least liked"]}
-          />
-        </div>
+
         <div className={styles.filter}>
           <span>CREATOR</span>
           <CustomSelect
@@ -186,7 +172,7 @@ function Discover({ items }: properties) {
                 setLoading
               )
             }
-            options={["Verified only", "Non verified only"]}
+            options={["Non verified only", "Verified only"]}
           />
         </div>
         <div className={styles.filter}>
@@ -196,10 +182,6 @@ function Discover({ items }: properties) {
               handleSliderChange(e, setData, filter, setFilter, setLoading)
             }
           />
-          <div className={styles.eth}>
-            <span>0.01 ETH</span>
-            <span>10 ETH</span>
-          </div>
         </div>
       </div>
       <div className={styles.discoverCont}>

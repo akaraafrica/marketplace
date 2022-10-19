@@ -100,18 +100,11 @@ class Item {
   }
 
   async getFilterData(filter: any) {
-    const {
-      category,
-      verifiedCreator,
-      likesOrder,
-      createdOrder,
-      priceOrder,
-      priceRange,
-    } = filter;
+    const { category, verifiedCreator, sort, priceRange } = filter;
 
     try {
       const items = await api.get(
-        `${url}/filter?category=${category}&verifiedCreator=${verifiedCreator}&likesOrder=${likesOrder}&createdOrder=${createdOrder}&priceOrder=${priceOrder}&priceRange=${priceRange}`
+        `${url}/filter?category=${category}&verifiedCreator=${verifiedCreator}&sort=${sort}&priceRange=${priceRange}`
       );
       return items.data;
     } catch (error) {
@@ -122,17 +115,10 @@ class Item {
   async getMore(lastIndex: number, filter: any) {
     try {
       if (filter) {
-        const {
-          category,
-          verifiedCreator,
-          likesOrder,
-          createdOrder,
-          priceOrder,
-          priceRange,
-        } = filter;
+        const { category, verifiedCreator, sort, priceRange } = filter;
 
         const items = await api.get(
-          `${url}/fetchmore?lastIndex=${lastIndex}&category=${category}&verifiedCreator=${verifiedCreator}&likesOrder=${likesOrder}&createdOrder=${createdOrder}&priceOrder=${priceOrder}&priceRange=${priceRange}`
+          `${url}/fetchmore?lastIndex=${lastIndex}&category=${category}&verifiedCreator=${verifiedCreator}&sort=${sort}&priceRange=${priceRange}`
         );
         return items.data;
       }
