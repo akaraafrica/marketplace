@@ -36,7 +36,7 @@ const Index = () => {
 
   const [open, setOpen] = useState(1);
   const [openVerifyDialog, setOpenVerifyDialog] = useState(false);
-
+  const [selectBeneficiary, setSelectBeneficiary] = useState<any>(null);
   const handleVerify = () => {
     setOpenVerifyDialog(true);
   };
@@ -169,8 +169,16 @@ const Index = () => {
     (total: number, beneficiary) => total + beneficiary?.percentage,
     0
   );
-
-  console.log(collection);
+  const handleRemoveBeneficiary = async (beneficiary: any) => {
+    try {
+      await collectionsDs.removeBeneficiary(beneficiary);
+      mutate();
+      toast.success("Beneficiary successful removed");
+    } catch (error) {
+      toast.error("Error removing Beneficiary");
+      console.log(error);
+    }
+  };
   return (
     <Layout>
       <MintCollectionDialog
@@ -195,6 +203,8 @@ const Index = () => {
       <AddBeneficiaryDialog
         collectionId={collection.id}
         open={openAddBeneficiary}
+        beneficiary={selectBeneficiary}
+        setBeneficiary={setSelectBeneficiary}
         handleClose={() => setOpenAddBeneficiary(false)}
         mutate={mutate}
       />
@@ -478,7 +488,11 @@ const Index = () => {
               </div>
               <div className={styles.content}>
                 {collection?.beneficiaries?.map((beneficiary) => (
-                  <div key={beneficiary.id} className={styles.row}>
+                  <div
+                    key={beneficiary.id}
+                    className={styles.row}
+                    onClick={() => setSelectBeneficiary(beneficiary)}
+                  >
                     <div className={styles.left}>
                       <DefaultAvatar
                         url={""}
@@ -510,8 +524,16 @@ const Index = () => {
                       />
                     </div>
                     <div className={styles.actionBtns}>
-                      <MdEdit size={30} color="#fff" />
-                      <MdCancel size={30} color="orangered" />
+                      <MdEdit
+                        size={30}
+                        color="#fff"
+                        onClick={() => setOpenAddBeneficiary(true)}
+                      />
+                      <MdCancel
+                        size={30}
+                        color="orangered"
+                        onClick={() => handleRemoveBeneficiary(beneficiary)}
+                      />
                     </div>
                   </div>
                 ))}
@@ -535,8 +557,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const isContributor = collection.data.contributors.find((contributor) => {
     return contributor.user.walletAddress == cookie.address;
   });
-  if (!isContributor) return { notFound: true };
-  if (!Object.keys(isContributor!).length) return { notFound: true };
+  // if (!isContributor) return { notFound: true };
+  // if (!Object.keys(isContributor!).length) return { notFound: true };
 
   return {
     props: {

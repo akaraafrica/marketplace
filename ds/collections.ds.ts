@@ -137,10 +137,32 @@ class Collection {
   }
   async addBeneficiary(collectionId: number, data: any) {
     try {
-      const res = await api.patch(url + "/addBeneficiary", {
+      const res = await api.post(url + "/beneficiary", {
         collectionId,
         ...data,
       });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updateBeneficiary(collectionId: number, data: any) {
+    try {
+      const res = await api.patch(url + "/beneficiary", {
+        collectionId,
+        ...data,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async removeBeneficiary(data: any) {
+    try {
+      const res = await api.delete(url + "/beneficiary", {
+        data,
+      });
+      return res.data;
     } catch (error) {
       console.log(error);
     }
