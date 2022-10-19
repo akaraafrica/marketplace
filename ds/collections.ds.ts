@@ -116,7 +116,7 @@ class Collection {
       const res = await api.put("/api/contributor/remove", {
         id,
         contributorId,
-        items: items,
+        items,
       });
       return res;
     } catch (error) {
