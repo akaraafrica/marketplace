@@ -8,8 +8,8 @@ import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
 import { CollectionDs, ContributorDs } from "../../../ds";
 import Link from "next/link";
 import withAuth from "../../../HOC/withAuth";
-import { BiArrowBack } from "react-icons/bi";
-import { BiRightArrowAlt } from "react-icons/bi";
+import { BiArrowBack, BiRightArrowAlt } from "react-icons/bi";
+import { MdCancel, MdEdit } from "react-icons/md";
 import { useRouter } from "next/router";
 import DefaultAvatar from "../../../components/DefaultAvatar";
 import NextImage from "../../../components/Image";
@@ -23,6 +23,7 @@ import MintCollectionDialog from "../../../components/CollectionAdmin/MintCollec
 import { getCookies } from "cookies-next";
 import { toast } from "react-toastify";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import collectionsDs from "../../../ds/collections.ds";
 
 const Index = () => {
   const router = useRouter();
@@ -43,6 +44,7 @@ const Index = () => {
     setOpenVerifyDialog(false);
   };
 
+  const [percentages, setPercentages] = useState<any>({});
   const { user } = useContext(AuthContext);
   const [openLunchTime, setOpenLunchTime] = useState(false);
   const [openAddBeneficiary, setOpenAddBeneficiary] = useState(false);
@@ -84,6 +86,78 @@ const Index = () => {
       toast.error("error");
     }
   };
+  const handleRemoveContributor = async (
+    contributorId: number,
+    items: IItem[]
+  ) => {
+    try {
+      await CollectionDs.removeContributor(
+        collection?.id as number,
+        contributorId,
+        items
+      );
+    } catch (error) {
+      console.log(error);
+      toast.error("error");
+    }
+  };
+  const handleChangePercent = (e: any) => {
+    setPercentages({
+      ...percentages,
+      [parseInt(e.target.name)]: parseInt(e.target.value),
+    });
+  };
+
+  const handlePercentCheck = () => {
+    let result;
+    const contributorsPercentage = Object.values(percentages);
+    if (collection?.type === "FUNDRAISING") {
+      const beneficiariesPercentage = collection?.beneficiaries?.reduce(
+        (total: number, beneficiary) => total + beneficiary?.percentage,
+        0
+      );
+      const contributorsTotal = contributorsPercentage.reduce(
+        (a: any, b: any) => a + b,
+        0
+      ) as number;
+      result = beneficiariesPercentage + contributorsTotal;
+    }
+    if (collection?.type === "COLLABORATORS") {
+      result = contributorsPercentage.reduce((a: any, b: any) => a + b, 0);
+    }
+
+    return result;
+  };
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    if (handlePercentCheck() !== 100) {
+      return;
+    }
+    console.log("sending to db");
+    // Save to the DB the contributors percentages
+    const contributorsPercent = Object.entries(percentages);
+    console.log("contributors: ", contributorsPercent);
+
+    try {
+      // ts-ignore
+      const BatchUpdate = collection?.contributors.forEach(
+        (contributor: { id: string | number }) => {
+          // const contributorId = contributor.id;
+          ContributorDs.updatePercentage({
+            id: contributor.id,
+            percent: percentages[contributor.id],
+          });
+        }
+      );
+      await Promise.all([
+        BatchUpdate,
+        collectionsDs.updateStatus({ id: collection?.id, status: "READY" }),
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(percentages);
+  };
   if (!collection) {
     return <h1>404</h1>;
   }
@@ -95,6 +169,8 @@ const Index = () => {
     (total: number, beneficiary) => total + beneficiary?.percentage,
     0
   );
+
+  console.log(collection);
   return (
     <Layout>
       <MintCollectionDialog
@@ -148,7 +224,9 @@ const Index = () => {
                 {collection?.status}
               </span>
               <h2>{collection?.title}</h2>
-              <div>Launches in {collection?.lunchTime}</div>
+              {collection?.lunchTime && (
+                <div>Launches in {collection?.lunchTime}</div>
+              )}
             </div>
 
             {collection.author.id === user?.id && (
@@ -210,13 +288,14 @@ const Index = () => {
                 </div>
                 {collection.type === "FUNDRAISING" && (
                   <>
-                    <div>
-                      <span>{total / beneficiariesTotal || "0"} ETH</span>
+                    {/* <div>
+                      <span>{(total / beneficiariesTotal).toFixed(3) || "0"} ETH</span>
                       <h3>Amount paid to beneficiaries</h3>
-                    </div>
+                    </div> */}
                     <div>
                       <span>
-                        {collection.revenue / beneficiariesTotal || "0"} ETH
+                        {((beneficiariesTotal / 100) * total).toFixed(3) || "0"}{" "}
+                        ETH
                       </span>
                       <h3>Target amount for beneficiaries</h3>
                     </div>
@@ -241,7 +320,15 @@ const Index = () => {
             <div className={styles.section}>
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
-                <button className={styles.btnSave}>Save</button>
+                {collection.type !== "ORDINARY" && (
+                  <button
+                    className={styles.btnSave}
+                    onClick={handleSave}
+                    disabled={handlePercentCheck() !== 100}
+                  >
+                    Save
+                  </button>
+                )}
               </div>
               <div className={styles.content}>
                 {collection?.contributors
@@ -284,7 +371,19 @@ const Index = () => {
                               collection.author.id === user?.id && (
                                 <>
                                   <button>{contributor.confirmation}</button>
-                                  <button className={styles.btnRemove}>
+                                  <button
+                                    onClick={() =>
+                                      handleRemoveContributor(
+                                        contributor.id,
+                                        collection.items?.filter((item) => {
+                                          return (
+                                            item.ownerId === contributor.userId
+                                          );
+                                        })
+                                      )
+                                    }
+                                    className={styles.btnRemove}
+                                  >
                                     Remove
                                   </button>
                                 </>
@@ -336,7 +435,12 @@ const Index = () => {
                       collection.type === "COLLABORATORS" ? (
                         <div className={styles.right}>
                           <label htmlFor="">PERCENTAGE</label>
-                          <input type="number" placeholder="10%" />
+                          <input
+                            type="number"
+                            name={(contributor?.id).toString()}
+                            onChange={handleChangePercent}
+                            placeholder="10%"
+                          />
                         </div>
                       ) : (
                         ""
@@ -365,7 +469,11 @@ const Index = () => {
                   <button onClick={() => setOpenAddBeneficiary(true)}>
                     Add Beneficiary
                   </button>
-                  <button className={styles.btnSave}>Save</button>
+                  {/* <button 
+                    className={styles.btnSave}
+                    onClick={handleSave}
+                    disabled={handlePercentCheck() !== 100}
+                  >Save</button> */}
                 </div>
               </div>
               <div className={styles.content}>
@@ -387,7 +495,7 @@ const Index = () => {
                           <span className={styles.number}>Wallet address</span>
                         </div>
                         <div className={styles.btnDiv}>
-                          {beneficiary.walletAddress}
+                          <p>{beneficiary.walletAddress}</p>
                         </div>
                       </div>
                     </div>
@@ -396,8 +504,14 @@ const Index = () => {
                       <input
                         value={beneficiary.percentage}
                         type="number"
+                        name={beneficiary.name}
                         placeholder="10%"
+                        disabled
                       />
+                    </div>
+                    <div className={styles.actionBtns}>
+                      <MdEdit size={30} color="#fff" />
+                      <MdCancel size={30} color="orangered" />
                     </div>
                   </div>
                 ))}

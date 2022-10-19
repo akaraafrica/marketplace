@@ -71,6 +71,16 @@ class Collection {
       console.log(error);
     }
   }
+  async updateStatus(data: any) {
+    try {
+      const res = await api.post(url + "/status", {
+        ...data,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async payout(data: any) {
     try {
       const res = await api.post(url + "/update", {
@@ -103,7 +113,7 @@ class Collection {
   }
   async removeContributor(id: number, contributorId: number, items: IItem[]) {
     try {
-      const res = await api.update("/api/contributor/remove", {
+      const res = await api.put("/api/contributor/remove", {
         id,
         contributorId,
         items: items,

@@ -65,10 +65,10 @@ model Item {
   published    Boolean
   publishedAt  DateTime?
   updatedAt    DateTime       @updatedAt
-  category     Category?      @default(ART)
   step         Int?
   royalties    Int?
   terms        Boolean?
+  category     Category?      @default(ART)
   collection   Collection?    @relation(fields: [collectionId], references: [id])
   owner        User           @relation(fields: [ownerId], references: [id])
   auction      Auction?
@@ -221,6 +221,7 @@ model Beneficiary {
   percentage    Int        @default(0)
   description   String
   name          String
+  email         String
   walletAddress String
   Collection    Collection @relation(fields: [collectionId], references: [id])
   User          User?      @relation(fields: [userId], references: [id])
@@ -255,11 +256,11 @@ enum Gender {
 }
 
 enum CollectionStatus {
-  CREATED
-  VERIFIED
-  READY
-  PUBLISHED
   DRAFT
+  READY
+  PENDING
+  VERIFIED
+  PUBLISHED
 }
 
 enum ContributorStatus {

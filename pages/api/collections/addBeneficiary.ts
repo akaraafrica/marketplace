@@ -4,8 +4,14 @@ import prisma from "../../../utils/lib/prisma";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "PATCH") {
     try {
-      const { collectionId, name, walletAddress, description, percentage } =
-        req.body;
+      const {
+        collectionId,
+        name,
+        email,
+        walletAddress,
+        description,
+        percentage,
+      } = req.body;
 
       await prisma.collection.update({
         where: {
@@ -15,6 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           beneficiaries: {
             create: {
               name: name,
+              email: email,
               walletAddress: walletAddress,
               description: description,
               percentage: percentage,

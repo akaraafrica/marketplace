@@ -11,7 +11,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
         },
         data: {
           contributors: {
-            disconnect: [{ id: req.body.contributorId }],
+            delete: { id: req.body.contributorId },
           },
           items: {
             disconnect: req.body.items.map((item: { id: number }) => {
@@ -20,7 +20,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           },
         },
       });
-      return res.status(200).send("contributor deleted");
+      return res.status(200).send("contributor removed");
     } catch (error) {
       console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {

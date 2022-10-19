@@ -5,7 +5,7 @@ const url = `/api/contributor`;
 class Contributor {
   async updatePercentage(data: any) {
     try {
-      const res = await api.post(url + "/percentage", data);
+      const res = await api.put(url + "/percentage", data);
       return res.data;
     } catch (error) {
       console.log(error);
