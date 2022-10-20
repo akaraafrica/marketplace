@@ -38,6 +38,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           visible: data.visible,
           type: data.type,
           videos: data.videos,
+          status:
+            data.type === "ORDINARY" || data.type === "LOCKSHARED"
+              ? "READY"
+              : "DRAFT",
           updatedAt: new Date(),
           author: {
             connect: {

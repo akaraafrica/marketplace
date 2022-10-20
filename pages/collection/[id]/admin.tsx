@@ -325,16 +325,14 @@ const Index = () => {
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
                 <div className={styles.btns}>
-                  {collection.status === "READY" &&
-                    (collection.type === "COLLABORATORS" ||
-                      collection.type === "FUNDRAISING") && (
-                      <button
-                        className={styles.btnSave2}
-                        onClick={handleSendEmails}
-                      >
-                        Send Emails
-                      </button>
-                    )}
+                  {collection.status === "READY" && (
+                    <button
+                      className={styles.btnSave2}
+                      onClick={handleSendEmails}
+                    >
+                      Send Emails
+                    </button>
+                  )}
                   {collection.type !== "ORDINARY" && (
                     <button
                       className={styles.btnSave}
