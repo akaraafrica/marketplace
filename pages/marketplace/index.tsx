@@ -28,9 +28,7 @@ const Index = () => {
   const [filter, setFilter] = useState({
     category: "ALL",
     verifiedCreator: false,
-    likesOrder: "asc",
-    createdOrder: "asc",
-    priceOrder: "desc",
+    sort: "Most liked",
     priceRange: 1000,
   });
   const [searchTerm, setSearchTerm] = useState("");
@@ -83,56 +81,32 @@ const Index = () => {
                 }
               />
             </div>
-            <div className={styles.recent}>
-              <CustomSelect
-                placeholder="Recently added"
-                onChange={(e) =>
-                  handleChange(
-                    e,
-                    "RECENT",
-                    setData,
-                    filter,
-                    setFilter,
-                    setLoading
-                  )
-                }
-                options={["Recently added", "First added"]}
-              />
-            </div>
+
             <div className={styles.filter}>
-              <span>PRICE</span>
+              <span>SORT BY</span>
               <CustomSelect
-                placeholder="Highest price"
+                placeholder="Sort By"
                 onChange={(e) =>
                   handleChange(
                     e,
-                    "PRICE",
+                    "SORT",
                     setData,
                     filter,
                     setFilter,
                     setLoading
                   )
                 }
-                options={["Highest price", "Lowest price"]}
+                options={[
+                  "Most liked",
+                  "Least liked",
+                  "Highest price",
+                  "Lowest price",
+                  "Recently added",
+                  "First added",
+                ]}
               />
             </div>
-            <div className={styles.filter}>
-              <span>LIKES</span>
-              <CustomSelect
-                placeholder="Most liked"
-                onChange={(e) =>
-                  handleChange(
-                    e,
-                    "LIKES",
-                    setData,
-                    filter,
-                    setFilter,
-                    setLoading
-                  )
-                }
-                options={["Most liked", "Least liked"]}
-              />
-            </div>
+
             <div className={styles.filter}>
               <span>CREATOR</span>
               <CustomSelect

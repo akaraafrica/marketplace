@@ -7,7 +7,11 @@ interface CustomSelectProps {
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   options?: string[];
 }
-const CustomSelect: React.FC<CustomSelectProps> = ({ onChange, options }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({
+  onChange,
+  options,
+  placeholder,
+}) => {
   const [value, setValue] = useState("");
   const handleOnChange = (e: any) => {
     setValue(e.target.value);
@@ -16,6 +20,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ onChange, options }) => {
   return (
     <div className={styles.customInput}>
       <select onChange={(e) => handleOnChange(e)} value={value}>
+        <option value="" disabled hidden>
+          {placeholder || ""}
+        </option>
         {options &&
           options.map((option) => {
             return (
