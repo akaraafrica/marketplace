@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CollectionDs } from "../../ds";
 import Dialog from "../global/Dialog";
 import styles from "./styles.module.scss";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"],
@@ -24,18 +25,32 @@ interface Properties {
   handleClose: () => void;
   collectionId: number;
   mutate: any;
+  beneficiary: any;
+  setBeneficiary: any;
 }
 const Index: React.FC<Properties> = ({
   open,
   handleClose,
   collectionId,
   mutate,
+  beneficiary,
+  setBeneficiary,
 }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [wallet, setWallet] = useState("");
   const [description, setDescription] = useState("");
   const [percent, setPercent] = useState(0);
+
+  useEffect(() => {
+    if (beneficiary) {
+      setName(beneficiary.name);
+      setEmail(beneficiary.email);
+      setWallet(beneficiary.walletAddress);
+      setDescription(beneficiary.description);
+      setPercent(beneficiary.percentage);
+    }
+  }, [beneficiary]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -49,19 +64,69 @@ const Index: React.FC<Properties> = ({
       description: description,
       percentage: percent,
     };
-    await CollectionDs.addBeneficiary(collectionId, data);
-    mutate();
+    if (beneficiary) {
+      const data = {
+        id: beneficiary.id,
+        name: name,
+        email: email,
+        walletAddress: wallet,
+        description: description,
+        percentage: percent,
+      };
+      try {
+        await CollectionDs.updateBeneficiary(collectionId, data);
+        setName("");
+        setEmail("");
+        setWallet("");
+        setDescription("");
+        setPercent(0);
+        toast.success("Beneficiary successful updated");
+        mutate();
+        setBeneficiary(null);
+        handleClose();
+      } catch (error) {
+        toast.success("Error updating beneficiary");
+        console.log(error);
+      }
+    } else {
+      try {
+        await CollectionDs.addBeneficiary(collectionId, data);
+        setName("");
+        setEmail("");
+        setWallet("");
+        setDescription("");
+        setPercent(0);
+        toast.success("Beneficiary successful added");
+        mutate();
+        setBeneficiary(null);
+        handleClose();
+      } catch (error) {
+        toast.success("Error adding beneficiary");
+        console.log(error);
+      }
+    }
+  };
+  const handleDialogClose = () => {
+    setName("");
+    setEmail("");
+    setWallet("");
+    setDescription("");
+    setPercent(0);
+    setBeneficiary(null);
+    handleClose();
   };
   return (
-    <Dialog open={open} handleClose={handleClose}>
+    <Dialog open={open} handleClose={handleDialogClose}>
       <main className={styles.main}>
-        <h4>Add Beneficiary</h4>
+        <h4>{beneficiary ? "Edit" : "Add"} Beneficiary</h4>
         <form onSubmit={handleSubmit}>
           <div className={styles.inputDiv}>
             <label>Name</label>
             <input
               onChange={(e) => setName(e.target.value)}
+              value={name}
               type="text"
+              required
               placeholder="John doe"
             />
           </div>
@@ -69,7 +134,9 @@ const Index: React.FC<Properties> = ({
             <label>Email</label>
             <input
               onChange={(e) => setEmail(e.target.value)}
-              type="text"
+              type="email"
+              required
+              value={email}
               placeholder="example@gmail.com"
             />
           </div>
@@ -78,6 +145,8 @@ const Index: React.FC<Properties> = ({
             <input
               onChange={(e) => setWallet(e.target.value)}
               type="text"
+              required
+              value={wallet}
               placeholder="0x00000000000..."
             />
           </div>
@@ -109,6 +178,9 @@ const Index: React.FC<Properties> = ({
             <input
               onChange={(e) => setPercent(parseInt(e.target.value))}
               type="number"
+              max={100}
+              required
+              value={percent}
               placeholder="10%"
             />
           </div>
