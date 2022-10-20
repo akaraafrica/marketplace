@@ -3,57 +3,355 @@ import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
-    const lastIndex = req.query.lastIndex;
+    const lastIndex = Number(req.query.lastIndex) + 1;
     const priceRange = req.query.priceRange;
-    const priceOrder = req.query.priceOrder as "asc" | "desc";
-    const createdOrder = req.query.createdOrder as "asc" | "desc";
-    const likesOrder = req.query.likesOrder as "asc" | "desc";
+    const sort = req.query.sort as
+      | "Most liked"
+      | "Least liked"
+      | "Highest price"
+      | "Lowest price"
+      | "Recently added"
+      | "First added";
     const verifiedCreator = req.query.verifiedCreator as unknown as string;
-    const category = req.query.category as unknown as any;
-    console.log("fetchmore");
+    const category = req.query.category as unknown as any; // console.log("fetchmore");
 
-    console.log({
-      category,
-      verifiedCreator,
-      likesOrder,
-      createdOrder,
-      priceOrder,
-      priceRange,
-    });
-    try {
-      const items = await prisma.item.findMany({
-        where: {
-          price: {
-            lte: Number(priceRange) || 0,
-          },
-          owner: {
-            verified: verifiedCreator.toLowerCase() === "true",
-          },
-          category: category,
-        },
-        include: {
-          likes: true,
-        },
-        skip: Number(lastIndex),
-        take: 20,
-        orderBy: [
-          {
-            price: priceOrder,
-          },
-          {
-            createdAt: createdOrder,
-          },
-          {
-            likes: {
-              _count: likesOrder,
+    if (sort === "Most liked") {
+      if (category === "ALL") {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
             },
-          },
-        ],
-      });
-      return res.status(200).json(items);
-    } catch (error) {
-      res.status(400).json("error");
-      console.log(error);
+            where: {
+              price: {
+                lte: Number(priceRange),
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+            },
+            orderBy: {
+              likes: {
+                _count: "desc",
+              },
+            },
+            skip: Number(lastIndex),
+          });
+
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      } else {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange) || 0,
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+              category: category,
+            },
+            orderBy: {
+              likes: {
+                _count: "desc",
+              },
+            },
+            skip: Number(lastIndex),
+          });
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      }
+    }
+    if (sort === "Least liked") {
+      if (category === "ALL") {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange),
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+            },
+            orderBy: {
+              likes: {
+                _count: "asc",
+              },
+            },
+            skip: Number(lastIndex),
+          });
+
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      } else {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange) || 0,
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+              category: category,
+            },
+            orderBy: {
+              likes: {
+                _count: "asc",
+              },
+            },
+            skip: Number(lastIndex),
+          });
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      }
+    }
+    if (sort === "Highest price") {
+      if (category === "ALL") {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange),
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+            },
+            orderBy: {
+              price: "desc",
+            },
+            skip: Number(lastIndex),
+          });
+
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      } else {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange) || 0,
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+              category: category,
+            },
+            orderBy: {
+              price: "desc",
+            },
+            skip: Number(lastIndex),
+          });
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      }
+    }
+    if (sort === "Lowest price") {
+      if (category === "ALL") {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange),
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+            },
+            orderBy: {
+              price: "asc",
+            },
+            skip: Number(lastIndex),
+          });
+
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      } else {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange) || 0,
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+              category: category,
+            },
+            orderBy: {
+              price: "asc",
+            },
+            skip: Number(lastIndex),
+          });
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      }
+    }
+    if (sort === "First added") {
+      if (category === "ALL") {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange),
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+            },
+            orderBy: {
+              createdAt: "asc",
+            },
+            skip: Number(lastIndex),
+          });
+
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      } else {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange) || 0,
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+              category: category,
+            },
+            orderBy: {
+              createdAt: "asc",
+            },
+            skip: Number(lastIndex),
+          });
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      }
+    }
+    if (sort === "Recently added") {
+      if (category === "ALL") {
+        try {
+          const items = await prisma.item.findMany({
+            orderBy: {
+              createdAt: "desc",
+            },
+            skip: Number(lastIndex),
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange),
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+            },
+          });
+
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      } else {
+        try {
+          const items = await prisma.item.findMany({
+            take: 50,
+            include: {
+              likes: true,
+            },
+            where: {
+              price: {
+                lte: Number(priceRange) || 0,
+              },
+              owner: {
+                verified: verifiedCreator.toLowerCase() === "true",
+              },
+              category: category,
+            },
+            orderBy: {
+              createdAt: "desc",
+            },
+            skip: Number(lastIndex),
+          });
+          return res.status(200).json(items);
+        } catch (error) {
+          res.status(400).json("error");
+          console.log(error);
+        }
+      }
     }
   }
 };

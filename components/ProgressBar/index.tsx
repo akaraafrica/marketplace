@@ -16,7 +16,7 @@ const SliderSizes: React.FC<props> = ({ onChange }) => {
         min={1}
         step={1}
         max={10}
-        defaultValue={5}
+        defaultValue={10}
         aria-label="Default"
         valueLabelDisplay="auto"
       />
