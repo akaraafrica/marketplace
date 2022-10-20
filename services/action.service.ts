@@ -267,6 +267,9 @@ export async function TriggerAction(props: ActionProps) {
           link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin `,
         };
         if (data && emailData) {
+          if (contributor.userId === user.id) {
+            return;
+          }
           promise.push(inApp([data]));
           promise.push(email([emailData]));
         }

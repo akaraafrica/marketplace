@@ -61,7 +61,8 @@ const ListItem: React.FC<ListItemProps> = ({
         <span className={styles.dot}></span>
       </div>
       {!loading ? (
-        action === "create-collection" || (action === "add-item" && respond) ? (
+        action === "contributor-notice" ||
+        (action === "add-item" && respond) ? (
           <div className={styles.actions}>
             <button onClick={handleAccept}>Accept</button>
             <button onClick={handleReject}>Reject</button>

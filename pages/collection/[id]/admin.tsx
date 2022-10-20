@@ -158,6 +158,10 @@ const Index = () => {
     }
     console.log(percentages);
   };
+  const handleSendEmails = async () => {
+    console.log("email sent");
+    await ContributorDs.sendNotifications({ collection, user });
+  };
   if (!collection) {
     return <h1>404</h1>;
   }
@@ -330,15 +334,25 @@ const Index = () => {
             <div className={styles.section}>
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
-                {collection.type !== "ORDINARY" && (
-                  <button
-                    className={styles.btnSave}
-                    onClick={handleSave}
-                    disabled={handlePercentCheck() !== 100}
-                  >
-                    Save
-                  </button>
-                )}
+                <div className={styles.btns}>
+                  {collection.status === "READY" && (
+                    <button
+                      className={styles.btnSave2}
+                      onClick={handleSendEmails}
+                    >
+                      Send Emails
+                    </button>
+                  )}
+                  {collection.type !== "ORDINARY" && (
+                    <button
+                      className={styles.btnSave}
+                      onClick={handleSave}
+                      disabled={handlePercentCheck() !== 100}
+                    >
+                      Save
+                    </button>
+                  )}
+                </div>
               </div>
               <div className={styles.content}>
                 {collection?.contributors

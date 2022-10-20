@@ -252,6 +252,10 @@
               font-weight: 600;
               font-size: 20px;
               color: #fcfcfd;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width: 300px;
             }
 
             .sub {
