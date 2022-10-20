@@ -3,6 +3,14 @@ import { api } from "../services/apiClient";
 const url = `/api/contributor`;
 
 class Contributor {
+  async sendNotifications(data: any) {
+    try {
+      const res = await api.post(url + "/sendmails", data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async updatePercentage(data: any) {
     try {
       const res = await api.put(url + "/percentage", data);
