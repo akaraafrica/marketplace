@@ -2,15 +2,112 @@
   width: 100%;
   overflow-x: hidden;
 
-  .breadcrumbWrap {
+  button {
+    cursor: pointer;
+    z-index: 10;
+    border: 2px solid #f2994a;
+    background-color: #f2994a;
+    color: #fcfcfd;
+    padding: 5px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    margin: auto;
+    display: block;
+  }
+
+  .contributorImages {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+
+    img {
+      border-radius: 10px;
+      width: 30rem;
+      height: 30rem;
+    }
+  }
+
+  main {
+    display: flex;
+    width: 90%;
     justify-content: space-between;
-    align-items: center;
-    padding: 24px 70px;
-    gap: 10px;
-    background: #141416;
-    border-bottom: 1px solid #353945;
+
+    .back {
+      color: white;
+      margin: 1.5rem;
+      margin-bottom: 0;
+      font-size: 1.5rem;
+    }
+
+    .img {
+      position: relative;
+      margin: auto;
+      cursor: pointer;
+      margin: auto;
+      display: block;
+      width: calc(211px + 10vw);
+      height: calc(320px + 10vw);
+
+      img {
+        border-radius: 10px;
+      }
+    }
+
+    section {
+      flex: 10;
+      background-color: #23262f;
+      margin: 0 1rem;
+      border-radius: 20px;
+      height: 75vh;
+      padding: 1rem;
+
+      @media (max-width: 800px) {
+        margin: 0;
+        width: 100%;
+      }
+    }
+
+    .header {
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      margin-bottom: 10px;
+
+      @media (max-width: 500px) {
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+        // margin: auto;
+      }
+
+      .avater {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h3 {
+        color: white;
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      h4 {
+        color: white;
+        margin: 0;
+        font-size: 0.8rem;
+      }
+    }
   }
 
   .backButton {
@@ -58,12 +155,14 @@
     align-items: center;
     justify-content: center;
     padding: 80px 0;
+    padding-left: 9%;
     background: #141416;
     border-bottom: 1px solid #353945;
     box-sizing: border-box;
 
     @media (max-width: 800px) {
-      padding: 80px 20px;
+      padding: 0px;
+      margin-top: 5rem;
     }
 
     .noteTitle {
@@ -90,9 +189,10 @@
 
     .top {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
-      width: 50%;
+      width: 85%;
+      margin-bottom: 1rem;
 
       @media (max-width: 800px) {
         width: 100%;
@@ -142,7 +242,7 @@
       justify-content: flex-start;
       align-items: center;
       gap: 24px;
-      width: 50%;
+      width: 80%;
       margin: 64px 0 48px;
 
       @media (max-width: 800px) {
@@ -172,7 +272,11 @@
     .list {
       display: flex;
       flex-direction: column;
-      width: 50%;
+      width: 24rem;
+      cursor: pointer;
+      height: 75vh;
+      overflow-y: auto;
+      overflow-x: hidden;
 
       @media (max-width: 800px) {
         width: 100%;
@@ -211,7 +315,8 @@
         justify-content: space-between;
         padding: 20px;
         gap: 24px;
-        // width: 100%;
+        width: 100%;
+        position: relative;
 
         @media (max-width: 800px) {
           width: 90%;
@@ -221,7 +326,7 @@
         .left {
           display: flex;
           align-items: center;
-          gap: 20px;
+          gap: 10px;
 
           @media (max-width: 800px) {
             gap: 0;
@@ -230,6 +335,7 @@
           .avatar {
             border-radius: 50%;
             width: 128px;
+            cursor: pointer;
             height: 128px;
 
             @media (max-width: 800px) {
@@ -251,6 +357,7 @@
               font-style: normal;
               font-weight: 600;
               font-size: 20px;
+              width: 100%;
               color: #fcfcfd;
               white-space: nowrap;
               overflow: hidden;
@@ -273,13 +380,6 @@
             }
           }
         }
-
-        .dot {
-          width: 12px;
-          height: 12px;
-          background: #f2994a;
-          border-radius: 16px;
-        }
       }
 
       .listItemWrapper:hover {
@@ -289,7 +389,31 @@
   }
 }
 
+.description {
+  display: flex;
+  color: white;
+  gap: 1rem;
+  align-items: center;
+  font-size: larger;
+  font-weight: 700;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background: #f2994a;
+  border-radius: 16px;
+  position: absolute;
+  right: 50px;
+}
+
 .actions {
   display: flex;
   gap: 30px;
+}
+
+.active {
+  background-color: #23262f;
+  border-radius: 20px;
+  width: fit-content;
 }

@@ -88,7 +88,8 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: item.owner.id,
         senderId: user.id,
         action: action,
-        title: `${getUserName(user)} place ${bidAmount} ETH bid on ${
+        title: "Your item received A bid",
+        description: `${getUserName(user)} place ${bidAmount} ETH bid on ${
           item?.title
         }`,
         itemType: ItemType.Bid,
@@ -114,7 +115,8 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: user.id,
         senderId: item.owner.id,
         action: action,
-        title: `congratulation 
+        title: "Your Bid has been accepted",
+        description: `congratulation 
         ${getUserName(user)}
          your bid on ${item?.title} for ${item.price} ETH is accepted`,
         itemType: ItemType.Bid,
@@ -141,7 +143,8 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: profile.id,
         senderId: user.id,
         action: action,
-        title: `${getUserName(user)} follows you`,
+        title: "A new follower",
+        description: `${getUserName(user)} follows you`,
       });
 
       if (data) {
@@ -154,8 +157,8 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: item.owner.id,
         senderId: user.id,
         action: action,
-        title: `
-        ${getUserName(user)} likes ${item?.title} `,
+        title: "Your Item is getting noticed",
+        description: `${getUserName(user)} likes ${item?.title} `,
         itemType: ItemType.Item,
         itemId: item.id,
       });
@@ -170,7 +173,8 @@ export async function TriggerAction(props: ActionProps) {
         receiverId: item.owner.id,
         senderId: user.id,
         action: action,
-        title: `${getUserName(user)} purchase ${item?.title} for ${
+        title: "Your item has been purchased",
+        description: `${getUserName(user)} purchase ${item?.title} for ${
           item.price
         } ETH`,
         itemType: ItemType.Bid,
@@ -189,59 +193,58 @@ export async function TriggerAction(props: ActionProps) {
         await email(emailData);
       }
       break;
-    case Actions.AddItem:
-      if (!item || !collection) throw Error("invalid action");
-      console.log(collection);
+    //   case Actions.AddItem:
+    //   if (!item || !collection) throw Error("invalid action");
+    //   console.log(collection);
 
-      data.push({
-        receiverId: item.owner.id,
-        senderId: user.id,
-        action: action,
-        title: ` ${getUserName(user)} is requesting to add ${item?.title} to ${
-          collection?.title
-        } collection `,
-        itemType: ItemType.Collection,
-        itemId: item.id,
-      });
-      emailData.push({
-        to: user.email,
-        from: "info@mbizi.org",
-        templateId: MailTemplateIDs.Purchase,
-        title: item.title,
-        amount: item.price,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
-      });
-      if (data) {
-        await inApp(data);
-        await email(emailData);
-      }
-      break;
-    case Actions.CreateItem:
-      if (!item) throw Error("invalid action");
+    //   data.push({
+    //     receiverId: item.owner.id,
+    //     senderId: user.id,
+    //     action: action,
+    //     title: "Your",
+    //     description: ` ${getUserName(user)} is requesting to add ${item?.title} to ${collection?.title
+    //       } collection `,
+    //     itemType: ItemType.Collection,
+    //     itemId: item.id,
+    //   });
+    //   emailData.push({
+    //     to: user.email,
+    //     from: "info@mbizi.org",
+    //     templateId: MailTemplateIDs.Purchase,
+    //     title: item.title,
+    //     amount: item.price,
+    //     link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
+    //   });
+    //   if (data) {
+    //     await inApp(data);
+    //     await email(emailData);
+    //   }
+    //   break;
+    //   // case Actions.CreateItem:
+    //   if (!item) throw Error("invalid action");
 
-      data.push({
-        receiverId: user.id,
-        senderId: user.id,
-        action: action,
-        title: `congratulation ${getUserName(user)} ${
-          item?.title
-        } has been minted`,
-        itemType: ItemType.Item,
-        itemId: item.id,
-      });
-      emailData.push({
-        to: user.email,
-        from: "info@mbizi.org",
-        templateId: MailTemplateIDs.CreateItem,
-        title: item.title,
-        amount: item.price,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
-      });
-      if (data && emailData) {
-        await inApp(data);
-        await email(emailData);
-      }
-      break;
+    //   data.push({
+    //     receiverId: user.id,
+    //     senderId: user.id,
+    //     action: action,
+    //     title: `congratulation ${getUserName(user)} ${item?.title
+    //       } has been minted`,
+    //     itemType: ItemType.Item,
+    //     itemId: item.id,
+    //   });
+    //   emailData.push({
+    //     to: user.email,
+    //     from: "info@mbizi.org",
+    //     templateId: MailTemplateIDs.CreateItem,
+    //     title: item.title,
+    //     amount: item.price,
+    //     link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
+    //   });
+    //   if (data && emailData) {
+    //     await inApp(data);
+    //     await email(emailData);
+    //   }
+    //   break;
     case Actions.contributorNotice:
       if (!collection) throw Error("invalid action");
       const promise: any = [];
@@ -251,12 +254,14 @@ export async function TriggerAction(props: ActionProps) {
           receiverId: contributor.user.id,
           senderId: user.id,
           action: action,
-          title: ` ${getUserName(
+          title: "Contributor Notice",
+          description: `${getUserName(
             user
           )} request your approval to add your item(s) to his ${
             collection?.title
           } collection. Check the collection dashboard and approve or decline.`,
           itemType: ItemType.Collection,
+          collectionId: collection.id,
         };
         const emailData = {
           to: contributor.user.email,
