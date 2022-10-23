@@ -1,156 +1,245 @@
 import NextImage from "../../../components/Image";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Layout from "../../../components/Layout";
-import QuickButtons from "../../../components/SingleItems/QuickButtons";
 import { CollectionDs } from "../../../ds";
 import useWindowSize from "../../../hooks/useWindowSize";
 import styles from "./index.module.scss";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { ICollection } from "../../../types/collection.interface";
 import { GetServerSideProps } from "next";
 import { IItem } from "../../../types/item.interface";
-import ReactHtmlParser from "react-html-parser";
-import withAuth from "../../../HOC/withAuth";
 import DefaultAvatar from "../../../components/DefaultAvatar";
-import { getUserName } from "../../../utils/helpers/getUserName";
+import { Box } from "@mui/material";
+import { BiArrowBack } from "react-icons/bi";
+import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
+import { AuthContext } from "../../../contexts/AuthContext";
+import Link from "next/link";
+import parse from "html-react-parser";
 
 interface properties {
   collection: ICollection;
 }
 const Index = ({ collection }: properties) => {
-  const width = useWindowSize().width!;
-  const [selectedItem, setSelectedItem] = useState<IItem>();
+  const total = collection.items.reduce(
+    (total: number, item: { price: number }) => total + item.price,
+    0
+  );
+  const [open, setOpen] = useState(1);
+  const { user } = useContext(AuthContext);
 
   return (
     <Layout>
-      <main className={styles.main}>
-        <section className={styles.sectionone}>
-          <div className={styles.img}>
-            <NextImage
-              className={styles.img}
-              alt={selectedItem ? selectedItem.title : collection.title}
-              src={selectedItem ? selectedItem.images[0] : collection.images[0]}
-              layout="fill"
-            />
-            {width < 800 && <QuickButtons collection={collection} />}
+      <Box className={styles.container}>
+        <div className={styles.breadcrumbWrap}>
+          <div className={styles.backButton}>
+            <Link href={`/`}>
+              <BiArrowBack />
+            </Link>
+            <p className={styles.backText}>Back to collections</p>
           </div>
-          {collection.items && collection.items?.length > 0 && (
-            <div className={styles.images}>
-              <Swiper
-                slidesPerView={4}
-                spaceBetween={5}
-                style={{ zIndex: 1 }}
-                className={styles.swiper_container}
+          {user?.id === collection.author.id && (
+            <Link href={`/collection/${collection.id}/admin`}>
+              <a>
+                <span className={styles.currentCrumb}>Manage collection</span>
+              </a>
+            </Link>
+          )}
+        </div>
+        <main>
+          <div className={styles.heading}>
+            <div className={styles.left}>
+              <h2>{collection?.title}</h2>
+              {collection?.lunchTime && (
+                <div>Launches in {collection?.lunchTime}</div>
+              )}
+            </div>
+          </div>
+          <section className={styles.nav}>
+            <span
+              onClick={() => setOpen(1)}
+              className={open === 1 ? styles.active : ""}
+            >
+              Items
+            </span>
+
+            <span
+              onClick={() => setOpen(2)}
+              className={open === 2 ? styles.active : ""}
+            >
+              Contributors
+            </span>
+
+            {collection.type === "FUNDRAISING" && (
+              <span
+                onClick={() => setOpen(4)}
+                className={open === 4 ? styles.active : ""}
               >
-                <SwiperSlide key={-1}>
+                Beneficiary
+              </span>
+            )}
+          </section>
+
+          {open === 1 && (
+            <div>
+              <section className={styles.stats}>
+                <div>
+                  <span>{collection?.items?.length}</span>
+                  <h3>Collection Items</h3>
+                </div>
+                <div>
+                  <span>{total} ETH</span>
+                  <h3>Total worth of Collection </h3>
+                </div>
+              </section>
+              <section className="">
+                <div className={styles.mainImg}>
                   <NextImage
-                    onClick={() => {
-                      setSelectedItem(undefined);
-                    }}
-                    key={-1}
-                    src={collection.images[0]}
-                    width={100}
-                    height={100}
-                    alt={collection.title}
-                    className={styles.image}
+                    className={styles.cardImg}
+                    src={
+                      collection?.images[0] || `/assets/placeholder-image.jpg`
+                    }
+                    width="1000px"
+                    height="450px"
+                    alt="product"
                   />
-                </SwiperSlide>
-                {collection.items.map(
-                  (item: IItem, idx) =>
-                    item.images.length > 0 && (
-                      <SwiperSlide key={idx}>
-                        <NextImage
-                          onClick={() => {
-                            setSelectedItem(item);
-                          }}
-                          key={idx}
-                          src={item.images[0] || ""}
-                          width={100}
-                          height={100}
-                          alt={item.title}
-                          className={styles.image}
-                        />
-                      </SwiperSlide>
-                    )
-                )}
-              </Swiper>
+                </div>
+
+                <div className={styles.bottomImg}>
+                  <div>
+                    {collection.images.slice(1).map((image, index) => (
+                      <NextImage
+                        className={styles.cardImg}
+                        src={image || `/assets/placeholder-image.jpg`}
+                        width="200px"
+                        key={index}
+                        height="150px"
+                        alt="product"
+                      />
+                    ))}
+                  </div>
+                  <div>{user && parse(collection.description)}</div>
+                </div>
+              </section>
+              <section>
+                <div className={styles.bottom}>
+                  <div>
+                    <ItemGrid
+                      collection={collection}
+                      user={user!}
+                      title="Collection Items"
+                      view={true}
+                    />
+                  </div>
+                </div>
+              </section>
             </div>
           )}
-        </section>
-
-        <section className={styles.sectiontwo}>
-          <div className={styles.price}>
-            <h3>{collection.title}</h3>
-            {/* <span>{item.price} 2.5 ETH</span> */}
-            {/* <span>$4,429.87</span> */}
-          </div>
-          {collection?.likes?.length && (
-            <div className={styles.stats}>
-              <div>
-                <span>Likes</span>
-                <span>{collection?.likes?.length || 0}</span>
+          {open === 2 && (
+            <div className={styles.section}>
+              <div className={styles.sectionTop}>
+                <div className={styles.btns}></div>
+              </div>
+              <div className={styles.content}>
+                {collection?.contributors
+                  ?.sort((a, b) => {
+                    if (a.userId === user?.id) {
+                      return -1;
+                    } else {
+                      return 1;
+                    }
+                  })
+                  .map((contributor) => (
+                    <div key={contributor.id} className={styles.row}>
+                      <div className={styles.left}>
+                        {contributor && (
+                          <DefaultAvatar
+                            url={contributor?.user?.profile?.avatar}
+                            id={contributor.user.id}
+                            width={"88px"}
+                            height={"88px"}
+                            walletAddress={contributor?.user.walletAddress}
+                            fontSize={"8px"}
+                          />
+                        )}
+                        <div className={styles.details}>
+                          <div className={styles.dtop}>
+                            <span className={styles.name}>
+                              {contributor.user.email}
+                            </span>
+                            <span className={styles.number}>
+                              {
+                                collection.items?.filter((item) => {
+                                  return item.ownerId === contributor.userId;
+                                }).length
+                              }{" "}
+                              Item(s) in collection
+                            </span>
+                          </div>
+                          <div className={styles.btnDiv}></div>
+                        </div>
+                      </div>
+                      <div className={styles.center}>
+                        <div className={styles.scroll}>
+                          {collection.items
+                            ?.filter(
+                              (item) => item.ownerId === contributor.userId
+                            )
+                            .map((item: IItem, idx: number) => (
+                              <div key={idx} className={styles.centerItem}>
+                                <NextImage
+                                  className={styles.image}
+                                  src={item.images[0]}
+                                  width="112px"
+                                  height="88px"
+                                />
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           )}
-          <div>{ReactHtmlParser(collection.description)}</div>
-
-          {width > 800 && (
-            <QuickButtons desktop={true} collection={collection} />
+          {open === 3 && (
+            <div className={styles.section}>
+              <h2>Whitelist</h2>
+            </div>
           )}
-          <section>
-            {selectedItem && (
-              <>
-                <div className={styles.price}>
-                  <h4>{selectedItem?.title}</h4>
-                </div>
-                <div className={styles.stats}>
-                  <div>
-                    <span>Likes</span>
-                    <span>{selectedItem?.likes?.length || 0}</span>
+          {open === 4 && (
+            <div className={styles.section}>
+              <div className={styles.topB}>
+                <div className={styles.sectionTop}></div>
+              </div>
+              <div className={styles.content}>
+                {collection?.beneficiaries?.map((beneficiary) => (
+                  <div key={beneficiary.id} className={styles.row}>
+                    <div className={styles.left}>
+                      <DefaultAvatar
+                        url={""}
+                        width={"88px"}
+                        height={"88px"}
+                        walletAddress={beneficiary.walletAddress}
+                        fontSize={"8px"}
+                      />
+                      <div className={styles.details}>
+                        <div className={styles.dtop}>
+                          <span className={styles.name}>
+                            {beneficiary.name}
+                          </span>
+                          <span className={styles.number}>Wallet address</span>
+                        </div>
+                        <div className={styles.btnDiv}>
+                          <p>{beneficiary.walletAddress}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <span>Offers</span>
-                    <span>{selectedItem?.bids?.length || 0}</span>
-                  </div>
-                  <div>
-                    <span>Rating</span>
-                    <span>{selectedItem?.ratings?.length || 0}</span>
-                  </div>
-                </div>
-              </>
-            )}
-            <p>{selectedItem?.description}</p>
-            {collection.author && (
-              <a
-                href={`/profile/${
-                  selectedItem ? selectedItem.owner.id : collection?.author?.id
-                }`}
-              >
-                <div className={styles.profileInfoCard}>
-                  <DefaultAvatar
-                    id={selectedItem ? selectedItem.id : collection.author.id}
-                    walletAddress={
-                      selectedItem
-                        ? selectedItem.owner.walletAddress!
-                        : collection.author.walletAddress!
-                    }
-                    url={
-                      selectedItem
-                        ? selectedItem.owner.profile?.avatar
-                        : collection.author.profile?.avatar
-                    }
-                  />
-                  <div className={styles.owner}>
-                    {getUserName(
-                      selectedItem ? selectedItem.owner : collection.author
-                    )}
-                  </div>
-                </div>
-              </a>
-            )}
-          </section>
-        </section>
-      </main>
+                ))}
+              </div>
+            </div>
+          )}
+        </main>
+      </Box>
     </Layout>
   );
 };
@@ -166,5 +255,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-// export default Index;
-export default withAuth(Index);
+export default Index;
