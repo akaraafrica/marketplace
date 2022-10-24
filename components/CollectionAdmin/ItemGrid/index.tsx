@@ -8,10 +8,12 @@ export default function ItemGrid({
   title,
   collection,
   user,
+  view,
 }: {
   user: IUser;
   collection: ICollection;
   title: string;
+  view?: boolean;
 }) {
   return (
     <section className={styles.watchlist}>
@@ -39,7 +41,7 @@ export default function ItemGrid({
                     <span>{item?.price} ETH</span>
                   </div>
                 </div>
-                {collection.author.id === user?.id && (
+                {collection.author.id === user?.id && !view && (
                   <button>Remove Item</button>
                 )}
               </div>
