@@ -272,7 +272,7 @@
     .list {
       display: flex;
       flex-direction: column;
-      width: 24rem;
+      width: 28rem;
       cursor: pointer;
       height: 75vh;
       overflow-y: auto;
@@ -284,9 +284,10 @@
 
       .listItemWrapper {
         display: flex;
+        // padding: 0 20px;
         flex-direction: column;
-        gap: 20px;
-        border-radius: 20px;
+        gap: 10px;
+        // border-radius: 20px;
         width: 100%;
 
         .actions {
@@ -313,8 +314,8 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 20px;
-        gap: 24px;
+        padding: 10px;
+        gap: 10px;
         width: 100%;
         position: relative;
 
@@ -326,7 +327,6 @@
         .left {
           display: flex;
           align-items: center;
-          gap: 10px;
 
           @media (max-width: 800px) {
             gap: 0;
@@ -357,12 +357,11 @@
               font-style: normal;
               font-weight: 600;
               font-size: 20px;
-              width: 100%;
               color: #fcfcfd;
+              width: 15rem;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
-              max-width: 300px;
             }
 
             .sub {
@@ -384,6 +383,8 @@
 
       .listItemWrapper:hover {
         background-color: #23262f;
+        width: 26rem;
+        border-radius: 20px;
       }
     }
   }
@@ -415,5 +416,5 @@
 .active {
   background-color: #23262f;
   border-radius: 20px;
-  width: fit-content;
+  width: 26rem;
 }
