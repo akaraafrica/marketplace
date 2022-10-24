@@ -89,19 +89,19 @@ model ItemRating {
 
 model Notification {
   title        String
-  description  String?
   content      String?
   createdAt    DateTime    @default(now())
   id           Int         @id @default(autoincrement())
   action       String
   itemId       Int?
-  collectionId Int?
   itemType     String?
   read         Boolean     @default(false)
   receiverId   Int
   senderId     Int?
-  item         Item?       @relation(fields: [itemId], references: [id])
+  description  String?
+  collectionId Int?
   collection   Collection? @relation(fields: [collectionId], references: [id])
+  item         Item?       @relation(fields: [itemId], references: [id])
   receiver     User        @relation("receiver", fields: [receiverId], references: [id])
   sender       User?       @relation("sender", fields: [senderId], references: [id])
 }

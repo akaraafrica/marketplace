@@ -35,24 +35,24 @@ const ListItem: React.FC<ListItemProps> = ({
   id,
   action,
 }) => {
-  const { user, isAuthenticated, signIn } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
-  const [respond, setRespond] = useState(true);
+  // const { user, isAuthenticated, signIn } = useContext(AuthContext);
+  // const [loading, setLoading] = useState(false);
+  // const [respond, setRespond] = useState(true);
 
-  const handleAccept = async () => {
-    const id = user?.id;
-    setLoading(true);
-    await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
-    setLoading(false);
-    setRespond(false);
-  };
-  const handleReject = async () => {
-    const id = user?.id;
-    setLoading(true);
-    await ContributorDs.updateStatus({ id, status: "REJECTED" });
-    setLoading(false);
-    setRespond(false);
-  };
+  // const handleAccept = async () => {
+  //   const id = user?.id;
+  //   setLoading(true);
+  //   await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
+  //   setLoading(false);
+  //   setRespond(false);
+  // };
+  // const handleReject = async () => {
+  //   const id = user?.id;
+  //   setLoading(true);
+  //   await ContributorDs.updateStatus({ id, status: "REJECTED" });
+  //   setLoading(false);
+  //   setRespond(false);
+  // };
   return (
     <div className={styles.listItemWrapper} id={id}>
       <div className={styles.listItem}>
@@ -71,19 +71,6 @@ const ListItem: React.FC<ListItemProps> = ({
           {!read && <span className={styles.dot}></span>}
         </div>
       </div>
-      {!loading ? (
-        action === "contributor-notice" ||
-        (action === "add-item" && respond) ? (
-          <div className={styles.actions}>
-            <button onClick={handleAccept}>Accept</button>
-            <button onClick={handleReject}>Reject</button>
-          </div>
-        ) : (
-          ""
-        )
-      ) : (
-        <span className={styles.actions}>Wait...</span>
-      )}
     </div>
   );
 };
@@ -92,6 +79,8 @@ const Index = () => {
   const router = useRouter();
   const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
+  const [loading, setLoading] = useState(false);
+  const [respond, setRespond] = useState(true);
 
   const { data: notifications } = useSWR<{ data: INotification[] }>(
     ["notificationsAll", user?.id],
@@ -140,6 +129,21 @@ const Index = () => {
     if (data && data.status === 204) {
       return toast.success("Marked all as read");
     }
+  };
+
+  const handleAccept = async () => {
+    const id = user?.id;
+    setLoading(true);
+    await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
+    setLoading(false);
+    setRespond(false);
+  };
+  const handleReject = async () => {
+    const id = user?.id;
+    setLoading(true);
+    await ContributorDs.updateStatus({ id, status: "REJECTED" });
+    setLoading(false);
+    setRespond(false);
   };
 
   return (
@@ -236,7 +240,7 @@ const Index = () => {
                     </a>
                   </Link>
                   <Link href={"item/" + selectedNotification?.item?.id}>
-                    <button>Go to Item</button>
+                    <button className={styles.visit}>Go to Item</button>
                   </Link>
                 </div>
               )}
@@ -254,8 +258,8 @@ const Index = () => {
                                 alt={item?.title}
                                 src={item?.images[0]}
                                 layout="fixed"
-                                width={200}
-                                height={200}
+                                width={300}
+                                height={300}
                               />
                             </a>
                           </Link>
@@ -269,8 +273,22 @@ const Index = () => {
                       "/admin"
                     }
                   >
-                    <button>Collection Dashboard</button>
+                    <button className={styles.visit}>
+                      Collection Dashboard
+                    </button>
                   </Link>
+                  {!loading ? (
+                    selectedNotification?.action === "contributor-notice" ? (
+                      <div className={styles.actions}>
+                        <button onClick={handleAccept}>Accept</button>
+                        <button onClick={handleReject}>Reject</button>
+                      </div>
+                    ) : (
+                      ""
+                    )
+                  ) : (
+                    <span className={styles.actions}>Wait...</span>
+                  )}
                 </>
               )}
             </section>
