@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import styles from "./admin.module.scss";
 import Layout from "../../../components/Layout";
 import { GetServerSideProps } from "next";
@@ -24,6 +24,7 @@ import { getCookies } from "cookies-next";
 import { toast } from "react-toastify";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import collectionsDs from "../../../ds/collections.ds";
+import UpdateCollectionAdminDialog from "../../../components/UpdateCollectionAdminDialog";
 
 const Index = () => {
   const router = useRouter();
@@ -49,6 +50,8 @@ const Index = () => {
   const [openLunchTime, setOpenLunchTime] = useState(false);
   const [openAddBeneficiary, setOpenAddBeneficiary] = useState(false);
   const [openPublish, setOpenPublish] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+
   // const [openPayout, setOpenPayout] = useState(false);
   const handleClose = () => {
     setOpenLunchTime(false);
@@ -62,6 +65,12 @@ const Index = () => {
   };
   const [respond, setRespond] = useState(false);
 
+  useEffect(() => {
+    // @ts-ignore
+    if (collection?.status === "PENDING" && handleCheckContributorsStatus()) {
+      setOpenUpdate(true);
+    }
+  }, []);
   const handleRejectRequest = async () => {
     const id = user?.id;
     try {
@@ -184,6 +193,20 @@ const Index = () => {
       console.log(error);
     }
   };
+  const handleCheckContributorsStatus = () => {
+    let count: number = 0;
+    collection.contributors.forEach((contributor) => {
+      if (contributor.confirmation === "ACCEPTED") {
+        count++;
+      }
+    });
+    if (count === collection.contributors.length) {
+      console.log("complete acceptance");
+      return true;
+    }
+  };
+
+  console.log(collection);
   return (
     <Layout>
       <MintCollectionDialog
@@ -211,6 +234,12 @@ const Index = () => {
         beneficiary={selectBeneficiary}
         setBeneficiary={setSelectBeneficiary}
         handleClose={() => setOpenAddBeneficiary(false)}
+        mutate={mutate}
+      />
+      <UpdateCollectionAdminDialog
+        open={openUpdate}
+        handleClose={() => setOpenUpdate(false)}
+        collectionId={collection.id}
         mutate={mutate}
       />
       {/* <PayoutDialog
@@ -265,7 +294,7 @@ const Index = () => {
                   </button>
                 )}
 
-                <button>Payout Funds</button>
+                {/* <button>Payout Funds</button> */}
                 <Link href={`/collection/create?id=${collection?.id}`}>
                   <button>
                     Edit Collection Details <BiRightArrowAlt />
@@ -416,7 +445,6 @@ const Index = () => {
                           </div>
                           <div className={styles.btnDiv}>
                             {!respond &&
-                              collection.status === "DRAFT" &&
                               contributor.confirmation === "PENDING" &&
                               contributor.userId !== user?.id &&
                               collection.author.id !== user?.id && (
