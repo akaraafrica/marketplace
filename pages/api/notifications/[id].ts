@@ -9,10 +9,43 @@ const handler = async (
 ) => {
   const id: number = parseInt(req.query.id as string);
   if (req.method === "GET") {
+    if (req.query.all) {
+      const data = await prisma.notification.findMany({
+        where: {
+          receiverId: id,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          receiver: {
+            include: {
+              profile: true,
+            },
+          },
+          sender: true,
+          item: true,
+          collection: {
+            include: {
+              items: {
+                include: {
+                  owner: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      res.status(200).json({ data });
+    }
     const data = await prisma.notification.findMany({
       where: {
         receiverId: id,
         read: false,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
       include: {
         receiver: {
@@ -21,6 +54,7 @@ const handler = async (
           },
         },
         item: true,
+        collection: true,
       },
     });
 

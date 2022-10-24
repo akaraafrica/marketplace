@@ -1,34 +1,45 @@
 import React from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import NextImage from "../../components/Image";
 import styles from "./index.module.scss";
 import { INotification } from "../../types/notification.interface";
 import getNiceDate from "../../utils/helpers/dateFormatter";
-
+import Link from "../Link";
 const Item = ({ data }: { data: INotification }) => {
   return (
-    <div className={styles.item}>
-      <div className={styles.left}>
-        <NextImage
-          className={styles.img}
-          src="/assets/productimg6.png"
-          width="70px"
-          height="70px"
-        />
-        <div className={styles.details}>
-          <span className={styles.title}>{data.title}</span>
-          {/* <span className={styles.desc}>0.18 ETH received</span> */}
-          <span className={styles.time}>{getNiceDate(data.createdAt)}</span>
-        </div>
-      </div>
-      <span className={styles.dot}></span>
+    <div>
+      <Link href={`/notifications?id=${data.id}`}>
+        <a>
+          <div className={styles.item}>
+            <div className={styles.left}>
+              <NextImage
+                className={styles.img}
+                src={
+                  data?.item
+                    ? data?.item?.images[0]
+                    : data?.collection?.images[0] || "/assets/avatar.png"
+                }
+                width="70px"
+                height="70px"
+              />
+              <div className={styles.details}>
+                <span className={styles.title}>{data.title}</span>
+                <span className={styles.time}>
+                  {getNiceDate(data.createdAt)}
+                </span>
+              </div>
+            </div>
+            <span className={styles.dot}></span>
+          </div>
+        </a>
+      </Link>
     </div>
   );
 };
 
 const Index = ({ data }: { data: INotification[] }) => {
   const router = useRouter();
+
   return (
     <div className={styles.root} style={{ zIndex: 1 }}>
       <div className={styles.top}>
@@ -36,17 +47,23 @@ const Index = ({ data }: { data: INotification[] }) => {
         <span onClick={() => router.push("/notifications")}>See all</span>
       </div>
       <div className={styles.body}>
-        {data.length &&
+        {data.length ? (
           data.map((notification) => {
             return (
               <div key={notification.id}>
                 <Item data={notification} />
               </div>
             );
-          })}
+          })
+        ) : (
+          <h3 className={styles.allread}>
+            All sorted. <br />
+            The world is your oyster.
+          </h3>
+        )}
       </div>
     </div>
   );
 };
 
-export default Index;
+export default React.memo(Index);
