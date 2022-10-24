@@ -1,5 +1,4 @@
 import { api } from "../services/apiClient";
-import data from "../data.json";
 
 interface CreateNotificationData {
   title: string;
@@ -20,30 +19,28 @@ class Notifications {
       console.log(error);
     }
   }
-
-  async updateAll(token: string, walletAddress: string) {
+  async fetchAll(id: number) {
     try {
-      const resp = await api.put(`${url}/updateAll`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ address: walletAddress }),
-      });
+      const resp = await api.get(`${url}/${id}?all=true`);
       return resp.data;
     } catch (error) {
       console.log(error);
     }
   }
 
-  async update(id: string, walletAddress: string, token: string) {
+  async updateAll(walletAddress: string) {
+    try {
+      const resp = await api.put(`${url}/updateAll`, { walletAddress });
+      return resp.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async update(id: string, walletAddress: string) {
     try {
       const resp = await api.put(`${url}/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        address: walletAddress,
+        walletAddress,
       });
       return resp.data;
     } catch (error) {

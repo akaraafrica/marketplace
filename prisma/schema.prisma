@@ -88,19 +88,22 @@ model ItemRating {
 }
 
 model Notification {
-  title      String
-  content    String?
-  createdAt  DateTime @default(now())
-  id         Int      @id @default(autoincrement())
-  action     String
-  itemId     Int?
-  itemType   String?
-  read       Boolean  @default(false)
-  receiverId Int
-  senderId   Int?
-  item       Item?    @relation(fields: [itemId], references: [id])
-  receiver   User     @relation("receiver", fields: [receiverId], references: [id])
-  sender     User?    @relation("sender", fields: [senderId], references: [id])
+  title        String
+  description  String?
+  content      String?
+  createdAt    DateTime    @default(now())
+  id           Int         @id @default(autoincrement())
+  action       String
+  itemId       Int?
+  collectionId Int?
+  itemType     String?
+  read         Boolean     @default(false)
+  receiverId   Int
+  senderId     Int?
+  item         Item?       @relation(fields: [itemId], references: [id])
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+  receiver     User        @relation("receiver", fields: [receiverId], references: [id])
+  sender       User?       @relation("sender", fields: [senderId], references: [id])
 }
 
 model Profile {
@@ -147,6 +150,7 @@ model Collection {
   contributors  Contributor[]
   items         Item[]
   likes         Like[]
+  Notification  Notification[]
 }
 
 model User {

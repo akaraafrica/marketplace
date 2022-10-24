@@ -7,6 +7,12 @@
   overflow-y: hidden;
   z-index: 1;
 
+  .allread {
+    color: white;
+    font-size: medium;
+    text-align: center;
+  }
+
   .top {
     display: flex;
     justify-content: space-between;
@@ -19,6 +25,7 @@
       font-size: 30px;
       font-weight: 600;
     }
+
     span {
       color: #fcfcfd;
       background-color: #f2994a;
@@ -27,17 +34,20 @@
       cursor: pointer;
     }
   }
+
   .body {
     height: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
     overflow-y: scroll;
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
 }
+
 .item {
   display: flex;
   justify-content: space-between;
@@ -63,10 +73,12 @@
         font-weight: 700;
         font-size: 16px;
       }
+
       .desc {
         color: #fcfcfd;
         font-size: 14px;
       }
+
       .time {
         font-size: 12px;
       }
@@ -81,6 +93,7 @@
     border: none;
   }
 }
+
 .item:hover {
   background-color: #23262f;
   border-radius: 10px;

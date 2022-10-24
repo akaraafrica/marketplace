@@ -50,14 +50,6 @@ function Header() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, active]);
 
-  useEffect(() => {
-    (async () => {
-      if (user?.id) {
-        // const { data } = await NotificationDs.fetch(user?.id);
-      }
-    })();
-  });
-
   function handleUpload() {
     user
       ? router.push("/item/create")
@@ -145,7 +137,9 @@ function Header() {
                 setNotificationOpen(!notificationOpen);
               }}
             >
-              <div className={styles.active}></div>
+              <div
+                className={notifications.data.length ? styles.active : ""}
+              ></div>
               <MdNotificationsNone size={40} />
               {notificationOpen && notifications && (
                 <div className={styles.dialog}>

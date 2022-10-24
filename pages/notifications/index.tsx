@@ -10,7 +10,12 @@ import { toast } from "react-toastify";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import { NotificationDs, ContributorDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
-import withAuth from "../../HOC/withAuth";
+import useSWR from "swr";
+import { INotification } from "../../types/notification.interface";
+import NextImage from "../../components/Image";
+import Link from "next/link";
+import DefaultAvatar from "../../components/DefaultAvatar";
+import useWindowSize from "../../hooks/useWindowSize";
 
 interface ListItemProps {
   title: string;
@@ -18,33 +23,38 @@ interface ListItemProps {
   date: string;
   img: string;
   action: string;
+  id: string;
+  read: string;
 }
 const ListItem: React.FC<ListItemProps> = ({
   title,
   subTitle,
   date,
   img,
+  read,
+  id,
   action,
 }) => {
   const { user, isAuthenticated, signIn } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [respond, setRespond] = useState(true);
 
-  const id = user?.id;
   const handleAccept = async () => {
+    const id = user?.id;
     setLoading(true);
     await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
     setLoading(false);
     setRespond(false);
   };
   const handleReject = async () => {
+    const id = user?.id;
     setLoading(true);
     await ContributorDs.updateStatus({ id, status: "REJECTED" });
     setLoading(false);
     setRespond(false);
   };
   return (
-    <div className={styles.listItemWrapper}>
+    <div className={styles.listItemWrapper} id={id}>
       <div className={styles.listItem}>
         <div className={styles.left}>
           <img
@@ -52,13 +62,14 @@ const ListItem: React.FC<ListItemProps> = ({
             src={img ? img : "/assets/avatar.png"}
             alt=""
           />
+
           <div className={styles.desc}>
             <div className={styles.title}>{title}</div>
             <p className={styles.sub}>{subTitle}</p>
             <span className={styles.date}>{date}</span>
           </div>
+          {!read && <span className={styles.dot}></span>}
         </div>
-        <span className={styles.dot}></span>
       </div>
       {!loading ? (
         action === "contributor-notice" ||
@@ -79,35 +90,58 @@ const ListItem: React.FC<ListItemProps> = ({
 
 const Index = () => {
   const router = useRouter();
-  const [notifications, setNotifications] = useState([]);
-  const { user, isAuthenticated } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const width = useWindowSize().width!;
+
+  const { data: notifications } = useSWR<{ data: INotification[] }>(
+    ["notificationsAll", user?.id],
+    () => NotificationDs.fetchAll(user!.id)
+  );
+
+  const updateData = async (id: string) => {
+    if (user) await NotificationDs.update(id, user.walletAddress);
+  };
+  const [selectedNotification, setSelectedNotification] = useState(
+    notifications?.data[0]
+  );
+  useEffect(() => {
+    if (selectedNotification)
+      document
+        .getElementById(selectedNotification!.id!.toString())
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+  }, [selectedNotification]);
+  useEffect(() => {
+    if (!selectedNotification) {
+      setSelectedNotification(notifications?.data[0]);
+    }
+  }, [notifications]);
 
   useEffect(() => {
-    if (user?.id)
-      NotificationDs.fetch(user!.id).then((res) => {
-        setNotifications(res.data);
-      });
-  }, [user]);
-
-  // const updateData = async (id: string) => {
-  //   await NotificationDs.update(
-  //     id,
-  //     user?.walletAddress || "",
-  //     user?.accessToken || ""
-  //   );
-  // };
-
+    const id = router.query.id as string;
+    if (id && notifications?.data) {
+      const findNotification = notifications?.data.find(
+        (item) => item!.id === Number(id)
+      );
+      if (findNotification && !selectedNotification) {
+        setSelectedNotification(findNotification);
+      }
+    }
+  }, [router, notifications]);
+  useEffect(() => {
+    if (selectedNotification && !selectedNotification?.read) {
+      updateData(selectedNotification.id as unknown as string);
+    }
+  }, [selectedNotification]);
   const updateAllData = async () => {
-    const data = await NotificationDs.updateAll(
-      user?.accessToken || "",
-      user?.walletAddress || ""
-    );
+    const data = await NotificationDs.updateAll(user!.walletAddress);
     if (data && data.status === 204) {
       return toast.success("Marked all as read");
     }
   };
 
-  console.log({ notifications });
   return (
     <div className={styles.root}>
       <Header />
@@ -124,33 +158,129 @@ const Index = () => {
       </div>
       <div className={styles.notification}>
         <div className={styles.top}>
-          <h3>Notifications</h3>
           <div className={styles.markButton} onClick={() => updateAllData()}>
             <p className={styles.markText}>Mark all as read</p>
           </div>
         </div>
-        <div className={styles.nav}>
-          <span className={styles.navItem}>Latest</span>
-          <span>Unread</span>
-          <span>All notifications</span>
-        </div>
-        <div className={styles.list}>
-          {notifications &&
-            notifications.map((item: any) => (
-              <ListItem
-                key={item.id}
-                title={item.title}
-                subTitle={item.content}
-                img={item?.item?.images[0]}
-                date={getNiceDate(item.createdAt)}
-                action={item.action}
-              />
-            ))}
-        </div>
+
+        <main>
+          {(width > 800 || !selectedNotification) && (
+            <div className={styles.list}>
+              {notifications?.data &&
+                notifications.data.map((item: any) => (
+                  <div
+                    key={item.id}
+                    onClick={() => setSelectedNotification(item)}
+                    className={
+                      item.id === selectedNotification?.id ? styles.active : ""
+                    }
+                  >
+                    <ListItem
+                      key={item.id}
+                      id={item.id}
+                      read={item.read}
+                      title={item.title}
+                      subTitle={item.content}
+                      img={item?.item?.images[0] || item?.collection?.images[0]}
+                      date={getNiceDate(item.createdAt)}
+                      action={item.action}
+                    />
+                  </div>
+                ))}
+            </div>
+          )}
+
+          {selectedNotification && (
+            <section>
+              {width < 800 && (
+                <BiArrowBack
+                  className={styles.back}
+                  onClick={() => setSelectedNotification(undefined)}
+                />
+              )}
+              <div className={styles.header}>
+                <div className={styles.avater}>
+                  <h3>{selectedNotification?.title}</h3>
+                  <br />
+                </div>
+
+                <h4>
+                  {selectedNotification?.item?.createdAt &&
+                    getNiceDate(selectedNotification!.item!.createdAt)}
+                </h4>
+              </div>
+              <div className={styles.description}>
+                <DefaultAvatar
+                  id={selectedNotification?.sender?.id}
+                  url={selectedNotification?.sender?.profile?.avatar}
+                  walletAddress={
+                    selectedNotification?.sender?.walletAddress || ""
+                  }
+                  fontSize="0.7em"
+                  length={2}
+                />
+
+                <span>{selectedNotification?.description}</span>
+              </div>
+
+              {selectedNotification?.item && (
+                <div className={styles.img}>
+                  <Link href={"item/" + selectedNotification?.item?.id}>
+                    <a>
+                      <NextImage
+                        alt={selectedNotification?.item?.title}
+                        src={selectedNotification?.item?.images[0]}
+                        width={500}
+                        height={500}
+                      />
+                    </a>
+                  </Link>
+                  <Link href={"item/" + selectedNotification?.item?.id}>
+                    <button>Go to Item</button>
+                  </Link>
+                </div>
+              )}
+              {selectedNotification?.collection && (
+                <>
+                  <div className={styles.contributorImages}>
+                    {selectedNotification?.collection?.items
+                      ?.filter((item) => item.owner.id === user?.id)
+                      .slice(0, 4)
+                      .map((item) => {
+                        return (
+                          <Link href={"item/" + item?.id} key={item.id}>
+                            <a>
+                              <NextImage
+                                alt={item?.title}
+                                src={item?.images[0]}
+                                layout="fixed"
+                                width={200}
+                                height={200}
+                              />
+                            </a>
+                          </Link>
+                        );
+                      })}
+                  </div>
+                  <Link
+                    href={
+                      "collection/" +
+                      selectedNotification?.collection?.id +
+                      "/admin"
+                    }
+                  >
+                    <button>Collection Dashboard</button>
+                  </Link>
+                </>
+              )}
+            </section>
+          )}
+        </main>
       </div>
       <Footer />
     </div>
   );
 };
 
-export default withAuth(Index);
+// export default withAuth(Index);
+export default Index;

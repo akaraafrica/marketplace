@@ -33,12 +33,14 @@ const Index: React.FC<AvatarProps> = ({
         className={styles.default}
       >
         <Link href={id ? `/profile/${id}` : "#"}>
-          <div
-            style={{ fontSize: fontSize }}
-            /* @ts-ignore: Unreachable code error */
-          >
-            {walletFirstThree + walletLastThree}
-          </div>
+          <a>
+            <div
+              style={{ fontSize: fontSize }}
+              /* @ts-ignore: Unreachable code error */
+            >
+              {walletFirstThree + walletLastThree}
+            </div>
+          </a>
         </Link>
       </div>
     );

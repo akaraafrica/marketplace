@@ -3,11 +3,10 @@ import prisma from "../../../utils/lib/prisma";
 import verifyToken from "../../../utils/middlewares/verifyToken";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const id: string = req.query.id as string;
   if (req.method === "PUT") {
     await prisma.user.update({
       where: {
-        walletAddress: req.body.address,
+        walletAddress: req.body.walletAddress,
       },
       data: {
         receivedNotifications: {
