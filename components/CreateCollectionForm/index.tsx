@@ -68,7 +68,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
     if (user) {
       setSelectedUser([...selectedUser, user]);
     }
-  }, [user]);
+  }, []);
   useEffect(() => {
     if (collection) {
       setValue("title", collection.title);

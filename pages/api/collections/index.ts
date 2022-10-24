@@ -28,6 +28,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   if (req.method === "POST") {
     const { data, user } = req.body;
+    let status =
+      data.type === "ORDINARY" || data.type === "LOCKSHARED"
+        ? "READY"
+        : ("DRAFT" as any);
+
     try {
       const response = await prisma.collection.create({
         data: {
@@ -38,10 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           visible: data.visible,
           type: data.type,
           videos: data.videos,
-          status:
-            data.type === "ORDINARY" || data.type === "LOCKSHARED"
-              ? "READY"
-              : "DRAFT",
+          status: status,
           updatedAt: new Date(),
           author: {
             connect: {
