@@ -1,30 +1,44 @@
-import Box from "@mui/material/Box";
 import { useContext, useState, useEffect } from "react";
 import styles from "./admin.module.scss";
-import Layout from "../../../components/Layout";
 import { GetServerSideProps } from "next";
 import { ICollection } from "../../../types/collection.interface";
-import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
 import { CollectionDs, ContributorDs } from "../../../ds";
-import Link from "next/link";
 import withAuth from "../../../HOC/withAuth";
 import { BiArrowBack, BiRightArrowAlt } from "react-icons/bi";
 import { MdCancel, MdEdit } from "react-icons/md";
-import { useRouter } from "next/router";
-import DefaultAvatar from "../../../components/DefaultAvatar";
 import NextImage from "../../../components/Image";
 import { IItem } from "../../../types/item.interface";
-import VerifyDialog from "../../../components/CollectionAdmin/VerifyDialog";
 import { AuthContext } from "../../../contexts/AuthContext";
-import LunchTimeDialog from "../../../components/LunchTimeDialog";
-import PayoutDialog from "../../../components/PayoutDialog";
-import AddBeneficiaryDialog from "../../../components/AddBeneficiaryDialog";
-import MintCollectionDialog from "../../../components/CollectionAdmin/MintCollectionDialog";
 import { getCookies } from "cookies-next";
-import { toast } from "react-toastify";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import collectionsDs from "../../../ds/collections.ds";
-import UpdateCollectionAdminDialog from "../../../components/UpdateCollectionAdminDialog";
+import dynamic from "next/dynamic";
+const Layout: any = dynamic(() => import("../../../components/Layout"));
+const ItemGrid: any = dynamic(
+  () => import("../../../components/CollectionAdmin/ItemGrid")
+);
+const VerifyDialog: any = dynamic(
+  () => import("../../../components/CollectionAdmin/VerifyDialog")
+);
+const DefaultAvatar: any = dynamic(
+  () => import("../../../components/DefaultAvatar")
+);
+const LunchTimeDialog: any = dynamic(
+  () => import("../../../components/LunchTimeDialog")
+);
+const AddBeneficiaryDialog: any = dynamic(
+  () => import("../../../components/AddBeneficiaryDialog")
+);
+const MintCollectionDialog: any = dynamic(
+  () => import("../../../components/CollectionAdmin/MintCollectionDialog")
+);
+const UpdateCollectionAdminDialog: any = dynamic(
+  () => import("../../../components/UpdateCollectionAdminDialog")
+);
+const Link: any = dynamic(() => import("next/link"));
+const Box: any = dynamic(() => import("@mui/material/Box"));
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const Index = () => {
   const router = useRouter();

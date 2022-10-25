@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import Layout from "../../components/Layout";
-import ProgressBar from "../../components/ProgressBar";
 import styles from "./index.module.scss";
 import Discovery, { Filter } from "../../ds/discovery.ds";
 import { MdCancel } from "react-icons/md";
-import DiscoveryItems from "../../components/DiscoveryItems";
 import {
   handleCategoryChange,
   handleChange,
   handleResetFilter,
   handleSliderChange,
 } from "../../components/DiscoverSection/utils";
-import CustomSelect from "../../components/CustomSelect";
 import { IItem } from "../../types/item.interface";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import itemDs from "../../ds/item.ds";
 import useDebounce from "../../hooks/useDebounce";
+import dynamic from "next/dynamic";
+const Layout: any = dynamic(() => import("../../components/Layout"));
+const ProgressBar: any = dynamic(() => import("../../components/ProgressBar"));
+const DiscoveryItems: any = dynamic(
+  () => import("../../components/DiscoveryItems")
+);
+const CustomSelect: any = dynamic(
+  () => import("../../components/CustomSelect")
+);
 
 const Index = () => {
   const { data: items } = useSWR<IItem[]>(["discovery"], () =>
@@ -76,7 +81,7 @@ const Index = () => {
             <div className={styles.filter}>
               <span>PRICE RANGE</span>
               <ProgressBar
-                onChange={(e) =>
+                onChange={(e: any) =>
                   handleSliderChange(e, setData, filter, setFilter, setLoading)
                 }
               />
@@ -86,7 +91,7 @@ const Index = () => {
               <span>SORT BY</span>
               <CustomSelect
                 placeholder="Sort By"
-                onChange={(e) =>
+                onChange={(e: any) =>
                   handleChange(
                     e,
                     "SORT",
@@ -111,7 +116,7 @@ const Index = () => {
               <span>CREATOR</span>
               <CustomSelect
                 placeholder="Non verified only"
-                onChange={(e) =>
+                onChange={(e: any) =>
                   handleChange(
                     e,
                     "CREATORS",

@@ -1,19 +1,21 @@
 import NextImage from "../../../components/Image";
 import React, { useContext, useState } from "react";
-import Layout from "../../../components/Layout";
 import { CollectionDs } from "../../../ds";
-import useWindowSize from "../../../hooks/useWindowSize";
 import styles from "./index.module.scss";
 import { ICollection } from "../../../types/collection.interface";
 import { GetServerSideProps } from "next";
 import { IItem } from "../../../types/item.interface";
-import DefaultAvatar from "../../../components/DefaultAvatar";
-import { Box } from "@mui/material";
 import { BiArrowBack } from "react-icons/bi";
-import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
 import { AuthContext } from "../../../contexts/AuthContext";
 import Link from "next/link";
 import parse from "html-react-parser";
+import dynamic from "next/dynamic";
+const Layout: any = dynamic(() => import("../../../components/Layout"));
+const DefaultAvatar: any = () => import("../../../components/DefaultAvatar");
+const ItemGrid: any = dynamic(
+  () => import("../../../components/CollectionAdmin/ItemGrid")
+);
+const Box: any = dynamic(() => import("@mui/material/Box"));
 
 interface properties {
   collection: ICollection;

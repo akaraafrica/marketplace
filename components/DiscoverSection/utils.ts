@@ -1,4 +1,3 @@
-import { TbRuler } from "react-icons/tb";
 import itemDs from "../../ds/item.ds";
 import { IItem } from "../../types/item.interface";
 
@@ -70,7 +69,7 @@ export const handleChange = async (
     console.log(value);
 
     setFilter({ ...filter, sort: value });
-    setLoading(TbRuler);
+    setLoading(true);
     const res = await itemDs.getFilterData({ ...filter, sort: value });
     setLoading(false);
     setData(res);
