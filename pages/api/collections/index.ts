@@ -67,11 +67,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
 
-      // await TriggerAction({
-      //   action: Actions.CreateCollection,
-      //   user,
-      //   collection: data,
-      // });
       console.log("Collection created");
 
       res.status(201).json({ id: response.id, message: "Collection created" });
