@@ -23,7 +23,7 @@ const Item = ({ data }: { data: INotification }) => {
                 height="70px"
               />
               <div className={styles.details}>
-                <span className={styles.title}>{data.title}</span>
+                <span className={styles.title}>{data.title.slice(0, 30)}</span>
                 <span className={styles.time}>
                   {getNiceDate(data.createdAt)}
                 </span>
