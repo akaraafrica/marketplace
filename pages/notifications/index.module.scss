@@ -2,7 +2,7 @@
   width: 100%;
   overflow-x: hidden;
 
-  button {
+  .visit {
     cursor: pointer;
     z-index: 10;
     border: 2px solid #f2994a;
@@ -65,7 +65,11 @@
       margin: 0 1rem;
       border-radius: 20px;
       height: 75vh;
-      padding: 1rem;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
       @media (max-width: 800px) {
         margin: 0;
@@ -290,21 +294,9 @@
         width: 100%;
 
         .actions {
-          justify-content: end;
+          display: flex;
+          justify-content: flex-start;
           padding: 20px;
-
-          button {
-            cursor: pointer;
-            border: 2px solid #f2994a;
-            background-color: #f2994a;
-            color: #fcfcfd;
-            padding: 5px;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            -ms-border-radius: 5px;
-            -o-border-radius: 5px;
-          }
         }
       }
 
@@ -396,6 +388,10 @@
   align-items: center;
   font-size: larger;
   font-weight: 700;
+  max-width: 50%;
+  @media (max-width: 800px) {
+    max-width: 100%;
+  }
 }
 
 .dot {
@@ -409,7 +405,23 @@
 
 .actions {
   display: flex;
+  justify-content: flex-end;
   gap: 30px;
+  // background: yellow;
+  padding: 20px;
+
+  button {
+    cursor: pointer;
+    border: 2px solid #f2994a;
+    background-color: transparent;
+    color: #fcfcfd;
+    padding: 8px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+  }
 }
 
 .active {

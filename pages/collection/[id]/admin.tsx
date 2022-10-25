@@ -139,7 +139,6 @@ const Index = () => {
     console.log("contributors: ", contributorsPercent);
 
     try {
-      // ts-ignore
       const BatchUpdate = collection?.contributors.forEach(
         (contributor: { id: string | number }) => {
           // const contributorId = contributor.id;
@@ -161,6 +160,8 @@ const Index = () => {
   const handleSendEmails = async () => {
     console.log("email sent");
     await ContributorDs.sendNotifications({ collection, user });
+    await collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" });
+    toast.success("Notifications sent successfully");
   };
   if (!collection) {
     return <h1>404</h1>;
@@ -245,7 +246,26 @@ const Index = () => {
 
             {collection.author.id === user?.id && (
               <div className={styles.right}>
-                <button>Payount Funds</button>
+                {collection.status === "READY" &&
+                  collection.author.id === user?.id && (
+                    <button
+                      className={styles.btnSave2}
+                      onClick={handleSendEmails}
+                    >
+                      Send Emails
+                    </button>
+                  )}
+                {collection.type !== "ORDINARY" && (
+                  <button
+                    className={styles.btnSave}
+                    onClick={handleSave}
+                    disabled={handlePercentCheck() !== 100}
+                  >
+                    Save
+                  </button>
+                )}
+
+                <button>Payout Funds</button>
                 <Link href={`/collection/create?id=${collection?.id}`}>
                   <button>
                     Edit Collection Details <BiRightArrowAlt />
@@ -334,25 +354,6 @@ const Index = () => {
             <div className={styles.section}>
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
-                <div className={styles.btns}>
-                  {collection.status === "READY" && (
-                    <button
-                      className={styles.btnSave2}
-                      onClick={handleSendEmails}
-                    >
-                      Send Emails
-                    </button>
-                  )}
-                  {collection.type !== "ORDINARY" && (
-                    <button
-                      className={styles.btnSave}
-                      onClick={handleSave}
-                      disabled={handlePercentCheck() !== 100}
-                    >
-                      Save
-                    </button>
-                  )}
-                </div>
               </div>
               <div className={styles.content}>
                 {collection?.contributors
