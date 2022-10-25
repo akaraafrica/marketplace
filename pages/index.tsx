@@ -2,7 +2,6 @@
 import React from "react";
 import Lottie from "react-lottie-player";
 import lottieJson from "../lotties/json-background.json";
-import SellersSec from "../components/SellersSec";
 import styles from "./index.module.scss";
 import HotItems from "../components/HotItems";
 import Discover from "../components/DiscoverSection/index";
@@ -18,6 +17,10 @@ import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import { ICollection } from "../types/collection.interface";
 import { IItem } from "../types/item.interface";
 import { IUser } from "../types/user.interface";
+import dynamic from "next/dynamic";
+const SellersSec: any = dynamic(() => import("../components/SellersSec"), {
+  ssr: false,
+});
 
 const Home = () => {
   const { data: collection } = useSWR<ICollection[]>(["collection"], () =>

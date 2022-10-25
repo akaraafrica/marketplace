@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import styles from "./admin.module.scss";
 import Layout from "../../../components/Layout";
 import { GetServerSideProps } from "next";
@@ -24,6 +24,7 @@ import { getCookies } from "cookies-next";
 import { toast } from "react-toastify";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import collectionsDs from "../../../ds/collections.ds";
+import UpdateCollectionAdminDialog from "../../../components/UpdateCollectionAdminDialog";
 
 const Index = () => {
   const router = useRouter();
@@ -49,6 +50,8 @@ const Index = () => {
   const [openLunchTime, setOpenLunchTime] = useState(false);
   const [openAddBeneficiary, setOpenAddBeneficiary] = useState(false);
   const [openPublish, setOpenPublish] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+
   // const [openPayout, setOpenPayout] = useState(false);
   const handleClose = () => {
     setOpenLunchTime(false);
@@ -62,6 +65,12 @@ const Index = () => {
   };
   const [respond, setRespond] = useState(false);
 
+  useEffect(() => {
+    // @ts-ignore
+    if (collection?.status === "PENDING" && handleCheckContributorsStatus()) {
+      setOpenUpdate(true);
+    }
+  }, []);
   const handleRejectRequest = async () => {
     const id = user?.id;
     try {
@@ -139,7 +148,6 @@ const Index = () => {
     console.log("contributors: ", contributorsPercent);
 
     try {
-      // ts-ignore
       const BatchUpdate = collection?.contributors.forEach(
         (contributor: { id: string | number }) => {
           // const contributorId = contributor.id;
@@ -161,6 +169,8 @@ const Index = () => {
   const handleSendEmails = async () => {
     console.log("email sent");
     await ContributorDs.sendNotifications({ collection, user });
+    await collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" });
+    toast.success("Notifications sent successfully");
   };
   if (!collection) {
     return <h1>404</h1>;
@@ -183,6 +193,20 @@ const Index = () => {
       console.log(error);
     }
   };
+  const handleCheckContributorsStatus = () => {
+    let count: number = 0;
+    collection.contributors.forEach((contributor) => {
+      if (contributor.confirmation === "ACCEPTED") {
+        count++;
+      }
+    });
+    if (count === collection.contributors.length) {
+      console.log("complete acceptance");
+      return true;
+    }
+  };
+
+  console.log(collection);
   return (
     <Layout>
       <MintCollectionDialog
@@ -210,6 +234,12 @@ const Index = () => {
         beneficiary={selectBeneficiary}
         setBeneficiary={setSelectBeneficiary}
         handleClose={() => setOpenAddBeneficiary(false)}
+        mutate={mutate}
+      />
+      <UpdateCollectionAdminDialog
+        open={openUpdate}
+        handleClose={() => setOpenUpdate(false)}
+        collectionId={collection.id}
         mutate={mutate}
       />
       {/* <PayoutDialog
@@ -245,7 +275,26 @@ const Index = () => {
 
             {collection.author.id === user?.id && (
               <div className={styles.right}>
-                <button>Payount Funds</button>
+                {collection.status === "READY" &&
+                  collection.author.id === user?.id && (
+                    <button
+                      className={styles.btnSave2}
+                      onClick={handleSendEmails}
+                    >
+                      Send Emails
+                    </button>
+                  )}
+                {collection.type !== "ORDINARY" && (
+                  <button
+                    className={styles.btnSave}
+                    onClick={handleSave}
+                    disabled={handlePercentCheck() !== 100}
+                  >
+                    Save
+                  </button>
+                )}
+
+                {/* <button>Payout Funds</button> */}
                 <Link href={`/collection/create?id=${collection?.id}`}>
                   <button>
                     Edit Collection Details <BiRightArrowAlt />
@@ -334,25 +383,6 @@ const Index = () => {
             <div className={styles.section}>
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
-                <div className={styles.btns}>
-                  {collection.status === "READY" && (
-                    <button
-                      className={styles.btnSave2}
-                      onClick={handleSendEmails}
-                    >
-                      Send Emails
-                    </button>
-                  )}
-                  {collection.type !== "ORDINARY" && (
-                    <button
-                      className={styles.btnSave}
-                      onClick={handleSave}
-                      disabled={handlePercentCheck() !== 100}
-                    >
-                      Save
-                    </button>
-                  )}
-                </div>
               </div>
               <div className={styles.content}>
                 {collection?.contributors
@@ -415,7 +445,6 @@ const Index = () => {
                           </div>
                           <div className={styles.btnDiv}>
                             {!respond &&
-                              collection.status === "DRAFT" &&
                               contributor.confirmation === "PENDING" &&
                               contributor.userId !== user?.id &&
                               collection.author.id !== user?.id && (

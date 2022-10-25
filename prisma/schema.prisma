@@ -94,13 +94,13 @@ model Notification {
   id           Int         @id @default(autoincrement())
   action       String
   itemId       Int?
-  collectionId Int?
   itemType     String?
   read         Boolean     @default(false)
   receiverId   Int
   senderId     Int?
   description  String?     @db.VarChar(10000)
   item         Item?       @relation(fields: [itemId], references: [id])
+  collectionId Int?
   collection   Collection? @relation(fields: [collectionId], references: [id])
   receiver     User        @relation("receiver", fields: [receiverId], references: [id])
   sender       User?       @relation("sender", fields: [senderId], references: [id])

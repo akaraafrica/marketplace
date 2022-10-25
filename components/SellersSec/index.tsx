@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SellersCard from "../SellersCard";
 import styles from "./styles.module.scss";
-// import Slider from "infinite-react-carousel";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import "swiper/css";

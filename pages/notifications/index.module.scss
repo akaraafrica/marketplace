@@ -2,7 +2,7 @@
   width: 100%;
   overflow-x: hidden;
 
-  button {
+  .visit {
     cursor: pointer;
     z-index: 10;
     border: 2px solid #f2994a;
@@ -65,7 +65,11 @@
       margin: 0 1rem;
       border-radius: 20px;
       height: 75vh;
-      padding: 1rem;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
       @media (max-width: 800px) {
         margin: 0;
@@ -272,7 +276,7 @@
     .list {
       display: flex;
       flex-direction: column;
-      width: 24rem;
+      width: 28rem;
       cursor: pointer;
       height: 75vh;
       overflow-y: auto;
@@ -284,27 +288,16 @@
 
       .listItemWrapper {
         display: flex;
+        // padding: 0 20px;
         flex-direction: column;
-        gap: 20px;
-        border-radius: 20px;
+        gap: 10px;
+        // border-radius: 20px;
         width: 100%;
 
         .actions {
-          justify-content: end;
+          display: flex;
+          justify-content: flex-start;
           padding: 20px;
-
-          button {
-            cursor: pointer;
-            border: 2px solid #f2994a;
-            background-color: #f2994a;
-            color: #fcfcfd;
-            padding: 5px;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            -ms-border-radius: 5px;
-            -o-border-radius: 5px;
-          }
         }
       }
 
@@ -313,8 +306,8 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 20px;
-        gap: 24px;
+        padding: 10px;
+        gap: 10px;
         width: 100%;
         position: relative;
 
@@ -326,7 +319,6 @@
         .left {
           display: flex;
           align-items: center;
-          gap: 10px;
 
           @media (max-width: 800px) {
             gap: 0;
@@ -357,12 +349,11 @@
               font-style: normal;
               font-weight: 600;
               font-size: 20px;
-              width: 100%;
               color: #fcfcfd;
+              width: 15rem;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
-              max-width: 300px;
             }
 
             .sub {
@@ -384,6 +375,8 @@
 
       .listItemWrapper:hover {
         background-color: #23262f;
+        width: 26rem;
+        border-radius: 20px;
       }
     }
   }
@@ -396,6 +389,10 @@
   align-items: center;
   font-size: larger;
   font-weight: 700;
+  max-width: 50%;
+  @media (max-width: 800px) {
+    max-width: 100%;
+  }
 }
 
 .dot {
@@ -409,11 +406,27 @@
 
 .actions {
   display: flex;
+  justify-content: flex-end;
   gap: 30px;
+  // background: yellow;
+  padding: 20px;
+
+  button {
+    cursor: pointer;
+    border: 2px solid #f2994a;
+    background-color: transparent;
+    color: #fcfcfd;
+    padding: 8px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+  }
 }
 
 .active {
   background-color: #23262f;
   border-radius: 20px;
-  width: fit-content;
+  width: 26rem;
 }
