@@ -55,7 +55,7 @@ model Item {
   collectionId Int?
   tokenId      String         @unique
   title        String
-  description  String?        @db.VarChar(250)
+  description  String?        @db.VarChar(10000)
   images       String[]
   video        String?
   acceptedBid  Float?
@@ -98,10 +98,10 @@ model Notification {
   read         Boolean     @default(false)
   receiverId   Int
   senderId     Int?
-  description  String?
+  description  String?     @db.VarChar(10000)
+  item         Item?       @relation(fields: [itemId], references: [id])
   collectionId Int?
   collection   Collection? @relation(fields: [collectionId], references: [id])
-  item         Item?       @relation(fields: [itemId], references: [id])
   receiver     User        @relation("receiver", fields: [receiverId], references: [id])
   sender       User?       @relation("sender", fields: [senderId], references: [id])
 }
@@ -133,7 +133,7 @@ model Collection {
   id            Int                @id @default(autoincrement())
   title         String
   tokenId       String             @unique
-  description   String             @db.VarChar(250)
+  description   String             @db.VarChar(10000)
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   authorId      Int

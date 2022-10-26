@@ -6,10 +6,6 @@ import "swiper/css/bundle";
 import "./_app.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./react-quill.css";
-// import { providers } from "ethers";
-// import { AuthProvider } from "../contexts/AuthContext";
-// import { Web3ReactProvider } from "@web3-react/core";
-// import { SWRConfig } from "swr";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 const MainAppWrapper: any = dynamic(
