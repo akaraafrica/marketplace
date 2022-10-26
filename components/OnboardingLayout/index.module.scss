@@ -8,6 +8,7 @@
 
   .sidebar {
     width: 400px;
+    height: 100% !important;
     @media (max-width: 800px) {
       position: fixed;
       margin-left: -150%;
@@ -17,7 +18,7 @@
 
   .children {
     width: calc(100% - 400px);
-    padding: 230px 0 0;
+    padding: 100px 0 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;

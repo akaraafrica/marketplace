@@ -5,17 +5,20 @@ import OnboardingInput from "../../components/OnboardingInput";
 import OnboardingButton from "../../components/OnboardingButton";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { BsFillCameraFill } from "react-icons/bs";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
 import { toast } from "react-toastify";
 import VerifyEmail from "../../components/VerifyEmail";
+import NextImage from "../../components/Image";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [verify, setVerify] = useState(false);
+  const [image, setImage] = useState(null);
   const router = useRouter();
 
   const { account, active, activate } = useWeb3React();
@@ -92,10 +95,33 @@ const Index = () => {
         />
       ) : (
         <div className={styles.login}>
-          <h6 className={styles.title}>Sign Up</h6>
-          <p className={styles.text}>Sign up with your email and password</p>
-          {error !== "" && <span className={styles.error}>{error}</span>}
+          <h6 className={styles.title}>Create an account</h6>
           <form className={styles.inputs}>
+            <div className={styles.mainImgdiv}>
+              <NextImage
+                className={styles.mainImg}
+                src={
+                  image
+                    ? URL.createObjectURL(image)
+                    : `/assets/placeholder-image.jpg`
+                }
+                layout="fill"
+                alt=""
+              />
+              <div className={styles.upload}>
+                <BsFillCameraFill size={30} color="#fff" />
+              </div>
+            </div>
+
+            <p className={styles.text}>Sign up with your email and password</p>
+            {error !== "" && <span className={styles.error}>{error}</span>}
+            <OnboardingInput
+              onChange={handleChange}
+              label="Name"
+              name="name"
+              type="text"
+              placeholder="John Smith"
+            />
             <OnboardingInput
               onChange={handleChange}
               label="Email"
@@ -110,6 +136,29 @@ const Index = () => {
               type="password"
               placeholder="***********"
             />
+            <OnboardingInput
+              onChange={handleChange}
+              label="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              placeholder="***********"
+            />
+            <div className={styles.gender}>
+              <label htmlFor="gender">Gender</label>
+              <div className={styles.btns}>
+                <button type="button">Male</button>
+                <button type="button">Female</button>
+                <button type="button">Others</button>
+              </div>
+            </div>
+            <div className={styles.gender}>
+              <label htmlFor="gender">Birth Date</label>
+              <div className={styles.btns}>
+                <input type="date">Male</input>
+                {/* <button type="button">Female</button>
+                <button type="button">Others</button> */}
+              </div>
+            </div>
           </form>
           <OnboardingButton text="Sign up" onClick={handleSubmit} />
           {/* <span className={styles.forgot}>Forgot Password</span> */}
