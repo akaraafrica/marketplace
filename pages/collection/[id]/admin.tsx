@@ -168,8 +168,17 @@ const Index = () => {
   };
   const handleSendEmails = async () => {
     console.log("email sent");
-    await ContributorDs.sendNotifications({ collection, user });
-    await collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" });
+    const AdminContributor = collection?.contributors.find(
+      (con) => con.userId === collection.author.id
+    );
+    await Promise.all([
+      ContributorDs.sendNotifications({ collection, user }),
+      ContributorDs.updateStatus({
+        id: AdminContributor?.id,
+        status: "ACCEPTED",
+      }),
+      collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" }),
+    ]);
     toast.success("Notifications sent successfully");
   };
   if (!collection) {

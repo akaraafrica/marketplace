@@ -27,6 +27,7 @@ const handler = async (
           item: true,
           collection: {
             include: {
+              contributors: true,
               items: {
                 include: {
                   owner: true,
