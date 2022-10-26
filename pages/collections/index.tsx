@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import LandingLayout from "../../components/Layout/index";
 import { CollectionDs } from "../../ds";
-import HotCollectionCard from "../../components/HotCollectionsCard";
 import { ICollection } from "../../types/collection.interface";
 import { BiSearch } from "react-icons/bi";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import useDebounce from "../../hooks/useDebounce";
+import dynamic from "next/dynamic";
+const LandingLayout: any = dynamic(() => import("../../components/Layout"));
+const HotCollectionCard: any = dynamic(
+  () => import("../../components/HotCollectionsCard")
+);
 
 const Index = () => {
   const { data: collections } = useSWR<ICollection[]>(["collection"], () =>
