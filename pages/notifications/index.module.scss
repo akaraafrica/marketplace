@@ -64,7 +64,6 @@
       background-color: #23262f;
       margin: 0 1rem;
       border-radius: 20px;
-      height: 75vh;
       padding: 3rem;
       display: flex;
       flex-direction: column;
@@ -390,6 +389,7 @@
   font-size: larger;
   font-weight: 700;
   max-width: 50%;
+
   @media (max-width: 800px) {
     max-width: 100%;
   }

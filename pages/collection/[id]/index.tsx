@@ -2,18 +2,16 @@ import NextImage from "../../../components/Image";
 import React, { useContext, useState } from "react";
 import Layout from "../../../components/Layout";
 import { CollectionDs } from "../../../ds";
-import useWindowSize from "../../../hooks/useWindowSize";
 import styles from "./index.module.scss";
 import { ICollection } from "../../../types/collection.interface";
 import { GetServerSideProps } from "next";
 import { IItem } from "../../../types/item.interface";
 import DefaultAvatar from "../../../components/DefaultAvatar";
 import { Box } from "@mui/material";
-import { BiArrowBack } from "react-icons/bi";
 import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
 import { AuthContext } from "../../../contexts/AuthContext";
-import Link from "next/link";
 import parse from "html-react-parser";
+import Link from "next/link";
 
 interface properties {
   collection: ICollection;
@@ -29,21 +27,15 @@ const Index = ({ collection }: properties) => {
   return (
     <Layout>
       <Box className={styles.container}>
-        <div className={styles.breadcrumbWrap}>
-          <div className={styles.backButton}>
-            <Link href={`/`}>
-              <BiArrowBack />
-            </Link>
-            <p className={styles.backText}>Back to collections</p>
-          </div>
-          {user?.id === collection.author.id && (
+        {user?.id === collection.author.id && (
+          <div className={styles.breadcrumbWrap}>
             <Link href={`/collection/${collection.id}/admin`}>
               <a>
                 <span className={styles.currentCrumb}>Manage collection</span>
               </a>
             </Link>
-          )}
-        </div>
+          </div>
+        )}
         <main>
           <div className={styles.heading}>
             <div className={styles.left}>
@@ -58,24 +50,20 @@ const Index = ({ collection }: properties) => {
               onClick={() => setOpen(1)}
               className={open === 1 ? styles.active : ""}
             >
-              Items
+              Home
             </span>
-
             <span
               onClick={() => setOpen(2)}
               className={open === 2 ? styles.active : ""}
             >
-              Contributors
+              Items
             </span>
-
-            {collection.type === "FUNDRAISING" && (
-              <span
-                onClick={() => setOpen(4)}
-                className={open === 4 ? styles.active : ""}
-              >
-                Beneficiary
-              </span>
-            )}
+            <span
+              onClick={() => setOpen(3)}
+              className={open === 3 ? styles.active : ""}
+            >
+              Participates
+            </span>
           </section>
 
           {open === 1 && (
@@ -93,150 +81,213 @@ const Index = ({ collection }: properties) => {
               <section className="">
                 <div className={styles.mainImg}>
                   <NextImage
-                    className={styles.cardImg}
                     src={
                       collection?.images[0] || `/assets/placeholder-image.jpg`
                     }
                     width="1000px"
-                    height="450px"
+                    height="700px"
                     alt="product"
                   />
                 </div>
 
                 <div className={styles.bottomImg}>
-                  <div>
-                    {collection.images.slice(1).map((image, index) => (
+                  {collection?.images[1] && (
+                    <div>
+                      <div>
+                        {
+                          // @ts-expect-error
+                          user && parse(collection.description)[0]
+                        }
+                      </div>
                       <NextImage
-                        className={styles.cardImg}
-                        src={image || `/assets/placeholder-image.jpg`}
-                        width="200px"
-                        key={index}
-                        height="150px"
+                        src={
+                          collection?.images[1] ||
+                          `/assets/placeholder-image.jpg`
+                        }
+                        width="400px"
+                        height="400px"
                         alt="product"
                       />
-                    ))}
-                  </div>
-                  <div>{user && parse(collection.description)}</div>
-                </div>
-              </section>
-              <section>
-                <div className={styles.bottom}>
+                    </div>
+                  )}
+                  {collection?.images[2] && (
+                    <div>
+                      <NextImage
+                        src={
+                          collection?.images[2] ||
+                          `/assets/placeholder-image.jpg`
+                        }
+                        width="400px"
+                        height="400px"
+                        alt="product"
+                      />
+                      <div>
+                        {
+                          // @ts-expect-error
+                          user && parse(collection.description)[1]
+                        }
+                      </div>
+                    </div>
+                  )}
                   <div>
-                    <ItemGrid
-                      collection={collection}
-                      user={user!}
-                      title="Collection Items"
-                      view={true}
+                    {collection?.images[3] && (
+                      <div>
+                        {
+                          // @ts-expect-error
+                          user && parse(collection.description)[2]
+                        }
+                      </div>
+                    )}
+                    <NextImage
+                      src={
+                        collection?.images[3] || `/assets/placeholder-image.jpg`
+                      }
+                      width="400px"
+                      height="400px"
+                      alt="product"
                     />
-                  </div>
+                  </div>{" "}
+                  {collection?.images[4] && (
+                    <div>
+                      <NextImage
+                        src={
+                          collection?.images[4] ||
+                          `/assets/placeholder-image.jpg`
+                        }
+                        width="400px"
+                        height="250px"
+                        alt="product"
+                      />
+                      <div>
+                        {
+                          // @ts-expect-error
+                          user && parse(collection.description)[3]
+                        }
+                      </div>
+                    </div>
+                  )}
                 </div>
               </section>
             </div>
           )}
+
           {open === 2 && (
-            <div className={styles.section}>
-              <div className={styles.sectionTop}>
-                <div className={styles.btns}></div>
+            <section>
+              <div className={styles.bottom}>
+                <div>
+                  <ItemGrid
+                    collection={collection}
+                    user={user!}
+                    title="Collection Items"
+                    view={true}
+                  />
+                </div>
               </div>
-              <div className={styles.content}>
-                {collection?.contributors
-                  ?.sort((a, b) => {
-                    if (a.userId === user?.id) {
-                      return -1;
-                    } else {
-                      return 1;
-                    }
-                  })
-                  .map((contributor) => (
-                    <div key={contributor.id} className={styles.row}>
+            </section>
+          )}
+
+          {open === 3 && (
+            <>
+              <div className={styles.section}>
+                <div className={styles.content}>
+                  <h2>Contributors</h2>
+                  {collection?.contributors
+                    ?.sort((a, b) => {
+                      if (a.userId === user?.id) {
+                        return -1;
+                      } else {
+                        return 1;
+                      }
+                    })
+                    .map((contributor) => (
+                      <div key={contributor.id} className={styles.row}>
+                        <div className={styles.left}>
+                          {contributor && (
+                            <DefaultAvatar
+                              url={contributor?.user?.profile?.avatar}
+                              id={contributor.user.id}
+                              width={"88px"}
+                              height={"88px"}
+                              walletAddress={contributor?.user.walletAddress}
+                              fontSize={"8px"}
+                            />
+                          )}
+                          <div className={styles.details}>
+                            <div className={styles.dtop}>
+                              <span className={styles.name}>
+                                {contributor.user.email}
+                              </span>
+                              <span className={styles.number}>
+                                {
+                                  collection.items?.filter((item) => {
+                                    return item.ownerId === contributor.userId;
+                                  }).length
+                                }{" "}
+                                Item(s) in collection
+                              </span>
+                            </div>
+                            <div className={styles.btnDiv}></div>
+                          </div>
+                        </div>
+                        <div className={styles.center}>
+                          <div className={styles.scroll}>
+                            {collection.items
+                              ?.filter(
+                                (item) => item.ownerId === contributor.userId
+                              )
+                              .map((item: IItem, idx: number) => (
+                                <div key={idx} className={styles.centerItem}>
+                                  <NextImage
+                                    className={styles.image}
+                                    src={item.images[0]}
+                                    width="112px"
+                                    height="88px"
+                                  />
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div className={styles.section}>
+                <div className={styles.topB}>
+                  <div className={styles.sectionTop}></div>
+                </div>
+                <div className={styles.content}>
+                  {collection?.beneficiaries.length > 0 && (
+                    <h2>Beneficiaries</h2>
+                  )}
+                  {collection?.beneficiaries?.map((beneficiary) => (
+                    <div key={beneficiary.id} className={styles.row}>
                       <div className={styles.left}>
-                        {contributor && (
-                          <DefaultAvatar
-                            url={contributor?.user?.profile?.avatar}
-                            id={contributor.user.id}
-                            width={"88px"}
-                            height={"88px"}
-                            walletAddress={contributor?.user.walletAddress}
-                            fontSize={"8px"}
-                          />
-                        )}
+                        <DefaultAvatar
+                          url={""}
+                          width={"88px"}
+                          height={"88px"}
+                          walletAddress={beneficiary.walletAddress}
+                          fontSize={"8px"}
+                        />
                         <div className={styles.details}>
                           <div className={styles.dtop}>
                             <span className={styles.name}>
-                              {contributor.user.email}
+                              {beneficiary.name}
                             </span>
                             <span className={styles.number}>
-                              {
-                                collection.items?.filter((item) => {
-                                  return item.ownerId === contributor.userId;
-                                }).length
-                              }{" "}
-                              Item(s) in collection
+                              Wallet address
                             </span>
                           </div>
-                          <div className={styles.btnDiv}></div>
-                        </div>
-                      </div>
-                      <div className={styles.center}>
-                        <div className={styles.scroll}>
-                          {collection.items
-                            ?.filter(
-                              (item) => item.ownerId === contributor.userId
-                            )
-                            .map((item: IItem, idx: number) => (
-                              <div key={idx} className={styles.centerItem}>
-                                <NextImage
-                                  className={styles.image}
-                                  src={item.images[0]}
-                                  width="112px"
-                                  height="88px"
-                                />
-                              </div>
-                            ))}
+                          <div className={styles.btnDiv}>
+                            <p>{beneficiary.walletAddress}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   ))}
+                </div>
               </div>
-            </div>
-          )}
-          {open === 3 && (
-            <div className={styles.section}>
-              <h2>Whitelist</h2>
-            </div>
-          )}
-          {open === 4 && (
-            <div className={styles.section}>
-              <div className={styles.topB}>
-                <div className={styles.sectionTop}></div>
-              </div>
-              <div className={styles.content}>
-                {collection?.beneficiaries?.map((beneficiary) => (
-                  <div key={beneficiary.id} className={styles.row}>
-                    <div className={styles.left}>
-                      <DefaultAvatar
-                        url={""}
-                        width={"88px"}
-                        height={"88px"}
-                        walletAddress={beneficiary.walletAddress}
-                        fontSize={"8px"}
-                      />
-                      <div className={styles.details}>
-                        <div className={styles.dtop}>
-                          <span className={styles.name}>
-                            {beneficiary.name}
-                          </span>
-                          <span className={styles.number}>Wallet address</span>
-                        </div>
-                        <div className={styles.btnDiv}>
-                          <p>{beneficiary.walletAddress}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            </>
           )}
         </main>
       </Box>

@@ -2,7 +2,7 @@
 
 .container {
   margin: auto;
-  margin-top: 10rem;
+  margin-top: 6rem;
   padding: auto 10rem;
   position: relative;
 
@@ -19,10 +19,15 @@
 
     div {
       margin: 1rem;
+      margin-top: 3rem;
       display: flex;
-      gap: 10px;
+      gap: 100px;
       color: white;
       font-weight: 500;
+
+      p {
+        width: 20rem;
+      }
     }
   }
 
@@ -78,15 +83,8 @@
 
   .breadcrumbWrap {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
     padding: 24px 15%;
-    gap: 10px;
-    background: #000;
-    border-bottom: 1px solid #353945;
-    border-top: 1px solid #353945;
-    margin-top: 100px;
 
     @media (max-width: 800px) {
       margin-top: 150px;
@@ -185,10 +183,10 @@
       font-style: normal;
       font-weight: 700;
       font-size: 32px;
+      margin: 10px;
       line-height: 40px;
       letter-spacing: -0.01em;
       color: #e6e8ec;
-      margin-bottom: 55px;
     }
 
     .topB {
