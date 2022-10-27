@@ -282,13 +282,11 @@ const Index = () => {
                   </Link>
                   {!loading ? (
                     selectedNotification?.action === "contributor-notice" &&
-                    isContributor()?.confirmation !== "PENDING" ? (
+                    isContributor()?.confirmation === "PENDING" && (
                       <div className={styles.actions}>
                         <button onClick={handleAccept}>Accept</button>
                         <button onClick={handleReject}>Reject</button>
                       </div>
-                    ) : (
-                      ""
                     )
                   ) : (
                     <span className={styles.actions}>Wait...</span>
@@ -304,5 +302,15 @@ const Index = () => {
   );
 };
 
-// export default withAuth(Index);
 export default Index;
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const { id }: any = ctx.params;
+//   let collection = await CollectionDs.getCollectionById(id);
+
+//   return {
+//     props: {
+//       collection: collection.data,
+//     },
+//   };
+// };
+// export default withAuth(Index);

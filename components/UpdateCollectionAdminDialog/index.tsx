@@ -23,6 +23,7 @@ const Index: React.FC<Properties> = ({
         status: "VERIFIED",
       });
       toast.success("Collection status updated, ready to publish");
+      handleClose();
       mutate();
     } catch (error) {
       console.log(error);
