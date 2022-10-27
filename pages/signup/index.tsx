@@ -92,10 +92,10 @@ const Index = () => {
         dob: state.dob,
       });
 
-      // const imageUpload = await getFileUploadURL(
-      //   image,
-      //   `user/profile/${res.data.id}/${state.name}`
-      // )
+      const imageUpload = await getFileUploadURL(
+        image,
+        `user/profile/${res.data.id}/`
+      );
 
       if (res.status === 200) {
         // toast.success(

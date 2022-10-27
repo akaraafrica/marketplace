@@ -6,7 +6,14 @@ const url = `/api/user`;
 
 class User {
   constructor() {}
-
+  async create(data: any) {
+    try {
+      const res = await api.post(url, data);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async fetch(walletAddress: string) {
     if (!walletAddress) {
       console.log("walletAddress is ", walletAddress);
