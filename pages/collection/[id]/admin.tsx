@@ -66,6 +66,15 @@ const Index = () => {
   const [respond, setRespond] = useState(false);
 
   useEffect(() => {
+    collection?.contributors.forEach((contributor) => {
+      setPercentages({
+        ...percentages,
+        [contributor.id]: contributor.percentage,
+      });
+    });
+  }, [collection?.contributors]);
+
+  useEffect(() => {
     // @ts-ignore
     if (collection?.status === "PENDING" && handleCheckContributorsStatus()) {
       setOpenUpdate(true);
@@ -214,7 +223,7 @@ const Index = () => {
       return true;
     }
   };
-
+  console.log(collection);
   return (
     <Layout>
       <MintCollectionDialog
@@ -387,6 +396,16 @@ const Index = () => {
             <div className={styles.section}>
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
+                {(collection.type === "FUNDRAISING" ||
+                  collection.type === "COLLABORATORS") && (
+                  <p>
+                    Contributor&apos;s{" "}
+                    {collection.type === "FUNDRAISING"
+                      ? "and beneficiary's"
+                      : ""}{" "}
+                    percentage must accumulate to a total of 100%
+                  </p>
+                )}
               </div>
               <div className={styles.content}>
                 {collection?.contributors
@@ -501,6 +520,7 @@ const Index = () => {
                             name={(contributor?.id).toString()}
                             onChange={handleChangePercent}
                             placeholder="10%"
+                            value={percentages[contributor?.id]}
                           />
                         </div>
                       ) : (

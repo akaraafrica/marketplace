@@ -121,11 +121,16 @@
       justify-content: space-between;
       align-items: center;
       gap: 20px;
+      flex-wrap: wrap;
 
       .btns {
         display: flex;
         align-items: center;
         gap: 20px;
+      }
+      p {
+        color: #f2994a;
+        max-width: 300px;
       }
     }
 
