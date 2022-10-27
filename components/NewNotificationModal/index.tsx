@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import NextImage from "../../components/Image";
 import styles from "./index.module.scss";
 import { INotification } from "../../types/notification.interface";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import Link from "../Link";
+import { AuthContext } from "../../contexts/AuthContext";
 const Item = ({ data }: { data: INotification }) => {
+  const { user } = useContext(AuthContext);
+
   return (
     <div>
-      <Link href={`/notifications?id=${data.id}`}>
+      <Link href={`/notifications/+${user?.id}?id=${data.id}`}>
         <a>
           <div className={styles.item}>
             <div className={styles.left}>
@@ -37,18 +40,21 @@ const Item = ({ data }: { data: INotification }) => {
   );
 };
 
-const Index = ({ data }: { data: INotification[] }) => {
+const Index = ({ data }: { data?: INotification[] }) => {
   const router = useRouter();
+  const { user } = useContext(AuthContext);
 
   return (
     <div className={styles.root} style={{ zIndex: 1 }}>
       <div className={styles.top}>
         <div>Notifications</div>
-        <span onClick={() => router.push("/notifications")}>See all</span>
+        <span onClick={() => router.push("/notifications/" + user?.id)}>
+          See all
+        </span>
       </div>
       <div className={styles.body}>
-        {data.length ? (
-          data.map((notification) => {
+        {data?.length ? (
+          data?.map((notification) => {
             return (
               <div key={notification.id}>
                 <Item data={notification} />

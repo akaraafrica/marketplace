@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useContext, useEffect, useState } from "react";
-import { useWeb3React } from "@web3-react/core";
 import styles from "./index.module.scss";
 import Footer from "../../components/Footer/index";
 import Header from "../../components/Header/index";
@@ -10,12 +9,14 @@ import { toast } from "react-toastify";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import { NotificationDs, ContributorDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
-import useSWR from "swr";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import { INotification } from "../../types/notification.interface";
 import NextImage from "../../components/Image";
 import Link from "next/link";
 import DefaultAvatar from "../../components/DefaultAvatar";
 import useWindowSize from "../../hooks/useWindowSize";
+import { GetServerSideProps } from "next";
+import withAuth from "../../HOC/withAuth";
 
 interface ListItemProps {
   title: string;
@@ -35,24 +36,6 @@ const ListItem: React.FC<ListItemProps> = ({
   id,
   action,
 }) => {
-  // const { user, isAuthenticated, signIn } = useContext(AuthContext);
-  // const [loading, setLoading] = useState(false);
-  // const [respond, setRespond] = useState(true);
-
-  // const handleAccept = async () => {
-  //   const id = user?.id;
-  //   setLoading(true);
-  //   await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
-  //   setLoading(false);
-  //   setRespond(false);
-  // };
-  // const handleReject = async () => {
-  //   const id = user?.id;
-  //   setLoading(true);
-  //   await ContributorDs.updateStatus({ id, status: "REJECTED" });
-  //   setLoading(false);
-  //   setRespond(false);
-  // };
   return (
     <div className={styles.listItemWrapper} id={id}>
       <div className={styles.listItem}>
@@ -80,10 +63,9 @@ const Index = () => {
   const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
   const [loading, setLoading] = useState(false);
-  const [respond, setRespond] = useState(true);
 
   const { data: notifications } = useSWR<{ data: INotification[] }>(
-    ["notificationsAll", user?.id],
+    "notificationsAll",
     () => NotificationDs.fetchAll(user!.id)
   );
 
@@ -136,14 +118,12 @@ const Index = () => {
     setLoading(true);
     await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
     setLoading(false);
-    setRespond(false);
   };
   const handleReject = async () => {
     const id = user?.id;
     setLoading(true);
     await ContributorDs.updateStatus({ id, status: "REJECTED" });
     setLoading(false);
-    setRespond(false);
   };
 
   return (
@@ -299,6 +279,25 @@ const Index = () => {
     </div>
   );
 };
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { id }: any = ctx.params;
+  let data = await NotificationDs.fetchAll(id);
 
-// export default withAuth(Index);
-export default Index;
+  return {
+    props: {
+      fallback: {
+        [unstable_serialize("notificationsAll")]: data,
+      },
+    },
+  };
+};
+const Page = ({ fallback }: any) => {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Index />
+    </SWRConfig>
+  );
+};
+export default Page;
+
+// export default withAuth(Page);
