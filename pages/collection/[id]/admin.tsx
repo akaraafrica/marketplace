@@ -421,7 +421,7 @@ const Index = () => {
                             </span>
                           </div>
                           <div className={styles.btnDiv}>
-                            {contributor.userId != user?.id &&
+                            {contributor.userId !== user?.id &&
                               collection.author.id === user?.id && (
                                 <>
                                   <button>{contributor.confirmation}</button>
