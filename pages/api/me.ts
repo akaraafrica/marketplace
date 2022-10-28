@@ -15,6 +15,9 @@ const handler = async (
         where: {
           walletAddress: auth,
         },
+        include: {
+          profile: true,
+        },
       });
       if (!user) return res.status(404).send("user not found");
       return res.status(200).json(user);

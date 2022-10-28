@@ -99,22 +99,23 @@ model Notification {
   receiverId   Int
   senderId     Int?
   description  String?     @db.VarChar(10000)
-  item         Item?       @relation(fields: [itemId], references: [id])
   collectionId Int?
   collection   Collection? @relation(fields: [collectionId], references: [id])
+  item         Item?       @relation(fields: [itemId], references: [id])
   receiver     User        @relation("receiver", fields: [receiverId], references: [id])
   sender       User?       @relation("sender", fields: [senderId], references: [id])
 }
 
 model Profile {
-  name        String
+  name        String?
   rating      Int?
-  avatar      String
+  avatar      String?
   dob         DateTime?
+  gender      String?
   userId      Int       @unique
   id          Int       @id @default(autoincrement())
-  phoneNumber String
-  bio         String    @db.VarChar(250)
+  phoneNumber String?
+  bio         String?    @db.VarChar(250)
   user        User      @relation(fields: [userId], references: [id])
 }
 

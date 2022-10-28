@@ -21,6 +21,7 @@ const Index: React.FC<AvatarProps> = ({
   fontSize = " 0.7em",
   length = 2,
 }) => {
+  // console.log(url)
   if (url === undefined || url === null || url === "") {
     const len = length && length > 0 ? length : 3;
     const lastThree = walletAddress?.length - len;
@@ -44,16 +45,19 @@ const Index: React.FC<AvatarProps> = ({
         </Link>
       </div>
     );
+  } else {
+    return (
+      <Link href={id ? `/profile/${id}` : "#"}>
+        <NextImage
+          src={url as string}
+          width={width}
+          height={height}
+          style={{ borderRadius: "50%" }}
+          className={styles.avatar}
+        />
+      </Link>
+    );
   }
-  return (
-    <NextImage
-      src={url}
-      width={width}
-      height={height}
-      style={{ borderRadius: "50%" }}
-      className={styles.avatar}
-    />
-  );
 };
 
 export default Index;
