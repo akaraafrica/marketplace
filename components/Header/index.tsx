@@ -130,7 +130,7 @@ function Header() {
             <input type="text" placeholder="Search" />
             <img alt="search icon" src={`/assets/searchIcon.svg`} />
           </div>
-          {user && notifications && (
+          {user && (
             <div
               className={styles.notification}
               onClick={() => {
@@ -138,12 +138,16 @@ function Header() {
               }}
             >
               <div
-                className={notifications.data.length ? styles.active : ""}
+                className={
+                  notifications && notifications.data.length
+                    ? styles.active
+                    : ""
+                }
               ></div>
               <MdNotificationsNone size={40} />
-              {notificationOpen && notifications && (
+              {notificationOpen && (
                 <div className={styles.dialog}>
-                  <NewNotificationModal data={notifications.data} />
+                  <NewNotificationModal data={notifications?.data} />
                 </div>
               )}
             </div>
