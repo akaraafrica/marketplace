@@ -1,8 +1,7 @@
 @use "../../../styles/colors" as *;
 
 .container {
-  margin: auto;
-  margin-top: 6rem;
+  margin: 6rem 0px;
   padding: auto 10rem;
   position: relative;
 
@@ -16,18 +15,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 2rem;
 
     div {
       margin: 1rem;
-      margin-top: 3rem;
       display: flex;
-      gap: 100px;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0px 5%;
+      gap: 1rem;
       color: white;
       font-weight: 500;
-
-      p {
-        width: 20rem;
-      }
     }
   }
 
@@ -393,8 +391,14 @@
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 1rem;
     border-bottom: solid 1px #353945;
+
+    h2 {
+      color: white;
+      margin: 0;
+      padding: 0;
+      font-size: 3rem;
+    }
 
     .left {
       display: flex;
@@ -520,4 +524,61 @@
   gap: 5px;
   border: 1px solid $secondary-color;
   background: black;
+}
+
+.videoSec {
+  width: 80%;
+  margin: auto;
+}
+
+// .plyr {
+//   width: 100% !important;
+//   height: 100% !important;
+// }
+
+// .plyr [poster] {
+//   width: 100% !important;
+//   height: 100% !important;
+// }
+
+.plyr__controls__item:hover,
+.plyr__control:hover {
+  background-color: transparent !important;
+}
+
+.plyr__menu {
+  display: none;
+}
+
+.plyr [data-plyr="pip"] {
+  display: none;
+}
+
+.plyr__control--overlaid {
+  display: none !important;
+}
+
+.plyr__progress input::-webkit-slider-thumb {
+  display: none;
+}
+
+.plyr__progress progress {
+  display: none;
+}
+
+.plyr__progress input::-webkit-slider-runnable-track {
+  height: 1vw !important;
+  border-radius: 100px !important;
+  color: #3a72fa;
+}
+
+#plyr-volume-6798::-webkit-slider-runnable-track {
+  color: #3a72fa;
+}
+
+@media only screen and (max-width: 800px) {
+  .plyr {
+    width: 100% !important;
+    height: auto !important;
+  }
 }

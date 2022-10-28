@@ -1,5 +1,5 @@
 import NextImage from "../../../components/Image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CollectionDs } from "../../../ds";
 import styles from "./index.module.scss";
 import { ICollection } from "../../../types/collection.interface";
@@ -9,6 +9,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import parse from "html-react-parser";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import Plyr from "plyr-react";
 const Layout: any = dynamic(() => import("../../../components/Layout"));
 const DefaultAvatar: any = () => import("../../../components/DefaultAvatar");
 const ItemGrid: any = dynamic(
@@ -27,26 +28,30 @@ const Index = ({ collection }: properties) => {
   const [open, setOpen] = useState(1);
   const { user } = useContext(AuthContext);
 
+  useEffect(() => {
+    // @ts-ignore
+    document
+      .querySelector("#videoSec video")
+      .setAttribute("poster", collection?.images[0]);
+  });
+
   return (
     <Layout>
       <Box className={styles.container}>
-        {user?.id === collection.author.id && (
-          <div className={styles.breadcrumbWrap}>
-            <Link href={`/collection/${collection.id}/admin`}>
-              <a>
-                <span className={styles.currentCrumb}>Manage collection</span>
-              </a>
-            </Link>
-          </div>
-        )}
         <main>
           <div className={styles.heading}>
-            <div className={styles.left}>
-              <h2>{collection?.title}</h2>
-              {collection?.lunchTime && (
-                <div>Launches in {collection?.lunchTime}</div>
-              )}
-            </div>
+            <h2>{collection?.title}</h2>
+            {user?.id === collection.author.id && (
+              <div className={styles.breadcrumbWrap}>
+                <Link href={`/collection/${collection.id}/admin`}>
+                  <a>
+                    <span className={styles.currentCrumb}>
+                      Manage collection
+                    </span>
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
           <section className={styles.nav}>
             <span
@@ -83,92 +88,41 @@ const Index = ({ collection }: properties) => {
               </section>
               <section className="">
                 <div className={styles.mainImg}>
-                  <NextImage
-                    src={
-                      collection?.images[0] || `/assets/placeholder-image.jpg`
-                    }
-                    width="1000px"
-                    height="700px"
-                    alt="product"
-                  />
-                </div>
-
-                <div className={styles.bottomImg}>
-                  {collection?.images[1] && (
-                    <div>
-                      <div>
-                        {
-                          // @ts-expect-error
-                          user && parse(collection.description)[0]
-                        }
-                      </div>
-                      <NextImage
-                        src={
-                          collection?.images[1] ||
-                          `/assets/placeholder-image.jpg`
-                        }
-                        width="400px"
-                        height="400px"
-                        alt="product"
+                  {collection.videos[0] ? (
+                    <div id="videoSec" className={styles.videoSec}>
+                      <Plyr
+                        source={{
+                          type: "video",
+                          sources: [{ src: collection.videos[0] }],
+                        }}
+                        width={"100%"}
+                        // height={"100%"}
+                        // preload={"false"}
+                        poster={collection?.images[0]}
                       />
                     </div>
-                  )}
-                  {collection?.images[2] && (
-                    <div>
-                      <NextImage
-                        src={
-                          collection?.images[2] ||
-                          `/assets/placeholder-image.jpg`
-                        }
-                        width="400px"
-                        height="400px"
-                        alt="product"
-                      />
-                      <div>
-                        {
-                          // @ts-expect-error
-                          user && parse(collection.description)[1]
-                        }
-                      </div>
-                    </div>
-                  )}
-                  <div>
-                    {collection?.images[3] && (
-                      <div>
-                        {
-                          // @ts-expect-error
-                          user && parse(collection.description)[2]
-                        }
-                      </div>
-                    )}
+                  ) : (
                     <NextImage
-                      src={
-                        collection?.images[3] || `/assets/placeholder-image.jpg`
-                      }
-                      width="400px"
-                      height="400px"
+                      src={collection?.images[0]}
+                      width="1000px"
+                      height="700px"
                       alt="product"
                     />
-                  </div>{" "}
-                  {collection?.images[4] && (
-                    <div>
+                  )}
+                </div>
+                <div className={styles.bottomImg}>
+                  {user && parse(collection.description)}
+                  <div>
+                    {collection?.images.slice(1).map((image, index) => (
                       <NextImage
-                        src={
-                          collection?.images[4] ||
-                          `/assets/placeholder-image.jpg`
-                        }
-                        width="400px"
-                        height="250px"
+                        src={image}
+                        key={index}
+                        width="300px"
+                        height="300px"
                         alt="product"
                       />
-                      <div>
-                        {
-                          // @ts-expect-error
-                          user && parse(collection.description)[3]
-                        }
-                      </div>
-                    </div>
-                  )}
+                    ))}
+                  </div>
                 </div>
               </section>
             </div>
