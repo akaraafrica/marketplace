@@ -25,7 +25,7 @@ export const enum MailTemplateIDs {
   Purchase = "d-dd6a356d09a5451bbefed7a80d39e8fb",
   CreateItem = "d-c682315847e647ec9aed19d0178d7836",
   CreateCollection = "d-d0ee395b7aa1424fa0a7d55d11e15d95",
-  contributorNotice = "d-105c1e4ff3604744b70492b9959c2602 ",
+  contributorNotice = "d-105c1e4ff3604744b70492b9959c2602",
 }
 
 export const enum Actions {
@@ -101,7 +101,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.PlaceBid,
         title: item.title,
         amount: bidAmount,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}/`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -129,7 +129,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.AcceptBid,
         title: item.title,
         amount: bidAmount,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}/`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -186,65 +186,14 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.Purchase,
         title: item.title,
         amount: item.price,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}/`,
       });
       if (data && emailData) {
         await inApp(data);
         await email(emailData);
       }
       break;
-    //   case Actions.AddItem:
-    //   if (!item || !collection) throw Error("invalid action");
-    //   console.log(collection);
 
-    //   data.push({
-    //     receiverId: item.owner.id,
-    //     senderId: user.id,
-    //     action: action,
-    //     title: "Your",
-    //     description: ` ${getUserName(user)} is requesting to add ${item?.title} to ${collection?.title
-    //       } collection `,
-    //     itemType: ItemType.Collection,
-    //     itemId: item.id,
-    //   });
-    //   emailData.push({
-    //     to: user.email,
-    //     from: "info@mbizi.org",
-    //     templateId: MailTemplateIDs.Purchase,
-    //     title: item.title,
-    //     amount: item.price,
-    //     link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
-    //   });
-    //   if (data) {
-    //     await inApp(data);
-    //     await email(emailData);
-    //   }
-    //   break;
-    //   // case Actions.CreateItem:
-    //   if (!item) throw Error("invalid action");
-
-    //   data.push({
-    //     receiverId: user.id,
-    //     senderId: user.id,
-    //     action: action,
-    //     title: `congratulation ${getUserName(user)} ${item?.title
-    //       } has been minted`,
-    //     itemType: ItemType.Item,
-    //     itemId: item.id,
-    //   });
-    //   emailData.push({
-    //     to: user.email,
-    //     from: "info@mbizi.org",
-    //     templateId: MailTemplateIDs.CreateItem,
-    //     title: item.title,
-    //     amount: item.price,
-    //     link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id} `,
-    //   });
-    //   if (data && emailData) {
-    //     await inApp(data);
-    //     await email(emailData);
-    //   }
-    //   break;
     case Actions.contributorNotice:
       if (!collection) throw Error("invalid action");
       const promise: any = [];
@@ -269,7 +218,7 @@ export async function TriggerAction(props: ActionProps) {
           templateId: MailTemplateIDs.contributorNotice,
           title: collection.title,
           author: getUserName(user),
-          link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin `,
+          link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
         };
         if (data && emailData) {
           if (contributor.userId === user.id) {
@@ -283,38 +232,6 @@ export async function TriggerAction(props: ActionProps) {
       Promise.all(promise);
 
       break;
-
-    // case Actions.CreateCollection:
-    //   if (!collection) throw Error("invalid action");
-    //   const promise: any = [];
-
-    //   collection.contributors.forEach((contributor) => {
-    //     const data = {
-    //       receiverId: contributor.user.id,
-    //       senderId: user.id,
-    //       action: action,
-    //       title: ` ${getUserName(
-    //         user
-    //       )} request your approval to add your item(s) to his ${collection?.title
-    //         } collection`,
-    //       itemType: ItemType.Collection,
-    //     };
-    //     const emailData = {
-    //       to: contributor.user.email,
-    //       from: "info@mbizi.org",
-    //       templateId: MailTemplateIDs.CreateCollection,
-    //       title: collection.title,
-    //       link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id} `,
-    //     };
-    //     if (data && emailData) {
-    //       promise.push(inApp([data]));
-    //       promise.push(email([emailData]));
-    //     }
-    //   });
-
-    //   Promise.all(promise);
-
-    //   break;
 
     case Actions.Announcement:
       if (!title || !content) throw Error("invalid action");

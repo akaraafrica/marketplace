@@ -1,27 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import Lottie from "react-lottie-player";
 import lottieJson from "../lotties/json-background.json";
+import dynamic from "next/dynamic";
 import styles from "./index.module.scss";
-import HotItems from "../components/HotItems";
-import Discover from "../components/DiscoverSection/index";
-import SubscribeModal from "../components/SubscribeModal/index";
-import HowItWorks from "../components/HowItWorks/index";
-import SwiperCore, { Pagination, Autoplay } from "swiper";
 import { Filter } from "../ds/discovery.ds";
-import LandingMainSection from "../components/LandingMainSection";
-import Layout from "../components/Layout";
-import HotCollectionsSection from "../components/HotCollectionsSection";
 import { CollectionDs, DiscoveryDs, ItemDs, UserDs } from "../ds/index";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import { ICollection } from "../types/collection.interface";
 import { IItem } from "../types/item.interface";
 import { IUser } from "../types/user.interface";
-import dynamic from "next/dynamic";
 const SellersSec: any = dynamic(() => import("../components/SellersSec"), {
   ssr: false,
 });
+const HotItems: any = dynamic(() => import("../components/HotItems"));
+const Layout: any = dynamic(() => import("../components/Layout"));
+const HotCollectionsSection: any = dynamic(
+  () => import("../components/HotCollectionsSection")
+);
 
+const LandingMainSection: any = dynamic(
+  () => import("../components/LandingMainSection")
+);
+
+const Discover: any = dynamic(
+  () => import("../components/DiscoverSection/index")
+);
+const SubscribeModal: any = dynamic(
+  () => import("../components/SubscribeModal/index")
+);
+const HowItWorks: any = dynamic(() => import("../components/HowItWorks/index"));
+const Lottie: any = dynamic(() => import("react-lottie-player"));
 const Home = () => {
   const { data: collection } = useSWR<ICollection[]>(["collection"], () =>
     CollectionDs.getCollections()
@@ -34,7 +42,7 @@ const Home = () => {
     UserDs.fetchSellers()
   );
 
-  SwiperCore.use([Pagination, Autoplay]);
+  // SwiperCore.use([Pagination, Autoplay]);
   return (
     <Layout>
       <div className={styles.styles}>

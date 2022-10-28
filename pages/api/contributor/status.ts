@@ -16,6 +16,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           confirmation: status,
         },
       });
+      console.log("contributor status updated");
       return res.status(200).send("contributor status updated");
     } catch (error) {
       console.log(error);

@@ -1,30 +1,44 @@
-import Box from "@mui/material/Box";
 import { useContext, useState, useEffect } from "react";
 import styles from "./admin.module.scss";
-import Layout from "../../../components/Layout";
 import { GetServerSideProps } from "next";
 import { ICollection } from "../../../types/collection.interface";
-import ItemGrid from "../../../components/CollectionAdmin/ItemGrid";
 import { CollectionDs, ContributorDs } from "../../../ds";
-import Link from "next/link";
 import withAuth from "../../../HOC/withAuth";
 import { BiArrowBack, BiRightArrowAlt } from "react-icons/bi";
 import { MdCancel, MdEdit } from "react-icons/md";
-import { useRouter } from "next/router";
-import DefaultAvatar from "../../../components/DefaultAvatar";
 import NextImage from "../../../components/Image";
 import { IItem } from "../../../types/item.interface";
-import VerifyDialog from "../../../components/CollectionAdmin/VerifyDialog";
 import { AuthContext } from "../../../contexts/AuthContext";
-import LunchTimeDialog from "../../../components/LunchTimeDialog";
-import PayoutDialog from "../../../components/PayoutDialog";
-import AddBeneficiaryDialog from "../../../components/AddBeneficiaryDialog";
-import MintCollectionDialog from "../../../components/CollectionAdmin/MintCollectionDialog";
 import { getCookies } from "cookies-next";
-import { toast } from "react-toastify";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import collectionsDs from "../../../ds/collections.ds";
-import UpdateCollectionAdminDialog from "../../../components/UpdateCollectionAdminDialog";
+import dynamic from "next/dynamic";
+const Layout: any = dynamic(() => import("../../../components/Layout"));
+const ItemGrid: any = dynamic(
+  () => import("../../../components/CollectionAdmin/ItemGrid")
+);
+const VerifyDialog: any = dynamic(
+  () => import("../../../components/CollectionAdmin/VerifyDialog")
+);
+const DefaultAvatar: any = dynamic(
+  () => import("../../../components/DefaultAvatar")
+);
+const LunchTimeDialog: any = dynamic(
+  () => import("../../../components/LunchTimeDialog")
+);
+const AddBeneficiaryDialog: any = dynamic(
+  () => import("../../../components/AddBeneficiaryDialog")
+);
+const MintCollectionDialog: any = dynamic(
+  () => import("../../../components/CollectionAdmin/MintCollectionDialog")
+);
+const UpdateCollectionAdminDialog: any = dynamic(
+  () => import("../../../components/UpdateCollectionAdminDialog")
+);
+const Link: any = dynamic(() => import("next/link"));
+const Box: any = dynamic(() => import("@mui/material/Box"));
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const Index = () => {
   const router = useRouter();
@@ -66,13 +80,21 @@ const Index = () => {
   const [respond, setRespond] = useState(false);
 
   useEffect(() => {
+    collection?.contributors.forEach((contributor) => {
+      setPercentages({
+        ...percentages,
+        [contributor.id]: contributor.percentage,
+      });
+    });
+  }, [collection?.contributors]);
+
+  useEffect(() => {
     // @ts-ignore
     if (collection?.status === "PENDING" && handleCheckContributorsStatus()) {
       setOpenUpdate(true);
     }
   }, []);
-  const handleRejectRequest = async () => {
-    const id = user?.id;
+  const handleRejectRequest = async (id: number) => {
     try {
       await ContributorDs.updateStatus({ id, status: "REJECTED" });
       mutate();
@@ -83,9 +105,9 @@ const Index = () => {
       toast.error("error");
     }
   };
-  const handleAcceptRequest = async () => {
+  const handleAcceptRequest = async (id: number) => {
     try {
-      await ContributorDs.updateStatus({ id, status: "REJECTED" });
+      await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
       mutate();
 
       toast.success("successful");
@@ -161,6 +183,7 @@ const Index = () => {
         BatchUpdate,
         collectionsDs.updateStatus({ id: collection?.id, status: "READY" }),
       ]);
+      mutate();
     } catch (error) {
       console.log(error);
     }
@@ -168,8 +191,17 @@ const Index = () => {
   };
   const handleSendEmails = async () => {
     console.log("email sent");
-    await ContributorDs.sendNotifications({ collection, user });
-    await collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" });
+    const AdminContributor = collection?.contributors.find(
+      (con) => con.userId === collection.author.id
+    );
+    await Promise.all([
+      ContributorDs.sendNotifications({ collection, user }),
+      ContributorDs.updateStatus({
+        id: AdminContributor?.id,
+        status: "ACCEPTED",
+      }),
+      collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" }),
+    ]);
     toast.success("Notifications sent successfully");
   };
   if (!collection) {
@@ -205,7 +237,6 @@ const Index = () => {
       return true;
     }
   };
-
   console.log(collection);
   return (
     <Layout>
@@ -351,10 +382,6 @@ const Index = () => {
                 </div>
                 {collection.type === "FUNDRAISING" && (
                   <>
-                    {/* <div>
-                      <span>{(total / beneficiariesTotal).toFixed(3) || "0"} ETH</span>
-                      <h3>Amount paid to beneficiaries</h3>
-                    </div> */}
                     <div>
                       <span>
                         {((beneficiariesTotal / 100) * total).toFixed(3) || "0"}{" "}
@@ -383,6 +410,16 @@ const Index = () => {
             <div className={styles.section}>
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
+                {(collection.type === "FUNDRAISING" ||
+                  collection.type === "COLLABORATORS") && (
+                  <p>
+                    Contributor&apos;s{" "}
+                    {collection.type === "FUNDRAISING"
+                      ? "and beneficiary's"
+                      : ""}{" "}
+                    percentage must accumulate to a total of 100%
+                  </p>
+                )}
               </div>
               <div className={styles.content}>
                 {collection?.contributors
@@ -421,7 +458,7 @@ const Index = () => {
                             </span>
                           </div>
                           <div className={styles.btnDiv}>
-                            {contributor.userId != user?.id &&
+                            {contributor.userId !== user?.id &&
                               collection.author.id === user?.id && (
                                 <>
                                   <button>{contributor.confirmation}</button>
@@ -444,20 +481,23 @@ const Index = () => {
                               )}
                           </div>
                           <div className={styles.btnDiv}>
-                            {!respond &&
-                              contributor.confirmation === "PENDING" &&
-                              contributor.userId !== user?.id &&
+                            {contributor.confirmation === "PENDING" &&
+                              contributor.userId === user?.id &&
                               collection.author.id !== user?.id && (
                                 <>
                                   <button
                                     className={styles.btnAccept}
-                                    onClick={handleAcceptRequest}
+                                    onClick={() =>
+                                      handleAcceptRequest(contributor.id)
+                                    }
                                   >
                                     Accept
                                   </button>
                                   <button
                                     className={styles.btnRemove}
-                                    onClick={handleRejectRequest}
+                                    onClick={() =>
+                                      handleRejectRequest(contributor.id)
+                                    }
                                   >
                                     Reject
                                   </button>
@@ -490,9 +530,11 @@ const Index = () => {
                           <label htmlFor="">PERCENTAGE</label>
                           <input
                             type="number"
+                            defaultValue={contributor?.percentage || 0}
                             name={(contributor?.id).toString()}
                             onChange={handleChangePercent}
                             placeholder="10%"
+                            value={percentages[contributor?.id]}
                           />
                         </div>
                       ) : (
@@ -501,12 +543,6 @@ const Index = () => {
                     </div>
                   ))}
               </div>
-              {collection.author.id === user?.id &&
-                collection.status === "VERIFIED" && (
-                  <button className={styles.verify} onClick={handleVerify}>
-                    send request to contributors
-                  </button>
-                )}
             </div>
           )}
           {open === 3 && (

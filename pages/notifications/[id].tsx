@@ -112,18 +112,39 @@ const Index = () => {
       return toast.success("Marked all as read");
     }
   };
+  const isContributor = () => {
+    return selectedNotification?.collection?.contributors?.find(
+      (con) => con.userId === user?.id
+    );
+  };
 
   const handleAccept = async () => {
-    const id = user?.id;
-    setLoading(true);
-    await ContributorDs.updateStatus({ id, status: "ACCEPTED" });
-    setLoading(false);
+    try {
+      const contributor = isContributor();
+      setLoading(true);
+      await ContributorDs.updateStatus({
+        id: contributor?.id,
+        status: "ACCEPTED",
+      });
+      setLoading(false);
+      toast.success("Accepted");
+    } catch (error) {
+      toast.error("Error Acceptting");
+    }
   };
   const handleReject = async () => {
-    const id = user?.id;
-    setLoading(true);
-    await ContributorDs.updateStatus({ id, status: "REJECTED" });
-    setLoading(false);
+    try {
+      const contributor = isContributor();
+      setLoading(true);
+      await ContributorDs.updateStatus({
+        id: contributor?.id,
+        status: "REJECTED",
+      });
+      setLoading(false);
+      toast.success("Rejected");
+    } catch (error) {
+      toast.error("Error");
+    }
   };
 
   return (
@@ -258,13 +279,12 @@ const Index = () => {
                     </button>
                   </Link>
                   {!loading ? (
-                    selectedNotification?.action === "contributor-notice" ? (
+                    selectedNotification?.action === "contributor-notice" &&
+                    isContributor()?.confirmation === "PENDING" && (
                       <div className={styles.actions}>
                         <button onClick={handleAccept}>Accept</button>
                         <button onClick={handleReject}>Reject</button>
                       </div>
-                    ) : (
-                      ""
                     )
                   ) : (
                     <span className={styles.actions}>Wait...</span>
