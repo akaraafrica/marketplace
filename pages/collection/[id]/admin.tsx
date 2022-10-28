@@ -66,11 +66,6 @@ const Index = () => {
   const [openPublish, setOpenPublish] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
 
-  // const [openPayout, setOpenPayout] = useState(false);
-  const handleClose = () => {
-    setOpenLunchTime(false);
-    // setOpenPayout(false);
-  };
   const handlePublish = () => {
     setOpenPublish(true);
   };

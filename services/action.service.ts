@@ -25,7 +25,9 @@ export const enum MailTemplateIDs {
   Purchase = "d-dd6a356d09a5451bbefed7a80d39e8fb",
   CreateItem = "d-c682315847e647ec9aed19d0178d7836",
   CreateCollection = "d-d0ee395b7aa1424fa0a7d55d11e15d95",
-  contributorNotice = "d-105c1e4ff3604744b70492b9959c2602",
+  ContributorNotice = "d-105c1e4ff3604744b70492b9959c2602",
+  ContributorAction = "",
+  CollectionApproved = "",
 }
 
 export const enum Actions {
@@ -35,7 +37,9 @@ export const enum Actions {
   Purchase = "purchase",
   CreateItem = "create-item",
   CreateCollection = "create-collection",
-  contributorNotice = "contributor-notice",
+  CollectionApproved = "collection-approved",
+  ContributorNotice = "contributor-notice",
+  ContributorAction = "contributor-action",
   AddItem = "add-item",
   Announcement = "announcement",
   UrgentAnnouncement = "urgent-announcement",
@@ -72,11 +76,21 @@ export interface ActionProps {
   bidAmount?: number;
   title?: string;
   content?: string;
+  contributorStatus?: string;
 }
 
 export async function TriggerAction(props: ActionProps) {
-  const { action, user, item, collection, bidAmount, profile, title, content } =
-    props;
+  const {
+    action,
+    user,
+    item,
+    collection,
+    bidAmount,
+    profile,
+    title,
+    content,
+    contributorStatus,
+  } = props;
 
   let data = [];
   let emailData = [];
@@ -193,8 +207,53 @@ export async function TriggerAction(props: ActionProps) {
         await email(emailData);
       }
       break;
+    case Actions.ContributorAction:
+      if (!collection || !contributorStatus) throw Error("invalid action");
+      data.push({
+        receiverId: collection.author.id,
+        senderId: user.id,
+        action: action,
+        title: "Contributor Request",
+        description: `${getUserName(
+          user
+        )} has ${contributorStatus} your request to join ${collection.title}`,
+      });
+      // emailData.push({
+      //   to: collection.author.email,
+      //   from: "info@mbizi.org",
+      // templateId: MailTemplateIDs.ContributorAction,
+      //   title: collection.title,
+      //   contributorStatus: contributorStatus,
+      //   link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+      // });
+      // if (data && emailData) {
+      await inApp(data);
+      // await email(emailData);
+      // }
+      break;
+    case Actions.CollectionApproved:
+      if (!collection) throw Error("invalid action");
+      data.push({
+        receiverId: collection.author.id,
+        senderId: collection.author.id,
+        action: action,
+        title: "Collection Approved",
+        description: `Congratulation your collection ${collection.title} is approved`,
+      });
+      emailData.push({
+        to: collection.author.email,
+        from: "info@mbizi.org",
+        templateId: MailTemplateIDs.ContributorAction,
+        title: collection.title,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+      });
+      // if (data && emailData) {
+      await inApp(data);
+      // await email(emailData);
+      // }
+      break;
 
-    case Actions.contributorNotice:
+    case Actions.ContributorNotice:
       if (!collection) throw Error("invalid action");
       const promise: any = [];
 
@@ -215,7 +274,7 @@ export async function TriggerAction(props: ActionProps) {
         const emailData = {
           to: contributor.user.email,
           from: "info@mbizi.org",
-          templateId: MailTemplateIDs.contributorNotice,
+          templateId: MailTemplateIDs.ContributorNotice,
           title: collection.title,
           author: getUserName(user),
           link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,

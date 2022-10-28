@@ -1,6 +1,7 @@
 import prisma, { Prisma } from "../../../utils/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ParsePrismaError } from "../../../utils/helpers/prisma.error";
+import { Actions, TriggerAction } from "../../../services/action.service";
 
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "PUT") {
@@ -8,7 +9,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
 
     if (!id) return res.status(404);
     try {
-      await prisma.contributor.update({
+      const resp = await prisma.contributor.update({
         where: {
           id: id,
         },
@@ -16,6 +17,40 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           confirmation: status,
         },
       });
+      const collection = await prisma.collection.findFirst({
+        where: {
+          id: resp.collectionId,
+        },
+        include: {
+          contributors: true,
+        },
+      });
+      const user = await prisma.user.findFirst({
+        where: {
+          id: resp.userId,
+        },
+        select: {
+          id: true,
+          profile: true,
+          walletAddress: true,
+        },
+      });
+      await TriggerAction({
+        action: Actions.ContributorAction,
+        user: user as any,
+        collection: collection as any,
+        contributorStatus: status,
+      });
+      const allApprove = collection?.contributors.every(
+        (contributor) => contributor.confirmation === "ACCEPTED"
+      );
+      if (allApprove) {
+        await TriggerAction({
+          action: Actions.CollectionApproved,
+          user: user as any,
+          collection: collection as any,
+        });
+      }
       console.log("contributor status updated");
       return res.status(200).send("contributor status updated");
     } catch (error) {
