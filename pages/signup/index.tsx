@@ -94,17 +94,16 @@ const Index = () => {
         dob: state.dob,
         gender: gender,
       });
-
-      const imageUrl = await getFileUploadURL(
-        image,
-        `user/profile/${res.data.user.id}/`
-      );
-
-      console.log(res.data);
-      await userDs.updateProfile({
-        id: res.data.user.id,
-        avatar: imageUrl,
-      });
+      if (image) {
+        const imageUrl = await getFileUploadURL(
+          image,
+          `user/profile/${res.data.user.id}/`
+        );
+        await userDs.updateProfile({
+          id: res.data.user.id,
+          avatar: imageUrl,
+        });
+      }
       if (res.status === 200) {
         setVerify(true);
       }
