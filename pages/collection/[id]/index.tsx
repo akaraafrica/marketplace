@@ -1,5 +1,5 @@
 import NextImage from "../../../components/Image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CollectionDs } from "../../../ds";
 import styles from "./index.module.scss";
 import { ICollection } from "../../../types/collection.interface";
@@ -26,6 +26,14 @@ const Index = ({ collection }: properties) => {
   );
   const [open, setOpen] = useState(1);
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    // @ts-ignore
+    const element = document.querySelector("#videoSec video");
+    if (element) {
+      element.setAttribute("poster", collection?.images[0]);
+    }
+  });
 
   return (
     <Layout>

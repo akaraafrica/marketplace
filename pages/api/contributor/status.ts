@@ -6,8 +6,9 @@ import { Actions, TriggerAction } from "../../../services/action.service";
 export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "PUT") {
     const { id, status } = req.body;
+    console.log({ id, status });
 
-    if (!id) return res.status(404);
+    // if (!id) return res.status(404);
     try {
       const resp = await prisma.contributor.update({
         where: {
@@ -23,6 +24,12 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
         },
         include: {
           contributors: true,
+          author: {
+            select: {
+              email: true,
+              id: true,
+            },
+          },
         },
       });
       const user = await prisma.user.findFirst({
@@ -44,6 +51,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
       const allApprove = collection?.contributors.every(
         (contributor) => contributor.confirmation === "ACCEPTED"
       );
+
       if (allApprove) {
         await TriggerAction({
           action: Actions.CollectionApproved,

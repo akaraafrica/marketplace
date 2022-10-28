@@ -209,6 +209,8 @@ export async function TriggerAction(props: ActionProps) {
       break;
     case Actions.ContributorAction:
       if (!collection || !contributorStatus) throw Error("invalid action");
+      console.log({ collection, user, contributorStatus });
+
       data.push({
         receiverId: collection.author.id,
         senderId: user.id,
@@ -217,19 +219,21 @@ export async function TriggerAction(props: ActionProps) {
         description: `${getUserName(
           user
         )} has ${contributorStatus} your request to join ${collection.title}`,
+        itemType: ItemType.Collection,
+        collectionId: collection.id,
       });
-      // emailData.push({
-      //   to: collection.author.email,
-      //   from: "info@mbizi.org",
-      // templateId: MailTemplateIDs.ContributorAction,
-      //   title: collection.title,
-      //   contributorStatus: contributorStatus,
-      //   link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
-      // });
-      // if (data && emailData) {
-      await inApp(data);
-      // await email(emailData);
-      // }
+      emailData.push({
+        to: collection.author.email,
+        from: "info@mbizi.org",
+        templateId: MailTemplateIDs.ContributorAction,
+        title: collection.title,
+        contributorStatus: contributorStatus,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+      });
+      if (data && emailData) {
+        await inApp(data);
+        // await email(emailData);
+      }
       break;
     case Actions.CollectionApproved:
       if (!collection) throw Error("invalid action");
@@ -239,11 +243,13 @@ export async function TriggerAction(props: ActionProps) {
         action: action,
         title: "Collection Approved",
         description: `Congratulation your collection ${collection.title} is approved`,
+        itemType: ItemType.Collection,
+        collectionId: collection.id,
       });
       emailData.push({
         to: collection.author.email,
         from: "info@mbizi.org",
-        templateId: MailTemplateIDs.ContributorAction,
+        templateId: MailTemplateIDs.CollectionApproved,
         title: collection.title,
         link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
       });

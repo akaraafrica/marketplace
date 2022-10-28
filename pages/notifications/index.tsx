@@ -281,14 +281,15 @@ const Index = () => {
                     </button>
                   </Link>
                   {!loading ? (
-                    selectedNotification?.action === "contributor-notice" &&
-                    isContributor()?.confirmation === "PENDING" && (
+                    selectedNotification?.action === "contributor-notice" && (
+                      // isContributor()?.confirmation === "PENDING" && (
                       <div className={styles.actions}>
                         <button onClick={handleAccept}>Accept</button>
                         <button onClick={handleReject}>Reject</button>
                       </div>
                     )
                   ) : (
+                    // )
                     <span className={styles.actions}>Wait...</span>
                   )}
                 </>
