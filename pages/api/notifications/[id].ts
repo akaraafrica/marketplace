@@ -91,4 +91,4 @@ const handler = async (
   }
 };
 
-export default verifyToken(handler);
+export default handler;
