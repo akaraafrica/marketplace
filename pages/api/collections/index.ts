@@ -4,6 +4,7 @@ import {
   ItemType,
   TriggerAction,
 } from "../../../services/action.service";
+import { IItem } from "../../../types/item.interface";
 import { randStr } from "../../../utils/helpers/randomStr";
 import prisma from "../../../utils/lib/prisma";
 
@@ -50,9 +51,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               id: user.id,
             },
           },
-          items: {
-            connect: data?.items.map((item: { id: number }) => ({
+          draftItems: {
+            create: data?.items.map((item: IItem) => ({
               id: item.id,
+              title: item.title,
+              description: item.description,
+              price: item.price,
+              ownerId: item.ownerId,
+              video: item.video,
+              images: item.images,
             })),
           },
           contributors: {

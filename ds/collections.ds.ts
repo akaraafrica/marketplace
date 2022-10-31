@@ -23,8 +23,15 @@ class Collection {
   }
   async getCollectionById(id: number) {
     try {
-      const res = await api.get(`${url}/${id}`);
-      return res.data;
+      let { data } = await api.get(`${url}/${id}`);
+      data = data.data;
+      data = {
+        ...data,
+        items: data?.items.length > 0 ? data?.items : data.draftItems,
+      };
+
+      // console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }

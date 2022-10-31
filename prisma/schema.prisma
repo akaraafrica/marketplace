@@ -115,7 +115,7 @@ model Profile {
   userId      Int       @unique
   id          Int       @id @default(autoincrement())
   phoneNumber String?
-  bio         String?    @db.VarChar(250)
+  bio         String?   @db.VarChar(250)
   user        User      @relation(fields: [userId], references: [id])
 }
 
@@ -149,9 +149,22 @@ model Collection {
   beneficiaries Beneficiary[]
   ratings       CollectionRating[]
   contributors  Contributor[]
+  draftItems    DraftItems[]
   items         Item[]
   likes         Like[]
   Notification  Notification[]
+}
+
+model DraftItems {
+  id           Int         @id @default(autoincrement())
+  ownerId      Int
+  collectionId Int?
+  title        String
+  description  String?     @db.VarChar(10000)
+  images       String[]
+  video        String?
+  price        Float
+  Collection   Collection? @relation(fields: [collectionId], references: [id])
 }
 
 model User {

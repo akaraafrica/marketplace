@@ -12,6 +12,7 @@ export interface DT {
   email?: string;
   name?: string;
   resetLink?: string;
+  contributorStatus?: string;
   emailComfirmLink?: string;
 }
 
@@ -33,6 +34,7 @@ export default async function SendMail({
   title,
   amount,
   author,
+  contributorStatus,
 }: any) {
   try {
     if (!to) return "Reciever's email is needed";
@@ -47,6 +49,7 @@ export default async function SendMail({
       title,
       amount,
       author,
+      contributorStatus,
     };
     await mail.send({ to, from, templateId, dynamicTemplateData, subject });
     return "email sent";

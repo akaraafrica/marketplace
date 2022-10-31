@@ -171,7 +171,7 @@ const Index = () => {
         <main>
           {(width > 800 || !selectedNotification) && (
             <div className={styles.list}>
-              {notifications?.data &&
+              {notifications &&
                 notifications.data.map((item: any) => (
                   <div
                     key={item.id}
@@ -248,24 +248,43 @@ const Index = () => {
               {selectedNotification?.collection && (
                 <>
                   <div className={styles.contributorImages}>
-                    {selectedNotification?.collection?.items
-                      ?.filter((item) => item.owner.id === user?.id)
-                      .slice(0, 4)
-                      .map((item) => {
-                        return (
-                          <Link href={"item/" + item?.id} key={item.id}>
-                            <a>
-                              <NextImage
-                                alt={item?.title}
-                                src={item?.images[0]}
-                                layout="fixed"
-                                width={300}
-                                height={300}
-                              />
-                            </a>
-                          </Link>
-                        );
-                      })}
+                    {selectedNotification?.collection?.items.length
+                      ? selectedNotification?.collection?.items
+                          ?.filter((item) => item.ownerId === user?.id)
+                          .slice(0, 4)
+                          .map((item) => {
+                            return (
+                              <Link href={"item/" + item?.id} key={item.id}>
+                                <a>
+                                  <NextImage
+                                    alt={item?.title}
+                                    src={item?.images[0]}
+                                    layout="fixed"
+                                    width={300}
+                                    height={300}
+                                  />
+                                </a>
+                              </Link>
+                            );
+                          })
+                      : selectedNotification?.collection?.draftItems
+                          ?.filter((item) => item.ownerId === user?.id)
+                          .slice(0, 4)
+                          .map((item) => {
+                            return (
+                              <Link href={"item/" + item?.id} key={item.id}>
+                                <a>
+                                  <NextImage
+                                    alt={item?.title}
+                                    src={item?.images[0]}
+                                    layout="fixed"
+                                    width={300}
+                                    height={300}
+                                  />
+                                </a>
+                              </Link>
+                            );
+                          })}
                   </div>
                   <Link
                     href={
@@ -279,14 +298,15 @@ const Index = () => {
                     </button>
                   </Link>
                   {!loading ? (
-                    selectedNotification?.action === "contributor-notice" &&
-                    isContributor()?.confirmation === "PENDING" && (
+                    selectedNotification?.action === "contributor-notice" && (
+                      // isContributor()?.confirmation === "PENDING" && (
                       <div className={styles.actions}>
                         <button onClick={handleAccept}>Accept</button>
                         <button onClick={handleReject}>Reject</button>
                       </div>
                     )
                   ) : (
+                    // )
                     <span className={styles.actions}>Wait...</span>
                   )}
                 </>

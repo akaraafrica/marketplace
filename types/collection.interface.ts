@@ -9,6 +9,7 @@ export interface ICollection {
   title: string;
   tokenId: string;
   items: IItem[];
+  draftItems: IItem[];
   description: string;
   createdAt: string;
   updatedAt: string;

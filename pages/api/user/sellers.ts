@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               items: true,
             },
           },
-          profile: true,
+          // profile: true,
         },
       });
 

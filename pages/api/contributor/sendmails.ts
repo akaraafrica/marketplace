@@ -7,7 +7,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
       await TriggerAction({
-        action: Actions.contributorNotice,
+        action: Actions.ContributorNotice,
         user,
         collection,
       });

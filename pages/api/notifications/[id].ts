@@ -24,15 +24,11 @@ const handler = async (
             },
           },
           sender: true,
-          item: true,
           collection: {
             include: {
               contributors: true,
-              items: {
-                include: {
-                  owner: true,
-                },
-              },
+              draftItems: true,
+              items: true,
             },
           },
         },

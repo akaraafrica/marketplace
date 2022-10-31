@@ -109,7 +109,9 @@ function Header() {
       <div className={styles.header}>
         <div className={styles.left}>
           <Link href={`/`}>
-            <img alt="logo" src={`/assets/Logo.png`} />
+            <a>
+              <img alt="logo" src={`/assets/Logo.png`} />
+            </a>
           </Link>
           <hr />
           <ul>
