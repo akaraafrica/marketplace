@@ -109,7 +109,9 @@ function Header() {
       <div className={styles.header}>
         <div className={styles.left}>
           <Link href={`/`}>
-            <img alt="logo" src={`/assets/Logo.png`} />
+            <a>
+              <img alt="logo" src={`/assets/Logo.png`} />
+            </a>
           </Link>
           <hr />
           <ul>
@@ -130,7 +132,7 @@ function Header() {
             <input type="text" placeholder="Search" />
             <img alt="search icon" src={`/assets/searchIcon.svg`} />
           </div>
-          {user && notifications && (
+          {user && (
             <div
               className={styles.notification}
               onClick={() => {
@@ -138,7 +140,7 @@ function Header() {
               }}
             >
               <div
-                className={notifications.data.length ? styles.active : ""}
+                className={notifications?.data.length ? styles.active : ""}
               ></div>
               <MdNotificationsNone size={40} />
               {notificationOpen && notifications && (

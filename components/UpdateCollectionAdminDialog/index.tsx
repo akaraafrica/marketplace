@@ -3,24 +3,26 @@ import styles from "./index.module.scss";
 import Dialog from "../global/Dialog";
 import collectionsDs from "../../ds/collections.ds";
 import { toast } from "react-toastify";
+import { ICollection } from "../../types/collection.interface";
 
 interface Properties {
   open: boolean;
   handleClose: () => void;
-  collectionId: number;
+  collection: ICollection;
   mutate: any;
 }
 const Index: React.FC<Properties> = ({
   open,
   handleClose,
-  collectionId,
+  collection,
   mutate,
 }) => {
   const handleChangeStatusToVerified = async () => {
     try {
       await collectionsDs.updateStatus({
-        id: collectionId,
+        id: collection.id,
         status: "VERIFIED",
+        collection,
       });
       toast.success("Collection status updated, ready to publish");
       handleClose();

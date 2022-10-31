@@ -42,37 +42,42 @@ const Home = () => {
     UserDs.fetchSellers()
   );
 
-  // SwiperCore.use([Pagination, Autoplay]);
   return (
-    <Layout>
-      <div className={styles.styles}>
-        <div className={styles.lottieBg}>
-          <Lottie
-            loop
-            animationData={lottieJson}
-            play
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "absolute",
-              left: 0,
-              right: 0,
-            }}
-          />
+    <>
+      <Layout>
+        <div className={styles.styles}>
+          <div className={styles.lottieBg}>
+            <Lottie
+              loop
+              animationData={lottieJson}
+              play
+              style={{
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                left: 0,
+                right: 0,
+              }}
+            />
+          </div>
         </div>
-      </div>
-      {collection ? <LandingMainSection collection={collection[0]} /> : <></>}
-      {sellers ? <SellersSec sellers={sellers} /> : <></>}
-      {item ? <HotItems items={item} /> : <></>}
-      {collection ? <HotCollectionsSection collections={collection} /> : <></>}
-      {discovery ? <Discover items={discovery} /> : <></>}
-      <div className={styles.discoverdividercon}></div>
-      <div id="subscribe">
-        <SubscribeModal />
-      </div>
-      <div className={styles.discoverdividercon}></div>
-      <HowItWorks />
-    </Layout>
+        {collection ? <LandingMainSection collection={collection[0]} /> : <></>}
+        {sellers ? <SellersSec sellers={sellers} /> : <></>}
+        {item ? <HotItems items={item} /> : <></>}
+        {collection ? (
+          <HotCollectionsSection collections={collection} />
+        ) : (
+          <></>
+        )}
+        {discovery ? <Discover items={discovery} /> : <></>}
+        <div className={styles.discoverdividercon}></div>
+        <div id="subscribe">
+          <SubscribeModal />
+        </div>
+        <div className={styles.discoverdividercon}></div>
+        <HowItWorks />
+      </Layout>
+    </>
   );
 };
 

@@ -20,6 +20,8 @@ interface properties {
   collection: ICollection;
 }
 const Index = ({ collection }: properties) => {
+  // console.log(collection.title);
+
   const total = collection.items.reduce(
     (total: number, item: { price: number }) => total + item.price,
     0
@@ -34,6 +36,7 @@ const Index = ({ collection }: properties) => {
       element.setAttribute("poster", collection?.images[0]);
     }
   });
+  console.log(collection);
 
   return (
     <Layout>
@@ -85,7 +88,7 @@ const Index = ({ collection }: properties) => {
                   <h3>Collection Items</h3>
                 </div>
                 <div>
-                  <span>{total} ETH</span>
+                  <span>{total.toFixed(2)} ETH</span>
                   <h3>Total worth of Collection </h3>
                 </div>
               </section>
@@ -202,64 +205,56 @@ const Index = ({ collection }: properties) => {
               <div className={styles.section}>
                 <div className={styles.content}>
                   <h2>Contributors</h2>
-                  {collection?.contributors
-                    ?.sort((a, b) => {
-                      if (a.userId === user?.id) {
-                        return -1;
-                      } else {
-                        return 1;
-                      }
-                    })
-                    .map((contributor) => (
-                      <div key={contributor.id} className={styles.row}>
-                        <div className={styles.left}>
-                          {contributor && (
-                            <DefaultAvatar
-                              url={contributor?.user?.profile?.avatar}
-                              id={contributor.user.id}
-                              width={"88px"}
-                              height={"88px"}
-                              walletAddress={contributor?.user.walletAddress}
-                              fontSize={"8px"}
-                            />
-                          )}
-                          <div className={styles.details}>
-                            <div className={styles.dtop}>
-                              <span className={styles.name}>
-                                {contributor.user.email}
-                              </span>
-                              <span className={styles.number}>
-                                {
-                                  collection.items?.filter((item) => {
-                                    return item.ownerId === contributor.userId;
-                                  }).length
-                                }{" "}
-                                Item(s) in collection
-                              </span>
-                            </div>
-                            <div className={styles.btnDiv}></div>
+                  {collection?.contributors.map((contributor) => (
+                    <div key={contributor.id} className={styles.row}>
+                      <div className={styles.left}>
+                        {/* {contributor && (
+                          <DefaultAvatar
+                            url={contributor?.user?.profile?.avatar || ""}
+                            id={contributor.user.id}
+                            width={"88px"}
+                            height={"88px"}
+                            walletAddress={contributor?.user.walletAddress}
+                            fontSize={"8px"}
+                          />
+                        )} */}
+                        <div className={styles.details}>
+                          <div className={styles.dtop}>
+                            <span className={styles.name}>
+                              {contributor.user.email}
+                            </span>
+                            <span className={styles.number}>
+                              {
+                                collection.items?.filter((item) => {
+                                  return item.ownerId === contributor.userId;
+                                }).length
+                              }
+                              Item(s) in collection
+                            </span>
                           </div>
-                        </div>
-                        <div className={styles.center}>
-                          <div className={styles.scroll}>
-                            {collection.items
-                              ?.filter(
-                                (item) => item.ownerId === contributor.userId
-                              )
-                              .map((item: IItem, idx: number) => (
-                                <div key={idx} className={styles.centerItem}>
-                                  <NextImage
-                                    className={styles.image}
-                                    src={item.images[0]}
-                                    width="112px"
-                                    height="88px"
-                                  />
-                                </div>
-                              ))}
-                          </div>
+                          <div className={styles.btnDiv}></div>
                         </div>
                       </div>
-                    ))}
+                      <div className={styles.center}>
+                        <div className={styles.scroll}>
+                          {collection.items
+                            ?.filter(
+                              (item) => item.ownerId === contributor.userId
+                            )
+                            .map((item: IItem, idx: number) => (
+                              <div key={idx} className={styles.centerItem}>
+                                <NextImage
+                                  className={styles.image}
+                                  src={item.images[0]}
+                                  width="112px"
+                                  height="88px"
+                                />
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className={styles.section}>
@@ -267,7 +262,7 @@ const Index = ({ collection }: properties) => {
                   <div className={styles.sectionTop}></div>
                 </div>
                 <div className={styles.content}>
-                  {collection?.beneficiaries.length > 0 && (
+                  {collection?.beneficiaries.length >= 1 && (
                     <h2>Beneficiaries</h2>
                   )}
                   {collection?.beneficiaries?.map((beneficiary) => (
@@ -312,7 +307,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      collection: collection.data,
+      collection: collection,
     },
   };
 };

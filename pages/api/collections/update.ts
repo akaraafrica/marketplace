@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { IItem } from "../../../types/item.interface";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -15,9 +16,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           description: data.description,
           visible: data.visible,
           updatedAt: new Date(),
-          items: {
-            connect: data.items.map((item: { id: number }) => ({
+          draftItems: {
+            set: data.items.map((item: IItem) => ({
               id: item.id,
+              title: item.title,
+              description: item.description,
+              price: item.price,
+              ownerId: item.ownerId,
+              video: item.video,
+              images: item.images,
             })),
           },
           contributors: {
