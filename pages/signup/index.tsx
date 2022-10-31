@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import VerifyEmail from "../../components/VerifyEmail";
 import NextImage from "../../components/Image";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
+import userDs from "../../ds/user.ds";
 
 const Index = () => {
   const [state, setState] = useState({
@@ -42,6 +43,7 @@ const Index = () => {
 
   const handleChangeImage = (e?: any) => {
     setImage(e.target.files[0]);
+    console.log(`Image`, e.target.files[0]);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,27 +86,28 @@ const Index = () => {
 
       console.log(state, image, gender);
 
-      const res = await axios.post("/api/user/signup", {
+      const res = await userDs.create({
         address: account,
         email: state.email,
         password: state.password,
         name: state.name,
         dob: state.dob,
+        gender: gender,
       });
-
-      const imageUpload = await getFileUploadURL(
-        image,
-        `user/profile/${res.data.id}/`
-      );
-
+      if (image) {
+        const imageUrl = await getFileUploadURL(
+          image,
+          `user/profile/${res.data.user.id}/`
+        );
+        await userDs.updateProfile({
+          id: res.data.user.id,
+          avatar: imageUrl,
+        });
+      }
       if (res.status === 200) {
-        // toast.success(
-        //   "Welcome to Akara, check your email to complete verification"
-        // );
-
         setVerify(true);
       }
-      console.log(res);
+      console.log("response", res);
     } catch (error: any) {
       if (error.response.status === 401)
         return setError(error.response.data.message);
