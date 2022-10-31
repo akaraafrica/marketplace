@@ -23,27 +23,36 @@ const Index: React.FC<AvatarProps> = ({
 }) => {
   // console.log(url)
   if (url === undefined || url === null || url === "") {
-    const len = length && length > 0 ? length : 3;
-    const lastThree = walletAddress?.length - len;
-    const walletFirstThree = walletAddress.slice(0, len);
-    const walletLastThree = walletAddress.slice(lastThree);
+    // const len = length && length > 0 ? length : 3;
+    // const lastThree = walletAddress?.length - len;
+    // const walletFirstThree = walletAddress.slice(0, len);
+    // const walletLastThree = walletAddress.slice(lastThree);
 
     return (
-      <div
-        style={{ width: width, height: height, backgroundColor: "Khaki" }}
-        className={styles.default}
-      >
-        <Link href={id ? `/profile/${id}` : "#"}>
-          <a>
-            <div
-              style={{ fontSize: fontSize }}
-              /* @ts-ignore: Unreachable code error */
-            >
-              {walletFirstThree + walletLastThree}
-            </div>
-          </a>
-        </Link>
-      </div>
+      // <div
+      //   style={{ width: width, height: height, backgroundColor: "Khaki" }}
+      //   className={styles.default}
+      // >
+      //   <Link href={id ? `/profile/${id}` : "#"}>
+      //     <a>
+      //       <div
+      //         style={{ fontSize: fontSize }}
+      //         /* @ts-ignore: Unreachable code error */
+      //       >
+      //         {walletFirstThree + walletLastThree}
+      //       </div>
+      //     </a>
+      //   </Link>
+      // </div>
+      <Link href={id ? `/profile/${id}` : "#"}>
+        <NextImage
+          src={`https://avatars.dicebear.com/api/micah/${walletAddress}.svg`}
+          width={width}
+          height={height}
+          style={{ borderRadius: "50%" }}
+          className={styles.avatar}
+        />
+      </Link>
     );
   } else {
     return (
