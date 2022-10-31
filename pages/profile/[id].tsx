@@ -71,7 +71,7 @@ const Index = () => {
       setIsFollowing(res);
     }
   };
-
+  // console.log(profile)
   return (
     <Layout>
       <div className={styles.root}>
@@ -93,16 +93,14 @@ const Index = () => {
               {profile && (
                 <DefaultAvatar
                   id={profile!.id}
-                  url={profile && profile.avatar}
+                  url={profile?.profile?.avatar}
                   width="160px"
                   height="160px"
                   walletAddress={walletAddress!}
                   fontSize="1.2em"
                 />
               )}
-              <span className={styles.name}>
-                {profile && profile.name && profile.name}
-              </span>
+              <span className={styles.name}>{profile?.profile?.name}</span>
               <div className={styles.wallet2}>
                 <span>{walletAddress && walletAddress}</span>
                 <NextImage
@@ -111,9 +109,7 @@ const Index = () => {
                   src="/assets/copyicon.svg"
                 />
               </div>
-              <span className={styles.desc}>
-                {profile && profile.bio && profile.bio}
-              </span>
+              <span className={styles.desc}>{profile?.profile?.bio}</span>
               <span className={styles.web}>
                 <TbWorld /> https://ui8.net
               </span>

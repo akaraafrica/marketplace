@@ -15,7 +15,8 @@ export default async function Signup(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { password, address } = req.body;
+  const { password, address, name, dob, gender, avatar, phoneNumber, bio } =
+    req.body;
   const userEmail = await req.body.email;
   let link = "";
   // console.log('Welcome:', userEmail )
@@ -60,6 +61,16 @@ export default async function Signup(
             walletAddress: address,
             receivedNotifications: {},
             updatedAt: new Date(),
+            profile: {
+              create: {
+                name: name,
+                dob: new Date(dob),
+                avatar: avatar,
+                phoneNumber: phoneNumber,
+                bio: bio,
+                gender: gender,
+              },
+            },
           },
         });
 
@@ -131,7 +142,21 @@ export default async function Signup(
         });
       }
       break;
-
+    case "PUT":
+      try {
+        await prisma.user.update({
+          where: {
+            id: req.body.id,
+          },
+          data: {
+            profile: {
+              update: {
+                avatar: avatar,
+              },
+            },
+          },
+        });
+      } catch (error) {}
     default:
       res.send("Method not allowed");
       break;

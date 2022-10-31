@@ -111,11 +111,11 @@ model Profile {
   rating      Int?
   avatar      String?
   dob         DateTime?
+  gender      String?
   userId      Int       @unique
   id          Int       @id @default(autoincrement())
   phoneNumber String?
   bio         String?   @db.VarChar(250)
-  gender      String?
   user        User      @relation(fields: [userId], references: [id])
 }
 

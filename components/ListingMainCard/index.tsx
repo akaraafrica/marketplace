@@ -139,8 +139,8 @@ function ListingMainCard() {
                           id={user.id}
                           url={user.profile?.avatar}
                           walletAddress={user.walletAddress}
-                          width="4rem"
-                          height="4rem"
+                          width="60px"
+                          height="60px"
                         />
                       </div>
                       <div className={styles.creatorNameDiv}>

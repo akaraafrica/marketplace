@@ -8,10 +8,11 @@ class User {
   constructor() {}
   async create(data: any) {
     try {
-      const res = await api.post(url, data);
+      const res = await api.post(`${url}/signup`, data);
       return res;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
   async fetch(walletAddress: string) {
@@ -52,7 +53,15 @@ class User {
     }
   }
 
-  async update() {}
+  async updateProfile(data: any) {
+    try {
+      const response = await api.put(`${url}/signup`, data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 
   async fetchSellers() {
     try {

@@ -3,6 +3,7 @@ import { IItem } from "./item.interface";
 import { ILike } from "./like.interface";
 
 export interface IProfile {
+  profile?: any;
   id: number;
   avatar?: string;
   bio?: string;
