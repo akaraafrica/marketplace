@@ -30,9 +30,10 @@ const Index = ({ collection }: properties) => {
 
   useEffect(() => {
     // @ts-ignore
-    document
-      .querySelector("#videoSec video")
-      .setAttribute("poster", collection?.images[0]);
+    const element = document.querySelector("#videoSec video");
+    if (element) {
+      element.setAttribute("poster", collection?.images[0]);
+    }
   });
 
   return (
