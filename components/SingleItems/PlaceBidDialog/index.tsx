@@ -5,6 +5,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import Dialog from "../../global/Dialog";
 import styles from "./index.module.scss";
 import { getUserName } from "../../../utils/helpers/getUserName";
+import Link from "next/link";
 
 export default function Index({
   open,
@@ -41,6 +42,19 @@ export default function Index({
               You are about to purchase <strong>{item.title} </strong>
               from <strong>${getUserName(item?.owner)}</strong>
             </p>
+            {item.collectionId && (
+              <section className={styles.collectionItem}>
+                <div>
+                  <h4>
+                    {item.title} is part of{" "}
+                    <Link href={`/collection/${item.collectionId}`}>
+                      <a>{item.collection.title}</a>
+                    </Link>{" "}
+                    collection
+                  </h4>
+                </div>
+              </section>
+            )}
 
             <h3>Your bid</h3>
             <div className={styles.bidinput}>

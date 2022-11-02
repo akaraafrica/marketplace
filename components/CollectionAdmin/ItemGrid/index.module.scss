@@ -34,7 +34,12 @@
       border-radius: 20px;
       border: 1px solid;
       background: black;
+      cursor: pointer;
       padding: 8px;
+    }
+
+    button:hover {
+      background-color: #f2994a;
     }
 
     .cardImg {

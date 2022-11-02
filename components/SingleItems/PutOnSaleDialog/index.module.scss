@@ -1,0 +1,32 @@
+@use "../../../styles/colors" as *;
+
+.main {
+  padding: 1rem;
+
+  h4 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: $secondary-color;
+    text-align: center;
+  }
+
+  p {
+    margin-top: 0;
+  }
+
+  .btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    button {
+      border: 0;
+      background-color: $secondary-color;
+      color: white;
+      padding: 8px 20px;
+      cursor: pointer;
+      border-radius: 24px;
+    }
+  }
+}

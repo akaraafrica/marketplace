@@ -17,6 +17,7 @@ import DefaultAvatar from "../../components/DefaultAvatar";
 import useWindowSize from "../../hooks/useWindowSize";
 import { GetServerSideProps } from "next";
 import withAuth from "../../HOC/withAuth";
+import collectionsDs from "../../ds/collections.ds";
 
 interface ListItemProps {
   title: string;
@@ -68,13 +69,24 @@ const Index = () => {
     "notificationsAll",
     () => NotificationDs.fetchAll(user!.id)
   );
-
   const updateData = async (id: string) => {
     if (user) await NotificationDs.update(id, user.walletAddress);
   };
   const [selectedNotification, setSelectedNotification] = useState(
     notifications?.data[0]
   );
+  useEffect(() => {
+    const id = router.query.id as string;
+
+    if (id && notifications?.data) {
+      const findNotification = notifications?.data.find(
+        (item) => item!.id === Number(id)
+      );
+      if (findNotification) {
+        setSelectedNotification(findNotification);
+      }
+    }
+  }, [router, notifications]);
   useEffect(() => {
     if (selectedNotification)
       document
@@ -90,17 +102,6 @@ const Index = () => {
     }
   }, [notifications]);
 
-  useEffect(() => {
-    const id = router.query.id as string;
-    if (id && notifications?.data) {
-      const findNotification = notifications?.data.find(
-        (item) => item!.id === Number(id)
-      );
-      if (findNotification && !selectedNotification) {
-        setSelectedNotification(findNotification);
-      }
-    }
-  }, [router, notifications]);
   useEffect(() => {
     if (selectedNotification && !selectedNotification?.read) {
       updateData(selectedNotification.id as unknown as string);
@@ -221,29 +222,33 @@ const Index = () => {
                   walletAddress={
                     selectedNotification?.sender?.walletAddress || ""
                   }
-                  fontSize="0.7em"
-                  length={2}
+                  width="100px"
+                  height="100px"
                 />
 
                 <span>{selectedNotification?.description}</span>
               </div>
-
               {selectedNotification?.item && (
-                <div className={styles.img}>
-                  <Link href={"item/" + selectedNotification?.item?.id}>
-                    <a>
-                      <NextImage
-                        alt={selectedNotification?.item?.title}
-                        src={selectedNotification?.item?.images[0]}
-                        width={500}
-                        height={500}
-                      />
-                    </a>
-                  </Link>
-                  <Link href={"item/" + selectedNotification?.item?.id}>
-                    <button className={styles.visit}>Go to Item</button>
-                  </Link>
-                </div>
+                <>
+                  <div className={styles.img}>
+                    <Link href={"/item/" + selectedNotification?.item?.id}>
+                      <a>
+                        <NextImage
+                          alt={selectedNotification?.item?.title}
+                          src={selectedNotification?.item?.images[0]}
+                          width={500}
+                          height={500}
+                        />
+                      </a>
+                    </Link>
+
+                    <Link href={"/item/" + selectedNotification?.item?.id}>
+                      <a>
+                        <button className={styles.visit}>Go to Item</button>
+                      </a>
+                    </Link>
+                  </div>
+                </>
               )}
               {selectedNotification?.collection && (
                 <>

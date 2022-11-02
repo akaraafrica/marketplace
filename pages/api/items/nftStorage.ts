@@ -15,8 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const name = fields.name as string;
         const description = fields.description as string;
         //@ts-ignore
-        const filepath = files.image.filepath;
-        console.log({ name }, { description });
+        const filepath = files?.image?.filepath;
         const nftStorage = new NFTStorage({
           token: process.env.NFT_STORAGE_KEY || "",
         });

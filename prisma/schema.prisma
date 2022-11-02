@@ -50,33 +50,34 @@ model Auction {
 }
 
 model Item {
-  id           Int            @id @default(autoincrement())
-  ownerId      Int
-  collectionId Int?
-  tokenId      String         @unique
-  title        String
-  description  String?        @db.VarChar(10000)
-  images       String[]
-  video        String?
-  acceptedBid  Float?
-  createdAt    DateTime       @default(now())
-  openForBid   Boolean
-  price        Float
-  published    Boolean
-  publishedAt  DateTime?
-  updatedAt    DateTime       @updatedAt
-  step         Int?
-  royalties    Int?
-  terms        Boolean?
-  category     Category?      @default(ART)
-  collection   Collection?    @relation(fields: [collectionId], references: [id])
-  owner        User           @relation(fields: [ownerId], references: [id])
-  auction      Auction?
-  bids         Bid[]
-  ratings      ItemRating[]
-  likes        Like[]
-  Notification Notification[]
-  purchases    Purchase[]
+  id                Int            @id @default(autoincrement())
+  ownerId           Int
+  collectionId      Int?
+  tokenId           String         @unique
+  title             String
+  description       String?        @db.VarChar(10000)
+  images            String[]
+  video             String?
+  acceptedBid       Float?
+  createdAt         DateTime       @default(now())
+  openForBid        Boolean
+  price             Float
+  published         Boolean
+  publishedAt       DateTime?
+  updatedAt         DateTime       @updatedAt
+  step              Int?
+  royalties         Int?
+  collectionOnChain Boolean?       @default(true)
+  terms             Boolean?
+  category          Category?      @default(ART)
+  collection        Collection?    @relation(fields: [collectionId], references: [id])
+  owner             User           @relation(fields: [ownerId], references: [id])
+  auction           Auction?
+  bids              Bid[]
+  ratings           ItemRating[]
+  likes             Like[]
+  Notification      Notification[]
+  purchases         Purchase[]
 }
 
 model ItemRating {
@@ -111,11 +112,11 @@ model Profile {
   rating      Int?
   avatar      String?
   dob         DateTime?
-  gender      String?
   userId      Int       @unique
   id          Int       @id @default(autoincrement())
   phoneNumber String?
   bio         String?   @db.VarChar(250)
+  gender      String?
   user        User      @relation(fields: [userId], references: [id])
 }
 
@@ -163,6 +164,7 @@ model DraftItems {
   description  String?     @db.VarChar(10000)
   images       String[]
   video        String?
+  createdAt    DateTime    @default(now())
   price        Float
   Collection   Collection? @relation(fields: [collectionId], references: [id])
 }

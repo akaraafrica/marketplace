@@ -11,7 +11,7 @@ const Item = ({ data }: { data: INotification }) => {
 
   return (
     <div>
-      <Link href={`/notifications/+${user?.id}?id=${data.id}`}>
+      <Link href={`/notifications/${user?.id}?id=${data.id}`}>
         <a>
           <div className={styles.item}>
             <div className={styles.left}>
