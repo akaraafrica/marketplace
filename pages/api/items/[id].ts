@@ -27,6 +27,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               rating: true,
             },
           },
+          collection: {
+            select: {
+              title: true,
+              id: true,
+              contributors: {
+                select: {
+                  user: {
+                    select: {
+                      walletAddress: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
           likes: true,
         },
       });

@@ -32,6 +32,8 @@ export default async function profile(
           ownerId: user.id,
           acceptedBid: 1,
           updatedAt: new Date(),
+          published: false,
+          collectionOnChain: false,
         },
       });
       try {
@@ -55,7 +57,7 @@ export default async function profile(
       try {
         await prisma.$transaction([updateItemOwner, createPurchase]);
 
-        if (item.collectionId) {
+        if (item.collectionId && item.collectionOnChain) {
           const collection = await prisma.collection.findUnique({
             where: {
               id: item.collectionId,

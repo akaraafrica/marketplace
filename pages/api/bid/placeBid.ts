@@ -10,8 +10,6 @@ export default async function profile(
     const { user, item, amount } = req.body;
 
     try {
-      console.log(req.body);
-
       const data = await prisma.bid.create({
         data: {
           amount: amount,

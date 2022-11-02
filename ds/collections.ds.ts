@@ -36,6 +36,18 @@ class Collection {
       console.log(error);
     }
   }
+  async removeItem(collectionId: number, itemId: number, draft?: string) {
+    try {
+      const res = await api.patch(`${url}/removeItem`, {
+        collectionId,
+        itemId,
+        draft,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async createData(data: any, user: IUser, walletAddress: string) {
     try {
       const res = await api.post(url, {
@@ -130,6 +142,7 @@ class Collection {
       console.log(error);
     }
   }
+
   async addItem({ user, item, collection }: any) {
     try {
       const res = await api.patch(url + "/addItem", {

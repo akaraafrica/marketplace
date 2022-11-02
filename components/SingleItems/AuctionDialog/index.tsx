@@ -24,7 +24,6 @@ export default function Index({ open, handleClose, item, edit }: any) {
           endTime,
         });
         mutate(["item", item.id]);
-
         toast.success("Auction updated");
         handleClose();
       } catch (error) {
