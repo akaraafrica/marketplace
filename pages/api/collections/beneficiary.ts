@@ -91,8 +91,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         data: {
           beneficiaries: {
             set: users.map((user: any) => ({
-              email: user.email,
-              walletAddress: user.walletAddress,
               user: {
                 connect: {
                   id: user.id,
