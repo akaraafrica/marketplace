@@ -142,6 +142,19 @@ const Index: React.FC<Properties> = ({
     setBeneficiary(null);
     handleClose();
   };
+  const handleConnect = async () => {
+    try {
+      await CollectionDs.connectBeneficiary(collectionId, selectedUser);
+      toast.success("Beneficiary successful added");
+      setSelectedUser([]);
+      mutate();
+      handleClose();
+    } catch (error) {
+      toast.error("Error adding beneficiary");
+      console.log(error);
+    }
+  };
+  console.log(selectedUser);
   return (
     <Dialog open={open} handleClose={handleDialogClose}>
       <main className={styles.main}>
@@ -233,6 +246,9 @@ const Index: React.FC<Properties> = ({
                 </div>
               ))}
             </div>
+            <button className={styles.add} onClick={handleConnect}>
+              Add Benefciary
+            </button>
           </div>
         )}
         {page === 1 && (

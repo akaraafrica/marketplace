@@ -1,6 +1,6 @@
+import { IUser } from "./../types/user.interface";
 import { api } from "../services/apiClient";
 import { IItem } from "../types/item.interface";
-import { IUser } from "../types/user.interface";
 
 const url = `/api/collections`;
 
@@ -140,6 +140,17 @@ class Collection {
       const res = await api.post(url + "/beneficiary", {
         collectionId,
         ...data,
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async connectBeneficiary(collectionId: number, users: IUser[]) {
+    try {
+      const res = await api.put(url + "/beneficiary", {
+        collectionId,
+        users,
       });
       return res;
     } catch (error) {

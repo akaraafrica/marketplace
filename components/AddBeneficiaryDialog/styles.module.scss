@@ -30,6 +30,17 @@
     width: 100%;
     gap: 12px;
 
+    .add {
+      background-color: transparent;
+      border: 1px solid #f2994a;
+      padding: 10px;
+      color: #f2994a;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+    }
     label {
       font-style: normal;
       font-weight: 700;
