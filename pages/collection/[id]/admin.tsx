@@ -462,7 +462,19 @@ const Index = () => {
                             {contributor.userId !== user?.id &&
                               collection.author.id === user?.id && (
                                 <>
-                                  <button>{contributor.confirmation}</button>
+                                  <button
+                                    style={{
+                                      backgroundColor:
+                                        contributor.confirmation === "ACCEPTED"
+                                          ? "green"
+                                          : contributor.confirmation ===
+                                            "REJECTED"
+                                          ? "red"
+                                          : "",
+                                    }}
+                                  >
+                                    {contributor.confirmation}
+                                  </button>
                                   <button
                                     onClick={() =>
                                       handleRemoveContributor(
