@@ -13,7 +13,6 @@ export default function PlaceBid({ item }: { item: IItem }) {
   const [openPlaceBidDialog, setOpenPlaceBidDialog] = useState(false);
   const [openPurchaseDialog, setOpenPurchaseDialog] = useState(false);
   const [openSucceesDialog, setOpenSuccessDialog] = useState(false);
-  const [openRemove, setOpenRemove] = useState(false);
 
   const [amount, setAmount] = useState<number | null>(null);
   const { user } = useContext(AuthContext);
@@ -30,28 +29,55 @@ export default function PlaceBid({ item }: { item: IItem }) {
   };
 
   const handlePlaceBid = async () => {
+    //TODO-OnChain-action
+
     if (!user) {
       return;
     }
     try {
-      if (amount) await BidDs.postData("placeBid", item, user, amount);
-      mutate(["item", item.id]);
-      toast.success("Bid Placed Successfully");
+      const newData = {
+        ...item,
+        bids: [
+          {
+            id: Math.random(),
+            amount: amount,
+            bidderId: user.id,
+            itemId: item.id,
+            updatedAt: new Date(),
+          },
+          ...item.bids,
+        ],
+      };
+      mutate("item" + item.id, () => newData, false);
       handleBidClose();
+      toast.success("Bid Placed Successfully");
+      await BidDs.postData("placeBid", item, user, amount!);
+      mutate("item" + item.id);
+
       setAmount(null);
     } catch (error) {
       toast.error("Error Placing Bid");
     }
   };
   const handlePurchaseNow = async () => {
+    //TODO-OnChain-action
+
     if (!user) {
       return;
     }
     try {
-      await BidDs.postData("purchase", item, user);
-      mutate(["item", item.id]);
+      const newData = {
+        ...item,
+        owner: user,
+        published: false,
+        ownerId: user.id,
+        auction: { open: false },
+      };
       setOpenSuccessDialog(true);
       handlePurchaseClose();
+      mutate("item" + item.id, () => newData, false);
+      await BidDs.postData("purchase", item, user);
+      mutate("item" + item.id);
     } catch (error) {
       toast.error("purchasing Bid");
     }

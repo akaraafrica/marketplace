@@ -352,29 +352,31 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               <span>single item</span>
             </h1>
           </div>
-          <div className={styles.sciuploadseccon}>
-            <div className={styles.uploadsechead}>
-              <span className={styles.upload}>Upload file</span>
-              <span className={styles.drag}>
-                Drag or choose your file to upload
-              </span>
+          {!item && (
+            <div className={styles.sciuploadseccon}>
+              <div className={styles.uploadsechead}>
+                <span className={styles.upload}>Upload file</span>
+                <span className={styles.drag}>
+                  Drag or choose your file to upload
+                </span>
+              </div>
+              <div
+                onClick={() => target.current?.click()}
+                className={styles.sciuploadbox}
+              >
+                <img alt="upload icon" src={`/assets/uploadicon.svg`} />
+                <p>PNG, GIF, WEBP, MP4 or MP3. Max 1Gb.</p>
+              </div>
+              <input
+                style={{ display: "none" }}
+                type="file"
+                {...register("image", { required: true })}
+                ref={target}
+                onChange={(e) => handleChnage(e, "main")}
+              />
+              {errors.image && <span>This field is required</span>}
             </div>
-            <div
-              onClick={() => target.current?.click()}
-              className={styles.sciuploadbox}
-            >
-              <img alt="upload icon" src={`/assets/uploadicon.svg`} />
-              <p>PNG, GIF, WEBP, MP4 or MP3. Max 1Gb.</p>
-            </div>
-            <input
-              style={{ display: "none" }}
-              type="file"
-              {...register("image", { required: true })}
-              ref={target}
-              onChange={(e) => handleChnage(e, "main")}
-            />
-            {errors.image && <span>This field is required</span>}
-          </div>
+          )}
           <div className={styles.sciuploadseccon}>
             <div className={styles.uploadsechead}>
               <span className={styles.upload}>
@@ -462,107 +464,94 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               </div>
             </section>
           </div>
-          {!item && (
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className={styles.itemdetailsformcon}
-            >
-              <h4>Item Details</h4>
-              <div className={styles.itemdetailsforminput}>
-                <label>ITEM NAME</label>
-                <input
-                  type="text"
-                  placeholder='e. g. "Redeemable Bitcoin Card with logo"'
-                  {...register("title", { required: true })}
-                />
-                {errors.title && <span>This field is required</span>}
-              </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={styles.itemdetailsformcon}
+          >
+            <h4>Item Details</h4>
+            <div className={styles.itemdetailsforminput}>
+              <label>ITEM NAME</label>
+              <input
+                type="text"
+                disabled={!!item}
+                placeholder='e. g. "Redeemable Bitcoin Card with logo"'
+                {...register("title", { required: true })}
+              />
+              {errors.title && <span>This field is required</span>}
+            </div>
+            <div className={styles.editor}>
+              <label>DESCRIPTION</label>
               <div className={styles.editor}>
-                <label>DESCRIPTION</label>
-                <div className={styles.editor}>
-                  <ReactQuill
-                    modules={{
-                      toolbar: toolbarOptions,
-                    }}
-                    theme="snow"
-                    style={{
-                      height: "20rem",
-                    }}
-                    placeholder='e.g. “After purchasing you will able to receive the logo...”"'
-                    value={getValues("description")}
-                    onChange={(e: any) => {
-                      setValue("description", e);
-                    }}
-                  />
-                </div>
+                <ReactQuill
+                  modules={{
+                    toolbar: toolbarOptions,
+                  }}
+                  theme="snow"
+                  style={{
+                    height: "20rem",
+                  }}
+                  placeholder='e.g. “After purchasing you will able to receive the logo...”"'
+                  value={getValues("description")}
+                  onChange={(e: any) => {
+                    setValue("description", e);
+                  }}
+                />
               </div>
+            </div>
 
-              <div className={styles.itemdetailformdropdownsCon}>
-                <div className={styles.itemdetailsformdropdown}>
-                  <label>CATEGORY</label>
-                  <select {...register("category")}>
-                    <option value="ART">ART</option>
-                    <option value="GAME">GAME</option>
-                    <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
-                    <option value="MUSIC">MUSIC</option>
-                    <option value="VIDEO">VIDEO</option>
-                  </select>
+            {!item && (
+              <>
+                <div className={styles.itemdetailformdropdownsCon}>
+                  <div className={styles.itemdetailsformdropdown}>
+                    <label>CATEGORY</label>
+                    <select {...register("category")}>
+                      <option value="ART">ART</option>
+                      <option value="GAME">GAME</option>
+                      <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+                      <option value="MUSIC">MUSIC</option>
+                      <option value="VIDEO">VIDEO</option>
+                    </select>
+                  </div>
+                  <div className={styles.itemdetailsformdropdown}>
+                    <label>ROYALTIES</label>
+                    <select {...register("royalties")}>
+                      <option value="1">1%</option>
+                      <option value="5">5%</option>
+                      <option value="10">10%</option>
+                      <option value="15">15%</option>
+                      <option value="20">20%</option>
+                    </select>
+                  </div>
+                  <div className={styles.itemdetailsforminput1}>
+                    <label>PRICE</label>
+                    <input
+                      type="number"
+                      placeholder="0.25 ETH"
+                      className={styles.input}
+                      min="0"
+                      step="0.01"
+                      {...register("price", { required: true })}
+                    />
+                    {errors.price && <span>This field is required</span>}
+                  </div>
                 </div>
-                <div className={styles.itemdetailsformdropdown}>
-                  <label>ROYALTIES</label>
-                  <select {...register("royalties")}>
-                    <option value="1">1%</option>
-                    <option value="5">5%</option>
-                    <option value="10">10%</option>
-                    <option value="15">15%</option>
-                    <option value="20">20%</option>
-                  </select>
+                <div className={styles.divider}></div>
+
+                <div className={styles.putonscalebtnsec}>
+                  <button type="submit">
+                    Create item
+                    <span>
+                      <img src={`/assets/arrow.svg`} alt="" />
+                    </span>
+                  </button>
+                  {/* <p>Auto saving</p> */}
                 </div>
-                <div className={styles.itemdetailsforminput1}>
-                  <label>PRICE</label>
-                  <input
-                    type="number"
-                    placeholder="0.25 ETH"
-                    className={styles.input}
-                    min="0"
-                    step="0.01"
-                    {...register("price", { required: true })}
-                  />
-                  {errors.price && <span>This field is required</span>}
-                </div>
-              </div>
-              <div className={styles.divider}></div>
-              <div className={styles.putonscalesec}>
-                <div className={styles.putonscalesec1}>
-                  <h4>Put on sale</h4>
-                </div>
-                <label className={styles.switch}>
-                  <input type="checkbox" {...register("published", {})} />
-                  <span className={`${styles.slider} ${styles.round}`}></span>
-                </label>
-              </div>
-              <div className={styles.putonscalebtnsec}>
-                <button type="submit">
-                  Create item
-                  <span>
-                    <img src={`/assets/arrow.svg`} alt="" />
-                  </span>
-                </button>
-                {/* <p>Auto saving</p> */}
-              </div>
-            </form>
-          )}
+              </>
+            )}
+          </form>
+
           {item && (
             <div>
-              <div className={styles.putonscalesec}>
-                <div>
-                  <h4>Put on sale</h4>
-                </div>
-                <label className={styles.switch}>
-                  <input type="checkbox" {...register("published", {})} />
-                  <span className={`${styles.slider} ${styles.round}`}></span>
-                </label>
-              </div>
               <div className={styles.putonscalebtnsec}>
                 <button type="submit" onClick={handleEditItem}>
                   Edit item

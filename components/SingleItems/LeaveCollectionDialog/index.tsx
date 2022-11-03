@@ -1,15 +1,20 @@
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { useSWRConfig } from "swr";
 import collectionsDs from "../../../ds/collections.ds";
 import Dialog from "../../global/Dialog";
 import styles from "./index.module.scss";
 
 export const LeaveCollectionDialog = ({ open, handleClose, item }: any) => {
+  const { mutate } = useSWRConfig();
+
   const handleRemoveItem = async () => {
     try {
       await collectionsDs.removeItem(item.collectionId, item.id);
-      toast.success("item successfully remmoved");
+      const newData = { ...item, collectionId: null };
+      mutate("item" + item.id, () => newData, false);
       handleClose();
+      toast.success("item successfully remmoved");
     } catch (error) {
       console.log(error);
       toast.error("error removing item");

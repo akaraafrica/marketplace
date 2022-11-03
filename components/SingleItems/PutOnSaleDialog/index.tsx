@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useSWRConfig } from "swr";
@@ -8,19 +9,24 @@ import styles from "./index.module.scss";
 
 export const PutOnSaleDialog = ({ open, handleClose, item }: any) => {
   const { mutate } = useSWRConfig();
+  console.log(item);
 
   const handleSale = async () => {
-    console.log(item.id);
-
     try {
-      await ItemDs.updateItem({ ...item, published: !item.published });
-      mutate(["item", item.id]);
+      const newData = {
+        ...item,
+        published: false,
+      };
+      mutate("item" + item.id, () => newData, false);
+
+      handleClose();
       toast.success(
         `item ${
           item.published ? "remove from sale" : "placed on sale"
         } successfully`
       );
-      handleClose();
+      await ItemDs.updateItem({ ...item, published: !item.published });
+      mutate("item" + item.id);
     } catch (error) {
       console.log(error);
       toast.error("error placing item on sale");
@@ -30,15 +36,30 @@ export const PutOnSaleDialog = ({ open, handleClose, item }: any) => {
 
   return (
     <Dialog open={open} handleClose={handleClose} title={" "}>
-      <section className={styles.main}>
-        <h4>
-          {item.published ? "Remove" : "Place"} {item.title} on sale ?
-        </h4>
-        <div className={styles.btns}>
-          <button onClick={handleSale}>Yes</button>
-          <button onClick={handleClose}>No</button>
-        </div>
-      </section>
+      {item.step > 4 && (
+        <section className={styles.main}>
+          <h4>
+            {item.published ? "Remove" : "Place"} {item.title} on sale ?
+          </h4>
+          <div className={styles.btns}>
+            <button onClick={handleSale}>Yes</button>
+            <button onClick={handleClose} className={styles.no}>
+              No
+            </button>
+          </div>
+        </section>
+      )}{" "}
+      {item.step < 4 && (
+        <section className={styles.notverified}>
+          <Image
+            alt="deposit"
+            src={`/assets/singleItem/alert.svg`}
+            width={50}
+            height={50}
+          />
+          <h4>Complete minting item</h4>
+        </section>
+      )}
     </Dialog>
   );
 };

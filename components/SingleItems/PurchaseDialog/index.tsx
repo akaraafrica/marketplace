@@ -35,13 +35,11 @@ export default function PurchaseDialog({
             <div>
               <p>
                 You are about to purchase <strong>{item.title} </strong>
-                from <strong>${getUserName(item?.owner)}</strong>
+                from <strong>${getUserName(item?.owner)}</strong> for
+                <strong> {item.price} ETH</strong>
               </p>
             </div>
-            <div className={styles.price}>
-              <strong>{item.price}</strong>
-              <strong>ETH</strong>
-            </div>
+            <div className={styles.price}></div>
             {item.collectionId && (
               <section className={styles.collectionItem}>
                 <div>

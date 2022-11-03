@@ -26,8 +26,9 @@ export const enum MailTemplateIDs {
   CreateItem = "d-c682315847e647ec9aed19d0178d7836",
   CreateCollection = "d-d0ee395b7aa1424fa0a7d55d11e15d95",
   ContributorNotice = "d-105c1e4ff3604744b70492b9959c2602",
-  ContributorAction = "",
-  CollectionApproved = "",
+  ContributorAction = "d-c9b35776b4184886800d02fcf6f0ad11",
+  CollectionApproved = "d-a9bc4e56560741838968f05bc8d88a12",
+  BeneficiaryNotice = "d-4ae903e4badf4970ab77324344bda42e",
 }
 
 export const enum Actions {

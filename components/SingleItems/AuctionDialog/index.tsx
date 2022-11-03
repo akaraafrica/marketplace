@@ -16,6 +16,8 @@ export default function Index({ open, handleClose, item, edit }: any) {
 
   const handleSubmit = async () => {
     if (edit) {
+      handleClose();
+      toast.success("Auction updated");
       try {
         await AuctionDs.updateData({
           id: item.auction.id,
@@ -23,13 +25,16 @@ export default function Index({ open, handleClose, item, edit }: any) {
           startTime,
           endTime,
         });
-        mutate(["item", item.id]);
-        toast.success("Auction updated");
-        handleClose();
+        mutate("item" + item.id);
       } catch (error) {
         toast.error("Error updating auction");
       }
     } else {
+      const newData = { ...item, auction: { open: true } };
+      mutate("item" + item.id, () => newData, false);
+      handleClose();
+      toast.success("placed on auction");
+
       try {
         await AuctionDs.postData({
           itemId: item.id,
@@ -38,9 +43,8 @@ export default function Index({ open, handleClose, item, edit }: any) {
           endTime,
         });
         mutate(["item", item.id]);
-        toast.success("placed on auction");
+
         setTimeout(() => {}, 2000);
-        handleClose();
       } catch (error) {
         toast.error("error placing auction");
       }
@@ -53,7 +57,11 @@ export default function Index({ open, handleClose, item, edit }: any) {
 
   return (
     <>
-      <Dialog open={open} handleClose={handleClose} title="place on action">
+      <Dialog
+        open={open}
+        handleClose={handleClose}
+        title={edit ? "edit auction" : "place on auction"}
+      >
         <main className={styles.main}>
           <p>
             You are about to place <strong>{item.title} </strong>
