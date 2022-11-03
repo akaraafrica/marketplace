@@ -173,6 +173,7 @@ const Index: React.FC<Properties> = ({
             New user
           </span>
         </div>
+        <hr />
         {page === 0 && (
           <div className={styles.itemdetailsforminputSearch}>
             <label>SEARCH TO SELECT BENEFICIARY</label>
@@ -215,34 +216,47 @@ const Index: React.FC<Properties> = ({
             </div>
             <div className={styles.itemImagesDiv}>
               {selectedUser.map((selUser, index) => (
-                <div key={index} className={styles.userImage}>
-                  <div
-                    className={styles.closeIcon}
-                    onClick={() =>
-                      setSelectedUser([
-                        ...selectedUser.slice(0, index),
-                        ...selectedUser.slice(index + 1, selectedUser.length),
-                      ])
-                    }
-                    style={{
-                      display: selUser.id === user?.id ? "none" : "block",
-                    }}
-                  >
-                    <Image
-                      width="30px"
-                      height="30px"
-                      alt="close icon"
-                      src={`/assets/closeicon.svg`}
+                <div key={index} className={styles.row}>
+                  <div className={styles.userImage}>
+                    <div
+                      className={styles.closeIcon}
+                      onClick={() =>
+                        setSelectedUser([
+                          ...selectedUser.slice(0, index),
+                          ...selectedUser.slice(index + 1, selectedUser.length),
+                        ])
+                      }
+                      style={{
+                        display: selUser.id === user?.id ? "none" : "block",
+                      }}
+                    >
+                      <Image
+                        width="30px"
+                        height="30px"
+                        alt="close icon"
+                        src={`/assets/closeicon.svg`}
+                      />
+                    </div>
+                    <DefaultAvatar
+                      fontSize=".6rem"
+                      id={user!.id}
+                      url={user?.profile?.avatar}
+                      walletAddress={selUser.walletAddress}
+                      width="56px"
+                      height="56px"
                     />
                   </div>
-                  <DefaultAvatar
-                    fontSize=".6rem"
-                    id={user!.id}
-                    url={user?.profile?.avatar}
-                    walletAddress={selUser.walletAddress}
-                    width="56px"
-                    height="56px"
-                  />
+                  <div className={styles.inputDiv}>
+                    <label>Percentage</label>
+                    <input
+                      onChange={(e) => setPercent(parseInt(e.target.value))}
+                      type="number"
+                      max={100}
+                      required
+                      value={percent}
+                      placeholder="10%"
+                    />
+                  </div>
                 </div>
               ))}
             </div>

@@ -90,7 +90,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         data: {
           beneficiaries: {
-            set: users.map((user: any) => ({
+            create: users.map((user: any) => ({
+              name: user.name,
+              email: user.email,
+              walletAddress: user.walletAddress,
+              description: user.description,
+              percentage: user.percentage,
               user: {
                 connect: {
                   id: user.id,

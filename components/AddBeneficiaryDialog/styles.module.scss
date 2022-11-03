@@ -23,6 +23,10 @@
     }
   }
 
+  hr {
+    color: #777e91;
+  }
+
   .itemdetailsforminputSearch {
     position: relative;
     display: flex;
@@ -41,6 +45,7 @@
       -ms-border-radius: 5px;
       -o-border-radius: 5px;
     }
+
     label {
       font-style: normal;
       font-weight: 700;
@@ -158,6 +163,26 @@
     .itemImagesDiv::-webkit-scrollbar {
       display: none;
       height: 5px;
+    }
+
+    .inputDiv {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      input {
+        height: 40px;
+        outline: none;
+        border: none;
+        background-color: $grey;
+        color: $white-color;
+        padding: 8px;
+        border-radius: 12px;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        -ms-border-radius: 12px;
+        -o-border-radius: 12px;
+      }
     }
   }
 
