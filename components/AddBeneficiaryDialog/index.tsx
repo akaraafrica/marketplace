@@ -46,10 +46,11 @@ const Index: React.FC<Properties> = ({
   const [wallet, setWallet] = useState("");
   const [description, setDescription] = useState("");
   const [percent, setPercent] = useState(0);
+  const [euserPercent, setEuserPercent] = useState<any>({});
   const [page, setPage] = useState(0);
   const [searchUser, setSearchUser] = useState("");
   const [searchedUser, setSearchedUser] = useState<IUser[]>([]);
-  const [selectedUser, setSelectedUser] = useState<IUser[]>([]);
+  const [selectedUser, setSelectedUser] = useState<any>([]);
   const [resultDisplay, setResultDisplay] = useState(false);
 
   const { user } = useContext(AuthContext);
@@ -60,6 +61,7 @@ const Index: React.FC<Properties> = ({
       setWallet(beneficiary.walletAddress);
       setDescription(beneficiary.description);
       setPercent(beneficiary.percentage);
+      setPage(1);
     }
   }, [beneficiary]);
 
@@ -143,8 +145,18 @@ const Index: React.FC<Properties> = ({
     handleClose();
   };
   const handleConnect = async () => {
+    const selectedUserWithPercent = selectedUser.map((selUser: any) => ({
+      ...user,
+      percentage: euserPercent[selUser.id],
+      name: selUser?.profile?.name,
+    }));
+
+    console.log("selected", selectedUserWithPercent);
     try {
-      await CollectionDs.connectBeneficiary(collectionId, selectedUser);
+      await CollectionDs.connectBeneficiary(
+        collectionId,
+        selectedUserWithPercent
+      );
       toast.success("Beneficiary successful added");
       setSelectedUser([]);
       mutate();
@@ -153,6 +165,12 @@ const Index: React.FC<Properties> = ({
       toast.error("Error adding beneficiary");
       console.log(error);
     }
+  };
+  const handleChangePercent = (e: any) => {
+    setEuserPercent({
+      ...euserPercent,
+      [parseInt(e.target.name)]: parseInt(e.target.value),
+    });
   };
   console.log(selectedUser);
   return (
@@ -215,7 +233,7 @@ const Index: React.FC<Properties> = ({
                 ))}
             </div>
             <div className={styles.itemImagesDiv}>
-              {selectedUser.map((selUser, index) => (
+              {selectedUser.map((selUser: any, index: number) => (
                 <div key={index} className={styles.row}>
                   <div className={styles.userImage}>
                     <div
@@ -226,9 +244,9 @@ const Index: React.FC<Properties> = ({
                           ...selectedUser.slice(index + 1, selectedUser.length),
                         ])
                       }
-                      style={{
-                        display: selUser.id === user?.id ? "none" : "block",
-                      }}
+                      // style={{
+                      //   display: selUser.id === user?.id ? "none" : "block",
+                      // }}
                     >
                       <Image
                         width="30px"
@@ -239,8 +257,8 @@ const Index: React.FC<Properties> = ({
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
-                      id={user!.id}
-                      url={user?.profile?.avatar}
+                      id={selUser!.id}
+                      url={selUser?.profile?.avatar}
                       walletAddress={selUser.walletAddress}
                       width="56px"
                       height="56px"
@@ -249,11 +267,12 @@ const Index: React.FC<Properties> = ({
                   <div className={styles.inputDiv}>
                     <label>Percentage</label>
                     <input
-                      onChange={(e) => setPercent(parseInt(e.target.value))}
+                      onChange={handleChangePercent}
+                      name={(selUser?.id).toString()}
                       type="number"
                       max={100}
                       required
-                      value={percent}
+                      // value={percen}
                       placeholder="10%"
                     />
                   </div>
