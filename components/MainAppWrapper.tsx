@@ -7,7 +7,8 @@ function MainAppWrapper({ Component, pageProps }: any) {
   return (
     <SWRConfig
       value={{
-        refreshInterval: 3000,
+        refreshInterval: 50000,
+        revalidateOnFocus: true,
         fetcher: (resource, init) =>
           fetch(resource, init).then((res) => res.json()),
       }}

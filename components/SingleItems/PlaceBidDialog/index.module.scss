@@ -149,3 +149,29 @@
     background: $blu2;
   }
 }
+
+.collectionItem {
+  background: $grey2;
+  padding: 10px 0px;
+  border-radius: 10px;
+  margin-top: 10px;
+
+  div {
+    margin-top: 1.3rem;
+    text-align: center;
+
+    h4 {
+      display: block;
+      color: white;
+      margin: 0;
+      padding: 0;
+      font-weight: 500;
+      font-size: 1.1rem;
+
+      a {
+        color: $secondary-color;
+        text-decoration: underline;
+      }
+    }
+  }
+}

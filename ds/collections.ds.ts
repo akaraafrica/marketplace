@@ -23,7 +23,26 @@ class Collection {
   }
   async getCollectionById(id: number) {
     try {
-      const res = await api.get(`${url}/${id}`);
+      let { data } = await api.get(`${url}/${id}`);
+      data = data.data;
+      data = {
+        ...data,
+        items: data?.items.length > 0 ? data?.items : data.draftItems,
+      };
+
+      // console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async removeItem(collectionId: number, itemId: number, draft?: string) {
+    try {
+      const res = await api.patch(`${url}/removeItem`, {
+        collectionId,
+        itemId,
+        draft,
+      });
       return res.data;
     } catch (error) {
       console.log(error);
@@ -123,6 +142,7 @@ class Collection {
       console.log(error);
     }
   }
+
   async addItem({ user, item, collection }: any) {
     try {
       const res = await api.patch(url + "/addItem", {

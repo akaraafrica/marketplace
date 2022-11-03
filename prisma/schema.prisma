@@ -67,9 +67,9 @@ model Item {
   updatedAt         DateTime       @updatedAt
   step              Int?
   royalties         Int?
+  collectionOnChain Boolean?       @default(true)
   terms             Boolean?
   category          Category?      @default(ART)
-  collectionOnChain Boolean?       @default(true)
   collection        Collection?    @relation(fields: [collectionId], references: [id])
   owner             User           @relation(fields: [ownerId], references: [id])
   auction           Auction?
@@ -150,10 +150,23 @@ model Collection {
   beneficiaries Beneficiary[]
   ratings       CollectionRating[]
   contributors  Contributor[]
-  DraftItems    DraftItems[]
+  draftItems    DraftItems[]
   items         Item[]
   likes         Like[]
   Notification  Notification[]
+}
+
+model DraftItems {
+  id           Int         @id @default(autoincrement())
+  ownerId      Int
+  collectionId Int?
+  title        String
+  description  String?     @db.VarChar(10000)
+  images       String[]
+  video        String?
+  createdAt    DateTime    @default(now())
+  price        Float
+  Collection   Collection? @relation(fields: [collectionId], references: [id])
 }
 
 model User {
@@ -232,19 +245,6 @@ model Beneficiary {
   walletAddress String
   Collection    Collection @relation(fields: [collectionId], references: [id])
   user          User?      @relation(fields: [userId], references: [id])
-}
-
-model DraftItems {
-  id           Int         @id @default(autoincrement())
-  ownerId      Int
-  collectionId Int?
-  title        String
-  description  String?     @db.VarChar(10000)
-  images       String[]
-  video        String?
-  createdAt    DateTime    @default(now())
-  price        Float
-  Collection   Collection? @relation(fields: [collectionId], references: [id])
 }
 
 enum CollectionTypes {

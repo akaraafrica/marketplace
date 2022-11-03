@@ -1,6 +1,9 @@
 import { CircularProgress } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import collectionsDs from "../../../ds/collections.ds";
 import { getUserName } from "../../../utils/helpers/getUserName";
 import Dialog from "../../global/Dialog";
 import styles from "./index.module.scss";
@@ -13,13 +16,13 @@ export default function PurchaseDialog({
 }: any) {
   const isVerified = item.owner.verified;
   const [followSteps, setFollowSteps] = useState(false);
-
   const handlePurchase = () => {
     setFollowSteps(true);
     setTimeout(() => {
       handlePurchaseNow();
     }, 3000);
   };
+
   return (
     <>
       <Dialog
@@ -39,6 +42,19 @@ export default function PurchaseDialog({
               <strong>{item.price}</strong>
               <strong>ETH</strong>
             </div>
+            {item.collectionId && (
+              <section className={styles.collectionItem}>
+                <div>
+                  <h4>
+                    {item.title} is part of{" "}
+                    <Link href={`/collection/${item.collectionId}`}>
+                      <a>{item.collection.title}</a>
+                    </Link>{" "}
+                    collection
+                  </h4>
+                </div>
+              </section>
+            )}
 
             {!isVerified && (
               <section className={styles.notverified}>

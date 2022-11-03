@@ -8,11 +8,13 @@ import styles from "./index.module.scss";
 import Link from "../../Link";
 import { IItem } from "../../../types/item.interface";
 import Index from "../AuctionDialog";
-import { AuctionDs } from "../../../ds";
+import { AuctionDs, ItemDs } from "../../../ds";
 import { toast } from "react-toastify";
 import DefaultAvatar from "../../DefaultAvatar";
 import { getUserName } from "../../../utils/helpers/getUserName";
 import { useSWRConfig } from "swr";
+import LeaveCollectionDialog from "../LeaveCollectionDialog";
+import PutOnSaleDialog from "../PutOnSaleDialog";
 
 interface infoProperties {
   user: IUser;
@@ -20,9 +22,16 @@ interface infoProperties {
 }
 const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
   const [open, setOpen] = useState(false);
+  const [openLeaveCollection, setOpenLeaveCollection] = useState(false);
+  const [openPutOnSale, setOpenPutOnSale] = useState(false);
+
   const handleClose = () => setOpen(false);
   const { user } = useContext(AuthContext);
   const { mutate } = useSWRConfig();
+
+  const isContributor = item?.collection?.contributors?.find(
+    (con) => con.user.walletAddress === user?.walletAddress
+  );
 
   const handleDelete = async () => {
     try {
@@ -37,45 +46,86 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
       toast.error("Error deleting auction");
     }
   };
+
   return (
-    <div className={styles.profileInfoCard}>
-      {open && (
-        <Index
-          open={open}
-          handleClose={handleClose}
-          item={item}
-          edit={item?.auction?.open ? true : false}
-        />
-      )}
-      <div>
-        <Link href={`/profile/${Itemuser.id}`}>
-          <div className={styles.avatar}>
-            <DefaultAvatar
-              id={Itemuser.id}
-              walletAddress={Itemuser.walletAddress!}
-              url={Itemuser.profile?.avatar}
-            />
-            <div>
-              <span>{getUserName(Itemuser)}</span>
+    <>
+      <LeaveCollectionDialog
+        open={openLeaveCollection}
+        handleClose={() => {
+          setOpenLeaveCollection(false);
+        }}
+        item={item}
+      />
+      <PutOnSaleDialog
+        open={openPutOnSale}
+        handleClose={() => {
+          setOpenPutOnSale(false);
+        }}
+        item={item}
+      />
+      <div className={styles.profileInfoCard}>
+        {open && (
+          <Index
+            open={open}
+            handleClose={handleClose}
+            item={item}
+            edit={item?.auction?.open ? true : false}
+          />
+        )}
+        <div>
+          <Link href={`/profile/${Itemuser.id}`}>
+            <div className={styles.avatar}>
+              <DefaultAvatar
+                id={Itemuser.id}
+                walletAddress={Itemuser.walletAddress!}
+                url={Itemuser.profile?.avatar}
+              />
+              <div>
+                <span>{getUserName(Itemuser)}</span>
+              </div>
             </div>
-          </div>
-        </Link>
-      </div>
-      {user && (
-        <div className={styles.buttons}>
-          {user.id === Itemuser.id && (
-            <button onClick={() => setOpen(true)}>
-              {item?.auction?.open ? "edit auction" : `place on auction`}
-            </button>
-          )}
-          {item?.auction?.open && item.ownerId === user.id && (
-            <button className={styles.close} onClick={handleDelete}>
-              close auction
-            </button>
-          )}
+          </Link>
         </div>
-      )}
-    </div>
+        {user && (
+          <>
+            <div className={styles.buttons}>
+              {user.id === Itemuser.id &&
+                (!item.collectionId || isContributor) && (
+                  <button onClick={() => setOpen(true)}>
+                    {item?.auction?.open ? "edit auction" : `place on auction`}
+                  </button>
+                )}
+
+              {item?.auction?.open && item.ownerId === user.id && (
+                <button className={styles.close} onClick={handleDelete}>
+                  close auction
+                </button>
+              )}
+              {item.ownerId === user.id &&
+                (!item.collectionId || isContributor) && (
+                  <button
+                    className={item.published ? styles.leave : styles.close}
+                    onClick={() => setOpenPutOnSale(true)}
+                  >
+                    {item.published ? "remove from sale" : "placed on sale"}
+                  </button>
+                )}
+              {user.id === Itemuser.id &&
+                item.collectionId &&
+                !item?.auction?.open &&
+                !isContributor && (
+                  <button
+                    className={styles.leave}
+                    onClick={() => setOpenLeaveCollection(true)}
+                  >
+                    leave collection
+                  </button>
+                )}
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
@@ -93,18 +143,6 @@ export default function Tags({ item }: { item: IItem }) {
         >
           Info
         </span>
-        {/* <span
-          onClick={() => setTag(1)}
-          className={` ${tag === 1 ? styles.active : ""}`}
-        >
-          Owners
-        </span> */}
-        {/* <span
-          onClick={() => setTag(2)}
-          className={` ${tag === 2 ? styles.active : ""}`}
-        >
-          History
-        </span> */}
         {isOwner && (
           <span
             onClick={() => setTag(3)}

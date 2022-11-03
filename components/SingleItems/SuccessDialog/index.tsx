@@ -7,6 +7,7 @@ export const SuccessDialog = ({ open, handleClose, item }: any) => {
   setTimeout(() => {
     handleClose();
   }, 5000);
+
   return (
     <Dialog open={open} handleClose={handleClose} title={" "}>
       <div className={styles.success}>

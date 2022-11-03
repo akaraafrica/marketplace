@@ -23,6 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             profile: true,
           },
         },
+        draftItems: true,
         items: {
           include: {
             bids: true,

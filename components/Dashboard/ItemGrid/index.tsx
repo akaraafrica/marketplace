@@ -41,7 +41,7 @@ export default function Index({
                       /> */}
                         <span>{item?.price} ETH</span>
                       </div>
-                      <button>Place a bid</button>
+                      <button>Place a bid</button>s
                     </>
                   )}
                 </div>

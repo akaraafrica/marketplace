@@ -9,6 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const items = await prisma.item.findMany({
         where: {
+          collectionId: null,
           owner: {
             id: {
               in: userIds,

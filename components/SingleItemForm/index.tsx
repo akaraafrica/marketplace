@@ -93,6 +93,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       setValue("title", item.title);
       setValue("description", item.description);
       setValue("royalties", item?.royalties);
+      setValue("published", item?.published);
       setValue("price", item.price.toString());
       setUploadId(item.id);
       if (item.step == 2) {
@@ -495,18 +496,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                   />
                 </div>
               </div>
-              {/* <div className={styles.itemdetailsforminput}>
-              <label>BLOCKCHAIN</label>
-              <select
-                {...register("blockchain", { required: true })}
-                defaultValue="Ethereum"
-                defaultChecked={true}
-              >
-                <option>Ethereum</option>
-                <option>Bitcoin</option>
-                <option>Solana</option>
-              </select>
-            </div> */}
+
               <div className={styles.itemdetailformdropdownsCon}>
                 <div className={styles.itemdetailsformdropdown}>
                   <label>CATEGORY</label>
@@ -545,7 +535,6 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               <div className={styles.putonscalesec}>
                 <div className={styles.putonscalesec1}>
                   <h4>Put on sale</h4>
-                  <p>You’ll receive bids on this item</p>
                 </div>
                 <label className={styles.switch}>
                   <input type="checkbox" {...register("published", {})} />
@@ -554,7 +543,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               </div>
               <div className={styles.putonscalebtnsec}>
                 <button type="submit">
-                  {item ? "Edit " : "Create "}item
+                  Create item
                   <span>
                     <img src={`/assets/arrow.svg`} alt="" />
                   </span>
@@ -564,13 +553,24 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
             </form>
           )}
           {item && (
-            <div className={styles.putonscalebtnsec}>
-              <button type="submit" onClick={handleEditItem}>
-                Edit item
-                <span>
-                  <img src={`/assets/arrow.svg`} alt="" />
-                </span>
-              </button>
+            <div>
+              <div className={styles.putonscalesec}>
+                <div>
+                  <h4>Put on sale</h4>
+                </div>
+                <label className={styles.switch}>
+                  <input type="checkbox" {...register("published", {})} />
+                  <span className={`${styles.slider} ${styles.round}`}></span>
+                </label>
+              </div>
+              <div className={styles.putonscalebtnsec}>
+                <button type="submit" onClick={handleEditItem}>
+                  Edit item
+                  <span>
+                    <img src={`/assets/arrow.svg`} alt="" />
+                  </span>
+                </button>
+              </div>
             </div>
           )}
         </div>

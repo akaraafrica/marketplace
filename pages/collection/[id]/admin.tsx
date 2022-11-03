@@ -44,10 +44,9 @@ const Index = () => {
   const router = useRouter();
   const id = router.query.id as unknown as number;
 
-  const { data, mutate } = useSWR<{ data: ICollection }>(["admin", id], () =>
+  const { data: collection, mutate } = useSWR<ICollection>(["admin", id], () =>
     CollectionDs.getCollectionById(id)
   );
-  const collection = data?.data;
 
   const [open, setOpen] = useState(1);
   const [openVerifyDialog, setOpenVerifyDialog] = useState(false);
@@ -66,11 +65,6 @@ const Index = () => {
   const [openPublish, setOpenPublish] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
 
-  // const [openPayout, setOpenPayout] = useState(false);
-  const handleClose = () => {
-    setOpenLunchTime(false);
-    // setOpenPayout(false);
-  };
   const handlePublish = () => {
     setOpenPublish(true);
   };
@@ -237,7 +231,6 @@ const Index = () => {
       return true;
     }
   };
-  console.log(collection);
   return (
     <Layout>
       <MintCollectionDialog
@@ -270,7 +263,7 @@ const Index = () => {
       <UpdateCollectionAdminDialog
         open={openUpdate}
         handleClose={() => setOpenUpdate(false)}
-        collectionId={collection.id}
+        collection={collection}
         mutate={mutate}
       />
       {/* <PayoutDialog
@@ -373,7 +366,7 @@ const Index = () => {
                   <h3>Collection Items</h3>
                 </div>
                 <div>
-                  <span>{total} ETH</span>
+                  <span>{total.toFixed(2)} ETH</span>
                   <h3>Total worth of Collection </h3>
                 </div>
                 <div>
@@ -644,13 +637,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let collection: { data: ICollection } = await CollectionDs.getCollectionById(
     id
   );
-  if (!collection.data) return { notFound: true };
 
-  const isContributor = collection.data.contributors.find((contributor) => {
-    return contributor.user.walletAddress == cookie.address;
-  });
-  if (!isContributor) return { notFound: true };
-  if (!Object.keys(isContributor!).length) return { notFound: true };
+  // if (!collection) return { notFound: true };
+
+  // const isContributor = collection.contributors.find((contributor) => {
+  //   return contributor.user.walletAddress == cookie.address;
+  // });
+  // if (!isContributor) return { notFound: true };
+  // if (!Object.keys(isContributor!).length) return { notFound: true };
 
   return {
     props: {
