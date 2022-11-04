@@ -239,12 +239,12 @@ model Beneficiary {
   collectionId  Int
   userId        Int?
   percentage    Int        @default(0)
-  description   String
-  name          String
+  description   String?
+  name          String?
   email         String
   walletAddress String
   Collection    Collection @relation(fields: [collectionId], references: [id])
-  User          User?      @relation(fields: [userId], references: [id])
+  user          User?      @relation(fields: [userId], references: [id])
 }
 
 enum CollectionTypes {

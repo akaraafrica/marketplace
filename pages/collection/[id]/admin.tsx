@@ -404,15 +404,16 @@ const Index = () => {
               <div className={styles.sectionTop}>
                 <h2>Manage Contributors</h2>
                 {(collection.type === "FUNDRAISING" ||
-                  collection.type === "COLLABORATORS") && (
-                  <p>
-                    Contributor&apos;s{" "}
-                    {collection.type === "FUNDRAISING"
-                      ? "and beneficiary's"
-                      : ""}{" "}
-                    percentage must accumulate to a total of 100%
-                  </p>
-                )}
+                  collection.type === "COLLABORATORS") &&
+                  handlePercentCheck() !== 100 && (
+                    <p>
+                      Contributor&apos;s{" "}
+                      {collection.type === "FUNDRAISING"
+                        ? "and beneficiary's"
+                        : ""}{" "}
+                      percentage must accumulate to a total of 100%
+                    </p>
+                  )}
               </div>
               <div className={styles.content}>
                 {collection?.contributors
@@ -454,7 +455,19 @@ const Index = () => {
                             {contributor.userId !== user?.id &&
                               collection.author.id === user?.id && (
                                 <>
-                                  <button>{contributor.confirmation}</button>
+                                  <button
+                                    style={{
+                                      backgroundColor:
+                                        contributor.confirmation === "ACCEPTED"
+                                          ? "green"
+                                          : contributor.confirmation ===
+                                            "REJECTED"
+                                          ? "red"
+                                          : "",
+                                    }}
+                                  >
+                                    {contributor.confirmation}
+                                  </button>
                                   <button
                                     onClick={() =>
                                       handleRemoveContributor(

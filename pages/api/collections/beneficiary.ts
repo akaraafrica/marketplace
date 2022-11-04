@@ -1,3 +1,4 @@
+import { data } from "cypress/types/jquery";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../utils/lib/prisma";
 
@@ -73,6 +74,38 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       console.log("Beneficiary added");
       console.log({ item });
 
+      res.status(200).json("Beneficiary added");
+    } catch (error) {
+      console.log(error);
+      res.status(400).json("error adding Beneficiary");
+    }
+  }
+  if (req.method === "PUT") {
+    try {
+      console.log(req.body);
+      const { collectionId, users } = req.body;
+      await prisma.collection.update({
+        where: {
+          id: collectionId,
+        },
+        data: {
+          beneficiaries: {
+            create: users.map((user: any) => ({
+              name: user.name,
+              email: user.email,
+              walletAddress: user.walletAddress,
+              description: user.description,
+              percentage: user.percentage,
+              user: {
+                connect: {
+                  id: user.id,
+                },
+              },
+            })),
+          },
+        },
+      });
+      console.log("Beneficiary added");
       res.status(200).json("Beneficiary added");
     } catch (error) {
       console.log(error);
