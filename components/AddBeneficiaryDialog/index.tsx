@@ -146,7 +146,7 @@ const Index: React.FC<Properties> = ({
   };
   const handleConnect = async () => {
     const selectedUserWithPercent = selectedUser.map((selUser: any) => ({
-      ...user,
+      ...selUser,
       percentage: euserPercent[selUser.id],
       name: selUser?.profile?.name,
     }));
