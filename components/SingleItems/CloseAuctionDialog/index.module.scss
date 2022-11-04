@@ -34,21 +34,3 @@
     }
   }
 }
-
-.notverified {
-  // background: $error2;
-  display: flex;
-  padding: 10px 20px;
-  gap: 20px;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-
-  h4 {
-    display: block;
-    color: $error;
-    margin: 0;
-    font-weight: 500;
-    font-size: 1.1rem;
-  }
-}

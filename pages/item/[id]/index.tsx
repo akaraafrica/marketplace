@@ -20,12 +20,14 @@ const Index = () => {
 
   const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
-  const { data: item } = useSWR<IItem>(["item", itemId], () =>
+  const { data: item, mutate } = useSWR<IItem>("item" + itemId, () =>
     ItemDs.getItem(itemId)
   );
+
   if (!item) {
     return <h1>404</h1>;
   }
+  console.log(item);
 
   return (
     <Layout>
@@ -45,6 +47,13 @@ const Index = () => {
           <div className={styles.price}>
             <div className={styles.title}>
               <h3>{item.title}</h3>
+              {item.collection.title && (
+                <Link href={`/collection/${item.collection.id}`}>
+                  <a>{item.collection.title}</a>
+                </Link>
+              )}
+            </div>
+            <div className={styles.title}>
               {item.ownerId === user?.id && (
                 <Link href={`/item/create?id=${item.id}`}>
                   <button className={styles.edit}>Edit Item</button>
@@ -68,8 +77,8 @@ const Index = () => {
               <span>{item?.ratings?.length || 0}</span>
             </div>
           </div>
-          <p>{user && parse(item.description)}</p>
-          {user && <Tags item={item} />}
+
+          {item && <Tags item={item} />}
 
           {width > 800 && <QuickButtons desktop={true} item={item} />}
         </section>
@@ -96,7 +105,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       fallback: {
-        [unstable_serialize(["item", itemId])]: item,
+        [unstable_serialize("item" + itemId)]: item,
       },
     },
   };

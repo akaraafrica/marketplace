@@ -10,12 +10,14 @@ export default function AcceptBidDialog({
   handleClose,
   item,
   handleAcceptBid,
+  selectedBid,
 }: any) {
   const [followSteps, setFollowSteps] = useState(false);
 
   const handleAccept = () => {
     setFollowSteps(true);
     setTimeout(() => {
+      //TODO-OnChain-action
       handleAcceptBid();
     }, 3000);
   };
@@ -36,12 +38,13 @@ export default function AcceptBidDialog({
                 height={50}
               />
               <p>
-                You are about to purchase <strong>{item.title} </strong>
-                from <strong> ${getUserName(item?.owner)}</strong>
+                You are about to accept bid from{" "}
+                <strong> ${getUserName(selectedBid?.user)}</strong> for
+                <strong> {item.title} </strong>
               </p>
             </div>
             <div className={styles.price}>
-              <strong>{item.price} ETH</strong>
+              <strong>{selectedBid.amount} ETH</strong>
             </div>
 
             <section>
