@@ -14,6 +14,7 @@ export interface ICollection {
   createdAt: string;
   updatedAt: string;
   revenue: number;
+  worth: number;
   author: IUser;
   images: string[];
   videos: string[];

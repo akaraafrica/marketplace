@@ -1,9 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import {
-  Actions,
-  ItemType,
-  TriggerAction,
-} from "../../../services/action.service";
 import { IItem } from "../../../types/item.interface";
 import { randStr } from "../../../utils/helpers/randomStr";
 import prisma from "../../../utils/lib/prisma";
@@ -29,6 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   if (req.method === "POST") {
     const { data, user } = req.body;
+
     let status =
       data.type === "ORDINARY" || data.type === "LOCKSHARED"
         ? "READY"
@@ -46,6 +42,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           videos: data.videos,
           status: status,
           updatedAt: new Date(),
+          worth: data?.worth,
           author: {
             connect: {
               id: user.id,

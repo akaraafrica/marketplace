@@ -67,9 +67,9 @@ model Item {
   updatedAt         DateTime       @updatedAt
   step              Int?
   royalties         Int?
-  collectionOnChain Boolean?       @default(true)
   terms             Boolean?
   category          Category?      @default(ART)
+  collectionOnChain Boolean?       @default(true)
   collection        Collection?    @relation(fields: [collectionId], references: [id])
   owner             User           @relation(fields: [ownerId], references: [id])
   auction           Auction?
@@ -145,6 +145,7 @@ model Collection {
   visible       Boolean            @default(false)
   lunchTime     String?
   revenue       Int?
+  worth         Int?
   type          CollectionTypes    @default(ORDINARY)
   author        User               @relation(fields: [authorId], references: [id])
   beneficiaries Beneficiary[]

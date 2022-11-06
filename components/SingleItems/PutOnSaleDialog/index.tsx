@@ -9,8 +9,6 @@ import styles from "./index.module.scss";
 
 export const PutOnSaleDialog = ({ open, handleClose, item }: any) => {
   const { mutate } = useSWRConfig();
-  console.log(item);
-
   const handleSale = async () => {
     try {
       const newData = {

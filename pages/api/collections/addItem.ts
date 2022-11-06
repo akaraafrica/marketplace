@@ -13,9 +13,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         data: {
           items: {
-            // create: {
-            // id: item.id,
-            // },
+            connect: {
+              id: item.id,
+            },
           },
         },
       });
