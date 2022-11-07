@@ -145,8 +145,8 @@ model Collection {
   visible       Boolean            @default(false)
   lunchTime     String?
   revenue       Int?
-  worth         Int?
   type          CollectionTypes    @default(ORDINARY)
+  worth         Int?
   author        User               @relation(fields: [authorId], references: [id])
   beneficiaries Beneficiary[]
   ratings       CollectionRating[]

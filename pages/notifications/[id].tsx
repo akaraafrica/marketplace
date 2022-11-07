@@ -75,18 +75,18 @@ const Index = () => {
   const [selectedNotification, setSelectedNotification] = useState(
     notifications?.data[0]
   );
-  useEffect(() => {
-    const id = router.query.id as string;
+  // useEffect(() => {
+  //   const id = router.query.id as string;
 
-    if (id && notifications?.data) {
-      const findNotification = notifications?.data.find(
-        (item) => item!.id === Number(id)
-      );
-      if (findNotification) {
-        setSelectedNotification(findNotification);
-      }
-    }
-  }, [router, notifications]);
+  //   if (id && notifications?.data) {
+  //     const findNotification = notifications?.data.find(
+  //       (item) => item!.id === Number(id)
+  //     );
+  //     if (findNotification) {
+  //       setSelectedNotification(findNotification);
+  //     }
+  //   }
+  // }, [router, notifications]);
   useEffect(() => {
     if (selectedNotification)
       document
@@ -96,17 +96,17 @@ const Index = () => {
           block: "end",
         });
   }, [selectedNotification]);
-  useEffect(() => {
-    if (!selectedNotification) {
-      setSelectedNotification(notifications?.data[0]);
-    }
-  }, [notifications]);
+  // useEffect(() => {
+  //   if (!selectedNotification) {
+  //     setSelectedNotification(notifications?.data[0]);
+  //   }
+  // }, [notifications]);
 
-  useEffect(() => {
-    if (selectedNotification && !selectedNotification?.read) {
-      updateData(selectedNotification.id as unknown as string);
-    }
-  }, [selectedNotification]);
+  // useEffect(() => {
+  //   if (selectedNotification && !selectedNotification?.read) {
+  //     updateData(selectedNotification.id as unknown as string);
+  //   }
+  // }, [selectedNotification]);
   const updateAllData = async () => {
     const data = await NotificationDs.updateAll(user!.walletAddress);
     if (data && data.status === 204) {
@@ -303,8 +303,8 @@ const Index = () => {
                     </button>
                   </Link>
                   {!loading ? (
-                    selectedNotification?.action === "contributor-notice" && (
-                      // isContributor()?.confirmation === "PENDING" && (
+                    selectedNotification?.action === "contributor-notice" &&
+                    isContributor()?.confirmation === "PENDING" && (
                       <div className={styles.actions}>
                         <button onClick={handleAccept}>Accept</button>
                         <button onClick={handleReject}>Reject</button>

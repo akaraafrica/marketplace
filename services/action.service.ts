@@ -228,12 +228,14 @@ export async function TriggerAction(props: ActionProps) {
         from: "info@mbizi.org",
         templateId: MailTemplateIDs.ContributorAction,
         title: collection.title,
+        contributor: getUserName(user),
+        action: contributorStatus,
         contributorStatus: contributorStatus,
         link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
       });
       if (data && emailData) {
         await inApp(data);
-        // await email(emailData);
+        await email(emailData);
       }
       break;
     case Actions.CollectionApproved:
@@ -254,10 +256,10 @@ export async function TriggerAction(props: ActionProps) {
         title: collection.title,
         link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
       });
-      // if (data && emailData) {
-      await inApp(data);
-      // await email(emailData);
-      // }
+      if (data && emailData) {
+        await inApp(data);
+        await email(emailData);
+      }
       break;
 
     case Actions.ContributorNotice:
