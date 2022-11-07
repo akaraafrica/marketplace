@@ -155,10 +155,10 @@ class Collection {
       console.log(error);
     }
   }
-  async addBeneficiary(collectionId: number, data: any) {
+  async addBeneficiary(collection: any, data: any) {
     try {
       const res = await api.post(url + "/beneficiary", {
-        collectionId,
+        collection,
         ...data,
       });
       return res;
@@ -166,10 +166,10 @@ class Collection {
       console.log(error);
     }
   }
-  async connectBeneficiary(collectionId: number, users: IUser[]) {
+  async connectBeneficiary(collection: any, users: IUser[]) {
     try {
       const res = await api.put(url + "/beneficiary", {
-        collectionId,
+        collection,
         users,
       });
       return res;

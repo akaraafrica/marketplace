@@ -529,17 +529,21 @@
 .videoSec {
   width: 80%;
   margin: auto;
+  // height: 20rem;
 }
 
-// .plyr {
-//   width: 100% !important;
-//   height: 100% !important;
-// }
+.plyr audio,
+.plyr iframe,
+.plyr video,
+.plyr--video {
+  height: 20rem !important;
+  background: blue !important;
+}
 
-// .plyr [poster] {
-//   width: 100% !important;
-//   height: 100% !important;
-// }
+.plyr [poster] {
+  width: 100% !important;
+  height: 20rem !important;
+}
 
 .plyr__controls__item:hover,
 .plyr__control:hover {

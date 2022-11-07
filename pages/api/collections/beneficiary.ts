@@ -1,12 +1,13 @@
 import { data } from "cypress/types/jquery";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Actions, TriggerAction } from "../../../services/action.service";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
       const {
-        collectionId,
+        collection,
         name,
         email,
         walletAddress,
@@ -16,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       await prisma.collection.update({
         where: {
-          id: collectionId,
+          id: collection.id,
         },
         data: {
           beneficiaries: {
@@ -29,6 +30,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
         },
+      });
+      await TriggerAction({
+        action: Actions.BeneficiaryNotice,
+        user: collection.author,
+        title: collection.title,
+        emailAddress: email,
+        collection,
       });
       console.log("Beneficiary added");
 
@@ -82,11 +90,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   if (req.method === "PUT") {
     try {
-      console.log(req.body);
-      const { collectionId, users } = req.body;
+      const { collection, users } = req.body;
       await prisma.collection.update({
         where: {
-          id: collectionId,
+          id: collection.id,
         },
         data: {
           beneficiaries: {
@@ -104,6 +111,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             })),
           },
         },
+      });
+      users.map((user: any) => {
+        TriggerAction({
+          action: Actions.BeneficiaryNotice,
+          user: collection.author,
+          title: collection.title,
+          emailAddress: user.email,
+          collection,
+        });
       });
       console.log("Beneficiary added");
       res.status(200).json("Beneficiary added");

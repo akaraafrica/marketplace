@@ -16,6 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           description: data.description,
           visible: data.visible,
           updatedAt: new Date(),
+          worth: data.worth,
           draftItems: {
             set: data.items.map((item: IItem) => ({
               id: item.id,

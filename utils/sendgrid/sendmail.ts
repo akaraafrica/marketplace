@@ -32,9 +32,10 @@ export default async function SendMail({
   link,
   subject,
   title,
+  contributor,
   amount,
   author,
-  contributorStatus,
+  action,
 }: any) {
   try {
     if (!to) return "Reciever's email is needed";
@@ -49,7 +50,8 @@ export default async function SendMail({
       title,
       amount,
       author,
-      contributorStatus,
+      contributor,
+      action,
     };
     await mail.send({ to, from, templateId, dynamicTemplateData, subject });
     return "email sent";

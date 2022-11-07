@@ -253,7 +253,7 @@ const Index = () => {
         mutate={mutate}
       />
       <AddBeneficiaryDialog
-        collectionId={collection.id}
+        collection={collection}
         open={openAddBeneficiary}
         beneficiary={selectBeneficiary}
         setBeneficiary={setSelectBeneficiary}
@@ -366,7 +366,9 @@ const Index = () => {
                   <h3>Collection Items</h3>
                 </div>
                 <div>
-                  <span>{total.toFixed(2)} ETH</span>
+                  <span>
+                    {collection?.worth?.toFixed(2) || total.toFixed(2)} ETH
+                  </span>
                   <h3>Total worth of Collection </h3>
                 </div>
                 <div>

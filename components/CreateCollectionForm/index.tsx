@@ -174,6 +174,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
     data.type = type;
     data.owners = selectedUser;
     data.items = selectedItems;
+    data.worth = selectedItems.reduce((acc, item) => acc + item?.price, 0);
 
     const address: string = localStorage.getItem("address")!;
 
@@ -230,6 +231,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
     data.owners = selectedUser;
     data.items = selectedItems;
     data.id = collection.id;
+    data.worth = selectedItems.reduce((acc, item) => acc + item?.price, 0);
 
     try {
       await CollectionDs.updateCollection(data);

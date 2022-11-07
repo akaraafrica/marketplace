@@ -27,7 +27,6 @@ const Index = () => {
   if (!item) {
     return <h1>404</h1>;
   }
-  console.log(item);
 
   return (
     <Layout>
@@ -46,10 +45,10 @@ const Index = () => {
         <section className={styles.sectiontwo}>
           <div className={styles.price}>
             <div className={styles.title}>
-              <h3>{item.title}</h3>
-              {item.collection.title && (
-                <Link href={`/collection/${item.collection.id}`}>
-                  <a>{item.collection.title}</a>
+              <h3>{item?.title}</h3>
+              {item?.collection?.title && (
+                <Link href={`/collection/${item?.collection?.id}`}>
+                  <a>{item?.collection?.title}</a>
                 </Link>
               )}
             </div>

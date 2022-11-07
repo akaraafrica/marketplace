@@ -9,6 +9,7 @@ import userDs from "../../ds/user.ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import Image from "../Image";
 import DefaultAvatar from "../DefaultAvatar";
+import { ICollection } from "../../types/collection.interface";
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"],
@@ -28,7 +29,7 @@ const toolbarOptions = [
 interface Properties {
   open: boolean;
   handleClose: () => void;
-  collectionId: number;
+  collection: ICollection;
   mutate: any;
   beneficiary: any;
   setBeneficiary: any;
@@ -36,7 +37,7 @@ interface Properties {
 const Index: React.FC<Properties> = ({
   open,
   handleClose,
-  collectionId,
+  collection,
   mutate,
   beneficiary,
   setBeneficiary,
@@ -103,7 +104,7 @@ const Index: React.FC<Properties> = ({
         percentage: percent,
       };
       try {
-        await CollectionDs.updateBeneficiary(collectionId, data);
+        await CollectionDs.updateBeneficiary(collection.id, data);
         setName("");
         setEmail("");
         setWallet("");
@@ -119,7 +120,7 @@ const Index: React.FC<Properties> = ({
       }
     } else {
       try {
-        await CollectionDs.addBeneficiary(collectionId, data);
+        await CollectionDs.addBeneficiary(collection, data);
         setName("");
         setEmail("");
         setWallet("");
@@ -154,7 +155,7 @@ const Index: React.FC<Properties> = ({
     console.log("selected", selectedUserWithPercent);
     try {
       await CollectionDs.connectBeneficiary(
-        collectionId,
+        collection,
         selectedUserWithPercent
       );
       toast.success("Beneficiary successful added");
@@ -172,7 +173,6 @@ const Index: React.FC<Properties> = ({
       [parseInt(e.target.name)]: parseInt(e.target.value),
     });
   };
-  console.log(selectedUser);
   return (
     <Dialog open={open} handleClose={handleDialogClose}>
       <main className={styles.main}>
@@ -279,7 +279,11 @@ const Index: React.FC<Properties> = ({
                 </div>
               ))}
             </div>
-            <button className={styles.add} onClick={handleConnect}>
+            <button
+              className={styles.add}
+              disabled={selectedUser.length <= 0}
+              onClick={handleConnect}
+            >
               Add Benefciary
             </button>
           </div>

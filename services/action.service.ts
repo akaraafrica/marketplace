@@ -36,6 +36,7 @@ export const enum Actions {
   AcceptBid = "accept-bid",
   Follow = "follow",
   Purchase = "purchase",
+  BeneficiaryNotice = "beneficiary-notice",
   CreateItem = "create-item",
   CreateCollection = "create-collection",
   CollectionApproved = "collection-approved",
@@ -77,6 +78,7 @@ export interface ActionProps {
   bidAmount?: number;
   title?: string;
   content?: string;
+  emailAddress?: string;
   contributorStatus?: string;
 }
 
@@ -90,6 +92,7 @@ export async function TriggerAction(props: ActionProps) {
     profile,
     title,
     content,
+    emailAddress,
     contributorStatus,
   } = props;
 
@@ -208,6 +211,21 @@ export async function TriggerAction(props: ActionProps) {
         await email(emailData);
       }
       break;
+    case Actions.BeneficiaryNotice:
+      if (!collection || !emailAddress) throw Error("invalid action");
+
+      emailData.push({
+        to: emailAddress,
+        from: "info@mbizi.org",
+        templateId: MailTemplateIDs.BeneficiaryNotice,
+        title: collection.title,
+        author: getUserName(user),
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+      });
+      if (emailData) {
+        await email(emailData);
+      }
+      break;
     case Actions.ContributorAction:
       if (!collection || !contributorStatus) throw Error("invalid action");
       console.log({ collection, user, contributorStatus });
@@ -228,12 +246,14 @@ export async function TriggerAction(props: ActionProps) {
         from: "info@mbizi.org",
         templateId: MailTemplateIDs.ContributorAction,
         title: collection.title,
+        contributor: getUserName(user),
+        action: contributorStatus,
         contributorStatus: contributorStatus,
         link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
       });
       if (data && emailData) {
         await inApp(data);
-        // await email(emailData);
+        await email(emailData);
       }
       break;
     case Actions.CollectionApproved:
@@ -254,10 +274,10 @@ export async function TriggerAction(props: ActionProps) {
         title: collection.title,
         link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
       });
-      // if (data && emailData) {
-      await inApp(data);
-      // await email(emailData);
-      // }
+      if (data && emailData) {
+        await inApp(data);
+        await email(emailData);
+      }
       break;
 
     case Actions.ContributorNotice:

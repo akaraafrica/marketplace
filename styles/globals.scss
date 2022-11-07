@@ -58,3 +58,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.plyr audio,
+.plyr iframe,
+.plyr video,
+.plyr--video {
+  height: 45rem !important;
+}
