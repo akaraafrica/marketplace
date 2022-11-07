@@ -36,6 +36,7 @@ export const enum Actions {
   AcceptBid = "accept-bid",
   Follow = "follow",
   Purchase = "purchase",
+  BeneficiaryNotice = "beneficiary-notice",
   CreateItem = "create-item",
   CreateCollection = "create-collection",
   CollectionApproved = "collection-approved",
@@ -77,6 +78,7 @@ export interface ActionProps {
   bidAmount?: number;
   title?: string;
   content?: string;
+  emailAddress?: string;
   contributorStatus?: string;
 }
 
@@ -90,6 +92,7 @@ export async function TriggerAction(props: ActionProps) {
     profile,
     title,
     content,
+    emailAddress,
     contributorStatus,
   } = props;
 
@@ -205,6 +208,21 @@ export async function TriggerAction(props: ActionProps) {
       });
       if (data && emailData) {
         await inApp(data);
+        await email(emailData);
+      }
+      break;
+    case Actions.BeneficiaryNotice:
+      if (!collection || !emailAddress) throw Error("invalid action");
+
+      emailData.push({
+        to: emailAddress,
+        from: "info@mbizi.org",
+        templateId: MailTemplateIDs.BeneficiaryNotice,
+        title: collection.title,
+        author: getUserName(user),
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+      });
+      if (emailData) {
         await email(emailData);
       }
       break;

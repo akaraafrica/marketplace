@@ -40,6 +40,7 @@
       padding: 10px;
       color: #f2994a;
       border-radius: 5px;
+      cursor: pointer;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       -ms-border-radius: 5px;
@@ -170,6 +171,10 @@
       flex-direction: column;
       gap: 10px;
 
+      button {
+        cursor: pointer;
+      }
+
       input {
         height: 40px;
         outline: none;
@@ -196,6 +201,10 @@
       flex-direction: column;
       gap: 10px;
 
+      button {
+        cursor: pointer;
+      }
+
       input {
         height: 40px;
         outline: none;
@@ -217,6 +226,7 @@
       color: $white-color;
       background-color: $secondary-color;
       border-radius: 12px;
+      cursor: pointer;
       -webkit-border-radius: 12px;
       -moz-border-radius: 12px;
       -ms-border-radius: 12px;

@@ -253,7 +253,7 @@ const Index = () => {
         mutate={mutate}
       />
       <AddBeneficiaryDialog
-        collectionId={collection.id}
+        collection={collection}
         open={openAddBeneficiary}
         beneficiary={selectBeneficiary}
         setBeneficiary={setSelectBeneficiary}
