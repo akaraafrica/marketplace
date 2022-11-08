@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NextImage from "../../../components/Image";
 import Layout from "../../../components/Layout";
 import QuickButtons from "../../../components/SingleItems/QuickButtons";
@@ -10,22 +10,26 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
 import Link from "next/link";
-import parse from "html-react-parser";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import { useRouter } from "next/router";
+import parse from "html-react-parser";
 
 const Index = () => {
   const router = useRouter();
   const itemId = router.query.id;
-
   const { user } = useContext(AuthContext);
   const width = useWindowSize().width!;
-  const { data: item, mutate } = useSWR<IItem>("item" + itemId, () =>
+  const { data: item } = useSWR<IItem>("item" + itemId, () =>
     ItemDs.getItem(itemId)
   );
-
+  const [selectedItem, setSelectedItem] = useState<undefined | string>(
+    item?.images[0]
+  );
+  useEffect(() => {
+    setSelectedItem(item?.images[0]);
+  }, [item]);
   if (!item) {
-    return <h1>404</h1>;
+    return <h1></h1>;
   }
 
   return (
@@ -35,11 +39,34 @@ const Index = () => {
           <div className={styles.tags}>
             <span>{item.category}</span>
           </div>
-          <div className={styles.img}>
-            {item?.images[0] && (
-              <NextImage alt={item.title} src={item.images[0]} layout="fill" />
-            )}
-            {width < 800 && <QuickButtons item={item} />}
+          <div>
+            <div>
+              <div className={styles.img}>
+                {selectedItem && (
+                  <NextImage
+                    alt={item?.title}
+                    src={selectedItem}
+                    layout="fill"
+                    onError={(e) => {
+                      console.log(e);
+                    }}
+                  />
+                )}
+                {width < 800 && <QuickButtons item={item} />}
+              </div>
+              <div className={styles.images}>
+                {item?.images.map((image) => (
+                  <NextImage
+                    alt={item?.title || ""}
+                    src={image}
+                    key={image}
+                    width="115%"
+                    onClick={() => setSelectedItem(image)}
+                    height="100%"
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </section>
         <section className={styles.sectiontwo}>
