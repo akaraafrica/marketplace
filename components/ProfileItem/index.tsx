@@ -58,7 +58,7 @@ const Index = ({
               </Link>
             </div>
           )}
-          <div className={styles.root}>
+          <div className={styles.collections}>
             {collections &&
               collections.map((collection) => (
                 <div key={collection.id}>

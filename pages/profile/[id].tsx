@@ -30,7 +30,7 @@ const Index = () => {
   const router = useRouter();
   const id = router.query.id as unknown as number;
 
-  const { data: profile, mutate } = useSWR<IProfile>(["profile", id], () =>
+  const { data: profile, mutate } = useSWR<IProfile>("profile" + id, () =>
     ProfileDs.fetch(id)
   );
   const [isFollowing, setIsFollowing] = useState<any>(false);
@@ -207,7 +207,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       fallback: {
-        [unstable_serialize(["profile", id])]: profile,
+        [unstable_serialize("profile" + id)]: profile,
       },
     },
   };

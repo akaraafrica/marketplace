@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import getNiceDate from "../../utils/helpers/dateFormatter";
 import { NotificationDs, ContributorDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
-import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import useSWR, { mutate, SWRConfig, unstable_serialize } from "swr";
 import { INotification } from "../../types/notification.interface";
 import NextImage from "../../components/Image";
 import Link from "next/link";
@@ -69,12 +69,20 @@ const Index = () => {
     "notificationsAll",
     () => NotificationDs.fetchAll(user!.id)
   );
-  const updateData = async (id: string) => {
+
+  const updateData = async (id: any) => {
     if (user) await NotificationDs.update(id, user.walletAddress);
+    mutate("notificationsAll");
   };
   const [selectedNotification, setSelectedNotification] = useState(
     notifications?.data[0]
   );
+  useEffect(() => {
+    if (!selectedNotification?.read) {
+      updateData(selectedNotification?.id);
+    }
+  }, [selectedNotification]);
+
   // useEffect(() => {
   //   const id = router.query.id as string;
 
@@ -109,6 +117,7 @@ const Index = () => {
   // }, [selectedNotification]);
   const updateAllData = async () => {
     const data = await NotificationDs.updateAll(user!.walletAddress);
+    mutate("notificationsAll");
     if (data && data.status === 204) {
       return toast.success("Marked all as read");
     }

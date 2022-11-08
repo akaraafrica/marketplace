@@ -20,7 +20,12 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
               owner: true,
             },
           },
-          collections: true,
+          collections: {
+            include: {
+              author: true,
+              items: true,
+            },
+          },
           followers: {
             include: {
               followers: {
