@@ -5,6 +5,7 @@ const nextConfig = {
     domains: [
       "ak-marketplace.s3.eu-west-3.amazonaws.com",
       "avatars.dicebear.com",
+      "firebasestorage.googleapis.com",
     ],
   },
   webpack: (config, { dev, isServer }) => {

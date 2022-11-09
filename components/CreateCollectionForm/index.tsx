@@ -286,7 +286,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
 
   const handleVideoChange = async (event: any) => {
     const file = event.target.files[0];
-    const MAX_FILE_SIZE = 5120; // 5MB
+    const MAX_FILE_SIZE = 5120 * 4; // 20MB
 
     if (file.size / 1024 > MAX_FILE_SIZE) {
       toast.warning("uploaded video file is too big");
