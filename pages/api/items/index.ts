@@ -39,7 +39,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           price: Number(item.price),
           ownerId: user.id,
           tokenId: randStr(10),
-          published: item.published,
+          published: false,
           category: item.category,
           royalties: Number(item.royalties),
           openForBid: false,
