@@ -159,3 +159,19 @@
     text-align: center;
   }
 }
+
+.images {
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  gap: 3%;
+  justify-content: center;
+  // width: calc(311px + 10vw);
+
+  img {
+    border-radius: 10px;
+    cursor: pointer;
+    display: none;
+    // visibility: hidden;
+  }
+}
