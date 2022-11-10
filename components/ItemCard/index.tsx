@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NextImage from "../Image";
 import styles from "./index.module.scss";
 import Link from "../Link";
 import AddToCollectionDialog from "../AddToCollectionDialog";
 import { IUser } from "../../types/user.interface";
 import { IItem } from "../../types/item.interface";
+import { AuthContext } from "../../contexts/AuthContext";
 
 interface ItemCardProps {
   id: number;
@@ -31,6 +32,8 @@ function ItemCard(props: ItemCardProps) {
     setOpenDialog(true);
   };
   const router = useRouter();
+  const { user } = useContext(AuthContext);
+
   const isMarketplace = router.pathname === "/marketplace";
   return (
     <div>
@@ -40,6 +43,7 @@ function ItemCard(props: ItemCardProps) {
         handleRequest={addItems}
         title={props.name}
         id={props.id}
+        price={props.price}
         owner={props.owner}
       />
 
@@ -86,7 +90,8 @@ function ItemCard(props: ItemCardProps) {
             </div>
           </a>
         </Link>
-        {!props.collectionImages &&
+        {user &&
+          !props.collectionImages &&
           props.isCollectionAdmin &&
           !props?.item?.collectionId && (
             <button onClick={handleAddToCollection}>

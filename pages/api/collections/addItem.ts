@@ -12,6 +12,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           id: collection.id,
         },
         data: {
+          worth: {
+            increment: item.price,
+          },
           items: {
             connect: {
               id: item.id,

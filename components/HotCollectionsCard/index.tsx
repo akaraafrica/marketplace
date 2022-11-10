@@ -4,6 +4,8 @@ import NextImage from "../Image";
 import { ICollection } from "../../types/collection.interface";
 import Link from "../Link";
 import { getUserName } from "../../utils/helpers/getUserName";
+import DefaultAvatar from "../../components/DefaultAvatar";
+
 interface properties {
   collection: ICollection;
 }
@@ -55,7 +57,18 @@ function HotCollectionCard(props: properties) {
                   />
                 </a>
               )}
-              <div className={styles.owner}>By {getUserName(author)}</div>
+              <div className={styles.owner}>
+                <DefaultAvatar
+                  id={author?.id}
+                  url={author?.profile?.avatar}
+                  width="40px"
+                  height="40px"
+                  walletAddress={author?.walletAddress || ""}
+                  fontSize="0.7em"
+                  length={1}
+                />{" "}
+                {getUserName(author)}
+              </div>
             </div>
           </Link>
           <span>{items && items.length} Items</span>

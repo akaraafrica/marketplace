@@ -14,38 +14,6 @@ function HotCollectionMobile() {
     slidesPerRow: 1,
     autoplay: true,
   };
-  return (
-    <div className="hotcollectionmobilecon">
-      {/* <Swiper style={{ zIndex: 0 }}>
-        <SwiperSlide>
-          <HotCollectionCard/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <HotCollectionCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <HotCollectionCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <HotCollectionCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <HotCollectionCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <HotCollectionCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <HotCollectionCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <HotCollectionCard />
-        </SwiperSlide>
-        <SwiperSlide>
-          <HotCollectionCard />
-        </SwiperSlide>
-      </Swiper> */}
-    </div>
-  );
+  return <></>;
 }
 export default HotCollectionMobile;

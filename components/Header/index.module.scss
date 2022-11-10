@@ -98,6 +98,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    gap: 1rem;
     justify-content: space-between;
 
     @media screen and (min-width: 1440px) {
@@ -162,7 +163,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 10px 12px 10px 16px;
-        gap: 18px;
+        gap: 10px;
         border: 2px solid #353945;
         border-radius: 8px;
 
@@ -171,6 +172,10 @@
           color: #fcfcfd;
           outline: none;
           border: none;
+        }
+
+        img {
+          margin-right: 20px;
         }
       }
 
@@ -242,6 +247,7 @@
         border-radius: 90px;
         position: relative;
         cursor: pointer;
+        width: 6.5rem;
 
         .amt {
           span {

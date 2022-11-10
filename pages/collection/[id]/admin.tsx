@@ -44,9 +44,10 @@ const Index = () => {
   const router = useRouter();
   const id = router.query.id as unknown as number;
 
-  const { data: collection, mutate } = useSWR<ICollection>(["admin", id], () =>
+  const { data: collection, mutate } = useSWR<ICollection>("admin" + id, () =>
     CollectionDs.getCollectionById(id)
   );
+  console.log({ collection });
 
   const [open, setOpen] = useState(1);
   const [openVerifyDialog, setOpenVerifyDialog] = useState(false);
@@ -651,7 +652,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       fallback: {
-        [unstable_serialize(["admin", id])]: collection,
+        [unstable_serialize("admin" + id)]: collection,
       },
     },
   };
