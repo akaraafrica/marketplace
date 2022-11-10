@@ -202,10 +202,11 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
 
       let imageArr = [];
       for (const image of Object.entries(images)) {
-        imageArr.push({
-          name: image[0],
-          file: image[1],
-        });
+        if (image[1])
+          imageArr.push({
+            name: image[0],
+            file: image[1],
+          });
       }
       let promise: any = [];
       imageArr.forEach((image, index) => {
