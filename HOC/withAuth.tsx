@@ -8,19 +8,20 @@ export default function withAuth(WrappedComponent: any) {
     const [verified, setVerified] = useState<boolean | null>(null);
     const { user, isAuthenticated, loading } = useContext(AuthContext);
     useEffect(() => {
-      if (!!loading) {
-        if (isAuthenticated) setVerified(true);
-      } else {
-        setVerified(false);
+      if (!loading && isAuthenticated) {
+        setVerified(true);
       }
     }, [user]);
+    if (!loading && !isAuthenticated && verified === null) {
+      setVerified(false);
+      Router.replace("/login");
+    }
     if (typeof window !== "undefined" && verified != null) {
-      if (verified != null) {
+      if (verified === true) {
         return <WrappedComponent {...props} />;
       } else {
         Router.replace("/login");
       }
     }
-    return null;
   };
 }
