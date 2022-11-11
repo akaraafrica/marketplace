@@ -116,6 +116,12 @@ const Index = () => {
     items: IItem[]
   ) => {
     try {
+      if (collection?.status === "READY" || collection?.status === "VERIFIED") {
+        await collectionsDs.updateStatus({
+          id: collection?.id,
+          status: "DRAFT",
+        });
+      }
       await CollectionDs.removeContributor(
         collection?.id as number,
         contributorId,
@@ -211,6 +217,12 @@ const Index = () => {
   );
   const handleRemoveBeneficiary = async (beneficiary: any) => {
     try {
+      if (collection.status === "READY" || collection.status === "VERIFIED") {
+        await collectionsDs.updateStatus({
+          id: collection?.id,
+          status: "DRAFT",
+        });
+      }
       await collectionsDs.removeBeneficiary(beneficiary);
       mutate();
       toast.success("Beneficiary successful removed");
