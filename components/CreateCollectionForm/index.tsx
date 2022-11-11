@@ -17,6 +17,8 @@ import userDs from "../../ds/user.ds";
 import withAuth from "../../HOC/withAuth";
 import { getUserName } from "../../utils/helpers/getUserName";
 import itemDs from "../../ds/item.ds";
+import validateImage from "../../utils/helpers/validateImage";
+import validateVideo from "../../utils/helpers/validateVideo";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -123,28 +125,32 @@ const Index = ({ collection }: { collection: ICollection }) => {
   const optional4 = useRef<HTMLInputElement>(null);
 
   const handleOptional1 = (e?: any) => {
-    setImages({
-      ...images,
-      optional1: e.target.files[0],
-    });
+    if (validateImage(e.target.files[0]))
+      setImages({
+        ...images,
+        optional1: e.target.files[0],
+      });
   };
   const handleOptional2 = (e?: any) => {
-    setImages({
-      ...images,
-      optional2: e.target.files[0],
-    });
+    if (validateImage(e.target.files[0]))
+      setImages({
+        ...images,
+        optional2: e.target.files[0],
+      });
   };
   const handleOptional3 = (e?: any) => {
-    setImages({
-      ...images,
-      optional3: e.target.files[0],
-    });
+    if (validateImage(e.target.files[0]))
+      setImages({
+        ...images,
+        optional3: e.target.files[0],
+      });
   };
   const handleOptional4 = (e?: any) => {
-    setImages({
-      ...images,
-      optional4: e.target.files[0],
-    });
+    if (validateImage(e.target.files[0]))
+      setImages({
+        ...images,
+        optional4: e.target.files[0],
+      });
   };
 
   const title = watch("title", "");
@@ -286,20 +292,16 @@ const Index = ({ collection }: { collection: ICollection }) => {
   };
 
   const handleVideoChange = async (event: any) => {
-    const file = event.target.files[0];
-    const MAX_FILE_SIZE = 20480; // 20MB
-
-    if (file.size / 1024 > MAX_FILE_SIZE) {
-      toast.warning("uploaded video file is too big");
-      return;
+    if (validateVideo(event.target.files[0])) {
+      setVideo(event.target.files[0]);
     }
-    setVideo(file);
   };
   const handleChangeRequired = (e?: any, name?: any) => {
-    setImages({
-      ...images,
-      main: e.target.files[0],
-    });
+    if (validateImage(e.target.files[0]))
+      setImages({
+        ...images,
+        main: e.target.files[0],
+      });
   };
   const clearState = () => {
     setDesc("");
@@ -342,7 +344,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 className={styles.sciuploadvideobox}
               >
                 <RiVideoUploadLine size={50} color="#777E91" />
-                <p>WEBM or MP4.</p>
+                <p>WEBM or MP4 Max 20MB</p>
               </div>
             ) : (
               <video controls>
@@ -380,7 +382,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                   alt="upload icon"
                   src={`/assets/uploadicon.svg`}
                 />
-                <p>PNG, GIF, WEBP, MP4 or MP3. Max 1Gb.</p>
+                <p>PNG, GIF, WEBP Max 5MB.</p>
               </div>
               <input
                 style={{ display: "none" }}
