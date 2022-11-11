@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { mutate } from "swr";
 import { AuthContext } from "../../contexts/AuthContext";
 import { CollectionDs } from "../../ds";
 import { getUserName } from "../../utils/helpers/getUserName";
@@ -12,6 +13,7 @@ export default function AddToCollectionDialog({
   owner,
   title,
   id,
+  price,
 }: any) {
   const user = useContext(AuthContext).user;
   const [collection, setCollection] = useState<null | number>(null);
@@ -39,9 +41,10 @@ export default function AddToCollectionDialog({
         const data = {
           user,
           collection,
-          item: { owner, id, title },
+          item: { owner, id, title, price },
         };
         await CollectionDs.addItem(data);
+        mutate("profile" + id);
         handleClose();
         toast.success("Item add successfully");
       }
@@ -54,10 +57,7 @@ export default function AddToCollectionDialog({
     <>
       <Dialog open={open} handleClose={handleClose}>
         <main className={styles.main}>
-          <p>
-            {`You are have requested to add  ${title} from ${getUserName(owner)}
-            profile`}
-          </p>
+          <p>{`Send request to add ${title} to your collection `}</p>
           <h4>Select collection</h4>
           <select onChange={handleChange}>
             {userCollections?.map((collection) => (

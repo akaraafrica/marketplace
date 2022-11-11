@@ -203,7 +203,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
 
       let videoUrl = await getFileUploadURL(
         video,
-        `/video/collection/${result.data.id}/${title.replace(" ", "-")}`
+        `/collection/${result.data.id}/${title.replace(" ", "-")}`
       );
 
       const imageURLs = await Promise.all(promise);
@@ -212,6 +212,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
         images: imageURLs,
         videos: [videoUrl],
       });
+
       toast.success("collection created successful");
       reset();
       clearState();
@@ -286,7 +287,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
 
   const handleVideoChange = async (event: any) => {
     const file = event.target.files[0];
-    const MAX_FILE_SIZE = 5120; // 5MB
+    const MAX_FILE_SIZE = 20480; // 20MB
 
     if (file.size / 1024 > MAX_FILE_SIZE) {
       toast.warning("uploaded video file is too big");
