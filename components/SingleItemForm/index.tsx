@@ -20,6 +20,7 @@ import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import itemDs from "../../ds/item.ds";
 import { useRouter } from "next/router";
 import { IItem } from "../../types/item.interface";
+import validateImage from "../../utils/helpers/validateImage";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -304,34 +305,39 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   const optional1 = useRef<HTMLInputElement>(null);
   const optional2 = useRef<HTMLInputElement>(null);
   const optional3 = useRef<HTMLInputElement>(null);
-  const handleChnage = (e?: any, name?: any) => {
-    if (e.target.files[0]) {
-      setValue("image", true);
-    } else {
-      setValue("image", undefined);
-    }
+
+  const handleChange = (e?: any, name?: any) => {
+    if (validateImage(e.target.files[0]))
+      if (e.target.files[0]) {
+        setValue("image", true);
+      } else {
+        setValue("image", undefined);
+      }
     setImages({
       ...images,
       main: e.target.files[0],
     });
   };
   const handleOptional1 = (e?: any) => {
-    setImages({
-      ...images,
-      optional1: e.target.files[0],
-    });
+    if (validateImage(e.target.files[0]))
+      setImages({
+        ...images,
+        optional1: e.target.files[0],
+      });
   };
   const handleOptional2 = (e?: any) => {
-    setImages({
-      ...images,
-      optional2: e.target.files[0],
-    });
+    if (validateImage(e.target.files[0]))
+      setImages({
+        ...images,
+        optional2: e.target.files[0],
+      });
   };
   const handleOptional3 = (e?: any) => {
-    setImages({
-      ...images,
-      optional3: e.target.files[0],
-    });
+    if (validateImage(e.target.files[0]))
+      setImages({
+        ...images,
+        optional3: e.target.files[0],
+      });
   };
   return (
     <>
@@ -366,14 +372,14 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                 className={styles.sciuploadbox}
               >
                 <img alt="upload icon" src={`/assets/uploadicon.svg`} />
-                <p>PNG, GIF, WEBP, MP4 or MP3. Max 1Gb.</p>
+                <p>PNG, GIF, WEBP Max 5MB.</p>
               </div>
               <input
                 style={{ display: "none" }}
                 type="file"
                 {...register("image", { required: true })}
                 ref={target}
-                onChange={(e) => handleChnage(e, "main")}
+                onChange={(e) => handleChange(e, "main")}
               />
               {errors.image && <span>This field is required</span>}
             </div>
