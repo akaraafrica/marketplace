@@ -8,6 +8,8 @@ import styles from "./index.module.scss";
 export const CloseAuctionDialog = ({ open, handleClose, item }: any) => {
   const { mutate } = useSWRConfig();
   const handleDelete = async () => {
+    // TODO ONCHAIN INTERACTION
+
     try {
       const newData = { ...item, auction: { open: false } };
       mutate("item" + item.id, () => newData, false);

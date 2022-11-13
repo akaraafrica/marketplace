@@ -16,6 +16,8 @@ export default function Index({ open, handleClose, item, edit }: any) {
 
   const handleSubmit = async () => {
     if (edit) {
+      // TODO ONCHAIN INTERACTION
+
       handleClose();
       toast.success("Auction updated");
       try {
@@ -30,6 +32,8 @@ export default function Index({ open, handleClose, item, edit }: any) {
         toast.error("Error updating auction");
       }
     } else {
+      // TODO ONCHAIN INTERACTION
+
       const newData = { ...item, auction: { open: true } };
       mutate("item" + item.id, () => newData, false);
       handleClose();

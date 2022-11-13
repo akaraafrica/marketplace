@@ -70,6 +70,8 @@ export default function MintCollectionDialog({
     }, 3000);
   };
   const handleSubmit = async () => {
+    // TODO ONCHAIN INTERACTION
+
     setStep({ ...step, complete: true });
     mutate();
     handleClose();
