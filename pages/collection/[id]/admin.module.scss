@@ -115,6 +115,13 @@
     // @media screen and (max-width: 1024px) {
     //   padding: 0 10%;
     // }
+    .topB {
+      p {
+        color: #f2994a;
+        max-width: 300px;
+        text-align: center;
+      }
+    }
     .sectionTop {
       display: flex;
       justify-content: space-between;
