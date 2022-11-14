@@ -105,11 +105,21 @@ const Index: React.FC<Properties> = ({
         percentage: percent,
       };
       try {
-        if (collection.status === "READY" || collection.status === "VERIFIED") {
+        if (collection.status === "VERIFIED") {
           await collectionsDs.updateStatus({
             id: collection?.id,
             status: "DRAFT",
           });
+          await CollectionDs.updateBeneficiary(collection.id, data);
+          setName("");
+          setEmail("");
+          setWallet("");
+          setDescription("");
+          setPercent(0);
+          toast.success("Beneficiary successful updated");
+          mutate();
+          setBeneficiary(null);
+          handleClose();
         }
         await CollectionDs.updateBeneficiary(collection.id, data);
         setName("");
@@ -127,11 +137,21 @@ const Index: React.FC<Properties> = ({
       }
     } else {
       try {
-        if (collection.status === "READY" || collection.status === "VERIFIED") {
+        if (collection.status === "VERIFIED") {
           await collectionsDs.updateStatus({
             id: collection?.id,
             status: "DRAFT",
           });
+          await CollectionDs.addBeneficiary(collection, data);
+          setName("");
+          setEmail("");
+          setWallet("");
+          setDescription("");
+          setPercent(0);
+          toast.success("Beneficiary successful added");
+          mutate();
+          setBeneficiary(null);
+          handleClose();
         }
         await CollectionDs.addBeneficiary(collection, data);
         setName("");
@@ -167,7 +187,7 @@ const Index: React.FC<Properties> = ({
 
     console.log("selected", selectedUserWithPercent);
     try {
-      if (collection.status === "READY" || collection.status === "VERIFIED") {
+      if (collection.status === "VERIFIED") {
         await collectionsDs.updateStatus({
           id: collection?.id,
           status: "DRAFT",
@@ -196,20 +216,22 @@ const Index: React.FC<Properties> = ({
     <Dialog open={open} handleClose={handleDialogClose}>
       <main className={styles.main}>
         <h4>{beneficiary ? "Edit" : "Add"} Beneficiary</h4>
-        <div className={styles.top}>
-          <span
-            onClick={() => setPage(0)}
-            style={{ background: page === 0 ? "#f2994a" : "inherit" }}
-          >
-            Existing user
-          </span>
-          <span
-            onClick={() => setPage(1)}
-            style={{ background: page === 1 ? "#f2994a" : "inherit" }}
-          >
-            New user
-          </span>
-        </div>
+        {!beneficiary && (
+          <div className={styles.top}>
+            <span
+              onClick={() => setPage(0)}
+              style={{ background: page === 0 ? "#f2994a" : "inherit" }}
+            >
+              Existing user
+            </span>
+            <span
+              onClick={() => setPage(1)}
+              style={{ background: page === 1 ? "#f2994a" : "inherit" }}
+            >
+              New user
+            </span>
+          </div>
+        )}
         <hr />
         {page === 0 && (
           <div className={styles.itemdetailsforminputSearch}>

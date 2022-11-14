@@ -10,7 +10,7 @@ const Index: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className={styles.layout}>
       <Header />
-      {children}
+      <div className={styles.children}>{children}</div>
       <Footer />
     </div>
   );
