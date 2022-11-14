@@ -5,22 +5,22 @@ import { SWRConfig } from "swr";
 
 function MainAppWrapper({ Component, pageProps }: any) {
   return (
-    <SWRConfig
-      value={{
-        refreshInterval: 50000,
-        revalidateOnFocus: true,
-        fetcher: (resource, init) =>
-          fetch(resource, init).then((res) => res.json()),
-      }}
+    // <SWRConfig
+    //   value={{
+    //     refreshInterval: 50000,
+    //     revalidateOnFocus: true,
+    //     fetcher: (resource, init) =>
+    //       fetch(resource, init).then((res) => res.json()),
+    //   }}
+    // >
+    <Web3ReactProvider
+      getLibrary={(provider: any) => new providers.Web3Provider(provider)}
     >
-      <Web3ReactProvider
-        getLibrary={(provider: any) => new providers.Web3Provider(provider)}
-      >
-        <AuthProvider>
-          <Component {...pageProps} />
-        </AuthProvider>
-      </Web3ReactProvider>
-    </SWRConfig>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </Web3ReactProvider>
+    // </SWRConfig>
   );
 }
 
