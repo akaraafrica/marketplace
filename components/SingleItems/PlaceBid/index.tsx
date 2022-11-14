@@ -29,7 +29,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
   };
 
   const handlePlaceBid = async () => {
-    //TODO-OnChain-action
+    // TODO ONCHAIN INTERACTION
 
     if (!user) {
       return;
@@ -60,7 +60,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
     }
   };
   const handlePurchaseNow = async () => {
-    //TODO-OnChain-action
+    // TODO ONCHAIN INTERACTION
 
     if (!user) {
       return;

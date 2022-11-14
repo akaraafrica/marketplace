@@ -32,6 +32,8 @@ export default function AcceptBid({
 
   const handleClose = () => setOpen(false);
   const handleAcceptBid = async () => {
+    // TODO ONCHAIN INTERACTION
+
     if (!user) {
       return;
     }
