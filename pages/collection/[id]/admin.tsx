@@ -88,7 +88,7 @@ const Index = () => {
     if (collection?.status === "PENDING" && handleCheckContributorsStatus()) {
       setOpenUpdate(true);
     }
-  }, []);
+  }, [collection?.status]);
   const handleRejectRequest = async (id: number) => {
     try {
       await ContributorDs.updateStatus({ id, status: "REJECTED" });
@@ -117,6 +117,12 @@ const Index = () => {
     items: IItem[]
   ) => {
     try {
+      if (collection?.status === "READY" || collection?.status === "VERIFIED") {
+        await collectionsDs.updateStatus({
+          id: collection?.id,
+          status: "DRAFT",
+        });
+      }
       await CollectionDs.removeContributor(
         collection?.id as number,
         contributorId,
@@ -165,6 +171,12 @@ const Index = () => {
     console.log("contributors: ", contributorsPercent);
 
     try {
+      if (collection?.status === "READY" || collection?.status === "VERIFIED") {
+        await collectionsDs.updateStatus({
+          id: collection?.id,
+          status: "DRAFT",
+        });
+      }
       const BatchUpdate = collection?.contributors.forEach(
         (contributor: { id: string | number }) => {
           // const contributorId = contributor.id;
@@ -212,6 +224,12 @@ const Index = () => {
   );
   const handleRemoveBeneficiary = async (beneficiary: any) => {
     try {
+      if (collection.status === "READY" || collection.status === "VERIFIED") {
+        await collectionsDs.updateStatus({
+          id: collection?.id,
+          status: "DRAFT",
+        });
+      }
       await collectionsDs.removeBeneficiary(beneficiary);
       mutate();
       toast.success("Beneficiary successful removed");
@@ -563,6 +581,17 @@ const Index = () => {
             <div className={styles.section}>
               <div className={styles.topB}>
                 <h2>Beneficiary</h2>
+                {(collection.type === "FUNDRAISING" ||
+                  collection.type === "COLLABORATORS") &&
+                  handlePercentCheck() !== 100 && (
+                    <p>
+                      Contributor&apos;s{" "}
+                      {collection.type === "FUNDRAISING"
+                        ? "and beneficiary's"
+                        : ""}{" "}
+                      percentage must accumulate to a total of 100%
+                    </p>
+                  )}
                 <div className={styles.sectionTop}>
                   <button onClick={() => setOpenAddBeneficiary(true)}>
                     Add Beneficiary

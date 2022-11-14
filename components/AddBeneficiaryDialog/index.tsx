@@ -10,6 +10,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import Image from "../Image";
 import DefaultAvatar from "../DefaultAvatar";
 import { ICollection } from "../../types/collection.interface";
+import collectionsDs from "../../ds/collections.ds";
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"],
@@ -104,6 +105,12 @@ const Index: React.FC<Properties> = ({
         percentage: percent,
       };
       try {
+        if (collection.status === "READY" || collection.status === "VERIFIED") {
+          await collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          });
+        }
         await CollectionDs.updateBeneficiary(collection.id, data);
         setName("");
         setEmail("");
@@ -120,6 +127,12 @@ const Index: React.FC<Properties> = ({
       }
     } else {
       try {
+        if (collection.status === "READY" || collection.status === "VERIFIED") {
+          await collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          });
+        }
         await CollectionDs.addBeneficiary(collection, data);
         setName("");
         setEmail("");
@@ -154,6 +167,12 @@ const Index: React.FC<Properties> = ({
 
     console.log("selected", selectedUserWithPercent);
     try {
+      if (collection.status === "READY" || collection.status === "VERIFIED") {
+        await collectionsDs.updateStatus({
+          id: collection?.id,
+          status: "DRAFT",
+        });
+      }
       await CollectionDs.connectBeneficiary(
         collection,
         selectedUserWithPercent
