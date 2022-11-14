@@ -13,6 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               profile: true,
             },
           },
+          draftItems: true,
           items: true,
           ratings: true,
         },
