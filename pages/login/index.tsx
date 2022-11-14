@@ -10,19 +10,48 @@ import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
 import { AuthContext } from "../../contexts/AuthContext";
+import googleLogin from "../../utils/auth/googleLogin";
+import facebookLogin from "../../utils/auth/facebookLogin";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const router = useRouter();
   const { account, active, activate } = useWeb3React();
-  const { signIn } = useContext(AuthContext);
+  const { signIn, completeLogin } = useContext(AuthContext);
 
   useEffect(() => {
     if (!active) activate(injected);
     setError("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handlefacebookLogin = async () => {
+    if (!account) {
+      toast.info("Please connect with metamask to login");
+      return;
+    }
+    try {
+      const res = await facebookLogin(account, setError);
+      console.log("facebook login", res);
+      completeLogin(res);
+    } catch (error: any) {
+      toast.error(error.error?.message || error.message);
+    }
+  };
+
+  const handlegoogleLogin = async () => {
+    if (!account) {
+      toast.info("Please connect with metamask to login");
+      return;
+    }
+    try {
+      const res = await googleLogin(account, setError);
+      console.log("google login ", res);
+      completeLogin(res);
+    } catch (error: any) {
+      toast.error(error.error?.message || error.message);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -89,10 +118,17 @@ const Index = () => {
         <span className={styles.continue}>Or continue with</span>
         <div className={styles.socials}>
           <span>
-            <FcGoogle />
+            <FcGoogle
+              onClick={handlegoogleLogin}
+              style={{ cursor: "pointer" }}
+            />
           </span>
           <span>
-            <FaFacebook color="#1877F2" />
+            <FaFacebook
+              color="#1877F2"
+              style={{ cursor: "pointer" }}
+              onClick={handlefacebookLogin}
+            />
           </span>
         </div>
         <p>

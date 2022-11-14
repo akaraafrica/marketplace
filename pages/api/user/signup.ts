@@ -19,7 +19,16 @@ export default async function Signup(
     req.body;
   const userEmail = await req.body.email;
   let link = "";
-  // console.log('Welcome:', userEmail )
+  console.log({
+    password,
+    address,
+    name,
+    dob,
+    gender,
+    avatar,
+    phoneNumber,
+    bio,
+  });
   switch (req.method) {
     case "POST":
       try {
@@ -73,7 +82,7 @@ export default async function Signup(
             },
           },
         });
-
+        console.log(newUser);
         const token = jwt.sign({ user: address }, secret, {
           expiresIn: "2d",
         });
@@ -99,6 +108,8 @@ export default async function Signup(
           message: "Please check your email to confirm",
         });
       } catch (error: any) {
+        console.log(error);
+
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           return res.status(500).send(ParsePrismaError(error));
         }

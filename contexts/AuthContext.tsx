@@ -5,6 +5,7 @@ import { getCookies, setCookies, removeCookies } from "cookies-next";
 import { api } from "../services/apiClient";
 import { IUser } from "../types/user.interface";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 type SignInCredential = {
   email: string;
@@ -14,6 +15,7 @@ type SignInCredential = {
 type AuthContextData = {
   signIn: (credentials: SignInCredential) => Promise<void>;
   signOut: () => void;
+  completeLogin: (response: any) => void;
   user: IUser | undefined;
   isAuthenticated: boolean;
   loading: boolean;
@@ -75,23 +77,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     };
   }, []);
-
-  async function signIn({ email, password }: SignInCredential) {
-    try {
-      const response = await api.post("/api/user/login", {
-        email,
-        password,
-      });
-
-      if (response.status == 400) return response.error;
-
-      const { accessToken, user, refreshToken } = response.data;
+  async function completeLogin(response: any) {
+    if (response?.status == 400) return response?.error;
+    if (response?.data) {
+      const { accessToken, user, refreshToken } = response?.data;
       if (account && account != user.walletAddress)
-        throw new AxiosError(
-          "Please connect the metamask account attached to this credentials to login.",
-          "500"
+        // throw new AxiosError(
+        //   "Please connect the metamask account attached to this credentials to login.",
+        //   "500"
+        // );
+        toast.error(
+          "Please connect the metamask account attached to this credentials to login."
         );
-
       setCookies("nextauth.token", accessToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
@@ -114,7 +111,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api.defaults.headers.head["Authorization"] = `Bearer ${accessToken}`;
 
       api
-        .get(`/api/me`, { headers: { Authorization: `Bearer ${accessToken}` } })
+        .get(`/api/me`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
         .then((savedUser: { data: IUser }) => {
           setUser(savedUser.data);
           setLoading(false);
@@ -122,6 +121,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
         .catch((err: any) => console.log(err));
 
       Router.back();
+    }
+  }
+  async function signIn({ email, password }: SignInCredential) {
+    try {
+      if (email && password) {
+        const response = await api.post("/api/user/login", {
+          email,
+          password,
+        });
+        completeLogin(response);
+      }
     } catch (err: any) {
       console.log(err);
       throw err;
@@ -130,7 +140,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ signIn, signOut, user, isAuthenticated, loading }}
+      value={{ signIn, signOut, user, isAuthenticated, loading, completeLogin }}
     >
       {children}
     </AuthContext.Provider>
