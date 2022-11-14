@@ -11,7 +11,8 @@ interface properties {
 }
 
 function HotCollectionCard(props: properties) {
-  const { id, images, title, author, items } = props.collection;
+  const { id, images, title, author, items, draftItems } = props.collection;
+  console.log(props.collection);
 
   return (
     <div className={styles.root}>
@@ -71,7 +72,7 @@ function HotCollectionCard(props: properties) {
               </div>
             </div>
           </Link>
-          <span>{items && items.length} Items</span>
+          <span>{items?.length || draftItems?.length || 0} Items</span>
         </div>
       </div>
     </div>
