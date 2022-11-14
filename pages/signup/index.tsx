@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import styles from "./index.module.scss";
 import OnboardingLayout from "../../components/OnboardingLayout";
 import OnboardingInput from "../../components/OnboardingInput";
@@ -15,8 +15,37 @@ import VerifyEmail from "../../components/VerifyEmail";
 import NextImage from "../../components/Image";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import userDs from "../../ds/user.ds";
+import googleLogin from "../../utils/auth/googleLogin";
+import { AuthContext } from "../../contexts/AuthContext";
+import facebookLogin from "../../utils/auth/facebookLogin";
 
 const Index = () => {
+  const { completeLogin } = useContext(AuthContext);
+  const handlegoogleLogin = async () => {
+    try {
+      const res = await googleLogin(account, setError, setVerify);
+      console.log("google login ", res);
+      completeLogin(res);
+    } catch (error: any) {
+      console.log(error);
+
+      toast.error(error.error?.message || error.message);
+    }
+  };
+  const handlefacebookLogin = async () => {
+    if (!account) {
+      toast.info("Please connect with metamask to login");
+      return;
+    }
+    try {
+      const res = await facebookLogin(account, setError, setVerify);
+      console.log("facebook login", res);
+      completeLogin(res);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.error?.message || error.message);
+    }
+  };
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -83,8 +112,6 @@ const Index = () => {
       if (state.password !== state.confirmPassword) {
         return setError("Password and confirm password does not match");
       }
-
-      console.log(state, image, gender);
 
       const res = await userDs.create({
         address: account,
@@ -245,10 +272,17 @@ const Index = () => {
           <span className={styles.continue}>Or continue with</span>
           <div className={styles.socials}>
             <span>
-              <FcGoogle />
+              <FcGoogle
+                onClick={handlegoogleLogin}
+                style={{ cursor: "pointer" }}
+              />
             </span>
             <span>
-              <FaFacebook color="#1877F2" />
+              <FaFacebook
+                color="#1877F2"
+                style={{ cursor: "pointer" }}
+                onClick={handlefacebookLogin}
+              />
             </span>
           </div>
           <p>
