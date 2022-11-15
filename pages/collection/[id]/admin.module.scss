@@ -122,12 +122,17 @@
         text-align: center;
       }
     }
+
     .sectionTop {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 20px;
       flex-wrap: wrap;
+
+      @media screen and (max-width: 1024px) {
+        flex-direction: column;
+      }
 
       .btns {
         display: flex;
@@ -155,6 +160,9 @@
     .topB {
       display: flex;
       justify-content: space-between;
+      @media screen and (max-width: 1024px) {
+        flex-direction: column;
+      }
 
       button {
         border: 1px solid #f2994a;
@@ -182,9 +190,6 @@
         gap: 24px;
         padding: 33px 0;
         flex-wrap: wrap;
-
-        @media screen and (max-width: 1024px) {
-        }
 
         .left {
           display: flex;

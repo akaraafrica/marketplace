@@ -35,6 +35,9 @@ const MintCollectionDialog: any = dynamic(
 const UpdateCollectionAdminDialog: any = dynamic(
   () => import("../../../components/UpdateCollectionAdminDialog")
 );
+const WarningDialog: any = dynamic(
+  () => import("../../../components/CollectionAdmin/WarningDialog")
+);
 const Link: any = dynamic(() => import("next/link"));
 const Box: any = dynamic(() => import("@mui/material/Box"));
 import { toast } from "react-toastify";
@@ -65,6 +68,9 @@ const Index = () => {
   const [openAddBeneficiary, setOpenAddBeneficiary] = useState(false);
   const [openPublish, setOpenPublish] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [warning, setWarning] = useState<
+    "SAVE" | "ADD" | "REMOVE" | "EDIT" | null
+  >(null);
 
   const handlePublish = () => {
     setOpenPublish(true);
@@ -117,7 +123,7 @@ const Index = () => {
     items: IItem[]
   ) => {
     try {
-      if (collection?.status === "READY" || collection?.status === "VERIFIED") {
+      if (collection?.status === "VERIFIED") {
         await collectionsDs.updateStatus({
           id: collection?.id,
           status: "DRAFT",
@@ -171,7 +177,7 @@ const Index = () => {
     console.log("contributors: ", contributorsPercent);
 
     try {
-      if (collection?.status === "READY" || collection?.status === "VERIFIED") {
+      if (collection?.status === "VERIFIED") {
         await collectionsDs.updateStatus({
           id: collection?.id,
           status: "DRAFT",
@@ -224,11 +230,14 @@ const Index = () => {
   );
   const handleRemoveBeneficiary = async (beneficiary: any) => {
     try {
-      if (collection.status === "READY" || collection.status === "VERIFIED") {
+      if (collection.status === "VERIFIED") {
         await collectionsDs.updateStatus({
           id: collection?.id,
           status: "DRAFT",
         });
+        await collectionsDs.removeBeneficiary(beneficiary);
+        mutate();
+        toast.success("Beneficiary successful removed");
       }
       await collectionsDs.removeBeneficiary(beneficiary);
       mutate();
@@ -285,6 +294,29 @@ const Index = () => {
         collection={collection}
         mutate={mutate}
       />
+      <WarningDialog
+        open={warning}
+        handleClose={() => setWarning(null)}
+        handleContinue={(e: any, beneficiary: any) => {
+          if (warning === "SAVE") {
+            setWarning(null);
+            return handleSave(e);
+          }
+          if (warning === "EDIT") {
+            setWarning(null);
+            return setOpenAddBeneficiary(true);
+          }
+          if (warning === "ADD") {
+            setWarning(null);
+            return setOpenAddBeneficiary(true);
+          }
+          if (warning === "REMOVE") {
+            setWarning(null);
+            return handleRemoveBeneficiary(beneficiary);
+          }
+          return;
+        }}
+      />
       {/* <PayoutDialog
         collection={collection}
         handleClose={handleClose}
@@ -330,7 +362,12 @@ const Index = () => {
                 {collection.type !== "ORDINARY" && (
                   <button
                     className={styles.btnSave}
-                    onClick={handleSave}
+                    onClick={(e) => {
+                      if (collection.status === "VERIFIED") {
+                        return setWarning("SAVE");
+                      }
+                      return handleSave(e);
+                    }}
                     disabled={handlePercentCheck() !== 100}
                   >
                     Save
@@ -593,7 +630,14 @@ const Index = () => {
                     </p>
                   )}
                 <div className={styles.sectionTop}>
-                  <button onClick={() => setOpenAddBeneficiary(true)}>
+                  <button
+                    onClick={(e) => {
+                      if (collection.status === "VERIFIED") {
+                        return setWarning("ADD");
+                      }
+                      return handleSave(e);
+                    }}
+                  >
                     Add Beneficiary
                   </button>
                   {/* <button 
@@ -644,12 +688,22 @@ const Index = () => {
                       <MdEdit
                         size={30}
                         color="#fff"
-                        onClick={() => setOpenAddBeneficiary(true)}
+                        onClick={() => {
+                          if (collection.status === "VERIFIED") {
+                            return setWarning("EDIT");
+                          }
+                          return setOpenAddBeneficiary(true);
+                        }}
                       />
                       <MdCancel
                         size={30}
                         color="orangered"
-                        onClick={() => handleRemoveBeneficiary(beneficiary)}
+                        onClick={() => {
+                          if (collection.status === "VERIFIED") {
+                            return setWarning("REMOVE");
+                          }
+                          return handleRemoveBeneficiary(beneficiary);
+                        }}
                       />
                     </div>
                   </div>
