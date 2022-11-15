@@ -29,7 +29,7 @@ const Index = () => {
   };
   useEffect(() => {
     (async () => {
-      if (debouncedSearchTerm.length > 1) {
+      if (debouncedSearchTerm.length >= 1) {
         setLoading(true);
         setData([]);
         try {

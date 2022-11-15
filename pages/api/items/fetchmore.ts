@@ -24,6 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
               price: {
                 lte: Number(priceRange),
               },
@@ -52,6 +53,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange) || 0,
               },
@@ -83,6 +86,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange),
               },
@@ -111,6 +116,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange) || 0,
               },
@@ -142,6 +149,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange),
               },
@@ -168,6 +177,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange) || 0,
               },
@@ -197,6 +208,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange),
               },
@@ -223,6 +236,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange) || 0,
               },
@@ -252,6 +267,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange),
               },
@@ -278,6 +295,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange) || 0,
               },
@@ -311,6 +330,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange),
               },
@@ -333,6 +354,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               likes: true,
             },
             where: {
+              published: true,
+
               price: {
                 lte: Number(priceRange) || 0,
               },
