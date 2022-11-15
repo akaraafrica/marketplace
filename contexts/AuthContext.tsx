@@ -81,14 +81,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (response?.status == 400) return response?.error;
     if (response?.data) {
       const { accessToken, user, refreshToken } = response?.data;
-      if (account && account != user.walletAddress)
-        // throw new AxiosError(
-        //   "Please connect the metamask account attached to this credentials to login.",
-        //   "500"
-        // );
+      if (account && account != user.walletAddress) {
         toast.error(
           "Please connect the metamask account attached to this credentials to login."
         );
+        return;
+      }
+      // throw new AxiosError(
+      //   "Please connect the metamask account attached to this credentials to login.",
+      //   "500"
+      // );
+
       setCookies("nextauth.token", accessToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
