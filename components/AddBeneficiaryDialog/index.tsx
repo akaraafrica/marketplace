@@ -269,7 +269,17 @@ const Index: React.FC<Properties> = ({
                       setResultDisplay(false);
                     }}
                   >
-                    {user.email && user.email}
+                    <div className={styles.avatarFlex}>
+                      <DefaultAvatar
+                        fontSize=".6rem"
+                        id={user!.id}
+                        url={user?.profile?.avatar}
+                        walletAddress={user.walletAddress}
+                        width="56px"
+                        height="56px"
+                      />
+                      <p>{user.email && user.email}</p>
+                    </div>
                   </span>
                 ))}
             </div>

@@ -167,6 +167,12 @@
       span {
         color: #fcfcfd;
         cursor: pointer;
+
+        .avatarFlex {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
       }
     }
 
