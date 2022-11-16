@@ -93,7 +93,8 @@ function ItemCard(props: ItemCardProps) {
         {user &&
           !props.collectionImages &&
           props.isCollectionAdmin &&
-          !props?.item?.collectionId && (
+          !props?.item?.collectionId &&
+          props.item?.published && (
             <button onClick={handleAddToCollection}>
               Add item to collection
             </button>

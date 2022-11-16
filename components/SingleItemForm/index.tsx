@@ -187,8 +187,6 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   };
 
   const handleUpload = async () => {
-    setUploadId(0);
-
     if (!user) return;
     setStep({ ...step, loading: true });
     const data = getValues();
@@ -231,12 +229,11 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   };
 
   const handleMint = async () => {
-    console.log("handleMint");
     setStep({ ...step, loading: true });
 
     try {
       const uploadResp = await itemDs.storeNFT(
-        images.main,
+        images.main || getValues().image,
         getValues("title"),
         getValues("description")
       );
@@ -297,7 +294,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
     toast.success("successful");
     reset();
     clearState();
-    router.push(`${uploadId}`);
+    router.push("/item/" + uploadId);
   };
   const handleDialogClose = () => setOpenDialog(false);
 

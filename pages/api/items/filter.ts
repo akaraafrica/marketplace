@@ -26,6 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange),
               },
+              published: true,
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -49,10 +50,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             include: {
               likes: true,
             },
+
             where: {
               price: {
                 lte: Number(priceRange) || 0,
               },
+              published: true,
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -83,6 +86,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange),
               },
+              published: true,
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -110,6 +114,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange) || 0,
               },
+              published: true,
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -140,6 +145,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange),
               },
+              published: true,
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -165,6 +171,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange) || 0,
               },
+              published: true,
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -193,6 +200,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange),
               },
+              published: true,
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -218,6 +226,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange) || 0,
               },
+              published: true,
+
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -246,6 +256,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange),
               },
+              published: true,
+
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -274,6 +286,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
+              published: true,
+
               category: category,
             },
             orderBy: {
@@ -299,6 +313,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange),
               },
+              published: true,
+
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
@@ -324,6 +340,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               price: {
                 lte: Number(priceRange) || 0,
               },
+              published: true,
               owner: {
                 verified: verifiedCreator.toLowerCase() === "true",
               },
