@@ -146,7 +146,7 @@ model Collection {
   lunchTime     String?
   revenue       Int?
   type          CollectionTypes    @default(ORDINARY)
-  worth         Int?
+  worth         Float?
   author        User               @relation(fields: [authorId], references: [id])
   beneficiaries Beneficiary[]
   ratings       CollectionRating[]
