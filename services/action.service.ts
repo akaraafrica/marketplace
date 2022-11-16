@@ -29,6 +29,7 @@ export const enum MailTemplateIDs {
   ContributorAction = "d-c9b35776b4184886800d02fcf6f0ad11",
   CollectionApproved = "d-a9bc4e56560741838968f05bc8d88a12",
   BeneficiaryNotice = "d-4ae903e4badf4970ab77324344bda42e",
+  NewBeneficiaryNotice = "d-6be5ee7228c24b479831387549302a39",
 }
 
 export const enum Actions {
@@ -37,6 +38,7 @@ export const enum Actions {
   Follow = "follow",
   Purchase = "purchase",
   BeneficiaryNotice = "beneficiary-notice",
+  NewBeneficiaryNotice = "newbeneficiary-notice",
   CreateItem = "create-item",
   CreateCollection = "create-collection",
   CollectionApproved = "collection-approved",
@@ -221,6 +223,21 @@ export async function TriggerAction(props: ActionProps) {
         title: collection.title,
         author: getUserName(user),
         link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+      });
+      if (emailData) {
+        await email(emailData);
+      }
+      break;
+    case Actions.NewBeneficiaryNotice:
+      if (!collection || !emailAddress) throw Error("invalid action");
+
+      emailData.push({
+        to: emailAddress,
+        from: "info@mbizi.org",
+        templateId: MailTemplateIDs.NewBeneficiaryNotice,
+        title: collection.title,
+        author: getUserName(user),
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}/signup/`,
       });
       if (emailData) {
         await email(emailData);

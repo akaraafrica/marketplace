@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
       await TriggerAction({
-        action: Actions.BeneficiaryNotice,
+        action: Actions.NewBeneficiaryNotice,
         user: collection.author,
         title: collection.title,
         emailAddress: email,
