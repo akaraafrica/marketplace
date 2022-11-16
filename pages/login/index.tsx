@@ -4,7 +4,7 @@ import OnboardingLayout from "../../components/OnboardingLayout";
 import OnboardingInput from "../../components/OnboardingInput";
 import OnboardingButton from "../../components/OnboardingButton";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
@@ -12,6 +12,7 @@ import { injected } from "../../connectors";
 import { AuthContext } from "../../contexts/AuthContext";
 import googleLogin from "../../utils/auth/googleLogin";
 import facebookLogin from "../../utils/auth/facebookLogin";
+import twitterLogin from "../../utils/auth/twitterLogin";
 
 const Index = () => {
   const [state, setState] = useState({ email: "", password: "" });
@@ -25,6 +26,20 @@ const Index = () => {
     setError("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handleTwitterLogin = async () => {
+    if (!account) {
+      toast.info("Please connect with metamask to login");
+      return;
+    }
+    try {
+      const res = await twitterLogin(account, setError);
+      console.log("twitter login", res);
+      completeLogin(res);
+    } catch (error: any) {
+      toast.error(error.error?.message || error.message);
+    }
+  };
+
   const handlefacebookLogin = async () => {
     if (!account) {
       toast.info("Please connect with metamask to login");
@@ -121,6 +136,13 @@ const Index = () => {
             <FcGoogle
               onClick={handlegoogleLogin}
               style={{ cursor: "pointer" }}
+            />
+          </span>
+          <span>
+            <FaTwitter
+              color="#1877F2"
+              style={{ cursor: "pointer" }}
+              onClick={handleTwitterLogin}
             />
           </span>
           <span>
