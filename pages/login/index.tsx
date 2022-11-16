@@ -64,7 +64,7 @@ const Index = () => {
       console.log("google login ", res);
       completeLogin(res);
     } catch (error: any) {
-      toast.error(error.error?.message || error.message);
+      // toast.error(error.error?.message || error.message);
     }
   };
 
@@ -97,7 +97,7 @@ const Index = () => {
       toast.success("Welcome to Akara, Login successful.");
       console.log("new signin result here ", res);
     } catch (error: any) {
-      toast.error(error.error?.message || error.message);
+      // toast.error(error.error?.message || error.message);
     }
   };
 

@@ -85,12 +85,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         toast.error(
           "Please connect the metamask account attached to this credentials to login."
         );
-        return;
+        throw new AxiosError(
+          "Please connect the metamask account attached to this credentials to login.",
+          "500"
+        );
       }
-      // throw new AxiosError(
-      //   "Please connect the metamask account attached to this credentials to login.",
-      //   "500"
-      // );
 
       setCookies("nextauth.token", accessToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -133,7 +132,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           email,
           password,
         });
-        completeLogin(response);
+        return completeLogin(response);
       }
     } catch (err: any) {
       console.log(err);
