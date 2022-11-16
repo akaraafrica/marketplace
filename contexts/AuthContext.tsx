@@ -123,7 +123,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         })
         .catch((err: any) => console.log(err));
 
-      Router.back();
+      Router.push("/");
     }
   }
   async function signIn({ email, password }: SignInCredential) {
