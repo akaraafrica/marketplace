@@ -635,7 +635,7 @@ const Index = () => {
                       if (collection.status === "VERIFIED") {
                         return setWarning("ADD");
                       }
-                      return handleSave(e);
+                      return setOpenAddBeneficiary(true);
                     }}
                   >
                     Add Beneficiary
