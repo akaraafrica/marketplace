@@ -17,6 +17,8 @@ export default async function profile(
           userId: user.id,
           transactionId: randStr(10),
           itemId: item.id,
+          itemOwnerId: item.ownerId,
+          isAuction: true,
         },
       });
 

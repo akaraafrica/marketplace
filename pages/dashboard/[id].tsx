@@ -31,31 +31,6 @@ interface TabPanelProps {
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Box color="ActiveBorder">{children}</Box>
-        </Box>
-      )}
-    </div>
-  );
-}
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 const Dashboard = () => {
   const router = useRouter();
   const id = router.query.id as unknown as number;
@@ -63,12 +38,14 @@ const Dashboard = () => {
   const { data, mutate } = useSWR(["dashboard", id], () =>
     ProfileDs.getDashboradData(id)
   );
+  console.log(data);
   const { items, collections, likes, bids } = data as {
     items: IItem[];
     collections: ICollection[];
     likes: ILike[];
     bids: IBid[];
   };
+
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -128,25 +105,26 @@ const Dashboard = () => {
                 textColor="primary"
                 indicatorColor="primary"
               >
-                <Tab
-                  sx={{ color: "white" }}
-                  label="Auction"
-                  {...a11yProps(0)}
-                />
-                <Tab sx={{ color: "white" }} label="Items" {...a11yProps(1)} />
+                <Tab sx={{ color: "white" }} label="Items" {...a11yProps(0)} />
                 <Tab
                   sx={{ color: "white" }}
                   label="Collections"
+                  {...a11yProps(1)}
+                />
+                <Tab
+                  sx={{ color: "white" }}
+                  label="Auction"
                   {...a11yProps(2)}
                 />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Items items={items} auction={true} />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
               <Items items={items} />
             </TabPanel>
+            <TabPanel value={value} index={2}>
+              <Items items={items} auction={true} />
+            </TabPanel>
+
             <TabPanel value={value} index={2}>
               <div className={styles.collections}>
                 {collections.map((collection) => (
@@ -157,6 +135,9 @@ const Dashboard = () => {
               </div>
             </TabPanel>
           </div>
+          <h1>Minted items: {data.mindtedItems.length}</h1>
+          <h1>Minted items Sold: {data.TotalMintedSold._sum.amount}</h1>
+          <h1>Minted Auction sold: {data.TotalAuctionSold._sum.amount}</h1>
 
           <NoSsr>
             <div className={styles.bottom}>
@@ -196,3 +177,28 @@ const Page = ({ fallback }: any) => {
   );
 };
 export default withAuth(Page);
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Box color="ActiveBorder">{children}</Box>
+        </Box>
+      )}
+    </div>
+  );
+}
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}

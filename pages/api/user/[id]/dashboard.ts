@@ -61,10 +61,44 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           },
         },
       });
+      const mindtedItems = await prisma.item.findMany({
+        where: {
+          authorId: id,
+        },
+        include: {
+          purchases: true,
+        },
+      });
+      const TotalMintedSold = await prisma.purchase.aggregate({
+        _sum: {
+          amount: true,
+        },
+        where: {
+          itemOwnerId: id,
+        },
+      });
+      const TotalAuctionSold = await prisma.purchase.aggregate({
+        _sum: {
+          amount: true,
+        },
+        where: {
+          itemOwnerId: id,
+          isAuction: true,
+        },
+      });
+
       // @ts-ignore: Unreachable code error
       const userWithoutPassword = exclude(user, "password");
       const { items, collections, likes } = userWithoutPassword as any;
-      return res.status(200).json({ items, collections, likes, bids });
+      return res.status(200).json({
+        items,
+        collections,
+        likes,
+        bids,
+        mindtedItems,
+        TotalMintedSold,
+        TotalAuctionSold,
+      });
     } catch (error) {
       console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
