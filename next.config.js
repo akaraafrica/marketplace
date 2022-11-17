@@ -7,6 +7,7 @@ const nextConfig = {
       "avatars.dicebear.com",
       "firebasestorage.googleapis.com",
       "lh3.googleusercontent.com",
+      "pbs.twimg.com",
     ],
   },
   webpack: (config, { dev, isServer }) => {

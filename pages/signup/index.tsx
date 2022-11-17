@@ -4,7 +4,7 @@ import OnboardingLayout from "../../components/OnboardingLayout";
 import OnboardingInput from "../../components/OnboardingInput";
 import OnboardingButton from "../../components/OnboardingButton";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { BsFillCameraFill } from "react-icons/bs";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -18,6 +18,7 @@ import userDs from "../../ds/user.ds";
 import googleLogin from "../../utils/auth/googleLogin";
 import { AuthContext } from "../../contexts/AuthContext";
 import facebookLogin from "../../utils/auth/facebookLogin";
+import twitterLogin from "../../utils/auth/twitterLogin";
 
 const Index = () => {
   const { completeLogin } = useContext(AuthContext);
@@ -29,6 +30,19 @@ const Index = () => {
     } catch (error: any) {
       console.log(error);
 
+      toast.error(error.error?.message || error.message);
+    }
+  };
+  const handleTwitterLogin = async () => {
+    if (!account) {
+      toast.info("Please connect with metamask to login");
+      return;
+    }
+    try {
+      const res = await twitterLogin(account, setError);
+      console.log("twitter login", res);
+      completeLogin(res);
+    } catch (error: any) {
       toast.error(error.error?.message || error.message);
     }
   };
@@ -275,6 +289,13 @@ const Index = () => {
               <FcGoogle
                 onClick={handlegoogleLogin}
                 style={{ cursor: "pointer" }}
+              />
+            </span>
+            <span>
+              <FaTwitter
+                color="#1877F2"
+                style={{ cursor: "pointer" }}
+                onClick={handleTwitterLogin}
               />
             </span>
             <span>

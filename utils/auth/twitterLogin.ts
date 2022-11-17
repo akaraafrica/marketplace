@@ -1,10 +1,10 @@
 import firebase from "../lib/firebaseConfig";
-import { FacebookAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import userDs from "../../ds/user.ds";
 import axios from "axios";
 
-const facebookLogin = async (account: any, setError: any, setVerify?: any) => {
-  const provider = new FacebookAuthProvider();
+const twitterLogin = async (account: any, setError: any, setVerify?: any) => {
+  const provider = new TwitterAuthProvider();
   const auth = getAuth(firebase);
   setError("");
   try {
@@ -48,7 +48,6 @@ const facebookLogin = async (account: any, setError: any, setVerify?: any) => {
     if (error.code === "auth/account-exists-with-different-credential") {
       setError("Use email or google to login");
     }
-    console.log(error.message);
     if (error.response?.status === 401)
       return setError(error?.response?.data?.message);
     if (error?.response?.status === 409)
@@ -57,4 +56,4 @@ const facebookLogin = async (account: any, setError: any, setVerify?: any) => {
       return setError("Server error, please try again later");
   }
 };
-export default facebookLogin;
+export default twitterLogin;
