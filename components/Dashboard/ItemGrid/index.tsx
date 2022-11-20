@@ -32,13 +32,6 @@ export default function Index({
                   {title == "watchlist" && (
                     <>
                       <div className={styles.centerDiv}>
-                        {/* <NextImage
-                        className={styles.centerDivImg}
-                        src="/assets/auctionAvatar.png"
-                        width="24px"
-                        height="24px"
-                        alt="avatar"
-                      /> */}
                         <span>{item?.price} ETH</span>
                       </div>
                       <button>Place a bid</button>s

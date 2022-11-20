@@ -1,4 +1,5 @@
 import Items from "../../components/Dashboard/Items";
+import ItemGrid from "../../components/Dashboard/ItemGrid";
 import Layout from "../../components/Layout";
 import { IItem } from "../../types/item.interface";
 import Tabs from "@mui/material/Tabs";
@@ -135,10 +136,43 @@ const Dashboard = () => {
               </div>
             </TabPanel>
           </div>
-          <h1>Minted items: {data.mindtedItems.length}</h1>
-          <h1>Minted items Sold: {data.TotalMintedSold._sum.amount}</h1>
-          <h1>Minted Auction sold: {data.TotalAuctionSold._sum.amount}</h1>
-
+          <div className={styles.stats}>
+            <div>
+              <h3>
+                Minted items <span>{data.mindtedItems.length} </span>
+              </h3>
+            </div>
+            <div>
+              <h3>Minted items revenue</h3>
+              <span>{data.TotalMintedSold._sum.amount} ETH</span>
+            </div>
+            <div>
+              <h3>Auction revenue </h3>
+              <span>{data.TotalAuctionSold._sum.amount}ETH</span>
+            </div>
+            <div>
+              <h3>Revenue from collection</h3>
+              <span>{data.TotalCollectionSold._sum.amount} ETH</span>
+            </div>
+            <div>
+              <h3>Collections as collaborator</h3>
+              <span> {data.collections.length} ETH</span>
+            </div>
+            <div>
+              <h3>Total collections revenue</h3>
+              <span>
+                {data.collections.reduce(
+                  (total: number, collection: any) =>
+                    total + collection?.revenue || 0,
+                  0
+                )}{" "}
+                ETH
+              </span>
+            </div>
+          </div>
+          <div>
+            <ItemGrid items={data.mindtedItems} title="Minted Items" />
+          </div>
           <NoSsr>
             <div className={styles.bottom}>
               {/* <div id="watchlist">
@@ -148,7 +182,7 @@ const Dashboard = () => {
                 />
               </div> */}
               <div id="bids">
-                <CustomTable title="Bids" bids={bids} />
+                {/* <CustomTable title="Bids" bids={bids} /> */}
               </div>
             </div>
           </NoSsr>

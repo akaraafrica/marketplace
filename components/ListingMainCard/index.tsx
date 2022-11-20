@@ -22,7 +22,7 @@ function ListingMainCard() {
     (async () => {
       let data: IItem[] = await ItemDs.getData();
 
-      data = data.sort((a, b) => a.price - b.price);
+      data = data?.sort((a, b) => a?.price - b?.price);
       setItem(data);
     })();
   }, []);

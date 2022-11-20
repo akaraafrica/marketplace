@@ -36,27 +36,22 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
         },
         include: {
           profile: true,
-          collections: true,
+          collections: {
+            include: {
+              contributors: {
+                where: {
+                  userId: id,
+                },
+              },
+            },
+          },
           likes: {
             include: { item: true },
           },
           items: {
             include: {
               auction: true,
-              bids: {
-                include: {
-                  user: {
-                    select: {
-                      walletAddress: true,
-                      profile: {
-                        select: {
-                          name: true,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
+              purchases: true,
             },
           },
         },
@@ -74,7 +69,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           amount: true,
         },
         where: {
-          itemOwnerId: id,
+          itemPrevOwnerId: id,
         },
       });
       const TotalAuctionSold = await prisma.purchase.aggregate({
@@ -82,8 +77,17 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           amount: true,
         },
         where: {
-          itemOwnerId: id,
+          itemPrevOwnerId: id,
           isAuction: true,
+        },
+      });
+      const TotalCollectionSold = await prisma.purchase.aggregate({
+        _sum: {
+          amount: true,
+        },
+        where: {
+          itemPrevOwnerId: id,
+          inCollectionId: true,
         },
       });
 
@@ -98,6 +102,7 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
         mindtedItems,
         TotalMintedSold,
         TotalAuctionSold,
+        TotalCollectionSold,
       });
     } catch (error) {
       console.log(error);
