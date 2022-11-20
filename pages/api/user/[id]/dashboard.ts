@@ -61,7 +61,12 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
           authorId: id,
         },
         include: {
-          purchases: true,
+          purchases: {
+            include: {
+              user: true,
+            },
+          },
+          owner: true,
         },
       });
       const TotalMintedSold = await prisma.purchase.aggregate({

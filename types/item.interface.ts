@@ -2,6 +2,7 @@ import { IAuction } from "./auction.interface";
 import { IBid } from "./bid.interface";
 import { ICollection } from "./collection.interface";
 import { ILike } from "./like.interface";
+import { IPurchases } from "./purchase.interface";
 import { IUser } from "./user.interface";
 
 export interface IItem {
@@ -28,6 +29,7 @@ export interface IItem {
   auction: IAuction;
   collection: ICollection;
   step: number;
+  purchases: IPurchases[];
   royalties: number;
   category: "ART" | "GAME" | "PHOTOGRAPHY" | "MUSIC" | "VIDEO";
 }

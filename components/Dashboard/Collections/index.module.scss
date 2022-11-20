@@ -53,8 +53,15 @@
 
   .infoDiv {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px 0;
+    height: 1rem;
+    color: #e6e8ec;
     width: 100%;
+
+    span {
+      font-weight: 700;
+    }
 
     h4 {
       font-style: normal;

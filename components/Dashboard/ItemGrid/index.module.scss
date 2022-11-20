@@ -17,10 +17,6 @@
   margin-bottom: 2rem;
 
   .cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-
     .cardImg {
       border-radius: 12px;
     }
@@ -39,39 +35,27 @@
         color: #fcfcfd;
       }
 
-      .centerDiv {
+      div {
         display: flex;
         align-items: center;
-        gap: 11px;
-
-        .centerDivImg {
-          border-radius: 50%;
-        }
 
         span {
-          border: 2px solid #45b36b;
-          border-radius: 4px;
-          padding: 8px 8px 6px;
-          font-weight: 700;
-          color: #45b36b;
-          font-size: 12px;
-          line-height: 12px;
+          color: white;
         }
       }
+    }
+  }
+}
 
-      button {
-        background: transparent;
-        border-radius: 90px;
-        color: #fcfcfd;
-        padding: 8px 12px;
-        border: 2px solid #777e91;
-        cursor: pointer;
-      }
+.history {
+  color: white;
 
-      button:hover {
-        background-color: #f2994a;
-        border: 2px solid #f2994a;
-      }
+  section {
+    height: 4.8rem;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 }

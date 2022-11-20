@@ -39,7 +39,6 @@ const Dashboard = () => {
   const { data, mutate } = useSWR(["dashboard", id], () =>
     ProfileDs.getDashboradData(id)
   );
-  console.log(data);
   const { items, collections, likes, bids } = data as {
     items: IItem[];
     collections: ICollection[];
@@ -126,7 +125,7 @@ const Dashboard = () => {
               <Items items={items} auction={true} />
             </TabPanel>
 
-            <TabPanel value={value} index={2}>
+            <TabPanel value={value} index={1}>
               <div className={styles.collections}>
                 {collections.map((collection) => (
                   <div className={styles.collection} key={collection.id}>
@@ -173,19 +172,6 @@ const Dashboard = () => {
           <div>
             <ItemGrid items={data.mindtedItems} title="Minted Items" />
           </div>
-          <NoSsr>
-            <div className={styles.bottom}>
-              {/* <div id="watchlist">
-                <ItemGrid
-                  items={likes?.map((item) => item.item!)}
-                  title="watchlist"
-                />
-              </div> */}
-              <div id="bids">
-                {/* <CustomTable title="Bids" bids={bids} /> */}
-              </div>
-            </div>
-          </NoSsr>
         </div>
       </Box>
     </Layout>
