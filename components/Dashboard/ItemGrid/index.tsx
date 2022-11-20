@@ -1,6 +1,9 @@
+import { DefaultContext } from "react-icons";
 import { IItem } from "../../../types/item.interface";
 import NextImage from "../../Image";
 import styles from "./index.module.scss";
+import DefaultAvatar from "../../DefaultAvatar";
+import { getUserName } from "../../../utils/helpers/getUserName";
 
 export default function Index({
   items,
@@ -28,23 +31,33 @@ export default function Index({
                 )}
 
                 <div className={styles.cardDetails}>
+                  <div></div>
                   <span className={styles.cardName}>{item?.title}</span>
-                  {title == "watchlist" && (
-                    <>
-                      <div className={styles.centerDiv}>
-                        {/* <NextImage
-                        className={styles.centerDivImg}
-                        src="/assets/auctionAvatar.png"
-                        width="24px"
-                        height="24px"
-                        alt="avatar"
-                      /> */}
-                        <span>{item?.price} ETH</span>
-                      </div>
-                      <button>Place a bid</button>s
-                    </>
-                  )}
+                  <div>
+                    <DefaultAvatar
+                      fontSize=".6rem"
+                      id={item?.owner?.id}
+                      url={item?.owner?.profile?.avatar}
+                      walletAddress={item?.owner?.walletAddress}
+                      width="40px"
+                      height="40px"
+                    />
+                    <span>{getUserName(item?.owner)}</span>
+                  </div>
                 </div>
+                {item.purchases.length > 0 && (
+                  <div className={styles.history}>
+                    <span>history</span>
+                    <section className={styles.prices}>
+                      {item.purchases?.map((purchase) => (
+                        <div key={purchase.id}>
+                          <span>{getUserName(purchase.user)}</span> --{">"}{" "}
+                          <span>{purchase.amount} ETH</span>
+                        </div>
+                      ))}
+                    </section>
+                  </div>
+                )}
               </div>
             );
           })}

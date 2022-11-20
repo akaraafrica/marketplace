@@ -19,8 +19,10 @@ export default async function profile(
         data: {
           amount: item.price,
           userId: user.id,
+          itemPrevOwnerId: item.ownerId,
           transactionId: randStr(10),
           itemId: item.id,
+          inCollectionId: !!item?.inCollectionId,
         },
       });
 

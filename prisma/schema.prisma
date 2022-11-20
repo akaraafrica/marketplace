@@ -20,14 +20,17 @@ model Bid {
 }
 
 model Purchase {
-  id            Int      @id @default(autoincrement())
-  amount        Float
-  createdAt     DateTime @default(now())
-  transactionId String   @unique
-  itemId        Int
-  userId        Int
-  item          Item     @relation(fields: [itemId], references: [id])
-  user          User     @relation(fields: [userId], references: [id])
+  id              Int      @id @default(autoincrement())
+  amount          Float
+  createdAt       DateTime @default(now())
+  transactionId   String   @unique
+  isAuction       Boolean  @default(false)
+  itemId          Int
+  userId          Int
+  itemPrevOwnerId Int?
+  inCollectionId  Boolean  @default(false)
+  item            Item     @relation(fields: [itemId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
 }
 
 model CollectionRating {
@@ -52,6 +55,7 @@ model Auction {
 model Item {
   id                Int            @id @default(autoincrement())
   ownerId           Int
+  authorId          Int?
   collectionId      Int?
   tokenId           String         @unique
   title             String

@@ -1,4 +1,5 @@
 import Items from "../../components/Dashboard/Items";
+import ItemGrid from "../../components/Dashboard/ItemGrid";
 import Layout from "../../components/Layout";
 import { IItem } from "../../types/item.interface";
 import Tabs from "@mui/material/Tabs";
@@ -31,31 +32,6 @@ interface TabPanelProps {
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Box color="ActiveBorder">{children}</Box>
-        </Box>
-      )}
-    </div>
-  );
-}
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 const Dashboard = () => {
   const router = useRouter();
   const id = router.query.id as unknown as number;
@@ -69,6 +45,7 @@ const Dashboard = () => {
     likes: ILike[];
     bids: IBid[];
   };
+
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -128,26 +105,27 @@ const Dashboard = () => {
                 textColor="primary"
                 indicatorColor="primary"
               >
-                <Tab
-                  sx={{ color: "white" }}
-                  label="Auction"
-                  {...a11yProps(0)}
-                />
-                <Tab sx={{ color: "white" }} label="Items" {...a11yProps(1)} />
+                <Tab sx={{ color: "white" }} label="Items" {...a11yProps(0)} />
                 <Tab
                   sx={{ color: "white" }}
                   label="Collections"
+                  {...a11yProps(1)}
+                />
+                <Tab
+                  sx={{ color: "white" }}
+                  label="Auction"
                   {...a11yProps(2)}
                 />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Items items={items} auction={true} />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
               <Items items={items} />
             </TabPanel>
             <TabPanel value={value} index={2}>
+              <Items items={items} auction={true} />
+            </TabPanel>
+
+            <TabPanel value={value} index={1}>
               <div className={styles.collections}>
                 {collections.map((collection) => (
                   <div className={styles.collection} key={collection.id}>
@@ -157,20 +135,43 @@ const Dashboard = () => {
               </div>
             </TabPanel>
           </div>
-
-          <NoSsr>
-            <div className={styles.bottom}>
-              {/* <div id="watchlist">
-                <ItemGrid
-                  items={likes?.map((item) => item.item!)}
-                  title="watchlist"
-                />
-              </div> */}
-              <div id="bids">
-                <CustomTable title="Bids" bids={bids} />
-              </div>
+          <div className={styles.stats}>
+            <div>
+              <h3>
+                Minted items <span>{data.mindtedItems.length} </span>
+              </h3>
             </div>
-          </NoSsr>
+            <div>
+              <h3>Minted items revenue</h3>
+              <span>{data.TotalMintedSold._sum.amount} ETH</span>
+            </div>
+            <div>
+              <h3>Auction revenue </h3>
+              <span>{data.TotalAuctionSold._sum.amount}ETH</span>
+            </div>
+            <div>
+              <h3>Revenue from collection</h3>
+              <span>{data.TotalCollectionSold._sum.amount} ETH</span>
+            </div>
+            <div>
+              <h3>Collections as collaborator</h3>
+              <span> {data.collections.length} ETH</span>
+            </div>
+            <div>
+              <h3>Total collections revenue</h3>
+              <span>
+                {data.collections.reduce(
+                  (total: number, collection: any) =>
+                    total + collection?.revenue || 0,
+                  0
+                )}{" "}
+                ETH
+              </span>
+            </div>
+          </div>
+          <div>
+            <ItemGrid items={data.mindtedItems} title="Minted Items" />
+          </div>
         </div>
       </Box>
     </Layout>
@@ -196,3 +197,28 @@ const Page = ({ fallback }: any) => {
   );
 };
 export default withAuth(Page);
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Box color="ActiveBorder">{children}</Box>
+        </Box>
+      )}
+    </div>
+  );
+}
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}

@@ -36,35 +36,79 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
         },
         include: {
           profile: true,
-          collections: true,
+          collections: {
+            include: {
+              contributors: {
+                where: {
+                  userId: id,
+                },
+              },
+            },
+          },
           likes: {
             include: { item: true },
           },
           items: {
             include: {
               auction: true,
-              bids: {
-                include: {
-                  user: {
-                    select: {
-                      walletAddress: true,
-                      profile: {
-                        select: {
-                          name: true,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
+              purchases: true,
             },
           },
         },
       });
+      const mindtedItems = await prisma.item.findMany({
+        where: {
+          authorId: id,
+        },
+        include: {
+          purchases: {
+            include: {
+              user: true,
+            },
+          },
+          owner: true,
+        },
+      });
+      const TotalMintedSold = await prisma.purchase.aggregate({
+        _sum: {
+          amount: true,
+        },
+        where: {
+          itemPrevOwnerId: id,
+        },
+      });
+      const TotalAuctionSold = await prisma.purchase.aggregate({
+        _sum: {
+          amount: true,
+        },
+        where: {
+          itemPrevOwnerId: id,
+          isAuction: true,
+        },
+      });
+      const TotalCollectionSold = await prisma.purchase.aggregate({
+        _sum: {
+          amount: true,
+        },
+        where: {
+          itemPrevOwnerId: id,
+          inCollectionId: true,
+        },
+      });
+
       // @ts-ignore: Unreachable code error
       const userWithoutPassword = exclude(user, "password");
       const { items, collections, likes } = userWithoutPassword as any;
-      return res.status(200).json({ items, collections, likes, bids });
+      return res.status(200).json({
+        items,
+        collections,
+        likes,
+        bids,
+        mindtedItems,
+        TotalMintedSold,
+        TotalAuctionSold,
+        TotalCollectionSold,
+      });
     } catch (error) {
       console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
