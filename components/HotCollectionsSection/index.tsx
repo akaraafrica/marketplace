@@ -11,6 +11,8 @@ interface properties {
   collections: ICollection[];
 }
 const Index = ({ collections }: properties) => {
+  console.log(collections);
+
   return (
     <div className={styles.root}>
       <h2>Hot collections</h2>
@@ -41,7 +43,7 @@ const Index = ({ collections }: properties) => {
             disableOnInteraction: false,
           }}
         >
-          {collections.map((c: ICollection, idx) => (
+          {collections?.map((c: ICollection, idx) => (
             <SwiperSlide key={c.createdAt}>
               <HotCollectionCard collection={c} />
             </SwiperSlide>

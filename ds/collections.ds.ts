@@ -198,5 +198,16 @@ class Collection {
       console.log(error);
     }
   }
+
+  async getPage(data: any) {
+    try {
+      const res = await api.get(url + "/getpage", {
+        data,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 export default new Collection();
