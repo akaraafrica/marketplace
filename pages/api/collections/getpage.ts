@@ -5,11 +5,11 @@ import prisma from "../../../utils/lib/prisma";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
-      const page = (req.query.page || 0) as Number;
+      const page = Number(req.query.page) || 0;
       const data = await prisma.$transaction([
         prisma.collection.count(),
         prisma.collection.findMany({
-          skip: Number(page === 1 ? 0 : page || 0) * 6,
+          skip: (page === 1 ? 0 : page - 1) * 6,
           take: 6,
           // cursor: {
           //   id: 6,
