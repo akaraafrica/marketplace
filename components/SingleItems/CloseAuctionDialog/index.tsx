@@ -2,7 +2,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { useSWRConfig } from "swr";
 import { AuctionDs } from "../../../ds";
-import Dialog from "../../global/Dialog";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 
 export const CloseAuctionDialog = ({ open, handleClose, item }: any) => {

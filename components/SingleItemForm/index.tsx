@@ -21,6 +21,7 @@ import itemDs from "../../ds/item.ds";
 import { useRouter } from "next/router";
 import { IItem } from "../../types/item.interface";
 import validateImage from "../../utils/helpers/validateImage";
+import Input from "../global/Form/Input";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -148,6 +149,9 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   const [uploadId, setUploadId] = useState(0);
 
   const onSubmit = async () => {
+    const data = getValues();
+    console.log(data);
+
     if (item) {
       if (item.step === 5) handleEditItem();
     } else {
@@ -474,14 +478,16 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
           >
             <h4>Item Details</h4>
             <div className={styles.itemdetailsforminput}>
-              <label>ITEM NAME</label>
-              <input
+              <Input
+                label="Item Name"
                 type="text"
+                name="title"
                 disabled={!!item}
+                required={true}
+                errors={errors}
+                register={register}
                 placeholder='e. g. "Redeemable Bitcoin Card with logo"'
-                {...register("title", { required: true })}
               />
-              {errors.title && <span>This field is required</span>}
             </div>
             <div className={styles.editor}>
               <label>DESCRIPTION</label>

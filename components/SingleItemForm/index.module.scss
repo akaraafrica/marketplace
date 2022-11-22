@@ -146,7 +146,6 @@
           line-height: 12px;
         }
 
-        input,
         select {
           display: flex;
           flex-direction: row;
@@ -157,7 +156,6 @@
           border-radius: 12px;
           background-color: transparent;
           color: #ffffff;
-          height: 48px;
           outline: none;
 
           ::placeholder {
@@ -199,21 +197,6 @@
           flex-direction: column;
           gap: 12px;
           width: 100%;
-
-          input,
-          select {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 12px 12px 16px;
-            gap: 67px;
-            border: 2px solid #353945;
-            border-radius: 12px;
-            background-color: #000000;
-            color: #ffffff;
-            height: 48px;
-          }
 
           .input {
             padding: 0px 10px;

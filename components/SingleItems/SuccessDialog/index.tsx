@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getUserName } from "../../../utils/helpers/getUserName";
-import Dialog from "../../global/Dialog";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 
 export const SuccessDialog = ({ open, handleClose, item }: any) => {

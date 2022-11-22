@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
-import Dialog from "../../global/Dialog";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 import { getUserName } from "../../../utils/helpers/getUserName";
 

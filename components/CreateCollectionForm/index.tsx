@@ -14,7 +14,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { ICollection } from "../../types/collection.interface";
 import { useRouter } from "next/router";
 import userDs from "../../ds/user.ds";
-import withAuth from "../../HOC/withAuth";
 import { getUserName } from "../../utils/helpers/getUserName";
 import itemDs from "../../ds/item.ds";
 import validateImage from "../../utils/helpers/validateImage";

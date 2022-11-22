@@ -1,0 +1,55 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+
+  label {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+  }
+}
+
+.input {
+  input {
+    border: 2px solid #353945;
+    border-radius: 12px;
+    background-color: transparent;
+    color: #ffffff;
+    height: 45px;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    text-indent: 10px;
+    width: 100%;
+
+    ::placeholder {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    :focus {
+      outline: none;
+      color: #fcfcfd;
+    }
+  }
+}
+
+.error {
+  color: #bc3e3e;
+  border: 2px solid #ef4444;
+  border-radius: 12px;
+  padding: 3px 5px;
+  background: #efb4b4;
+  padding-bottom: 5px;
+
+  input {
+    border: 1px solid #d0d5dd;
+    border-radius: 5px;
+    color: #000;
+    background-color: #f9fafb;
+  }
+}

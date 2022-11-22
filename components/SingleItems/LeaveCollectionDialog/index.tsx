@@ -2,7 +2,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { useSWRConfig } from "swr";
 import collectionsDs from "../../../ds/collections.ds";
-import Dialog from "../../global/Dialog";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 
 export const LeaveCollectionDialog = ({ open, handleClose, item }: any) => {

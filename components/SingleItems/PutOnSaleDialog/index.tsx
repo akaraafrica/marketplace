@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useSWRConfig } from "swr";
 import { ItemDs } from "../../../ds";
 import collectionsDs from "../../../ds/collections.ds";
-import Dialog from "../../global/Dialog";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 
 export const PutOnSaleDialog = ({ open, handleClose, item }: any) => {

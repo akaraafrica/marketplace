@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import collectionsDs from "../../../ds/collections.ds";
 import { getUserName } from "../../../utils/helpers/getUserName";
-import Dialog from "../../global/Dialog";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 
 export default function PurchaseDialog({
