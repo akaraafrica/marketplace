@@ -262,28 +262,28 @@ const Index = () => {
               )}
             </div>
           </div>
-          <div className={styles.pagination}>
-            <button
-              onClick={() =>
-                page === 2
-                  ? router.push("/marketplace")
-                  : router.push(`/marketplace?page=${page - 1}`)
-              }
-              disabled={page === 1}
-            >
-              Previous
-            </button>
-            <p>
-              Page {page} of
-              {/* {Math.ceil(data?.length / 6)}{" "} */}
-            </p>
-            <button
-              onClick={() => router.push(`/marketplace?page=${page + 1}`)}
-              // disabled={page >= Math.ceil(data?.length / 6)}
-            >
-              Next
-            </button>
-          </div>
+        </div>
+        <div className={styles.pagination}>
+          <button
+            onClick={() =>
+              page === 2
+                ? router.push("/marketplace")
+                : router.push(`/marketplace?page=${page - 1}`)
+            }
+            disabled={page === 1}
+          >
+            Previous
+          </button>
+          <p>
+            Page {page} of
+            {/* {Math.ceil(data?.length / 6)}{" "} */}
+          </p>
+          <button
+            onClick={() => router.push(`/marketplace?page=${page + 1}`)}
+            // disabled={page >= Math.ceil(data?.length / 6)}
+          >
+            Next
+          </button>
         </div>
       </div>
     </Layout>
