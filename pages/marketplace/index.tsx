@@ -14,6 +14,7 @@ import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import itemDs from "../../ds/item.ds";
 import useDebounce from "../../hooks/useDebounce";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 const Layout: any = dynamic(() => import("../../components/Layout"));
 const ProgressBar: any = dynamic(() => import("../../components/ProgressBar"));
 const DiscoveryItems: any = dynamic(
@@ -24,6 +25,8 @@ const CustomSelect: any = dynamic(
 );
 
 const Index = () => {
+  const router = useRouter();
+  const page = Number(router?.query?.page) || 1;
   const { data: items } = useSWR<IItem[]>(["discovery"], () =>
     Discovery.getData(Filter.All)
   );
@@ -258,6 +261,28 @@ const Index = () => {
                 <h3 className={styles.found}>No item found</h3>
               )}
             </div>
+          </div>
+          <div className={styles.pagination}>
+            <button
+              onClick={() =>
+                page === 2
+                  ? router.push("/marketplace")
+                  : router.push(`/marketplace?page=${page - 1}`)
+              }
+              disabled={page === 1}
+            >
+              Previous
+            </button>
+            <p>
+              Page {page} of
+              {/* {Math.ceil(data?.length / 6)}{" "} */}
+            </p>
+            <button
+              onClick={() => router.push(`/marketplace?page=${page + 1}`)}
+              // disabled={page >= Math.ceil(data?.length / 6)}
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
