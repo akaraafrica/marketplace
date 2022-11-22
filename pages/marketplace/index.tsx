@@ -10,7 +10,7 @@ import {
   handleSliderChange,
 } from "../../components/DiscoverSection/utils";
 import { IItem } from "../../types/item.interface";
-import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import useSWR, { SWRConfig, unstable_serialize, mutate } from "swr";
 import itemDs from "../../ds/item.ds";
 import useDebounce from "../../hooks/useDebounce";
 import dynamic from "next/dynamic";
@@ -24,14 +24,18 @@ const CustomSelect: any = dynamic(
   () => import("../../components/CustomSelect")
 );
 
+const preFechedData = (page: any, filter: any) => {
+  mutate("discovery" + page, () => Discovery.getPageData(filter, page));
+};
 const Index = () => {
   const router = useRouter();
   const page = Number(router?.query?.page) || 1;
-  const { data: items } = useSWR<IItem[]>(["discovery"], () =>
-    Discovery.getData(Filter.All)
-  );
   const [open, setOpen] = useState(Filter.All);
-  const [data, setData] = useState(items);
+
+  const { data: items } = useSWR<any>(["discovery"], () =>
+    Discovery.getPageData(open, page)
+  );
+  const [data, setData] = useState<null | []>(null);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
     category: "ALL",
@@ -41,6 +45,15 @@ const Index = () => {
   });
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm: string = useDebounce(searchTerm, 250);
+
+  useEffect(() => {
+    if (items) {
+      setData(items[1]);
+      preFechedData(page + 1, open);
+      preFechedData(page - 1, open);
+    }
+  }, [items]);
+
   const handleSearch = async (e: any) => {
     const value: string = e.target.value.toLowerCase();
 
@@ -267,20 +280,25 @@ const Index = () => {
           <button
             onClick={() =>
               page === 2
-                ? router.push("/marketplace")
-                : router.push(`/marketplace?page=${page - 1}`)
+                ? router.push("/marketplace", undefined, { shallow: true })
+                : router.push(`/marketplace?page=${page - 1}`, undefined, {
+                    shallow: true,
+                  })
             }
             disabled={page === 1}
           >
             Previous
           </button>
           <p>
-            Page {page} of
-            {/* {Math.ceil(data?.length / 6)}{" "} */}
+            Page {page} of {items && Math.ceil(items[0] / 6)}{" "}
           </p>
           <button
-            onClick={() => router.push(`/marketplace?page=${page + 1}`)}
-            // disabled={page >= Math.ceil(data?.length / 6)}
+            onClick={() =>
+              router.push(`/marketplace?page=${page + 1}`, undefined, {
+                shallow: true,
+              })
+            }
+            disabled={items && page >= Math.ceil(items[0] / 6)}
           >
             Next
           </button>
@@ -289,12 +307,14 @@ const Index = () => {
     </Layout>
   );
 };
-export async function getServerSideProps() {
-  let discovery = await Discovery.getData(Filter.All);
+export async function getServerSideProps(ctx: any) {
+  const page = Number(ctx.query.page);
+
+  let discovery = await Discovery.getPageData(Filter.All, page || 1);
   return {
     props: {
       fallback: {
-        [unstable_serialize(["discovery"])]: discovery,
+        [unstable_serialize(["discovery" + (page || 1)])]: discovery,
       },
     },
   };

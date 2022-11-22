@@ -3,12 +3,19 @@ import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
-    console.log(req.body.page);
+    // console.log(req.body.page);
     try {
+      const page =
+        Number(req?.query?.page) === 0 ? 0 : Number(req?.query?.page) - 1;
       const data = await prisma.$transaction([
-        prisma.item.count(),
+        prisma.item.count({
+          where: {
+            published: true,
+          },
+        }),
         prisma.item.findMany({
-          take: 8,
+          skip: page * 6 || 0,
+          take: 6,
           where: {
             published: true,
           },
@@ -24,6 +31,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               },
             },
             likes: true,
+          },
+          orderBy: {
+            id: "asc",
           },
         }),
       ]);

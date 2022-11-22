@@ -6,7 +6,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const page =
-        Number(req?.query?.page) === 0 ? 1 : Number(req?.query?.page) - 1;
+        Number(req?.query?.page) === 0 ? 0 : Number(req?.query?.page) - 1;
       const data = await prisma.$transaction([
         prisma.collection.count(),
         prisma.collection.findMany({
