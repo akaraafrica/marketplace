@@ -14,63 +14,93 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       | "First added";
     const verifiedCreator = req.query.verifiedCreator as unknown as string;
     const category = req.query.category as unknown as any; // console.log("fetchmore");
+    const page =
+      Number(req?.query?.page) === 0 ? 0 : Number(req?.query?.page) - 1;
 
     if (sort === "Most liked") {
       if (category === "ALL") {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
-              price: {
-                lte: Number(priceRange),
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-            },
-            orderBy: {
-              likes: {
-                _count: "desc",
+              where: {
+                published: true,
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
               },
-            },
-            skip: Number(lastIndex),
-          });
+              orderBy: {
+                likes: {
+                  _count: "desc",
+                },
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
 
-          return res.status(200).json(items);
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
         }
       } else {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange) || 0,
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-              category: category,
-            },
-            orderBy: {
-              likes: {
-                _count: "desc",
+              where: {
+                published: true,
+
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
               },
-            },
-            skip: Number(lastIndex),
-          });
-          return res.status(200).json(items);
+              orderBy: {
+                likes: {
+                  _count: "desc",
+                },
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
@@ -80,60 +110,89 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (sort === "Least liked") {
       if (category === "ALL") {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange),
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-            },
-            orderBy: {
-              likes: {
-                _count: "asc",
-              },
-            },
-            skip: Number(lastIndex),
-          });
+              where: {
+                published: true,
 
-          return res.status(200).json(items);
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+              },
+              orderBy: {
+                likes: {
+                  _count: "asc",
+                },
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
         }
       } else {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange) || 0,
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-              category: category,
-            },
-            orderBy: {
-              likes: {
-                _count: "asc",
+              where: {
+                published: true,
+
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
               },
-            },
-            skip: Number(lastIndex),
-          });
-          return res.status(200).json(items);
+              orderBy: {
+                likes: {
+                  _count: "asc",
+                },
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
@@ -143,56 +202,85 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (sort === "Highest price") {
       if (category === "ALL") {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange),
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-            },
-            orderBy: {
-              price: "desc",
-            },
-            skip: Number(lastIndex),
-          });
+              where: {
+                published: true,
 
-          return res.status(200).json(items);
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+              },
+              orderBy: {
+                price: "desc",
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
         }
       } else {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange) || 0,
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-              category: category,
-            },
-            orderBy: {
-              price: "desc",
-            },
-            skip: Number(lastIndex),
-          });
-          return res.status(200).json(items);
+              where: {
+                published: true,
+
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
+              },
+              orderBy: {
+                price: "desc",
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
@@ -202,56 +290,85 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (sort === "Lowest price") {
       if (category === "ALL") {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange),
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-            },
-            orderBy: {
-              price: "asc",
-            },
-            skip: Number(lastIndex),
-          });
+              where: {
+                published: true,
 
-          return res.status(200).json(items);
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+              },
+              orderBy: {
+                price: "asc",
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
         }
       } else {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange) || 0,
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-              category: category,
-            },
-            orderBy: {
-              price: "asc",
-            },
-            skip: Number(lastIndex),
-          });
-          return res.status(200).json(items);
+              where: {
+                published: true,
+
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
+              },
+              orderBy: {
+                price: "asc",
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
@@ -261,56 +378,85 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (sort === "First added") {
       if (category === "ALL") {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange),
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-            },
-            orderBy: {
-              createdAt: "asc",
-            },
-            skip: Number(lastIndex),
-          });
+              where: {
+                published: true,
 
-          return res.status(200).json(items);
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+              },
+              orderBy: {
+                createdAt: "asc",
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
         }
       } else {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange) || 0,
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-              category: category,
-            },
-            orderBy: {
-              createdAt: "asc",
-            },
-            skip: Number(lastIndex),
-          });
-          return res.status(200).json(items);
+              where: {
+                published: true,
+
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
+              },
+              orderBy: {
+                createdAt: "asc",
+              },
+              skip: page * 6 || 0,
+            }),
+          ]);
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
@@ -320,56 +466,85 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (sort === "Recently added") {
       if (category === "ALL") {
         try {
-          const items = await prisma.item.findMany({
-            orderBy: {
-              createdAt: "desc",
-            },
-            skip: Number(lastIndex),
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange),
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              orderBy: {
+                createdAt: "desc",
               },
-            },
-          });
+              skip: page * 6 || 0,
+              take: 6,
+              include: {
+                likes: true,
+              },
+              where: {
+                published: true,
 
-          return res.status(200).json(items);
+                price: {
+                  lte: Number(priceRange),
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+              },
+            }),
+          ]);
+
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);
         }
       } else {
         try {
-          const items = await prisma.item.findMany({
-            take: 50,
-            include: {
-              likes: true,
-            },
-            where: {
-              published: true,
+          const data = await prisma.$transaction([
+            prisma.item.count({
+              where: {
+                published: true,
 
-              price: {
-                lte: Number(priceRange) || 0,
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
               },
-              owner: {
-                verified: verifiedCreator.toLowerCase() === "true",
+            }),
+            prisma.item.findMany({
+              take: 6,
+              include: {
+                likes: true,
               },
-              category: category,
-            },
-            orderBy: {
-              createdAt: "desc",
-            },
-            skip: Number(lastIndex),
-          });
-          return res.status(200).json(items);
+              where: {
+                published: true,
+
+                price: {
+                  lte: Number(priceRange) || 0,
+                },
+                owner: {
+                  verified: verifiedCreator.toLowerCase() === "true",
+                },
+                category: category,
+              },
+              orderBy: {
+                createdAt: "desc",
+              },
+              skip: Number(lastIndex),
+            }),
+          ]);
+          return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
           console.log(error);

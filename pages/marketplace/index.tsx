@@ -31,26 +31,33 @@ const Index = () => {
   const router = useRouter();
   const page = Number(router?.query?.page) || 1;
   const [open, setOpen] = useState(Filter.All);
-
-  const { data: items } = useSWR<any>(["discovery" + page], () =>
-    Discovery.getPageData(open, page)
-  );
-  const [data, setData] = useState<null | []>(null);
-  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
     category: "ALL",
     verifiedCreator: false,
     sort: "Most liked",
     priceRange: 1000,
+    filterCount: 0,
   });
+
+  const { data: items } = useSWR<any>(["discovery" + page], () =>
+    Discovery.getPageData(filter, page)
+  );
+  // console.log(items);
+
+  const [data, setData] = useState<null | []>(null);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm: string = useDebounce(searchTerm, 250);
 
   useEffect(() => {
     if (items) {
       setData(items[1]);
-      preFechedData(page + 1, open);
-      preFechedData(page - 1, open);
+      // setFilter({
+      //   ...filter,
+      //   filterCount:items[0]
+      // })
+      // preFechedData(page + 1, filter);
+      // preFechedData(page - 1, filter);
     }
   }, [items]);
 
@@ -309,8 +316,13 @@ const Index = () => {
 };
 export async function getServerSideProps(ctx: any) {
   const page = Number(ctx.query.page);
-
-  let discovery = await Discovery.getPageData(Filter.All, page || 1);
+  const filter = {
+    category: "ALL",
+    verifiedCreator: false,
+    sort: "Most liked",
+    priceRange: 1000,
+  };
+  let discovery = await Discovery.getPageData(filter, page || 1);
   return {
     props: {
       fallback: {

@@ -26,13 +26,15 @@ class Discovery {
       console.log(error);
     }
   }
-  async getPageData(filterBy: Filter, page: any) {
+  async getPageData(filterBy: any, page: any) {
+    // console.log(filterBy);
+
     try {
-      const res = await api.get(url + "/getpage?page=" + page, {
-        params: {
-          filterBy,
-        },
-      });
+      const res = await api.get(
+        `${url}/getpage?page=${page}&category=${filterBy.category}&verifiedCreator=${filterBy.verifiedCreator}&sort=${filterBy.sort}&priceRange=${filterBy.priceRange}`
+      );
+      // console.log(res);
+
       return res.data;
     } catch (error) {
       console.log(error);

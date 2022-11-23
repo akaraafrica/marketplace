@@ -66,8 +66,6 @@ export const handleChange = async (
 ) => {
   let value = e?.target?.value;
   if (param === "SORT") {
-    console.log(value);
-
     setFilter({ ...filter, sort: value });
     setLoading(true);
     const res = await itemDs.getFilterData({ ...filter, sort: value });
@@ -124,6 +122,12 @@ export const handleCategoryChange = async (
   setFilter({ ...filter, category });
   setLoading(true);
   const res = await itemDs.getFilterData({ ...filter, category: category });
-  setData(res);
+  console.log(res[1]);
+
+  setData(res[1]);
+  setFilter({
+    ...filter,
+    filterCount: res[0],
+  });
   setLoading(false);
 };
