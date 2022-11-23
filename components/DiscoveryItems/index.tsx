@@ -22,36 +22,36 @@ function DiscoveryItems({ initialItems, filter }: properties) {
     setItems(initialItems);
   }, [initialItems]);
 
-  const fetchMoreData = async () => {
-    let data = await ItemDs.getMore(items.length, filter);
-    setItems([...items, ...data]);
-    if (data.length == 0) {
-      setHasMore(false);
-    }
-  };
+  // const fetchMoreData = async () => {
+  //   let data = await ItemDs.getMore(items.length, filter);
+  //   setItems([...items, ...data]);
+  //   if (data.length == 0) {
+  //     setHasMore(false);
+  //   }
+  // };
   return (
-    <InfiniteScroll
-      dataLength={items?.length || 0}
-      next={fetchMoreData}
-      hasMore={isMarketplace ? hasMore : false}
-      loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
-    >
-      <div className={styles.allitems}>
-        {items?.map((item: any, idx) => {
-          return (
-            <ItemCard
-              key={idx}
-              id={item.id}
-              img={item.images[0]}
-              name={item.title}
-              price={item.price}
-              ownerAvatar={`${item.owner?.profile?.avatar}`}
-              highestBid={item.highestbid}
-            />
-          );
-        })}
-      </div>
-    </InfiniteScroll>
+    // <InfiniteScroll
+    //   dataLength={items?.length || 0}
+    //   next={fetchMoreData}
+    //   hasMore={isMarketplace ? hasMore : false}
+    //   loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
+    // >
+    <div className={styles.allitems}>
+      {items?.map((item: any, idx) => {
+        return (
+          <ItemCard
+            key={idx}
+            id={item.id}
+            img={item.images[0]}
+            name={item.title}
+            price={item.price}
+            ownerAvatar={`${item.owner?.profile?.avatar}`}
+            highestBid={item.highestbid}
+          />
+        );
+      })}
+    </div>
+    // </InfiniteScroll>
   );
 }
 export default DiscoveryItems;

@@ -26,6 +26,18 @@ class Discovery {
       console.log(error);
     }
   }
+  async getPageData(filterBy: Filter, page: any) {
+    try {
+      const res = await api.get(url + "/getpage?page=" + page, {
+        params: {
+          filterBy,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default new Discovery();
