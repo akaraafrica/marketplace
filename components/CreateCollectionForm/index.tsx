@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext, useEffect } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import Image from "../Image";
-import DefaultAvatar from "../DefaultAvatar";
+import DefaultAvatar from "../global/DefaultAvatar";
 import { IUser } from "../../types/user.interface";
 import { toast } from "react-toastify";
 import { IItem } from "../../types/item.interface";
@@ -18,6 +18,9 @@ import { getUserName } from "../../utils/helpers/getUserName";
 import itemDs from "../../ds/item.ds";
 import validateImage from "../../utils/helpers/validateImage";
 import validateVideo from "../../utils/helpers/validateVideo";
+import Input from "../global/Form/Input";
+import Button from "../global/Button/Button";
+import CustomDatePicker from "../global/Form/DatePicker";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -505,14 +508,16 @@ const Index = ({ collection }: { collection: ICollection }) => {
             </div>
             <div className={styles.itemdetailsforminput}>
               <h4>Collection Details</h4>
-              <label>COLLECTION NAME</label>
-              <input
+              <Input
+                label="COLLECTION NAME"
                 type="text"
+                name="title"
                 disabled={!!collection}
+                required={true}
+                errors={errors}
+                register={register}
                 placeholder='e. g. "Redeemable Bitcoin Card with logo"'
-                {...register("title", { required: true })}
               />
-              {errors.title && <span>This field is required</span>}
             </div>
 
             <div className={styles.editor}>
@@ -553,27 +558,28 @@ const Index = ({ collection }: { collection: ICollection }) => {
             </div>
             <div className={styles.itemdetailformdropdownsCon}>
               <div className={styles.itemdetailsformdropdown}>
-                <label>COUNT DOWN FROM</label>
-                <input
-                  type="text"
+                <CustomDatePicker />
+                {/* <Input
+                  label="COUNT DOWN FROM"
+                  type="date"
+                  name="countdown"
+                  errors={errors}
+                  register={register}
                   placeholder="12-03-2022"
-                  onFocus={(e) => (e.target.type = "date")}
-                  {...register("countdown", {})}
-                />
+                /> */}
               </div>
             </div>
             <div className={styles.divider}></div>
             <div className={styles.itemdetailsforminputSearch}>
-              <label>SEARCH TO SELECT CONTRIBUTORS</label>
-              <input
-                type="text"
-                name="Search"
-                placeholder="Search users"
+              <Input
+                label="SEARCH TO SELECT CONTRIBUTORS"
                 value={searchUser}
-                onChange={(e) => {
+                name="Search"
+                onChange={(e: any) => {
                   setResultDisplay(true);
                   setSearchUser(e.target.value);
                 }}
+                placeholder="Search users"
               />
               <div
                 style={{ display: `${resultDisplay ? "flex" : "none"}` }}
@@ -586,7 +592,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
                       <span
                         key={index}
                         onClick={() => {
-                          const userItems: IItem[] = user.items!;
                           for (let i = 0; i < selectedUser.length; i++) {
                             if (
                               selectedUser[i].walletAddress ===
@@ -597,7 +602,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
                             }
                           }
                           setSelectedUser([...selectedUser, user]);
-                          // setItems([...items, ...userItems]);
                           setSearchUser("");
                           setResultDisplay(false);
                         }}
@@ -651,17 +655,16 @@ const Index = ({ collection }: { collection: ICollection }) => {
               </div>
             </div>
             <div className={styles.itemdetailsforminputSearch}>
-              <label>SELECT ITEMS FROM GALLERY</label>
-              <input
-                type="text"
+              <Input
+                label="SELECT ITEMS FROM GALLERY"
                 name="Search"
-                placeholder="Search items"
                 disabled={!selectedUser.length}
-                value={searchItem}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   setItemResultDisplay(true);
                   setSearchItem(e.target.value);
                 }}
+                value={searchItem}
+                placeholder="Search items"
               />
               <div
                 style={{ display: `${itemResultDisplay ? "flex" : "none"}` }}
@@ -722,7 +725,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
             </div>
             <div className={styles.putonscalebtnsec}>
               {collection ? (
-                <button type="submit">
+                <Button loading={loading}>
                   Update collection
                   <span>
                     <Image
@@ -732,24 +735,19 @@ const Index = ({ collection }: { collection: ICollection }) => {
                       alt=""
                     />
                   </span>
-                </button>
+                </Button>
               ) : (
-                <button type="submit" disabled={loading}>
+                <Button loading={loading}>
                   Create collection
                   <span>
                     <Image
                       width="20px"
                       height="20px"
-                      className={loading ? styles.spinner : ""}
-                      src={
-                        loading
-                          ? `/assets/singleItem/spinner.svg`
-                          : `/assets/arrow.svg`
-                      }
+                      src={`/assets/arrow.svg`}
                       alt=""
                     />
                   </span>
-                </button>
+                </Button>
               )}
             </div>
           </form>

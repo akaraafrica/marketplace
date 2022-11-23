@@ -7,7 +7,7 @@ import { styled } from "@mui/material/styles";
 import styles from "./styles.module.scss";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CgArrowTopRight } from "react-icons/cg";
-import DefaultAvatar from "../DefaultAvatar";
+import DefaultAvatar from "../global/DefaultAvatar";
 import Link from "next/link";
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({

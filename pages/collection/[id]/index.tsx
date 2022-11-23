@@ -12,7 +12,7 @@ import Link from "next/link";
 import Plyr from "plyr-react";
 const Layout: any = dynamic(() => import("../../../components/Layout"));
 // const DefaultAvatar: any = () => import("../../../components/DefaultAvatar");
-import DefaultAvatar from "../../../components/DefaultAvatar";
+import DefaultAvatar from "../../../components/global/DefaultAvatar";
 const ItemGrid: any = dynamic(
   () => import("../../../components/CollectionAdmin/ItemGrid")
 );

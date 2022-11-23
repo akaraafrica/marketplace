@@ -21,7 +21,7 @@ const VerifyDialog: any = dynamic(
   () => import("../../../components/CollectionAdmin/VerifyDialog")
 );
 const DefaultAvatar: any = dynamic(
-  () => import("../../../components/DefaultAvatar")
+  () => import("../../../components/global/DefaultAvatar")
 );
 const LunchTimeDialog: any = dynamic(
   () => import("../../../components/LunchTimeDialog")

@@ -4,7 +4,7 @@ import NextImage from "../Image";
 import { ICollection } from "../../types/collection.interface";
 import Link from "../Link";
 import { getUserName } from "../../utils/helpers/getUserName";
-import DefaultAvatar from "../../components/DefaultAvatar";
+import DefaultAvatar from "../global/DefaultAvatar";
 
 interface properties {
   collection: ICollection;

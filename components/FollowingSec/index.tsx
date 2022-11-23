@@ -3,7 +3,7 @@
 import React from "react";
 import { getUserName } from "../../utils/helpers/getUserName";
 import styles from "./index.module.scss";
-import DefaultAvatar from "../../components/DefaultAvatar";
+import DefaultAvatar from "../global/DefaultAvatar";
 import Link from "next/link";
 
 function FollowingSec({ person }: any) {

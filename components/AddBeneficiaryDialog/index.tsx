@@ -8,7 +8,7 @@ import { IUser } from "../../types/user.interface";
 import userDs from "../../ds/user.ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import Image from "../Image";
-import DefaultAvatar from "../DefaultAvatar";
+import DefaultAvatar from "../global/DefaultAvatar";
 import { ICollection } from "../../types/collection.interface";
 import collectionsDs from "../../ds/collections.ds";
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });

@@ -8,7 +8,7 @@ import AcceptBidDialog from "./../AcceptBidDialog";
 import { BidDs } from "../../../ds";
 import { IBid } from "../../../types/bid.interface";
 import { getUserName } from "../../../utils/helpers/getUserName";
-import DefaultAvatar from "../../DefaultAvatar";
+import DefaultAvatar from "../../global/DefaultAvatar";
 import { useSWRConfig } from "swr";
 
 export default function AcceptBid({

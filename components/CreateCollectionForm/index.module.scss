@@ -79,6 +79,7 @@
         background: #23262f;
         border-radius: 16px;
       }
+
       .sciuploadbox:hover,
       .sciuploadvideobox:hover {
         z-index: 99;
@@ -112,6 +113,7 @@
         border-radius: 16px;
         object-fit: cover;
       }
+
       :hover {
         z-index: 99;
       }
@@ -127,6 +129,7 @@
       gap: 10px;
       background: #23262f;
       border-radius: 16px;
+
       :hover {
         z-index: 99;
       }
@@ -157,10 +160,12 @@
         background: #23262f;
         border-radius: 16px;
       }
+
       .sciuploadvideobox:hover {
         z-index: 99;
         cursor: pointer;
       }
+
       video {
         :hover {
           z-index: 99;
@@ -179,7 +184,6 @@
           line-height: 12px;
         }
 
-        input,
         select {
           display: flex;
           flex-direction: row;
@@ -235,7 +239,6 @@
           line-height: 12px;
         }
 
-        input,
         select {
           display: flex;
           flex-direction: row;
@@ -370,7 +373,6 @@
           gap: 12px;
           width: 100%;
 
-          input,
           select {
             display: flex;
             flex-direction: row;
@@ -533,6 +535,7 @@
       width: 70%;
       margin: 0 auto;
     }
+
     @media screen and (max-width: 1024px) {
       position: relative;
       top: unset;

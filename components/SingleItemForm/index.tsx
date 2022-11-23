@@ -22,6 +22,8 @@ import { useRouter } from "next/router";
 import { IItem } from "../../types/item.interface";
 import validateImage from "../../utils/helpers/validateImage";
 import Input from "../global/Form/Input";
+import Select from "../global/Form/Select";
+import Button from "../global/Button/Button";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -86,6 +88,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
     handleSubmit,
     setValue,
     reset,
+    setError,
     formState: { errors },
   } = useForm<form>();
 
@@ -150,8 +153,6 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
 
   const onSubmit = async () => {
     const data = getValues();
-    console.log(data);
-
     if (item) {
       if (item.step === 5) handleEditItem();
     } else {
@@ -308,6 +309,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   const optional3 = useRef<HTMLInputElement>(null);
 
   const handleChange = (e?: any, name?: any) => {
+    setError("image", {});
     if (validateImage(e.target.files[0]))
       if (e.target.files[0]) {
         setValue("image", true);
@@ -368,21 +370,26 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
                   Drag or choose your file to upload
                 </span>
               </div>
-              <div
-                onClick={() => target.current?.click()}
-                className={styles.sciuploadbox}
-              >
-                <img alt="upload icon" src={`/assets/uploadicon.svg`} />
-                <p>PNG, GIF, WEBP Max 5MB.</p>
+
+              <div className={errors.image?.type ? styles.error : ""}>
+                <div
+                  onClick={() => target.current?.click()}
+                  className={styles.sciuploadbox}
+                >
+                  <img alt="upload icon" src={`/assets/uploadicon.svg`} />
+                  <p>PNG, GIF, WEBP Max 5MB.</p>
+                </div>
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  {...register("image", { required: true })}
+                  ref={target}
+                  onChange={(e) => handleChange(e, "main")}
+                />
+                {errors.image?.type === "required" && (
+                  <span>This field is required</span>
+                )}
               </div>
-              <input
-                style={{ display: "none" }}
-                type="file"
-                {...register("image", { required: true })}
-                ref={target}
-                onChange={(e) => handleChange(e, "main")}
-              />
-              {errors.image && <span>This field is required</span>}
             </div>
           )}
           <div className={styles.sciuploadseccon}>
@@ -513,48 +520,44 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               <>
                 <div className={styles.itemdetailformdropdownsCon}>
                   <div className={styles.itemdetailsformdropdown}>
-                    <label>CATEGORY</label>
-                    <select {...register("category")}>
-                      <option value="ART">ART</option>
-                      <option value="GAME">GAME</option>
-                      <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
-                      <option value="MUSIC">MUSIC</option>
-                      <option value="VIDEO">VIDEO</option>
-                    </select>
+                    <Select
+                      name="category"
+                      label="Category"
+                      register={register}
+                      data={["ART", "GAME", "PHOTOGRAPHY", "MUSIC", "VIDEO"]}
+                      errors={errors}
+                    />
                   </div>
                   <div className={styles.itemdetailsformdropdown}>
-                    <label>ROYALTIES</label>
-                    <select {...register("royalties")}>
-                      <option value="1">1%</option>
-                      <option value="5">5%</option>
-                      <option value="10">10%</option>
-                      <option value="15">15%</option>
-                      <option value="20">20%</option>
-                    </select>
+                    <Select
+                      name="royalties"
+                      label="ROYALTIES"
+                      register={register}
+                      data={["1", "5", "10", "15", "20"]}
+                      errors={errors}
+                    />
                   </div>
                   <div className={styles.itemdetailsforminput1}>
-                    <label>PRICE</label>
-                    <input
+                    <Input
+                      label="Price"
                       type="number"
+                      name="price"
+                      required={true}
+                      errors={errors}
+                      register={register}
                       placeholder="0.25 ETH"
-                      className={styles.input}
-                      min="0"
-                      step="0.01"
-                      {...register("price", { required: true })}
                     />
-                    {errors.price && <span>This field is required</span>}
                   </div>
                 </div>
                 <div className={styles.divider}></div>
 
                 <div className={styles.putonscalebtnsec}>
-                  <button type="submit">
+                  <Button>
                     Create item
                     <span>
                       <img src={`/assets/arrow.svg`} alt="" />
                     </span>
-                  </button>
-                  {/* <p>Auto saving</p> */}
+                  </Button>
                 </div>
               </>
             )}

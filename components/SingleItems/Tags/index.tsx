@@ -8,7 +8,7 @@ import styles from "./index.module.scss";
 import Link from "../../Link";
 import { IItem } from "../../../types/item.interface";
 import Index from "../AuctionDialog";
-import DefaultAvatar from "../../DefaultAvatar";
+import DefaultAvatar from "../../global/DefaultAvatar";
 import { getUserName } from "../../../utils/helpers/getUserName";
 import { useSWRConfig } from "swr";
 import LeaveCollectionDialog from "../LeaveCollectionDialog";

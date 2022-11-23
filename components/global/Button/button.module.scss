@@ -1,0 +1,30 @@
+.main {
+  button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    min-width: 8rem;
+    border-radius: 20px;
+    gap: 12px;
+    cursor: pointer;
+    background: #f2994a;
+    color: #fcfcfd;
+    border: 0;
+  }
+}
+
+.spinner {
+  animation: rotation 2s infinite linear;
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(359deg);
+    }
+  }
+}
