@@ -37,10 +37,13 @@ const Home = () => {
   const { data: discovery } = useSWR<IItem[]>(["discovery"], () =>
     DiscoveryDs.getData(Filter.All)
   );
-  const { data: item } = useSWR<IItem[]>(["item"], () => ItemDs.getData());
+  const { data: item } = useSWR<IItem[]>(["item"], () =>
+    ItemDs.getHotItemsData()
+  );
   const { data: sellers } = useSWR<IUser[]>(["sellers"], () =>
     UserDs.fetchSellers()
   );
+  console.log(item);
 
   return (
     <>
@@ -85,7 +88,7 @@ export async function getServerSideProps() {
   let [discovery, collection, item, sellers] = await Promise.all([
     DiscoveryDs.getData(Filter.All),
     CollectionDs.getCollections(),
-    ItemDs.getData(),
+    ItemDs.getHotItemsData(),
     UserDs.fetchSellers(),
   ]);
 

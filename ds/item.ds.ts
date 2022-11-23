@@ -98,6 +98,14 @@ class Item {
       console.log(error);
     }
   }
+  async getHotItemsData() {
+    try {
+      const items = await api.get(url + "/hotitems");
+      return items.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async getFilterData(filter: any) {
     const { category, verifiedCreator, sort, priceRange } = filter;

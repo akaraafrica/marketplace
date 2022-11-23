@@ -76,23 +76,20 @@ function HotItems({ items }: properties) {
             className={styles.swiper_container}
           >
             {data &&
-              data
-                .sort((a: any, b: any) =>
-                  a.bids.length > b.bids.length ? -1 : 1
-                )
-                .map((item: any, idx) => (
-                  <SwiperSlide key={idx}>
-                    <ItemCard
-                      key={idx}
-                      id={item.id}
-                      img={`${item.images[0]}`}
-                      name={item.title}
-                      price={item.price}
-                      ownerAvatar={`${item.owner?.profile?.avatar}`}
-                      highestBid={item.highestbid}
-                    />
-                  </SwiperSlide>
-                ))}
+              data.map((item: any, idx) => (
+                <SwiperSlide key={idx}>
+                  <ItemCard
+                    key={idx}
+                    id={item.id}
+                    img={`${item.images[0]}`}
+                    name={item.title}
+                    price={item.price}
+                    ownerAvatar={`${item.owner?.profile?.avatar}`}
+                    highestBid={item.highestbid}
+                    item={item}
+                  />
+                </SwiperSlide>
+              ))}
           </Swiper>
         </div>
       </div>
