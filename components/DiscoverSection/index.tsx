@@ -19,7 +19,7 @@ interface properties {
 }
 function Discover({ items }: properties) {
   const [open, setOpen] = useState(Filter.All);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>(items);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
     category: "ALL",
@@ -27,6 +27,7 @@ function Discover({ items }: properties) {
     sort: "Most liked",
     priceRange: 1000,
   });
+
   return (
     <div className={styles.root}>
       <h1>Discover</h1>

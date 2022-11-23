@@ -2,11 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log("fiter");
-  console.log(req.query);
-
   if (req.method === "GET") {
-    // const lastIndex = Number(req.query.lastIndex) + 1;
     const priceRange = req.query.priceRange;
     const sort = req.query.sort as
       | "Most liked"
@@ -57,8 +53,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               skip: page * 6 || 0,
             }),
           ]);
-          console.log(data);
-
           return res.status(200).json(data);
         } catch (error) {
           res.status(400).json("error");
@@ -104,7 +98,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               skip: page * 6 || 0,
             }),
           ]);
-          console.log(data);
 
           return res.status(200).json(data);
         } catch (error) {
