@@ -32,7 +32,7 @@ const Index = () => {
   const page = Number(router?.query?.page) || 1;
   const [open, setOpen] = useState(Filter.All);
 
-  const { data: items } = useSWR<any>(["discovery"], () =>
+  const { data: items } = useSWR<any>(["discovery" + page], () =>
     Discovery.getPageData(open, page)
   );
   const [data, setData] = useState<null | []>(null);

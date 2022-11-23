@@ -54,7 +54,7 @@ class Collection {
         data,
         user,
       });
-      console.log(res);
+      // console.log(res);
       return res;
     } catch (error) {
       console.log(error);
@@ -62,7 +62,7 @@ class Collection {
     }
   }
   async updateData(data: any) {
-    console.log(data);
+    // console.log(data);
     try {
       const res = await api.patch(url, {
         ...data,
