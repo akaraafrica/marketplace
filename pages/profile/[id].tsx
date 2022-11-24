@@ -20,9 +20,12 @@ import NextLink from "../../components/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import dynamic from "next/dynamic";
 
-const DefaultAvatar = dynamic(() => import("../../components/DefaultAvatar"), {
-  ssr: false,
-});
+const DefaultAvatar = dynamic(
+  () => import("../../components/global/DefaultAvatar"),
+  {
+    ssr: false,
+  }
+);
 
 const Index = () => {
   const [open, setOpen] = React.useState(0);

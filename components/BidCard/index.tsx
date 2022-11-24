@@ -6,7 +6,7 @@ import { Router } from "next/router";
 import Link from "../Link";
 import { getUserName } from "../../utils/helpers/getUserName";
 import dynamic from "next/dynamic";
-const DefaultAvatar = dynamic(() => import("../DefaultAvatar"), {
+const DefaultAvatar = dynamic(() => import("../global/DefaultAvatar"), {
   ssr: false,
 });
 

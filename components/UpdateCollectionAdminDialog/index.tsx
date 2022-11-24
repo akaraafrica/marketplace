@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
-import Dialog from "../global/Dialog";
+import Dialog from "../global/Dialog/Dialog";
 import collectionsDs from "../../ds/collections.ds";
 import { toast } from "react-toastify";
 import { ICollection } from "../../types/collection.interface";

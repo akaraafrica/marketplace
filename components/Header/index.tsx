@@ -17,7 +17,7 @@ import { MdNotificationsNone } from "react-icons/md";
 import NextImage from "../../components/Image";
 import CustomSelect from "../CustomSelect";
 import Link from "../Link";
-import DefaultAvatar from "../../components/DefaultAvatar";
+import DefaultAvatar from "../global/DefaultAvatar";
 import useSWR from "swr";
 import { NotificationDs } from "../../ds";
 import { INotification } from "../../types/notification.interface";

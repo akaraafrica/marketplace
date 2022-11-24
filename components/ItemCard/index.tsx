@@ -8,7 +8,7 @@ import AddToCollectionDialog from "../AddToCollectionDialog";
 import { IUser } from "../../types/user.interface";
 import { IItem } from "../../types/item.interface";
 import { AuthContext } from "../../contexts/AuthContext";
-import DefaultAvatar from "../DefaultAvatar";
+import DefaultAvatar from "../global/DefaultAvatar";
 
 interface ItemCardProps {
   id: number;
@@ -36,7 +36,7 @@ function ItemCard(props: ItemCardProps) {
   const { user } = useContext(AuthContext);
 
   const isMarketplace = router.pathname === "/marketplace";
-  const highestbid = props?.item?.bids.reduce(
+  const highestbid = props?.item?.bids?.reduce(
     (acc, shot) => (acc = acc > shot.amount ? acc : shot.amount),
     0
   );
@@ -93,7 +93,7 @@ function ItemCard(props: ItemCardProps) {
                 </div>
               )}
             </div>
-            {props.item && props?.item?.bids.length > 0 && (
+            {props.item && props?.item?.bids?.length > 0 && (
               <>
                 <div className={styles.previewstockcon}>
                   <div className={styles.avatars}>

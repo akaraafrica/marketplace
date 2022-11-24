@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { AuthContext } from "../../../contexts/AuthContext";
-import Dialog from "../../global/Dialog";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 import { getUserName } from "../../../utils/helpers/getUserName";
 import Link from "next/link";

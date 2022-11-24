@@ -4,7 +4,7 @@ import { mutate } from "swr";
 import { AuthContext } from "../../contexts/AuthContext";
 import { CollectionDs } from "../../ds";
 import { getUserName } from "../../utils/helpers/getUserName";
-import Dialog from "../global/Dialog";
+import Dialog from "../global/Dialog/Dialog";
 import styles from "./styles.module.scss";
 
 export default function AddToCollectionDialog({

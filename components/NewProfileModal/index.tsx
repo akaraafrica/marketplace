@@ -4,7 +4,7 @@ import NextImage from "../../components/Image";
 import Link from "../Link";
 import styles from "./index.module.scss";
 import { maskWallet } from "../../utils/helpers/maskWallet";
-import DefaultAvatar from "../../components/DefaultAvatar";
+import DefaultAvatar from "../global/DefaultAvatar";
 import { getUserName } from "../../utils/helpers/getUserName";
 
 interface properties {

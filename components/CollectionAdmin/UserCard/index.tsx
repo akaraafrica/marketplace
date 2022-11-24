@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Avatar } from "@mui/material";
 import styles from "./ContributorsGrid.module.scss";
-import DefaultAvatar from "../../DefaultAvatar";
+import DefaultAvatar from "../../global/DefaultAvatar";
 import { ContributorDs } from "../../../ds";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { toast } from "react-toastify";
