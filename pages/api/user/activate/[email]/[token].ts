@@ -11,7 +11,7 @@ export default async function Emailverification(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const userEmail = req.body.email;
+  const userEmail = req.query.email as string;
   if (userEmail) {
     try {
       await prisma.user.update({

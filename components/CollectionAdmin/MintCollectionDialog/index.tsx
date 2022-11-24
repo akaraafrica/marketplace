@@ -1,7 +1,7 @@
 import Image from "../../Image";
 import { useState } from "react";
 
-import Dialog from "../../global/Dialog";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 import { toast } from "react-toastify";
 import { useContract } from "../../../hooks/web3";

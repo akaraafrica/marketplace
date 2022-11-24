@@ -9,7 +9,7 @@ import { IItem } from "../../types/item.interface";
 import { IUser } from "../../types/user.interface";
 import { getUserName } from "../../utils/helpers/getUserName";
 import styles from "./index.module.scss";
-const DefaultAvatar = dynamic(() => import("../DefaultAvatar"), {
+const DefaultAvatar = dynamic(() => import("../global/DefaultAvatar"), {
   ssr: false,
 });
 
@@ -22,7 +22,7 @@ function ListingMainCard() {
     (async () => {
       let data: IItem[] = await ItemDs.getData();
 
-      data = data.sort((a, b) => a.price - b.price);
+      data = data?.sort((a, b) => a?.price - b?.price);
       setItem(data);
     })();
   }, []);

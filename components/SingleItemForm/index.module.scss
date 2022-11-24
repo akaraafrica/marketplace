@@ -80,13 +80,13 @@
       }
 
       .sciuploadbox {
-        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         padding: 64px 8px;
         gap: 10px;
+        cursor: pointer;
         background: #23262f;
         border-radius: 16px;
       }
@@ -111,6 +111,7 @@
         align-items: center;
         padding: 60px 20px;
         gap: 10px;
+        cursor: pointer;
         background: #23262f;
         border-radius: 16px;
       }
@@ -146,7 +147,6 @@
           line-height: 12px;
         }
 
-        input,
         select {
           display: flex;
           flex-direction: row;
@@ -157,7 +157,6 @@
           border-radius: 12px;
           background-color: transparent;
           color: #ffffff;
-          height: 48px;
           outline: none;
 
           ::placeholder {
@@ -199,21 +198,6 @@
           flex-direction: column;
           gap: 12px;
           width: 100%;
-
-          input,
-          select {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 12px 12px 16px;
-            gap: 67px;
-            border: 2px solid #353945;
-            border-radius: 12px;
-            background-color: #000000;
-            color: #ffffff;
-            height: 48px;
-          }
 
           .input {
             padding: 0px 10px;
@@ -324,20 +308,6 @@
     .putonscalebtnsec {
       display: flex;
       justify-content: space-between;
-
-      button {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 16px 24px;
-        gap: 12px;
-        cursor: pointer;
-        background: #f2994a;
-        color: #fcfcfd;
-        border-radius: 90px;
-        border: 1px solid #f2994a;
-      }
 
       p {
         font-style: normal;
@@ -457,4 +427,12 @@
       gap: 10px;
     }
   }
+}
+
+.error {
+  border: 2px solid #ef4444;
+  border-radius: 12px;
+  padding: 3px 5px;
+  background: #efb4b4;
+  padding-bottom: 5px;
 }

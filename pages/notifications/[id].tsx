@@ -13,7 +13,7 @@ import useSWR, { mutate, SWRConfig, unstable_serialize } from "swr";
 import { INotification } from "../../types/notification.interface";
 import NextImage from "../../components/Image";
 import Link from "next/link";
-import DefaultAvatar from "../../components/DefaultAvatar";
+import DefaultAvatar from "../../components/global/DefaultAvatar";
 import useWindowSize from "../../hooks/useWindowSize";
 import { GetServerSideProps } from "next";
 import withAuth from "../../HOC/withAuth";

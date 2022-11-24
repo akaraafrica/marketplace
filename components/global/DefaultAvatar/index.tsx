@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import NextImage from "../Image";
+import NextImage from "../../Image";
 import styles from "./index.module.scss";
 import Link from "next/link";
 
@@ -23,13 +23,23 @@ const Index: React.FC<AvatarProps> = ({
     return (
       <Link href={id ? `/profile/${id}` : "#"}>
         <a>
-          <NextImage
-            src={`https://avatars.dicebear.com/api/micah/${walletAddress}.svg`}
-            width={width}
-            height={height}
-            style={{ borderRadius: "50%" }}
-            className={styles.avatar}
-          />
+          <div
+            style={{
+              border: "2px solid #353945",
+              borderRadius: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <NextImage
+              src={`https://avatars.dicebear.com/api/micah/${walletAddress}.svg`}
+              width={width}
+              height={height}
+              style={{ borderRadius: "50%" }}
+              className={styles.avatar}
+            />
+          </div>
         </a>
       </Link>
     );

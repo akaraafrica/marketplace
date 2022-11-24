@@ -1,7 +1,7 @@
 import Image from "../../components/Image";
 import { useState, useContext } from "react";
 
-import Dialog from "../global/Dialog";
+import Dialog from "../global/Dialog/Dialog";
 import styles from "./MintTokenDialog.module.scss";
 
 export interface Step {

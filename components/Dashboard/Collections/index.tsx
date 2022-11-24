@@ -7,8 +7,9 @@ interface properties {
   collection: ICollection;
 }
 
-function Collections(props: properties) {
-  const { id, images, title, author, items } = props.collection;
+function Collections({ collection }: properties) {
+  const { id, images, title, author, items } = collection;
+  const userStatus = collection?.contributors[0]?.confirmation;
   return (
     <div className={styles.root}>
       <Link href={`/collection/${id}/admin`} passHref>
@@ -33,8 +34,30 @@ function Collections(props: properties) {
               ))}
           </div>
           <div className={styles.infoDiv}>
-            <h4>{title && title}</h4>
+            <h4>{title}</h4>
+            <span
+              style={{
+                color: collection.status === "DRAFT" ? "orange" : "green",
+              }}
+            >
+              {collection.status}
+            </span>
           </div>
+          <span style={{ color: "white", fontWeight: "800" }}>
+            Contributor Status:{" "}
+            <span
+              style={{
+                color:
+                  userStatus === "ACCEPTED"
+                    ? "green"
+                    : userStatus === "PENDING"
+                    ? "orange"
+                    : "red",
+              }}
+            >
+              {userStatus}
+            </span>
+          </span>
         </a>
       </Link>
     </div>
