@@ -184,42 +184,6 @@
           line-height: 12px;
         }
 
-        select {
-          display: flex;
-          flex-direction: row;
-          align-items: flex-start;
-          padding: 12px 16px;
-          gap: 10px;
-          border: 2px solid #353945;
-          border-radius: 12px;
-          background-color: transparent;
-          color: #ffffff;
-          height: 48px;
-          outline: none;
-
-          ::placeholder {
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 24px;
-          }
-
-          :focus {
-            outline: none;
-            color: #fcfcfd;
-          }
-        }
-
-        select {
-          line-height: 30px;
-          color: #777e91;
-
-          option {
-            color: #777e91;
-            background-color: #000000;
-          }
-        }
-
         span {
           color: orangered;
         }
@@ -237,33 +201,6 @@
           font-weight: 700;
           font-size: 12px;
           line-height: 12px;
-        }
-
-        select {
-          display: flex;
-          flex-direction: row;
-          align-items: flex-start;
-          padding: 12px 16px;
-          gap: 10px;
-          border: 2px solid #353945;
-          border-radius: 12px;
-          background-color: transparent;
-          color: #ffffff;
-          // height: 48px;
-          width: 50%;
-          outline: none;
-
-          ::placeholder {
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 24px;
-          }
-
-          :focus {
-            outline: none;
-            color: #fcfcfd;
-          }
         }
 
         select {

@@ -21,6 +21,7 @@ import validateVideo from "../../utils/helpers/validateVideo";
 import Input from "../global/Form/Input";
 import Button from "../global/Button/Button";
 import CustomDatePicker from "../global/Form/DatePicker";
+import Select from "../global/Form/Select";
 
 const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
 const toolbarOptions = [
@@ -50,6 +51,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
   } = useForm();
   const [desc, setDesc] = useState("");
   const [type, setType] = useState("");
+  const [countDown, setCountDown] = useState(new Date());
   const [video, setVideo] = useState(null);
   const [searchUser, setSearchUser] = useState("");
   const [searchedUser, setSearchedUser] = useState<IUser[]>([]);
@@ -67,7 +69,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
     optional4: null,
   });
   const { user } = useContext(AuthContext);
-
   useEffect(() => {
     if (user) {
       setSelectedUser([...selectedUser, user]);
@@ -85,7 +86,9 @@ const Index = ({ collection }: { collection: ICollection }) => {
       setSelectedItems(collection.items);
     }
   }, [collection, setValue]);
-
+  useEffect(() => {
+    setValue("countdown", countDown);
+  }, [countDown]);
   let queryCall = useRef<any>();
 
   useEffect(() => {
@@ -541,32 +544,23 @@ const Index = ({ collection }: { collection: ICollection }) => {
               </div>
             </div>
             <div className={styles.itemdetailsforminput}>
-              <label>COLLECTION TYPE</label>
-              <select
-                onChange={(e: any) => setType(e.target.value)}
+              <Select
+                name="type"
+                label="COLLECTION TYPE"
+                register={register}
+                data={[
+                  "ORDINARY",
+                  "COLLABORATORS",
+                  "FUNDRAISING",
+                  "LOCKSHARED",
+                ]}
                 disabled={!!collection}
-                value={type}
-              >
-                <option value="" disabled hidden>
-                  Choose a Collection type
-                </option>
-                <option value="ORDINARY">Ordinary</option>
-                <option value="COLLABORATORS">Collaborators</option>
-                <option value="FUNDRAISING">Fund Raising</option>
-                <option value="LOCKSHARED">Lock Shared</option>
-              </select>
+                errors={errors}
+              />
             </div>
             <div className={styles.itemdetailformdropdownsCon}>
               <div className={styles.itemdetailsformdropdown}>
-                <CustomDatePicker />
-                {/* <Input
-                  label="COUNT DOWN FROM"
-                  type="date"
-                  name="countdown"
-                  errors={errors}
-                  register={register}
-                  placeholder="12-03-2022"
-                /> */}
+                <CustomDatePicker getValue={setCountDown} />
               </div>
             </div>
             <div className={styles.divider}></div>
