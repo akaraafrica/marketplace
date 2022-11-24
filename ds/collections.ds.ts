@@ -54,7 +54,7 @@ class Collection {
         data,
         user,
       });
-      console.log(res);
+      // console.log(res);
       return res;
     } catch (error) {
       console.log(error);
@@ -62,7 +62,7 @@ class Collection {
     }
   }
   async updateData(data: any) {
-    console.log(data);
+    // console.log(data);
     try {
       const res = await api.patch(url, {
         ...data,
@@ -193,6 +193,15 @@ class Collection {
       const res = await api.delete(url + "/beneficiary", {
         data,
       });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getPage(page: any) {
+    try {
+      const res = await api.get(url + "/getpage?page=" + page);
       return res.data;
     } catch (error) {
       console.log(error);

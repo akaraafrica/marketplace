@@ -111,7 +111,7 @@ export const handleSliderChange = async (
 type category = "ART" | "GAME" | "PHOTOGRAPHY" | "MUSIC" | "VIDEO" | "ALL";
 export const handleCategoryChange = async (
   category: category,
-  setData: React.Dispatch<React.SetStateAction<IItem[] | undefined>>,
+  setData: React.Dispatch<React.SetStateAction<null | []>>,
   items: IItem[] | undefined,
   setLoading: any,
   filter: any,

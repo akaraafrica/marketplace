@@ -19,7 +19,7 @@ interface properties {
 }
 function Discover({ items }: properties) {
   const [open, setOpen] = useState(Filter.All);
-  const [data, setData] = useState<IItem[] | undefined>(items);
+  const [data, setData] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
     category: "ALL",

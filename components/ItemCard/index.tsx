@@ -8,6 +8,7 @@ import AddToCollectionDialog from "../AddToCollectionDialog";
 import { IUser } from "../../types/user.interface";
 import { IItem } from "../../types/item.interface";
 import { AuthContext } from "../../contexts/AuthContext";
+import DefaultAvatar from "../DefaultAvatar";
 
 interface ItemCardProps {
   id: number;
@@ -35,6 +36,10 @@ function ItemCard(props: ItemCardProps) {
   const { user } = useContext(AuthContext);
 
   const isMarketplace = router.pathname === "/marketplace";
+  const highestbid = props?.item?.bids.reduce(
+    (acc, shot) => (acc = acc > shot.amount ? acc : shot.amount),
+    0
+  );
   return (
     <div>
       <AddToCollectionDialog
@@ -88,6 +93,31 @@ function ItemCard(props: ItemCardProps) {
                 </div>
               )}
             </div>
+            {props.item && props?.item?.bids.length > 0 && (
+              <>
+                <div className={styles.previewstockcon}>
+                  <div className={styles.avatars}>
+                    {props.item.bids.map((bid) => (
+                      <div key={bid.id} className={styles.image}>
+                        <DefaultAvatar
+                          url={bid.user.profile?.avatar}
+                          walletAddress={bid.user.walletAddress}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <hr />
+                <div className={styles.bidsec}>
+                  <div className={styles.bidsec1}>
+                    <img src="/assets/bidicon.svg" alt="icon" />
+                    <p>Highest bid</p>
+                    <span>{props?.item?.bids && highestbid} ETH</span>
+                  </div>
+                  <p>New bid 🔥</p>
+                </div>
+              </>
+            )}
           </a>
         </Link>
         {user &&

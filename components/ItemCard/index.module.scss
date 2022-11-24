@@ -46,7 +46,7 @@
       display: flex;
       align-items: center;
 
-      img {
+      .image {
         width: 32px;
         height: 32px;
         border-radius: 50%;
@@ -70,17 +70,17 @@
     font-size: 12px;
     align-items: center;
     justify-content: space-between;
+    text-decoration: none;
 
     .bidsec1 {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 3px;
+      color: #353945 !important;
 
       span {
-        span {
-          color: #fcfcfd;
-        }
+        color: #fcfcfd !important;
       }
     }
   }
@@ -138,10 +138,11 @@
     width: 100%;
 
     .avatars {
+      margin-top: 20px;
       display: flex;
       align-items: center;
 
-      img {
+      .image {
         width: 32px;
         height: 32px;
         border-radius: 50%;
@@ -170,13 +171,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 3px;
+      gap: 7px;
+      color: #353945 !important;
 
       span {
-        span {
-          color: #fcfcfd;
-        }
+        color: #fcfcfd !important;
       }
+    }
+    p {
+      color: #353945 !important;
     }
   }
 
