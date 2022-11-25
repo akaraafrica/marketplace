@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { IUser } from "../../types/user.interface";
 import userDs from "../../ds/user.ds";
 import { AuthContext } from "../../contexts/AuthContext";
-import Image from "../Image";
+import Image from "../global/Image";
 import DefaultAvatar from "../global/DefaultAvatar";
 import { ICollection } from "../../types/collection.interface";
 import collectionsDs from "../../ds/collections.ds";

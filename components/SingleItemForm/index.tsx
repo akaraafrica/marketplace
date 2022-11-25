@@ -152,7 +152,6 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   const [uploadId, setUploadId] = useState(0);
 
   const onSubmit = async () => {
-    const data = getValues();
     if (item) {
       if (item.step === 5) handleEditItem();
     } else {

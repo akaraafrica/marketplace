@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import styles from "./index.module.scss";
-import OnboardingLayout from "../../components/OnboardingLayout";
-import OnboardingInput from "../../components/OnboardingInput";
-import OnboardingButton from "../../components/OnboardingButton";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { BsFillCameraFill } from "react-icons/bs";
@@ -12,16 +9,48 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
 import { toast } from "react-toastify";
 import VerifyEmail from "../../components/VerifyEmail";
-import NextImage from "../../components/Image";
+import NextImage from "../../components/global/Image";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import userDs from "../../ds/user.ds";
 import googleLogin from "../../utils/auth/googleLogin";
 import { AuthContext } from "../../contexts/AuthContext";
 import facebookLogin from "../../utils/auth/facebookLogin";
 import twitterLogin from "../../utils/auth/twitterLogin";
+import OnboardingLayout from "../../components/global/OnboardingLayout";
+import OnboardingInput from "../../components/global/OnboardingInput";
+import Button from "../../components/global/Button/Button";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 const Index = () => {
   const { completeLogin } = useContext(AuthContext);
+  const formSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(4, "Password length should be at least 4 characters")
+      .max(20, "Password cannot exceed more than 20 characters"),
+    confirmPassword: Yup.string()
+      .required("Confirm Password is required")
+      .min(4, "Password length should be at least 4 characters")
+      .max(12, "Password cannot exceed more than 12 characters")
+      .oneOf([Yup.ref("password")], "Passwords do not match"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    mode: "onTouched",
+    resolver: yupResolver(formSchema),
+  });
+  console.log(errors);
+
   const handlegoogleLogin = async () => {
     try {
       const res = await googleLogin(account, setError, setVerify);
@@ -70,6 +99,7 @@ const Index = () => {
   const [error, setError] = useState("");
   const [gender, setGender] = useState("");
   const [verify, setVerify] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const router = useRouter();
 
@@ -94,7 +124,7 @@ const Index = () => {
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmit = async () => {
     setError("");
     if (!account) {
       toast.info("Please connect with metamask to login");
@@ -170,7 +200,7 @@ const Index = () => {
       ) : (
         <div className={styles.login}>
           <h6 className={styles.title}>Create an account</h6>
-          <form className={styles.inputs}>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.inputs}>
             <div className={styles.mainImgdiv}>
               <NextImage
                 className={styles.mainImg}
@@ -198,47 +228,38 @@ const Index = () => {
 
             {error !== "" && <span className={styles.error}>{error}</span>}
             <OnboardingInput
-              onChange={handleChange}
+              register={register}
+              errors={errors}
               label="Name"
               name="name"
               type="text"
               placeholder="John Smith"
             />
             <OnboardingInput
-              onChange={handleChange}
+              register={register}
+              errors={errors}
               label="Email"
               name="email"
               type="email"
               placeholder="sarah@gmail.com"
             />
             <OnboardingInput
-              onChange={handleChange}
+              register={register}
+              errors={errors}
               label="Password"
               name="password"
               type="password"
               placeholder="***********"
             />
-            <div className={styles.confirm}>
-              <label>Confirm password</label>
-              <input
-                onChange={handleChange}
-                name="confirmPassword"
-                type="password"
-                placeholder="***********"
-                className={
-                  state.confirmPassword &&
-                  state.confirmPassword === state.password
-                    ? styles.input
-                    : styles.errorInput
-                }
-              />
-            </div>
-            {state.confirmPassword &&
-              state.confirmPassword !== state.password && (
-                <span className={styles.confirmError}>
-                  Password does not match
-                </span>
-              )}
+            <OnboardingInput
+              register={register}
+              errors={errors}
+              label="Password"
+              name="confirmPassword"
+              type="password"
+              placeholder="***********"
+            />
+
             <div className={styles.gender}>
               <label htmlFor="gender">Gender</label>
               <div className={styles.btns}>
@@ -274,15 +295,17 @@ const Index = () => {
               <div className={styles.btns}>
                 <OnboardingInput
                   type="date"
-                  onChange={handleChange}
                   label=""
+                  register={register}
+                  errors={errors}
                   name="dob"
                   placeholder="choose your DOB"
                 />
               </div>
             </div>
+            <Button loading={loading}>Sign up </Button>
           </form>
-          <OnboardingButton text="Sign up" onClick={handleSubmit} />
+
           <span className={styles.continue}>Or continue with</span>
           <div className={styles.socials}>
             <span>

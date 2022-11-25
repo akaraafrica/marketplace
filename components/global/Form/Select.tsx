@@ -20,13 +20,23 @@ export default function Select({
   return (
     <div className={styles.main}>
       <label>{label}</label>
-      <select {...rest} {...register(name)}>
-        {data?.map((item, index) => (
-          <option value={item} key={index}>
-            {item}
+      <div
+        className={errors && errors[name] && errors[name] ? styles.error : ""}
+      >
+        <select {...rest} {...register(name, { required: true })}>
+          <option value="" selected disabled hidden>
+            {label}
           </option>
-        ))}
-      </select>
+          {data?.map((item, index) => (
+            <option value={item} key={index}>
+              {item}
+            </option>
+          ))}
+        </select>
+        {errors[name] && errors[name].type === "required" && (
+          <span>This field is required</span>
+        )}
+      </div>
     </div>
   );
 }

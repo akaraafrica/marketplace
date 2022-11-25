@@ -3,7 +3,7 @@
 
 import { Typography } from "@mui/material";
 import React from "react";
-import NextImage from "../Image";
+import NextImage from "../global/Image";
 import styles from "./index.module.scss";
 
 interface DT {

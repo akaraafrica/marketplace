@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import styles from "./index.module.scss";
-import Link from "../../Link";
+import Link from "../../global/Link";
 
 interface ItemCardProps {
   id: number;

@@ -3,7 +3,7 @@ import { Avatar } from "@mui/material";
 import styles from "./styles.module.scss";
 import { ICollection } from "../../types/collection.interface";
 import { Router } from "next/router";
-import Link from "../Link";
+import Link from "../global/Link";
 import { getUserName } from "../../utils/helpers/getUserName";
 import dynamic from "next/dynamic";
 const DefaultAvatar = dynamic(() => import("../global/DefaultAvatar"), {

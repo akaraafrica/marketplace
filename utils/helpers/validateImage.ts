@@ -9,11 +9,11 @@ const validateImage = (file: File) => {
     "image/gif",
     "image/webp",
   ];
-  if (!FILE_TYPES.includes(file.type)) {
+  if (!FILE_TYPES.includes(file?.type)) {
     toast.error("File type is not supported");
     return false;
   }
-  if (file.size > MAX_IMAGE_SIZE) {
+  if (file?.size > MAX_IMAGE_SIZE) {
     toast.error("File size is too big");
     return false;
   }

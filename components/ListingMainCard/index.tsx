@@ -2,7 +2,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import NextImage from "../../components/Image";
+import NextImage from "../global/Image";
 import { ItemDs } from "../../ds";
 import userDs from "../../ds/user.ds";
 import { IItem } from "../../types/item.interface";

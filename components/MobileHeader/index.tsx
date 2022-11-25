@@ -12,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import ProfileModal from "../ProfileModal/index";
 import NotificationModal from "../NotificationModal/index";
-import NextImage from "../Image";
+import NextImage from "../global/Image";
 
 export default function SwipeableTemporaryDrawer() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);

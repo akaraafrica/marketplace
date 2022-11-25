@@ -2,7 +2,7 @@
 // TODO: convert this to NextImage when given the chance
 import Link from "next/link";
 import React from "react";
-import NextImage from "../Image";
+import NextImage from "../global/Image";
 import styles from "./index.module.scss";
 
 function Footer() {

@@ -1,4 +1,4 @@
-import Image from "../../Image";
+import Image from "../../global/Image";
 import { useState } from "react";
 
 import Dialog from "../../global/Dialog/Dialog";

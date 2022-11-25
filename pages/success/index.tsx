@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "./index.module.scss";
 import { BsCheck2Circle } from "react-icons/bs";
-import OnboardingLayout from "../../components/OnboardingLayout";
-import OnboardingButton from "../../components/OnboardingButton";
 import { useRouter } from "next/router";
+import OnboardingLayout from "../../components/global/OnboardingLayout";
 
 const Index = () => {
   const router = useRouter();
@@ -15,10 +14,10 @@ const Index = () => {
         <p className={styles.text}>
           You have completed you account verification.
         </p>
-        <OnboardingButton
+        {/* <OnboardingButton
           onClick={() => router.push("/login")}
           text="Go to Login"
-        />
+        /> */}
       </div>
     </OnboardingLayout>
   );

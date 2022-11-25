@@ -6,7 +6,7 @@ import { CollectionDs, ContributorDs } from "../../../ds";
 import withAuth from "../../../HOC/withAuth";
 import { BiArrowBack, BiRightArrowAlt } from "react-icons/bi";
 import { MdCancel, MdEdit } from "react-icons/md";
-import NextImage from "../../../components/Image";
+import NextImage from "../../../components/global/Image";
 import { IItem } from "../../../types/item.interface";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { getCookies } from "cookies-next";

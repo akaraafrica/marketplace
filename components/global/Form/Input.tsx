@@ -4,7 +4,7 @@ type InputProps = {
   label: string;
   type?: string;
   placeholder?: string;
-  error?: string;
+  error?: any;
   name: string;
   required?: boolean;
   disabled?: boolean;
@@ -23,10 +23,13 @@ export default function Input({
   disabled,
   register,
   name,
+  error,
   onChange,
   value,
   ...rest
 }: InputProps) {
+  // console.log("error", error);
+
   return (
     <>
       <div className={styles.main}>
@@ -51,15 +54,26 @@ export default function Input({
             )}
           </div>
         ) : (
-          <div className={styles.input}>
-            <input
-              type={type}
-              onChange={onChange}
-              value={value}
-              disabled={disabled}
-              placeholder={placeholder}
-              {...rest}
-            />
+          <div
+            className={
+              errors && errors[name] && errors[name].type === "required"
+                ? styles.error
+                : ""
+            }
+          >
+            <div className={styles.input}>
+              <input
+                type={type}
+                onChange={onChange}
+                value={value}
+                disabled={disabled}
+                placeholder={placeholder}
+                {...rest}
+              />
+            </div>
+            {errors && errors[name] && errors[name].type === "required" && (
+              <span>This field is required</span>
+            )}
           </div>
         )}
       </div>

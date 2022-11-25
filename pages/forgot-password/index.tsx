@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
-import OnboardingLayout from "../../components/OnboardingLayout";
-import OnboardingInput from "../../components/OnboardingInput";
-import OnboardingButton from "../../components/OnboardingButton";
 import { toast } from "react-toastify";
 import axios from "axios";
 import VerifyEmail from "../../components/VerifyEmail";
+import OnboardingLayout from "../../components/global/OnboardingLayout";
+import OnboardingInput from "../../components/global/OnboardingInput";
 
 const Index = () => {
   const [email, setEmail] = useState("");
@@ -66,14 +65,13 @@ const Index = () => {
           <p>Type your correct email address to get your password reset link</p>
           {error !== "" && <span className={styles.error}>{error}</span>}
           <div className={styles.action}>
-            <OnboardingInput
+            {/* <OnboardingInput
               label="Email"
               name="email"
               type="email"
               placeholder="example@gmail.com"
-              onChange={handleChange}
-            />
-            <OnboardingButton text="Reset Password" onClick={handleSubmit} />
+            /> */}
+            {/* <Button text="Reset Password" onClick={handleSubmit} /> */}
           </div>
         </div>
       )}

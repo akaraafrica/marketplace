@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import { ToastContainer } from "react-toastify";
-import OnboardingSidebar from "../../components/OnboardingSidebar";
+import OnboardingSideBar from "../OnboardingSidebar";
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
 }
 
-const OnboardingLayout: React.FC<Props> = ({ children }) => {
+const OnboardingLayout = ({ children }: Props) => {
   const [slide, setSlide] = useState<Boolean>(false);
   useEffect(() => {
     if (window.innerWidth <= 600 || !slide) {
@@ -20,22 +19,10 @@ const OnboardingLayout: React.FC<Props> = ({ children }) => {
   return (
     <div className={styles.layout}>
       <div className={styles.sidebar}>
-        <OnboardingSidebar />
+        <OnboardingSideBar />
       </div>
 
       <div className={styles.children}>{children}</div>
-      <ToastContainer
-        position="top-center"
-        autoClose={4000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
     </div>
   );
 };

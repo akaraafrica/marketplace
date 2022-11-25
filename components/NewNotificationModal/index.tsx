@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import NextImage from "../../components/Image";
+import NextImage from "../global/Image";
 import styles from "./index.module.scss";
 import { INotification } from "../../types/notification.interface";
 import getNiceDate from "../../utils/helpers/dateFormatter";
-import Link from "../Link";
+import Link from "../global/Link";
 import { AuthContext } from "../../contexts/AuthContext";
 const Item = ({ data }: { data: INotification }) => {
   const { user } = useContext(AuthContext);
