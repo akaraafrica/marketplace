@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./index.module.scss";
 import { toast } from "react-toastify";
 import axios from "axios";
-import VerifyEmail from "../../components/VerifyEmail";
+import VerifyEmail from "../../components/global/VerifyEmail";
 import OnboardingLayout from "../../components/global/OnboardingLayout";
 import OnboardingInput from "../../components/global/OnboardingInput";
 

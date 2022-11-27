@@ -1,4 +1,4 @@
-import NextImage from "../global/Image";
+import NextImage from "../Image";
 import styles from "./index.module.scss";
 
 interface Verify {

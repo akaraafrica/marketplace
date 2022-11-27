@@ -4,59 +4,29 @@ import React, { useRef, useState } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import { ProfileDs } from "../../ds";
+import Button from "../global/Button/Button";
+import Input from "../global/Form/Input";
 
 function SettingsForm() {
-  const [show, setshow] = useState(false);
   const [foto, setFoto] = useState(null);
 
   const {
     register,
     handleSubmit,
-    reset,
+    getValues,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any, e: any) => {
-    e.preventDefault();
-    // if (foto) {
-    //   data.avatar = foto;
-    // }
-    const newData: any = {};
-    if (
-      !data.name &&
-      !data.bio &&
-      !data.phoneNumber &&
-      !data.website &&
-      !data.twitter &&
-      !data.facebook &&
-      !data.instagram &&
-      !data.itemMaxOffer &&
-      !data.itemMinOffer
-    ) {
-      return;
-    }
-
-    for (let key in data) {
-      if (data[key] !== "") {
-        newData[key] = data[key];
-      }
-    }
-    console.log(newData);
+  const onSubmit = () => {
     const id: number = parseInt(localStorage.getItem("id")!);
     const accessToken: string = localStorage.getItem("accessToken")!;
-
-    ProfileDs.updateData(newData, id, accessToken);
-    clearState();
+    const data = getValues();
+    ProfileDs.updateData(data, id, accessToken);
   };
 
   const target = useRef<HTMLInputElement>(null);
   const handleChange = (e: any) => {
     setFoto(e.target.files[0]);
-  };
-
-  const clearState = () => {
-    setFoto(null);
-    reset();
   };
 
   return (
@@ -90,9 +60,17 @@ function SettingsForm() {
                   <p>
                     We recommend an image of at least 400x400.Gifs work too 🙌
                   </p>
-                  <button type="button" onClick={() => target.current?.click()}>
+                  <Button
+                    onClick={() => target.current?.click()}
+                    customStyle={{
+                      background: "black",
+                      border: "2px solid #353945",
+                      minWidth: "100px",
+                      padding: "1px",
+                    }}
+                  >
                     Upload
-                  </button>
+                  </Button>
                   <input
                     style={{ display: "none" }}
                     type="file"
@@ -101,32 +79,8 @@ function SettingsForm() {
                   />
                 </div>
               </div>
-              <div className={styles.itemsetting}>
-                <h4>Item Settings</h4>
-                <div className={styles.itemsettinginput}>
-                  <div className={styles.itemsettingforminput}>
-                    <label>MIN OFFER</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      placeholder='Minimum Offer"'
-                      {...register("itemMinOffer", {})}
-                    />
-                  </div>
-                  <div className={styles.itemsettingforminput}>
-                    <label>MAX OFFER</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      placeholder='Maximum Offer"'
-                      {...register("itemMaxOffer", {})}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className={styles.turnonnotification}>
+
+              {/* <div className={styles.turnonnotification}>
                 <div className={styles.turnonnotificationtext}>
                   <h4>Turn on Notifications?</h4>
                   <p>This will unmute all notifications</p>
@@ -135,28 +89,28 @@ function SettingsForm() {
                   <input type="checkbox" {...register("turnOnNotify", {})} />
                   <span className={`${styles.slider} ${styles.round}`}></span>
                 </label>
-              </div>
+              </div> */}
             </div>
             <div className={styles.settingformsec2}>
               <div className={styles.settingformsec1content1}>
                 <h4>Account info</h4>
                 <div className={styles.settingformsec2inputs}>
-                  <div className={styles.itemsettingforminputsec2}>
-                    <label>DISPLAY NAME</label>
-                    <input
-                      type="text"
-                      placeholder='Enter your display name"'
-                      {...register("name", {})}
-                    />
-                  </div>
-                  <div className={styles.itemsettingforminputsec2}>
-                    <label>Phone number</label>
-                    <input
-                      type="text"
-                      placeholder="+2348010203040"
-                      {...register("phoneNumber", {})}
-                    />
-                  </div>
+                  <Input
+                    label="DISPLAY NAME"
+                    register={register}
+                    errors={errors}
+                    name="name"
+                    placeholder="Enter your display name"
+                  />
+
+                  <Input
+                    label="PHONE NUMBER"
+                    register={register}
+                    errors={errors}
+                    name="phoneNumber"
+                    placeholder="+2348010203040"
+                  />
+
                   <div className={styles.itemsettingforminputsec2}>
                     <label>Bio</label>
                     <textarea
@@ -166,54 +120,37 @@ function SettingsForm() {
                   </div>
                 </div>
               </div>
-              <div className={styles.settingformsec1content2}>
-                <h4>Social</h4>
-                <div className={styles.itemsettingforminputsec2}>
-                  <label>portfolio or website</label>
-                  <input
-                    type="text"
-                    placeholder='Enter URL"'
-                    {...register("website", {})}
-                  />
-                </div>
-                <div className={styles.itemsettingforminputsec2twitter}>
-                  <label>twitter</label>
-                  <div className={styles.inputcon}>
-                    <input
-                      type="text"
-                      placeholder="@twitter username"
-                      {...register("twitter", {})}
-                    />
-                    <button type="button">Verify account</button>
-                  </div>
-                  <div
-                    className={show ? styles.socialmedias : styles.hidesocials}
-                  >
-                    <div>
-                      <label>facebook</label>
-                      <div className={styles.inputcon}>
-                        <input
-                          type="text"
-                          placeholder="facebook url"
-                          {...register("facebook", {})}
-                        />
-                        <button type="button">Verify account</button>
-                      </div>
-                    </div>
-                    <div>
-                      <label>instagram</label>
-                      <div className={styles.inputcon}>
-                        <input
-                          type="text"
-                          placeholder="instagram username"
-                          {...register("instagram", {})}
-                        />
-                        <button type="button">Verify account</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.addsocialaccountbtn}>
+              <h4>SOCIAL</h4>
+              <Input
+                label="PORTFOLIO OR WEBSITE"
+                register={register}
+                errors={errors}
+                name="websites"
+                placeholder="Enter your portfolio or website"
+              />
+
+              <Input
+                label="Twitter"
+                register={register}
+                errors={errors}
+                name="twitter"
+                placeholder="@twitter username"
+              />
+              <Input
+                label="Facebook"
+                register={register}
+                errors={errors}
+                name="facebook"
+                placeholder="@facebook username"
+              />
+              <Input
+                label="Instagram"
+                register={register}
+                errors={errors}
+                name="instagram"
+                placeholder="instagram username"
+              />
+              {/* <div className={styles.addsocialaccountbtn}>
                   <button type="button" onClick={() => setshow(!show)}>
                     <span>
                       <img alt="plus icon" src={`/assets/plusicon.svg`} />
@@ -222,22 +159,16 @@ function SettingsForm() {
                       ? "Hide other social account"
                       : "Add more social account"}
                   </button>
-                </div>
-                <div className={styles.socialtext}>
-                  <p>
-                    To update your settings you should sign message through your
-                    wallet. Click &apos Update profile &apos then sign the
-                    message
-                  </p>
-                </div>
-                <div className={styles.clearallsec}></div>
-                <div className={styles.clearallsec}>
-                  <button type="submit">Update Profile</button>
-                  <div className={styles.clearsecone} onClick={clearState}>
-                    <img alt="close icon" src={`/assets/closeicon.svg`} />
-                    <p>Clear all</p>
-                  </div>
-                </div>
+                </div> */}
+              <div className={styles.socialtext}>
+                <p>
+                  To update your settings you should sign message through your
+                  wallet. Click &apos Update profile &apos then sign the message
+                </p>
+              </div>
+              <div className={styles.clearallsec}></div>
+              <div className={styles.clearallsec}>
+                <Button>Update Profile</Button>
               </div>
             </div>
           </form>
