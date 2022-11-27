@@ -16,9 +16,11 @@
   .inputs {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: 40px;
-
+    gap: 10px;
+    button {
+      text-align: center;
+      margin: auto;
+    }
     .mainImgdiv {
       margin: 30px auto 0px;
       width: 240px;
@@ -136,7 +138,6 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
-
       label {
         font-style: normal;
         font-weight: 700;
@@ -144,29 +145,33 @@
         line-height: 128%;
         color: #050505;
       }
-
-      .btns {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+      div {
         width: 100%;
 
-        .button {
-          background: white;
-          border: 1px solid #d3d3d8;
-          padding: 10px 32px;
-          border-radius: 12px;
-          -webkit-border-radius: 12px;
-          -moz-border-radius: 12px;
-          -ms-border-radius: 12px;
-          -o-border-radius: 12px;
-          cursor: pointer;
+        .btns {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
 
-          &:hover,
-          &:focus,
-          &:active {
-            background: #050505;
-            color: white;
+          .button {
+            background: white;
+            border: 1px solid #d3d3d8;
+            padding: 10px 32px;
+            border-radius: 12px;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            -ms-border-radius: 12px;
+            -o-border-radius: 12px;
+            cursor: pointer;
+
+            &:hover,
+            &:focus,
+            &:active {
+              background: #050505;
+              color: white;
+            }
           }
         }
       }
@@ -238,5 +243,31 @@
   .signup {
     color: #f78f21;
     cursor: pointer;
+  }
+}
+.error {
+  width: 97% !important;
+  border-radius: 20px;
+  padding: 5px 10px;
+  padding-top: 6px;
+  background: #efb4b4;
+  text-align: start;
+
+  span {
+    color: red;
+    padding: 10px;
+    font-size: medium;
+    font-weight: 400;
+  }
+}
+
+.birthdate {
+  // display: flex;
+  // // flex-direction: column;
+  // align-items: flex-start;
+  text-align: start;
+  label {
+    font-weight: 700;
+    color: #24243b;
   }
 }
