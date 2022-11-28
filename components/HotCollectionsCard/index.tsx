@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./index.module.scss";
-import NextImage from "../Image";
+import NextImage from "../global/Image";
 import { ICollection } from "../../types/collection.interface";
-import Link from "../Link";
+import Link from "../global/Link";
 import { getUserName } from "../../utils/helpers/getUserName";
 import DefaultAvatar from "../global/DefaultAvatar";
 

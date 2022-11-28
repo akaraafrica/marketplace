@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import NextImage from "../../Image";
+import NextImage from "../Image";
 import styles from "./index.module.scss";
 import Link from "next/link";
 

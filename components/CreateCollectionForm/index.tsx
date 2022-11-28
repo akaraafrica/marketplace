@@ -1,7 +1,7 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
-import Image from "../Image";
+import Image from "../global/Image";
 import DefaultAvatar from "../global/DefaultAvatar";
 import { IUser } from "../../types/user.interface";
 import { toast } from "react-toastify";
@@ -22,22 +22,7 @@ import Input from "../global/Form/Input";
 import Button from "../global/Button/Button";
 import CustomDatePicker from "../global/Form/DatePicker";
 import Select from "../global/Form/Select";
-
-const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
-const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"],
-  ["blockquote", "code-block"],
-  [{ header: 1 }, { header: 2 }],
-  [{ list: "ordered" }, { list: "bullet" }],
-  [{ script: "sub" }, { script: "super" }],
-  [{ indent: "-1" }, { indent: "+1" }],
-  [{ direction: "rtl" }],
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ color: ["#353945"] }, { background: [] }],
-  [{ font: [] }],
-  [{ align: [] }],
-  ["clean"],
-];
+import TextEditor from "../global/TextEditor";
 
 const Index = ({ collection }: { collection: ICollection }) => {
   const {
@@ -47,6 +32,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
     reset,
     setValue,
     getValues,
+    setError,
     formState: { errors },
   } = useForm();
   const [desc, setDesc] = useState("");
@@ -84,6 +70,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
       );
       setSelectedUser(contributors);
       setSelectedItems(collection.items);
+      setValue("items", collection.items);
     }
   }, [collection, setValue]);
   useEffect(() => {
@@ -168,13 +155,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
       setLoading(false);
     } else {
       setLoading(true);
-
-      if (!title || !desc || !type) {
-        toast.error("Ensure required fields are not empty");
-        setLoading(false);
-
-        return;
-      }
       await handleUpload();
       setLoading(false);
     }
@@ -182,10 +162,10 @@ const Index = ({ collection }: { collection: ICollection }) => {
   const handleUpload = async () => {
     const data = getValues();
     data.description = desc;
-    data.type = type;
     data.owners = selectedUser;
     data.items = selectedItems;
     data.worth = selectedItems.reduce((acc, item) => acc + item?.price, 0);
+    console.log(images);
 
     const address: string = localStorage.getItem("address")!;
 
@@ -302,11 +282,14 @@ const Index = ({ collection }: { collection: ICollection }) => {
     }
   };
   const handleChangeRequired = (e?: any, name?: any) => {
-    if (validateImage(e.target.files[0]))
+    if (validateImage(e.target.files[0])) {
       setImages({
         ...images,
         main: e.target.files[0],
       });
+      setValue("image", e.target.files[0]);
+      setError("image", {});
+    }
   };
   const clearState = () => {
     setDesc("");
@@ -322,6 +305,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
     setSelectedItems([]);
     setSelectedUser([]);
   };
+
   return (
     <div className={styles.root}>
       <div className={styles.sciCon}>
@@ -377,24 +361,30 @@ const Index = ({ collection }: { collection: ICollection }) => {
                   Drag or choose your file to upload
                 </span>
               </div>
-              <div
-                onClick={() => target.current?.click()}
-                className={styles.sciuploadbox}
-              >
-                <Image
-                  width="50px"
-                  height="50px"
-                  alt="upload icon"
-                  src={`/assets/uploadicon.svg`}
+              <div className={errors.image?.type ? styles.error : ""}>
+                <div
+                  onClick={() => target.current?.click()}
+                  className={styles.sciuploadbox}
+                >
+                  <Image
+                    width="50px"
+                    height="50px"
+                    alt="upload icon"
+                    src={`/assets/uploadicon.svg`}
+                  />
+                  <p>PNG, GIF, WEBP Max 5MB.</p>
+                </div>
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  {...register("image", { required: true })}
+                  ref={target}
+                  onChange={(e) => handleChangeRequired(e, "main")}
                 />
-                <p>PNG, GIF, WEBP Max 5MB.</p>
+                {errors.image?.type === "required" && (
+                  <span>This field is required</span>
+                )}
               </div>
-              <input
-                style={{ display: "none" }}
-                type="file"
-                ref={target}
-                onChange={(e) => handleChangeRequired(e, "main")}
-              />
             </div>
             <div className={styles.sciuploadseccon}>
               <div className={styles.uploadsechead}>
@@ -524,22 +514,21 @@ const Index = ({ collection }: { collection: ICollection }) => {
             </div>
 
             <div className={styles.editor}>
-              <label>DESCRIPTION</label>
-
-              <div className={styles.editor}>
-                <ReactQuill
-                  modules={{
-                    toolbar: toolbarOptions,
-                  }}
-                  theme="snow"
-                  style={{
-                    height: "16rem",
-                  }}
-                  placeholder='e.g. “After purchasing you will able to receive the logo...”"'
-                  value={desc}
+              <div
+                className={styles.editor}
+                {...register("desc", { required: true })}
+              >
+                <TextEditor
+                  label="DESCRIPTION"
                   onChange={(e: any) => {
+                    setError("desc", {});
+                    setValue("desc", e);
                     setDesc(e);
                   }}
+                  name="desc"
+                  errors={errors}
+                  value={desc}
+                  placeholder='e.g. “After purchasing you will able to receive the logo...”"'
                 />
               </div>
             </div>
@@ -560,7 +549,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
             </div>
             <div className={styles.itemdetailformdropdownsCon}>
               <div className={styles.itemdetailsformdropdown}>
-                <CustomDatePicker getValue={setCountDown} />
+                <CustomDatePicker label="COUNT DOWN" getValue={setCountDown} />
               </div>
             </div>
             <div className={styles.divider}></div>
@@ -651,15 +640,18 @@ const Index = ({ collection }: { collection: ICollection }) => {
             <div className={styles.itemdetailsforminputSearch}>
               <Input
                 label="SELECT ITEMS FROM GALLERY"
-                name="Search"
+                name="items"
                 disabled={!selectedUser.length}
                 onChange={(e: any) => {
                   setItemResultDisplay(true);
                   setSearchItem(e.target.value);
+                  setError("items", {});
                 }}
+                errors={errors}
                 value={searchItem}
                 placeholder="Search items"
               />
+
               <div
                 style={{ display: `${itemResultDisplay ? "flex" : "none"}` }}
                 className={styles.searchResults}
@@ -677,6 +669,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                           }
                         }
                         setSelectedItems([...selectedItems, item]);
+                        setValue("items", [...selectedItems, item]);
                         setSearchItem("");
                         setItemResultDisplay(false);
                       }}

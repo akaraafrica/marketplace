@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import NextImage from "../../components/Image";
-import Link from "../Link";
+import NextImage from "../global/Image";
+import Link from "../global/Link";
 import styles from "./index.module.scss";
 import { maskWallet } from "../../utils/helpers/maskWallet";
 import DefaultAvatar from "../global/DefaultAvatar";

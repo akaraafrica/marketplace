@@ -1,4 +1,4 @@
-import NextImage from "../../../components/Image";
+import NextImage from "../../../components/global/Image";
 import React, { useContext, useEffect, useState } from "react";
 import { CollectionDs } from "../../../ds";
 import styles from "./index.module.scss";

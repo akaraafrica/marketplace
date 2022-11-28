@@ -1,6 +1,6 @@
 import { DefaultContext } from "react-icons";
 import { IItem } from "../../../types/item.interface";
-import NextImage from "../../Image";
+import NextImage from "../../global/Image";
 import styles from "./index.module.scss";
 import DefaultAvatar from "../../global/DefaultAvatar";
 import { getUserName } from "../../../utils/helpers/getUserName";

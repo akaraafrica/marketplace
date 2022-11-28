@@ -24,22 +24,7 @@ import validateImage from "../../utils/helpers/validateImage";
 import Input from "../global/Form/Input";
 import Select from "../global/Form/Select";
 import Button from "../global/Button/Button";
-
-const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
-const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"],
-  ["blockquote", "code-block"],
-  [{ header: 1 }, { header: 2 }],
-  [{ list: "ordered" }, { list: "bullet" }],
-  [{ script: "sub" }, { script: "super" }],
-  [{ indent: "-1" }, { indent: "+1" }],
-  [{ direction: "rtl" }],
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ color: ["#353945"] }, { background: [] }],
-  [{ font: [] }],
-  [{ align: [] }],
-  ["clean"],
-];
+import TextEditor from "../global/TextEditor";
 
 export interface Step {
   count: number;
@@ -152,7 +137,6 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   const [uploadId, setUploadId] = useState(0);
 
   const onSubmit = async () => {
-    const data = getValues();
     if (item) {
       if (item.step === 5) handleEditItem();
     } else {
@@ -497,23 +481,13 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
               />
             </div>
             <div className={styles.editor}>
-              <label>DESCRIPTION</label>
-              <div className={styles.editor}>
-                <ReactQuill
-                  modules={{
-                    toolbar: toolbarOptions,
-                  }}
-                  theme="snow"
-                  style={{
-                    height: "20rem",
-                  }}
-                  placeholder='e.g. “After purchasing you will able to receive the logo...”"'
-                  value={getValues("description")}
-                  onChange={(e: any) => {
-                    setValue("description", e);
-                  }}
-                />
-              </div>
+              <TextEditor
+                label="DESCRIPTION"
+                onChange={(e: any) => setValue("description", e)}
+                value={getValues("description")}
+                name="description"
+                placeholder='e.g. “After purchasing you will able to receive the logo...”"'
+              />
             </div>
 
             {!item && (

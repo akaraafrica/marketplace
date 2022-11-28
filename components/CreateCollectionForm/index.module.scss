@@ -69,7 +69,7 @@
       }
 
       .sciuploadbox {
-        width: 95%;
+        width: 98%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -78,6 +78,9 @@
         gap: 10px;
         background: #23262f;
         border-radius: 16px;
+      }
+      span {
+        color: red;
       }
 
       .sciuploadbox:hover,
@@ -91,12 +94,6 @@
       color: white;
       margin-bottom: 2rem;
       margin-top: 10px;
-
-      label {
-        color: #666;
-        font-size: 12px;
-        font-weight: 600;
-      }
     }
 
     .additional {
@@ -150,7 +147,7 @@
       }
 
       .sciuploadvideobox {
-        width: 95%;
+        width: 98%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -609,5 +606,22 @@
     to {
       transform: rotate(359deg);
     }
+  }
+}
+
+.error {
+  border-radius: 12px;
+  padding: 3px 5px;
+  background: #efb4b4;
+  padding-bottom: 5px;
+  overflow: hidden;
+  position: relative;
+  .ql-snow {
+    border: 0px !important;
+  }
+  .errorMsg {
+    color: red;
+    position: absolute;
+    bottom: 10px;
   }
 }

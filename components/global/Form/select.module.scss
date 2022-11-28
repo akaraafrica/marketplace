@@ -37,3 +37,18 @@
     }
   }
 }
+
+.error {
+  border-radius: 12px;
+  padding: 5px 5px;
+  background: #efb4b4;
+  padding-bottom: 5px;
+  span {
+    color: red !important;
+  }
+  select {
+    border-radius: 8px;
+    background: #23262f;
+    z-index: 4;
+  }
+}

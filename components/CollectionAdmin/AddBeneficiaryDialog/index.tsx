@@ -1,32 +1,18 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { CollectionDs } from "../../ds";
-import Dialog from "../global/Dialog/Dialog";
+import { CollectionDs } from "../../../ds";
+import Dialog from "../../global/Dialog/Dialog";
 import styles from "./styles.module.scss";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
-import { IUser } from "../../types/user.interface";
-import userDs from "../../ds/user.ds";
-import { AuthContext } from "../../contexts/AuthContext";
-import Image from "../Image";
-import DefaultAvatar from "../global/DefaultAvatar";
-import { ICollection } from "../../types/collection.interface";
-import collectionsDs from "../../ds/collections.ds";
-const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
-const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"],
-  ["blockquote", "code-block"],
-  [{ header: 1 }, { header: 2 }],
-  [{ list: "ordered" }, { list: "bullet" }],
-  [{ script: "sub" }, { script: "super" }],
-  [{ indent: "-1" }, { indent: "+1" }],
-  [{ direction: "rtl" }],
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ color: ["#353945"] }, { background: [] }],
-  [{ font: [] }],
-  [{ align: [] }],
-  ["clean"],
-];
-
+import { IUser } from "../../../types/user.interface";
+import userDs from "../../../ds/user.ds";
+import Image from "../../global/Image";
+import DefaultAvatar from "../../global/DefaultAvatar";
+import { ICollection } from "../../../types/collection.interface";
+import collectionsDs from "../../../ds/collections.ds";
+import Input from "../../global/Form/Input";
+import Button from "../../global/Button/Button";
+import TextEditor from "../../global/TextEditor";
 interface Properties {
   open: boolean;
   handleClose: () => void;
@@ -50,12 +36,12 @@ const Index: React.FC<Properties> = ({
   const [percent, setPercent] = useState(0);
   const [euserPercent, setEuserPercent] = useState<any>({});
   const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [searchUser, setSearchUser] = useState("");
   const [searchedUser, setSearchedUser] = useState<IUser[]>([]);
   const [selectedUser, setSelectedUser] = useState<any>([]);
   const [resultDisplay, setResultDisplay] = useState(false);
 
-  const { user } = useContext(AuthContext);
   useEffect(() => {
     if (beneficiary) {
       setName(beneficiary.name);
@@ -95,6 +81,8 @@ const Index: React.FC<Properties> = ({
       description: description,
       percentage: percent,
     };
+    setLoading(true);
+
     if (beneficiary) {
       const data = {
         id: beneficiary.id,
@@ -134,6 +122,7 @@ const Index: React.FC<Properties> = ({
       } catch (error) {
         toast.success("Error updating beneficiary");
         console.log(error);
+        setLoading(false);
       }
     } else {
       try {
@@ -166,6 +155,7 @@ const Index: React.FC<Properties> = ({
       } catch (error) {
         toast.success("Error adding beneficiary");
         console.log(error);
+        setLoading(false);
       }
     }
   };
@@ -235,16 +225,15 @@ const Index: React.FC<Properties> = ({
         <hr />
         {page === 0 && (
           <div className={styles.itemdetailsforminputSearch}>
-            <label>SEARCH TO SELECT BENEFICIARY</label>
-            <input
-              type="text"
-              name="Search"
+            <Input
+              label="SEARCH TO SELECT BENEFICIARY"
               placeholder="Search users"
               value={searchUser}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setResultDisplay(true);
                 setSearchUser(e.target.value);
               }}
+              name="Search"
             />
             <div
               style={{ display: `${resultDisplay ? "flex" : "none"}` }}
@@ -316,15 +305,14 @@ const Index: React.FC<Properties> = ({
                     />
                   </div>
                   <div className={styles.inputDiv}>
-                    <label>Percentage</label>
-                    <input
+                    <Input
+                      label="percentage"
+                      placeholder="10%"
+                      type="number"
+                      required
                       onChange={handleChangePercent}
                       name={(selUser?.id).toString()}
-                      type="number"
                       max={100}
-                      required
-                      // value={percen}
-                      placeholder="10%"
                     />
                   </div>
                 </div>
@@ -342,70 +330,62 @@ const Index: React.FC<Properties> = ({
         {page === 1 && (
           <form onSubmit={handleSubmit}>
             <div className={styles.inputDiv}>
-              <label>Name</label>
-              <input
-                onChange={(e) => setName(e.target.value)}
+              <Input
+                label="Name"
+                onChange={(e: any) => setName(e.target.value)}
                 value={name}
                 type="text"
                 required
+                name="name"
                 placeholder="John doe"
               />
             </div>
             <div className={styles.inputDiv}>
-              <label>Email</label>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
+              <Input
+                label="Email"
+                onChange={(e: any) => setEmail(e.target.value)}
+                value={email}
                 type="email"
                 required
-                value={email}
+                name="email"
                 placeholder="example@gmail.com"
               />
             </div>
             <div className={styles.inputDiv}>
-              <label>Wallet Address</label>
-              <input
-                onChange={(e) => setWallet(e.target.value)}
+              <Input
+                label="Wallet Address"
+                onChange={(e: any) => setWallet(e.target.value)}
+                value={wallet}
                 type="text"
                 required
-                value={wallet}
-                placeholder="0x00000000000..."
+                name="wallet"
+                placeholder="0x0000000..."
               />
             </div>
             <div className={styles.inputDiv}>
-              <label>Description</label>
-              {/* <input
-              onChange={(e) => setDescription(e.target.value)}
-              type="text"
-              placeholder="Enter beneficiary description"
-            /> */}
-              <ReactQuill
-                modules={{
-                  toolbar: toolbarOptions,
-                }}
-                theme="snow"
-                style={{
-                  height: "10rem",
-                  marginBottom: "100px",
-                }}
-                placeholder='e.g. “Funds will be sent to beneficiary...”"'
+              <TextEditor
+                label="Description"
+                onChange={(e: any) => setDescription(e)}
                 value={description}
-                onChange={(e: any) => {
-                  setDescription(e);
-                }}
+                placeholder='e.g. "Funds will be sent to beneficiary..." '
+                height={"10rem"}
               />
             </div>
             <div className={styles.inputDiv}>
-              <label>Percentage</label>
-              <input
-                onChange={(e) => setPercent(parseInt(e.target.value))}
-                type="number"
-                max={100}
-                required
+              <Input
+                label="Percentage"
+                onChange={(e: any) => setPercent(e.target.value)}
                 value={percent}
+                type="number"
+                required
+                name="percent"
                 placeholder="10%"
+                max={100}
               />
             </div>
-            <button type="submit">Submit</button>
+            <Button customStyle={{ width: "100%" }} loading={loading}>
+              Submit
+            </Button>
           </form>
         )}
       </main>

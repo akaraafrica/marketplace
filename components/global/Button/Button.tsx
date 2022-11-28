@@ -6,18 +6,25 @@ type Prop = {
   disabled?: boolean;
   loading?: boolean;
   customStyle?: {};
+  onClick?: () => void;
 };
 
 export default function Button({
   children,
   loading,
+  onClick,
   disabled,
   customStyle,
   ...rest
 }: Prop) {
   return (
     <div className={styles.main}>
-      <button {...rest} disabled={disabled || loading} style={customStyle}>
+      <button
+        onClick={onClick}
+        {...rest}
+        disabled={disabled || loading}
+        style={customStyle}
+      >
         {loading ? (
           <Image
             width="20px"

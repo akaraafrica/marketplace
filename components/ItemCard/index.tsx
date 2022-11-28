@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
-import NextImage from "../Image";
+import NextImage from "../global/Image";
 import styles from "./index.module.scss";
-import Link from "../Link";
+import Link from "../global/Link";
 import AddToCollectionDialog from "../AddToCollectionDialog";
 import { IUser } from "../../types/user.interface";
 import { IItem } from "../../types/item.interface";

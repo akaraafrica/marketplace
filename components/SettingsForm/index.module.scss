@@ -1,5 +1,8 @@
 .settingform {
   margin-top: 150px;
+  h4 {
+    font-weight: 700;
+  }
 }
 .settingformheading h1 {
   font-style: normal;
@@ -180,11 +183,12 @@ input:checked + .slider:before {
   font-weight: 500;
 }
 .itemsettingforminputsec2 label {
-  font-size: 1vw;
-  color: #b1b5c3;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
 }
 .itemsettingforminputsec2 input {
-  width: 25vw;
+  max-width: 40rem;
   height: 3.5vw;
   background-color: transparent;
   border: 2px solid #353945;
@@ -195,7 +199,8 @@ input:checked + .slider:before {
   margin-top: 0.7vw;
 }
 .itemsettingforminputsec2 textarea {
-  width: 25vw;
+  max-width: 29rem;
+  width: 100%;
   height: 9.6vw;
   background-color: transparent;
   border: 2px solid #353945;
@@ -220,7 +225,6 @@ input:checked + .slider:before {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  margin-top: 2vw;
 }
 .settingformsec1content2 h4 {
   font-size: 1.1vw;
@@ -318,13 +322,17 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: space-between;
   width: 38vw;
-  margin-top: 3vw;
+  margin-top: 1vw;
 }
 .settingformcontentcon {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   width: 80%;
+  input {
+    max-width: 30rem;
+    margin-bottom: 1rem !important;
+  }
 }
 .settingformcontentparent {
   display: flex;

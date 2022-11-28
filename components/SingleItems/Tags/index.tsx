@@ -5,7 +5,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import AcceptBid from "../AcceptBid";
 import PlaceBid from "../PlaceBid";
 import styles from "./index.module.scss";
-import Link from "../../Link";
+import Link from "../../global/Link";
 import { IItem } from "../../../types/item.interface";
 import Index from "../AuctionDialog";
 import DefaultAvatar from "../../global/DefaultAvatar";

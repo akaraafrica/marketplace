@@ -1,27 +1,59 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import styles from "./index.module.scss";
-import OnboardingLayout from "../../components/OnboardingLayout";
-import OnboardingInput from "../../components/OnboardingInput";
-import OnboardingButton from "../../components/OnboardingButton";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { BsFillCameraFill } from "react-icons/bs";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../../connectors";
 import { toast } from "react-toastify";
-import VerifyEmail from "../../components/VerifyEmail";
-import NextImage from "../../components/Image";
+import VerifyEmail from "../../components/global/VerifyEmail";
+import NextImage from "../../components/global/Image";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import userDs from "../../ds/user.ds";
 import googleLogin from "../../utils/auth/googleLogin";
 import { AuthContext } from "../../contexts/AuthContext";
 import facebookLogin from "../../utils/auth/facebookLogin";
 import twitterLogin from "../../utils/auth/twitterLogin";
+import OnboardingLayout from "../../components/global/OnboardingLayout";
+import OnboardingInput from "../../components/global/OnboardingInput";
+import Button from "../../components/global/Button/Button";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 const Index = () => {
   const { completeLogin } = useContext(AuthContext);
+  const formSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(4, "Password length should be at least 4 characters")
+      .max(20, "Password cannot exceed more than 20 characters"),
+    confirmPassword: Yup.string()
+      .required("Confirm Password is required")
+      .min(4, "Password length should be at least 4 characters")
+      .max(20, "Password cannot exceed more than 20 characters")
+      .oneOf([Yup.ref("password")], "Passwords do not match"),
+    gender: Yup.string().required("choose gender"),
+    birthdate: Yup.string().required("choose birthdate"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setError: seterror,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    mode: "onTouched",
+    resolver: yupResolver(formSchema),
+  });
+
   const handlegoogleLogin = async () => {
     try {
       const res = await googleLogin(account, setError, setVerify);
@@ -60,20 +92,15 @@ const Index = () => {
       toast.error(error.error?.message || error.message);
     }
   };
-  const [state, setState] = useState({
-    email: "",
-    password: "",
-    name: "",
-    dob: "",
-    confirmPassword: "",
-  });
+
   const [error, setError] = useState("");
   const [gender, setGender] = useState("");
   const [verify, setVerify] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const router = useRouter();
 
-  const { account, active, activate } = useWeb3React();
+  const { account, activate } = useWeb3React();
 
   const target = useRef<HTMLInputElement>(null);
 
@@ -89,50 +116,22 @@ const Index = () => {
     console.log(`Image`, e.target.files[0]);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setState((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmit = async () => {
     setError("");
     if (!account) {
       toast.info("Please connect with metamask to login");
       return;
     }
-
-    const pattern =
-      /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
-    const result = pattern.test(state.email);
+    const { name, email, birthdate, password } = getValues();
+    console.log({ name, email, birthdate, password });
 
     try {
-      if (!state.email) {
-        return setError("Email field is empty");
-      }
-      if (!state.name) {
-        return setError("Name field is empty");
-      }
-      if (!state.password) {
-        return setError("Password field is empty");
-      }
-      if (!result) {
-        return setError("Invalid email, check email and try again");
-      }
-      if (state.password.length < 6) {
-        return setError(
-          "Password is too short, choose a more secured password"
-        );
-      }
-      if (state.password !== state.confirmPassword) {
-        return setError("Password and confirm password does not match");
-      }
-
       const res = await userDs.create({
         address: account,
-        email: state.email,
-        password: state.password,
-        name: state.name,
-        dob: state.dob,
+        email: email,
+        password: password,
+        name: name,
+        dob: birthdate,
         gender: gender,
       });
       if (image) {
@@ -159,7 +158,6 @@ const Index = () => {
     }
   };
 
-  //
   return (
     <OnboardingLayout>
       {verify ? (
@@ -170,7 +168,7 @@ const Index = () => {
       ) : (
         <div className={styles.login}>
           <h6 className={styles.title}>Create an account</h6>
-          <form className={styles.inputs}>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.inputs}>
             <div className={styles.mainImgdiv}>
               <NextImage
                 className={styles.mainImg}
@@ -198,91 +196,105 @@ const Index = () => {
 
             {error !== "" && <span className={styles.error}>{error}</span>}
             <OnboardingInput
-              onChange={handleChange}
+              register={register}
+              errors={errors}
               label="Name"
               name="name"
               type="text"
               placeholder="John Smith"
             />
             <OnboardingInput
-              onChange={handleChange}
+              register={register}
+              errors={errors}
               label="Email"
               name="email"
               type="email"
               placeholder="sarah@gmail.com"
             />
             <OnboardingInput
-              onChange={handleChange}
+              register={register}
+              errors={errors}
               label="Password"
               name="password"
               type="password"
               placeholder="***********"
             />
-            <div className={styles.confirm}>
-              <label>Confirm password</label>
-              <input
-                onChange={handleChange}
-                name="confirmPassword"
-                type="password"
-                placeholder="***********"
-                className={
-                  state.confirmPassword &&
-                  state.confirmPassword === state.password
-                    ? styles.input
-                    : styles.errorInput
-                }
-              />
-            </div>
-            {state.confirmPassword &&
-              state.confirmPassword !== state.password && (
-                <span className={styles.confirmError}>
-                  Password does not match
-                </span>
-              )}
+            <OnboardingInput
+              register={register}
+              errors={errors}
+              label="Password"
+              name="confirmPassword"
+              type="password"
+              placeholder="***********"
+            />
+
             <div className={styles.gender}>
               <label htmlFor="gender">Gender</label>
-              <div className={styles.btns}>
-                <button
-                  className={gender === "MALE" ? styles.active : styles.button}
-                  onClick={() => setGender("MALE")}
-                  type="button"
-                >
-                  Male
-                </button>
-                <button
-                  className={
-                    gender === "FEMALE" ? styles.active : styles.button
-                  }
-                  onClick={() => setGender("FEMALE")}
-                  type="button"
-                >
-                  Female
-                </button>
-                <button
-                  className={
-                    gender === "OTHERS" ? styles.active : styles.button
-                  }
-                  onClick={() => setGender("OTHERS")}
-                  type="button"
-                >
-                  Others
-                </button>
+              <div
+                className={
+                  errors?.gender?.type === "required" ? styles.error : ""
+                }
+              >
+                <div className={styles.btns}>
+                  <button
+                    className={
+                      gender === "MALE" ? styles.active : styles.button
+                    }
+                    onClick={() => {
+                      setGender("MALE");
+                      setValue("gender", "MALE");
+                      seterror("gender", {});
+                    }}
+                    type="button"
+                  >
+                    Male
+                  </button>
+                  <button
+                    className={
+                      gender === "FEMALE" ? styles.active : styles.button
+                    }
+                    onClick={() => {
+                      setGender("FEMALE");
+                      setValue("gender", "FEMALE");
+                      seterror("gender", {});
+                    }}
+                    type="button"
+                  >
+                    Female
+                  </button>
+                  <button
+                    className={
+                      gender === "OTHERS" ? styles.active : styles.button
+                    }
+                    onClick={() => {
+                      setGender("OTHERS");
+                      setValue("gender", "OTHERS");
+                      seterror("gender", {});
+                    }}
+                    type="button"
+                  >
+                    Others
+                  </button>
+                </div>
+                {errors.gender && (
+                  <span>{errors?.gender?.message as string}</span>
+                )}
               </div>
             </div>
-            <div className={styles.gender}>
+            <div className={styles.birthdate}>
               <label htmlFor="gender">Birthdate</label>
-              <div className={styles.btns}>
-                <OnboardingInput
-                  type="date"
-                  onChange={handleChange}
-                  label=""
-                  name="dob"
-                  placeholder="choose your DOB"
-                />
-              </div>
+              <OnboardingInput
+                type="date"
+                label=""
+                register={register}
+                errors={errors}
+                name="birthdate"
+                placeholder="choose your DOB"
+              />
             </div>
+            <Button loading={loading}>Sign up </Button>
           </form>
-          <OnboardingButton text="Sign up" onClick={handleSubmit} />
+
           <span className={styles.continue}>Or continue with</span>
           <div className={styles.socials}>
             <span>

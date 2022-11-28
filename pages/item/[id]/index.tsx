@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import React, { useContext, useEffect, useState } from "react";
-import NextImage from "../../../components/Image";
+import NextImage from "../../../components/global/Image";
 import Layout from "../../../components/Layout";
 import QuickButtons from "../../../components/SingleItems/QuickButtons";
 import Tags from "../../../components/SingleItems/Tags";

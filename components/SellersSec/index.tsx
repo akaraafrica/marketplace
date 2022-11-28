@@ -6,7 +6,7 @@ import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import swiperClass from "swiper/types/swiper-class";
-import NextImage from "../Image";
+import NextImage from "../global/Image";
 
 const SellersSec = (props: any) => {
   const [swiperRef, setSwiperRef] = useState<swiperClass>();

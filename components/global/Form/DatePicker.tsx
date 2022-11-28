@@ -16,26 +16,29 @@ const WhiteBorderTextField = styled(TextField)`
   }
 `;
 
-export default function ResponsiveDateTimePickers({ getValue }: any) {
+export default function CustomeDateTimePickers({ label, getValue }: any) {
   const [value, setValue] = React.useState<Dayjs | null>(
     dayjs("2018-01-01T00:00:00.000Z")
   );
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Stack spacing={3} className={styles.input}>
-        <DateTimePicker
-          label=""
-          renderInput={(params) => {
-            return <WhiteBorderTextField {...params} />;
-          }}
-          value={value}
-          onChange={(newValue) => {
-            setValue(newValue);
-            getValue(new Date(newValue as any));
-          }}
-        />
-      </Stack>
-    </LocalizationProvider>
+    <div className={styles.main}>
+      <label htmlFor="">{label}</label>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Stack spacing={3} className={styles.input}>
+          <DateTimePicker
+            label=""
+            renderInput={(params) => {
+              return <WhiteBorderTextField {...params} />;
+            }}
+            value={value}
+            onChange={(newValue) => {
+              setValue(newValue);
+              getValue(new Date(newValue as any));
+            }}
+          />
+        </Stack>
+      </LocalizationProvider>
+    </div>
   );
 }

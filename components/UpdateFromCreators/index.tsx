@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
 import { Badge } from "@mui/material";
-import NextImage from "../../components/Image";
+import NextImage from "../global/Image";
 interface DT {
   badgecontent: number;
   name: string;

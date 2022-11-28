@@ -11,7 +11,7 @@ import { NotificationDs, ContributorDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import useSWR, { mutate, SWRConfig, unstable_serialize } from "swr";
 import { INotification } from "../../types/notification.interface";
-import NextImage from "../../components/Image";
+import NextImage from "../../components/global/Image";
 import Link from "next/link";
 import DefaultAvatar from "../../components/global/DefaultAvatar";
 import useWindowSize from "../../hooks/useWindowSize";
