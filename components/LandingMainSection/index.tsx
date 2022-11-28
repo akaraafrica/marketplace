@@ -12,7 +12,7 @@ const Index = ({ collection }: properties) => {
   return (
     <div className={styles.root}>
       <LandingMain />
-      <LandingBidding collection={collection} />
+      {collection && <LandingBidding collection={collection} />}
       <div className={styles.bottom}>
         <ListingMainCard />
       </div>
