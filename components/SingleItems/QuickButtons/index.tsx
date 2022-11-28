@@ -33,7 +33,9 @@ export default function QuickButtons({
   collection,
 }: IQuickButtons) {
   const router = useRouter();
-  const url = `${process.env.NEXT_PUBLIC_DOMAIN}${router.asPath}`;
+  const url = `${window.location.origin || process.env.NEXT_PUBLIC_DOMAIN}${
+    router.asPath
+  }`;
   const [showSocial, setShowSocial] = useState(false);
   const [loading, setLoading] = useState(false);
   const { mutate } = useSWRConfig();
