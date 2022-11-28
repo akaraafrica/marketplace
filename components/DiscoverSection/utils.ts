@@ -66,21 +66,27 @@ export const handleChange = async (
 ) => {
   let value = e?.target?.value;
   if (param === "SORT") {
-    console.log(value);
-
-    setFilter({ ...filter, sort: value });
     setLoading(true);
     const res = await itemDs.getFilterData({ ...filter, sort: value });
     setLoading(false);
-    setData(res);
+    setData(res[1]);
+    setFilter({
+      ...filter,
+      sort: value,
+      filterCount: res[0],
+    });
   }
   if (param === "CREATORS") {
     const val = value === "Verified only" ? true : false;
-    setFilter({ ...filter, verifiedCreator: val });
     setLoading(true);
     const res = await itemDs.getFilterData({ ...filter, verifiedCreator: val });
     setLoading(false);
-    setData(res);
+    setData(res[1]);
+    setFilter({
+      ...filter,
+      verifiedCreator: val,
+      filterCount: res[0],
+    });
   }
 };
 
@@ -95,16 +101,19 @@ export const handleSliderChange = async (
   setLoading: any
 ) => {
   const value = e.target.value;
-  setFilter({
-    ...filter,
-    priceRange: value,
-  });
+
   setLoading(true);
   const res = await itemDs.getFilterData({
     ...filter,
     priceRange: value,
   });
-  setData(res);
+  setData(res[1]);
+  setFilter({
+    ...filter,
+    priceRange: value,
+
+    filterCount: res[0],
+  });
   setLoading(false);
 };
 
@@ -117,13 +126,14 @@ export const handleCategoryChange = async (
   filter: any,
   setFilter: any
 ) => {
-  // if (category === "ALL") {
-  //   setData(items);
-  //   return;
-  // }
   setFilter({ ...filter, category });
   setLoading(true);
   const res = await itemDs.getFilterData({ ...filter, category: category });
-  setData(res);
+  setData(res[1]);
+  setFilter({
+    ...filter,
+    category,
+    filterCount: res[0],
+  });
   setLoading(false);
 };

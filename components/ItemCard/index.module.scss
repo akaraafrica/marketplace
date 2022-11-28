@@ -25,6 +25,13 @@
     padding: 20px 0 5px;
     color: #fcfcfd;
 
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 6rem;
+      white-space: nowrap;
+    }
+
     .previewcardprice {
       span {
         border: 1px solid #45b36b;

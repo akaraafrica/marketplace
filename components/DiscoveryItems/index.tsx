@@ -16,26 +16,11 @@ function DiscoveryItems({ initialItems, filter }: properties) {
   const [hasMore, setHasMore] = useState(true);
   const router = useRouter();
 
-  const isMarketplace = router.pathname === "/marketplace";
-
   useEffect(() => {
     setItems(initialItems);
   }, [initialItems]);
 
-  // const fetchMoreData = async () => {
-  //   let data = await ItemDs.getMore(items.length, filter);
-  //   setItems([...items, ...data]);
-  //   if (data.length == 0) {
-  //     setHasMore(false);
-  //   }
-  // };
   return (
-    // <InfiniteScroll
-    //   dataLength={items?.length || 0}
-    //   next={fetchMoreData}
-    //   hasMore={isMarketplace ? hasMore : false}
-    //   loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
-    // >
     <div className={styles.allitems}>
       {items?.map((item: any, idx) => {
         return (
@@ -51,7 +36,6 @@ function DiscoveryItems({ initialItems, filter }: properties) {
         );
       })}
     </div>
-    // </InfiniteScroll>
   );
 }
 export default DiscoveryItems;
