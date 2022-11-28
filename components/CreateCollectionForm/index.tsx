@@ -22,22 +22,7 @@ import Input from "../global/Form/Input";
 import Button from "../global/Button/Button";
 import CustomDatePicker from "../global/Form/DatePicker";
 import Select from "../global/Form/Select";
-
-const ReactQuill: any = dynamic(() => import("react-quill"), { ssr: false });
-const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"],
-  ["blockquote", "code-block"],
-  [{ header: 1 }, { header: 2 }],
-  [{ list: "ordered" }, { list: "bullet" }],
-  [{ script: "sub" }, { script: "super" }],
-  [{ indent: "-1" }, { indent: "+1" }],
-  [{ direction: "rtl" }],
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ color: ["#353945"] }, { background: [] }],
-  [{ font: [] }],
-  [{ align: [] }],
-  ["clean"],
-];
+import TextEditor from "../global/TextEditor";
 
 const Index = ({ collection }: { collection: ICollection }) => {
   const {
@@ -529,38 +514,22 @@ const Index = ({ collection }: { collection: ICollection }) => {
             </div>
 
             <div className={styles.editor}>
-              <label>DESCRIPTION</label>
               <div
-                className={
-                  errors?.desc?.type === "required" ? styles.error : ""
-                }
+                className={styles.editor}
+                {...register("desc", { required: true })}
               >
-                <div
-                  className={styles.editor}
-                  {...register("desc", { required: true })}
-                >
-                  <ReactQuill
-                    modules={{
-                      toolbar: toolbarOptions,
-                    }}
-                    theme="snow"
-                    style={{
-                      height: "16rem",
-                    }}
-                    placeholder='e.g. “After purchasing you will able to receive the logo...”"'
-                    value={desc}
-                    onChange={(e: any) => {
-                      setError("desc", {});
-                      setValue("desc", e);
-                      setDesc(e);
-                    }}
-                  />
-                  {errors?.desc?.type === "required" && (
-                    <span className={styles.errorMsg}>
-                      This field is required
-                    </span>
-                  )}
-                </div>
+                <TextEditor
+                  label="DESCRIPTION"
+                  onChange={(e: any) => {
+                    setError("desc", {});
+                    setValue("desc", e);
+                    setDesc(e);
+                  }}
+                  name="desc"
+                  errors={errors}
+                  value={desc}
+                  placeholder='e.g. “After purchasing you will able to receive the logo...”"'
+                />
               </div>
             </div>
             <div className={styles.itemdetailsforminput}>
@@ -670,7 +639,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
             </div>
             <div className={styles.itemdetailsforminputSearch}>
               <Input
-                {...register("items", { required: true })}
                 label="SELECT ITEMS FROM GALLERY"
                 name="items"
                 disabled={!selectedUser.length}

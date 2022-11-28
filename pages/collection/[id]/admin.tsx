@@ -27,7 +27,7 @@ const LunchTimeDialog: any = dynamic(
   () => import("../../../components/LunchTimeDialog")
 );
 const AddBeneficiaryDialog: any = dynamic(
-  () => import("../../../components/AddBeneficiaryDialog")
+  () => import("../../../components/CollectionAdmin/AddBeneficiaryDialog")
 );
 const MintCollectionDialog: any = dynamic(
   () => import("../../../components/CollectionAdmin/MintCollectionDialog")
@@ -50,7 +50,6 @@ const Index = () => {
   const { data: collection, mutate } = useSWR<ICollection>("admin" + id, () =>
     CollectionDs.getCollectionById(id)
   );
-  console.log({ collection });
 
   const [open, setOpen] = useState(1);
   const [openVerifyDialog, setOpenVerifyDialog] = useState(false);
