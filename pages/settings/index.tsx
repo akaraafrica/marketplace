@@ -1,5 +1,5 @@
 import React from "react";
-import SettingsForm from "../../components/SettingsForm/index";
+import SettingsForm from "../../components/SettingsForm";
 import Layout from "../../components/Layout";
 import { BiArrowBack } from "react-icons/bi";
 import styles from "./index.module.scss";

@@ -4,8 +4,8 @@ import React, { useRef, useState } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import { ProfileDs } from "../../ds";
-import Button from "../../components/global/Button/Button";
-import Input from "../../components/global/Form/Input";
+import Button from "../global/Button/Button";
+import Input from "../global/Form/Input";
 
 function SettingsForm() {
   const [foto, setFoto] = useState(null);
