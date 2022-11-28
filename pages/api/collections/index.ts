@@ -7,6 +7,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const data = await prisma.collection.findMany({
+        where: {
+          status: "PUBLISHED",
+        },
         include: {
           author: {
             include: {

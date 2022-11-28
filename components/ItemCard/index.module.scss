@@ -150,11 +150,12 @@
       align-items: center;
 
       .image {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         margin: -8px;
-        border: 2px solid #353945;
+        // border: 1px solid #353945;
+        background-color: #000;
       }
 
       :first-child {
