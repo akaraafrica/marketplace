@@ -49,10 +49,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           draftItems: {
             create: data?.items.map((item: IItem) => ({
-              id: item.id,
+              itemId: item.id,
               title: item.title,
               description: item.description,
               price: item.price,
+              images: item.images,
               ownerId: item.ownerId,
             })),
           },

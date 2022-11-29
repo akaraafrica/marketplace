@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.scss";
 import ItemCard from "../ItemCard/index";
 import { IItem } from "../../types/item.interface";
-import { ItemDs } from "../../ds";
-import { useRouter } from "next/router";
 
 interface properties {
   initialItems: IItem[];
@@ -13,29 +10,11 @@ interface properties {
 
 function DiscoveryItems({ initialItems, filter }: properties) {
   const [items, setItems] = useState(initialItems);
-  const [hasMore, setHasMore] = useState(true);
-  const router = useRouter();
-
-  const isMarketplace = router.pathname === "/marketplace";
-
   useEffect(() => {
     setItems(initialItems);
   }, [initialItems]);
 
-  // const fetchMoreData = async () => {
-  //   let data = await ItemDs.getMore(items.length, filter);
-  //   setItems([...items, ...data]);
-  //   if (data.length == 0) {
-  //     setHasMore(false);
-  //   }
-  // };
   return (
-    // <InfiniteScroll
-    //   dataLength={items?.length || 0}
-    //   next={fetchMoreData}
-    //   hasMore={isMarketplace ? hasMore : false}
-    //   loader={<h6 style={{ textAlign: "center" }}>Loading...</h6>}
-    // >
     <div className={styles.allitems}>
       {items?.map((item: any, idx) => {
         return (
@@ -51,7 +30,6 @@ function DiscoveryItems({ initialItems, filter }: properties) {
         );
       })}
     </div>
-    // </InfiniteScroll>
   );
 }
 export default DiscoveryItems;
