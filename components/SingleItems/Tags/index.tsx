@@ -77,7 +77,7 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
             </div>
           </Link>
           <div className={styles.desc}>
-            <p>{item && parse(item.description).toString()}</p>
+            <div>{item && parse(item.description)}</div>
           </div>
         </div>
         {user && (

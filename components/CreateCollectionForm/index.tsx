@@ -7,7 +7,6 @@ import { IUser } from "../../types/user.interface";
 import { toast } from "react-toastify";
 import { IItem } from "../../types/item.interface";
 import { RiVideoUploadLine } from "react-icons/ri";
-import dynamic from "next/dynamic";
 import { getFileUploadURL } from "../../utils/upload/fileUpload";
 import { CollectionDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -35,6 +34,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
     setError,
     formState: { errors },
   } = useForm();
+
   const [desc, setDesc] = useState("");
   const [type, setType] = useState("");
   const [countDown, setCountDown] = useState(new Date());
@@ -165,7 +165,6 @@ const Index = ({ collection }: { collection: ICollection }) => {
     data.owners = selectedUser;
     data.items = selectedItems;
     data.worth = selectedItems.reduce((acc, item) => acc + item?.price, 0);
-    console.log(images);
 
     const address: string = localStorage.getItem("address")!;
 
@@ -182,9 +181,9 @@ const Index = ({ collection }: { collection: ICollection }) => {
         }
       }
 
-      let promise: any = [];
+      let Imagepromise: any = [];
       imageArr.forEach((image) => {
-        promise.push(
+        Imagepromise.push(
           getFileUploadURL(
             image.file,
             `collection/${result.data.id}/${image.name}`
@@ -197,19 +196,15 @@ const Index = ({ collection }: { collection: ICollection }) => {
         `/collection/${result.data.id}/${title.replace(" ", "-")}`
       );
 
-      const imageURLs = await Promise.all(promise);
+      const imageURLs = await Promise.all(Imagepromise);
+
       await CollectionDs.updateData({
         id: result.data.id,
         images: imageURLs,
-        videos: [videoUrl],
+        videos: videoUrl ? [videoUrl] : [],
       });
 
-      toast.success("collection created successful");
-      reset();
-      clearState();
-      setTimeout(() => {
-        router.push(`/collection/${result.data.id}`);
-      }, 3000);
+      await router.push(`/collection/${result.data.id}`);
     } catch (error) {
       console.log(error);
       toast.error("error creating collection");
@@ -267,10 +262,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
           videos: [videoUrl],
         });
       }
-      toast.success("collection updated successful");
-      setTimeout(() => {
-        router.push("/collection/" + collection.id);
-      }, 2000);
+      await router.push("/collection/" + collection.id);
     } catch (error) {
       console.log(error);
     }
@@ -637,7 +629,10 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 ))}
               </div>
             </div>
-            <div className={styles.itemdetailsforminputSearch}>
+            <div
+              className={styles.itemdetailsforminputSearch}
+              {...register("items", { required: true })}
+            >
               <Input
                 label="SELECT ITEMS FROM GALLERY"
                 name="items"
@@ -645,6 +640,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 onChange={(e: any) => {
                   setItemResultDisplay(true);
                   setSearchItem(e.target.value);
+
                   setError("items", {});
                 }}
                 errors={errors}

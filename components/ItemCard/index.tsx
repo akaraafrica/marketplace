@@ -87,11 +87,9 @@ function ItemCard(props: ItemCardProps) {
             )}
             <div className={styles.previewcardnamebox}>
               <span>{props.name}</span>
-              {!props.collectionImages && (
-                <div className={styles.previewcardprice}>
-                  <span>{props.price} ETH</span>
-                </div>
-              )}
+              <div className={styles.previewcardprice}>
+                <span>{props.price} ETH</span>
+              </div>
             </div>
             {props.item && props?.item?.bids?.length > 0 && (
               <>

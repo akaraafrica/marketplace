@@ -143,11 +143,12 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       setOpenDialog(true);
     }
   };
-
+  const [loading, setLoading] = useState(false);
   const handleEditItem = async () => {
     if (!user) return;
     const data = getValues();
     try {
+      setLoading(true);
       await ItemDs.updateItem({ ...data, id: item!.id });
       let imageArr = [];
       for (const image of Object.entries(images)) {
@@ -163,7 +164,6 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
           getFileUploadURL(image.file, `item/${item!.id}/${image.name}`)
         );
       });
-      toast.success("successful");
       const imageURLs = await Promise.all(promise);
       if (imageURLs.length) {
         await itemDs.updateData({ id: item!.id, images: imageURLs });
@@ -171,6 +171,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       setStep({ ...step, loading: false, complete: true });
       router.push("/item/" + item?.id);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -540,12 +541,12 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
           {item && (
             <div>
               <div className={styles.putonscalebtnsec}>
-                <button type="submit" onClick={handleEditItem}>
+                <Button onClick={handleEditItem} loading={loading}>
                   Edit item
                   <span>
                     <img src={`/assets/arrow.svg`} alt="" />
                   </span>
-                </button>
+                </Button>
               </div>
             </div>
           )}
