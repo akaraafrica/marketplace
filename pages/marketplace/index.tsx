@@ -9,7 +9,6 @@ import {
   handleResetFilter,
   handleSliderChange,
 } from "../../components/DiscoverSection/utils";
-import { IItem } from "../../types/item.interface";
 import useSWR, { SWRConfig, unstable_serialize, mutate } from "swr";
 import itemDs from "../../ds/item.ds";
 import useDebounce from "../../hooks/useDebounce";
@@ -29,30 +28,50 @@ const preFechedData = (page: any, filter: any) => {
 };
 const Index = () => {
   const router = useRouter();
-  const page = Number(router?.query?.page) || 1;
+  const [page, setPage] = useState(Number(router?.query?.page) || 1);
   const [open, setOpen] = useState(Filter.All);
-
-  const { data: items } = useSWR<any>(["discovery" + page], () =>
-    Discovery.getPageData(open, page)
-  );
-  const [data, setData] = useState<null | []>(null);
-  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
     category: "ALL",
     verifiedCreator: false,
     sort: "Most liked",
     priceRange: 1000,
+    filterCount: 0,
   });
+
+  const { data: items } = useSWR<any>(["discovery" + page], () =>
+    Discovery.getPageData(filter, page)
+  );
+
+  const [data, setData] = useState<null | []>(null);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm: string = useDebounce(searchTerm, 250);
 
   useEffect(() => {
+    if (filter.filterCount < 6) {
+      setPage(1);
+    }
+  }, [data]);
+
+  useEffect(() => {
     if (items) {
       setData(items[1]);
-      preFechedData(page + 1, open);
-      preFechedData(page - 1, open);
+      preFechedData(page + 1, filter);
+      preFechedData(page - 1, filter);
     }
   }, [items]);
+  useEffect(() => {
+    setFilter({
+      ...filter,
+      filterCount: items[0],
+    });
+  }, []);
+  useEffect(() => {
+    if (data) {
+      preFechedData(page + 1, filter);
+      preFechedData(page - 1, filter);
+    }
+  }, [filter]);
 
   const handleSearch = async (e: any) => {
     const value: string = e.target.value.toLowerCase();
@@ -278,27 +297,30 @@ const Index = () => {
         </div>
         <div className={styles.pagination}>
           <button
-            onClick={() =>
+            onClick={() => {
+              setPage(page - 1);
+
               page === 2
                 ? router.push("/marketplace", undefined, { shallow: true })
                 : router.push(`/marketplace?page=${page - 1}`, undefined, {
                     shallow: true,
-                  })
-            }
+                  });
+            }}
             disabled={page === 1}
           >
             Previous
           </button>
           <p>
-            Page {page} of {items && Math.ceil(items[0] / 6)}{" "}
+            Page {page} of {items && Math.ceil(filter.filterCount / 6)}{" "}
           </p>
           <button
-            onClick={() =>
+            onClick={() => {
+              setPage(page + 1);
               router.push(`/marketplace?page=${page + 1}`, undefined, {
                 shallow: true,
-              })
-            }
-            disabled={items && page >= Math.ceil(items[0] / 6)}
+              });
+            }}
+            disabled={items && page >= Math.ceil(filter.filterCount / 6)}
           >
             Next
           </button>
@@ -309,8 +331,13 @@ const Index = () => {
 };
 export async function getServerSideProps(ctx: any) {
   const page = Number(ctx.query.page);
-
-  let discovery = await Discovery.getPageData(Filter.All, page || 1);
+  const filter = {
+    category: "ALL",
+    verifiedCreator: false,
+    sort: "Most liked",
+    priceRange: 1000,
+  };
+  let discovery = await Discovery.getPageData(filter, page || 1);
   return {
     props: {
       fallback: {

@@ -10,6 +10,7 @@ interface properties {
 
 function DiscoveryItems({ initialItems, filter }: properties) {
   const [items, setItems] = useState(initialItems);
+
   useEffect(() => {
     setItems(initialItems);
   }, [initialItems]);

@@ -30,13 +30,22 @@ const SubscribeModal: any = dynamic(
 );
 const HowItWorks: any = dynamic(() => import("../components/HowItWorks/index"));
 const Lottie: any = dynamic(() => import("react-lottie-player"));
+
+const filter = {
+  category: "ALL",
+  verifiedCreator: false,
+  sort: "Most liked",
+  priceRange: 1000,
+};
+
 const Home = () => {
   const { data: collection } = useSWR<ICollection[]>(["collection"], () =>
     CollectionDs.getCollections()
   );
-  const { data: discovery } = useSWR<IItem[]>(["discovery"], () =>
-    DiscoveryDs.getData(Filter.All)
+  const { data: discovery } = useSWR<any>(["discovery"], () =>
+    DiscoveryDs.getPageData(filter, 1)
   );
+
   const { data: item } = useSWR<IItem[]>(["item"], () =>
     ItemDs.getHotItemsData()
   );
@@ -72,7 +81,7 @@ const Home = () => {
         ) : (
           <></>
         )}
-        {discovery ? <Discover items={discovery} /> : <></>}
+        {discovery ? <Discover items={discovery[1]} /> : <></>}
         <div className={styles.discoverdividercon}></div>
         <div id="subscribe">
           <SubscribeModal />
@@ -86,7 +95,7 @@ const Home = () => {
 
 export async function getServerSideProps() {
   let [discovery, collection, item, sellers] = await Promise.all([
-    DiscoveryDs.getData(Filter.All),
+    DiscoveryDs.getPageData(filter, 1),
     CollectionDs.getCollections(),
     ItemDs.getHotItemsData(),
     UserDs.fetchSellers(),

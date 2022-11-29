@@ -7,6 +7,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const items = await prisma.collection.findMany({
         where: {
+          status: "PUBLISHED",
           OR: [
             {
               title: {
