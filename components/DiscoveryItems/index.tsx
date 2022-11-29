@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./index.module.scss";
 import ItemCard from "../ItemCard/index";
 import { IItem } from "../../types/item.interface";
-import { ItemDs } from "../../ds";
-import { useRouter } from "next/router";
 
 interface properties {
   initialItems: IItem[];
@@ -13,8 +10,6 @@ interface properties {
 
 function DiscoveryItems({ initialItems, filter }: properties) {
   const [items, setItems] = useState(initialItems);
-  const [hasMore, setHasMore] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     setItems(initialItems);

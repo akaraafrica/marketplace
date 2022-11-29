@@ -163,6 +163,7 @@ model Collection {
 
 model DraftItems {
   id           Int         @id @default(autoincrement())
+  itemId       Int
   ownerId      Int
   collectionId Int?
   title        String

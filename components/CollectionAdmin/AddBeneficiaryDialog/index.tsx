@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { CollectionDs } from "../../../ds";
 import Dialog from "../../global/Dialog/Dialog";
 import styles from "./styles.module.scss";
-import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import { IUser } from "../../../types/user.interface";
 import userDs from "../../../ds/user.ds";
