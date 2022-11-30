@@ -1,4 +1,4 @@
-import styles from "./input.module.scss";
+import styles from "./Input.module.scss";
 
 type InputProps = {
   label: string;
