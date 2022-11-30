@@ -119,13 +119,14 @@ const Index = () => {
   const onSubmit = async () => {
     setError("");
     if (!account) {
+      setError("Please connect with metamask to signup");
       toast.info("Please connect with metamask to login");
       return;
     }
     const { name, email, birthdate, password } = getValues();
-    console.log({ name, email, birthdate, password });
 
     try {
+      setLoading(true);
       const res = await userDs.create({
         address: account,
         email: email,
@@ -149,6 +150,8 @@ const Index = () => {
       }
       console.log("response", res);
     } catch (error: any) {
+      setLoading(false);
+
       if (error.response.status === 401)
         return setError(error.response.data.message);
       if (error.response.status === 409)

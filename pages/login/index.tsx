@@ -92,6 +92,7 @@ const Index = () => {
   const submit = async () => {
     if (!account) {
       toast.info("Please connect with metamask to login");
+      setError("Please connect with metamask to signup");
       return;
     }
     const data = getValues();
