@@ -32,11 +32,11 @@ const Index = () => {
     password: Yup.string()
       .required("Password is required")
       .min(4, "Password length should be at least 4 characters")
-      .max(20, "Password cannot exceed more than 20 characters"),
+      .max(25, "Password cannot exceed more than 20 characters"),
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
       .min(4, "Password length should be at least 4 characters")
-      .max(20, "Password cannot exceed more than 20 characters")
+      .max(25, "Password cannot exceed more than 20 characters")
       .oneOf([Yup.ref("password")], "Passwords do not match"),
     gender: Yup.string().required("choose gender"),
     birthdate: Yup.string().required("choose birthdate"),

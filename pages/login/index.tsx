@@ -30,7 +30,7 @@ const Index = () => {
     password: Yup.string()
       .required("Password is required")
       .min(4, "Password length should be at least 4 characters")
-      .max(20, "Password cannot exceed more than 20 characters"),
+      .max(25, "Password cannot exceed more than 20 characters"),
   });
 
   const {
@@ -84,6 +84,7 @@ const Index = () => {
       console.log("google login ", res);
       completeLogin(res);
     } catch (error: any) {
+      console.log(error);
       toast.error(error.error?.message || error.message);
     }
   };
@@ -102,8 +103,11 @@ const Index = () => {
       });
       console.log("new signin result here ", res);
     } catch (error: any) {
+      console.log("error here ", error.error?.message);
+
       setLoading(false);
       toast.error(error.error?.message || error.message);
+      setError(error.error?.message || error.message);
     }
   };
 
