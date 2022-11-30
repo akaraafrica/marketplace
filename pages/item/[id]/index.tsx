@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import React, { useContext, useEffect, useState } from "react";
 import NextImage from "../../../components/global/Image";
-import Layout from "../../../components/Layout";
+import Layout from "../../../components/global/Layout";
 import QuickButtons from "../../../components/SingleItems/QuickButtons";
 import Tags from "../../../components/SingleItems/Tags";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -12,7 +12,6 @@ import styles from "./index.module.scss";
 import Link from "next/link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import { useRouter } from "next/router";
-import parse from "html-react-parser";
 
 const Index = () => {
   const router = useRouter();

@@ -1,14 +1,12 @@
 import Items from "../../components/Dashboard/Items";
 import ItemGrid from "../../components/Dashboard/ItemGrid";
-import Layout from "../../components/Layout";
+import Layout from "../../components/global/Layout";
 import { IItem } from "../../types/item.interface";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useContext, useState } from "react";
 import styles from "./dashboard.module.scss";
-import CustomTable from "../../components/Dashboard/Table";
-import { NoSsr } from "@mui/material";
 import { IoMdListBox } from "react-icons/io";
 import { CgArrowsExchangeV } from "react-icons/cg";
 import SettingsIcon from "@mui/icons-material/Settings";

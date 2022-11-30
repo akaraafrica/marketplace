@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import VerifyEmail from "../../components/global/VerifyEmail";
 import OnboardingLayout from "../../components/global/OnboardingLayout";
-import OnboardingInput from "../../components/global/OnboardingInput";
 
 const Index = () => {
   const [email, setEmail] = useState("");

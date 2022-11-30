@@ -1,0 +1,79 @@
+@use "../../../styles/colors" as *;
+
+.main {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  p {
+    font-size: 1.2rem;
+    margin: 1rem;
+    padding: 0;
+  }
+
+  h4 {
+    padding: 0;
+    margin: 0rem;
+    margin-left: 1rem;
+    font-size: 1rem;
+    color: white;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+  }
+
+  select {
+    margin-left: 1rem;
+    background: $grey2;
+    color: white;
+    padding: 10px 50px;
+    border-radius: 15px;
+    // pointer-events: none;
+
+    appearance: none;
+  }
+
+  select:after {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #f00;
+    position: absolute;
+    top: 40%;
+    right: 5px;
+    content: "";
+  }
+
+  h6 {
+    color: $grey3;
+    padding: 0;
+    margin: 1rem;
+  }
+}
+
+.button {
+  margin-top: 2rem;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  button {
+    color: white;
+    background: $grey2;
+    border: 0;
+    border-radius: 30px;
+    padding: 12px 45px;
+    cursor: pointer;
+    margin: auto;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    width: 23rem;
+  }
+
+  .accept {
+    background: $secondary-color;
+  }
+}

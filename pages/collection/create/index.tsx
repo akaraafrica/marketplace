@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import React from "react";
 import CreateCollectionForm from "../../../components/CreateCollectionForm";
-import Layout from "../../../components/Layout";
+import Layout from "../../../components/global/Layout";
 import { CollectionDs } from "../../../ds";
 import withAuth from "../../../HOC/withAuth";
 import { ICollection } from "../../../types/collection.interface";

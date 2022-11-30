@@ -2,9 +2,8 @@
 // TODO: convert this to NextImage when given the chance
 import React from "react";
 import styles from "./index.module.scss";
-import Header from "../../components/Header";
-import HotItems from "../../components/HotItems/index";
-import Footer from "../../components/Footer/index";
+import Header from "../../components/global/Header";
+import Footer from "../../components/global/Footer/index";
 import { ItemDs } from "../../ds";
 
 function ContactPage(props: any) {
@@ -102,7 +101,6 @@ function ContactPage(props: any) {
           </div>
         </div>
       </div>
-      <HotItems items={props.items} />
       <Footer />
     </div>
   );
