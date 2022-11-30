@@ -24,16 +24,17 @@ export default function Index({
                   <NextImage
                     className={styles.cardImg}
                     src={item.images[0]}
-                    width="160px"
-                    height="148px"
+                    width="200px"
+                    height="200px"
                     alt="product"
                   />
                 )}
 
                 <div className={styles.cardDetails}>
-                  <div></div>
                   <span className={styles.cardName}>{item?.title}</span>
-                  <div>
+                  <div></div>
+                  <span className={styles.title}>Current Owner</span>
+                  <div className={styles.owner}>
                     <DefaultAvatar
                       fontSize=".6rem"
                       id={item?.owner?.id}
@@ -45,19 +46,19 @@ export default function Index({
                     <span>{getUserName(item?.owner)}</span>
                   </div>
                 </div>
-                {item.purchases.length > 0 && (
+                {/* {item.purchases.length > 0 && (
                   <div className={styles.history}>
-                    <span>history</span>
+                    <span className={styles.title}>Item purchase history</span>
                     <section className={styles.prices}>
                       {item.purchases?.map((purchase) => (
-                        <div key={purchase.id}>
-                          <span>{getUserName(purchase.user)}</span> --{">"}{" "}
+                        <div className={styles.purchase} key={purchase.id}>
+                          <span>{getUserName(purchase.user)}</span>
                           <span>{purchase.amount} ETH</span>
                         </div>
                       ))}
                     </section>
                   </div>
-                )}
+                )} */}
               </div>
             );
           })}
