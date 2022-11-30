@@ -32,11 +32,11 @@ const Index = () => {
     password: Yup.string()
       .required("Password is required")
       .min(4, "Password length should be at least 4 characters")
-      .max(20, "Password cannot exceed more than 20 characters"),
+      .max(25, "Password cannot exceed more than 20 characters"),
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
       .min(4, "Password length should be at least 4 characters")
-      .max(20, "Password cannot exceed more than 20 characters")
+      .max(25, "Password cannot exceed more than 20 characters")
       .oneOf([Yup.ref("password")], "Passwords do not match"),
     gender: Yup.string().required("choose gender"),
     birthdate: Yup.string().required("choose birthdate"),
@@ -119,13 +119,14 @@ const Index = () => {
   const onSubmit = async () => {
     setError("");
     if (!account) {
+      setError("Please connect with metamask to signup");
       toast.info("Please connect with metamask to login");
       return;
     }
     const { name, email, birthdate, password } = getValues();
-    console.log({ name, email, birthdate, password });
 
     try {
+      setLoading(true);
       const res = await userDs.create({
         address: account,
         email: email,
@@ -149,6 +150,8 @@ const Index = () => {
       }
       console.log("response", res);
     } catch (error: any) {
+      setLoading(false);
+
       if (error.response.status === 401)
         return setError(error.response.data.message);
       if (error.response.status === 409)

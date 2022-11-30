@@ -1,4 +1,4 @@
-import styles from "./input.module.scss";
+import styles from "./Input.module.scss";
 
 type InputProps = {
   label: string;
@@ -13,6 +13,7 @@ type InputProps = {
   max?: number;
   onChange?: any;
   value?: any;
+  customStyle?: any;
 };
 
 export default function Input({
@@ -27,6 +28,7 @@ export default function Input({
   error,
   onChange,
   value,
+  customStyle,
   ...rest
 }: InputProps) {
   return (
@@ -43,6 +45,7 @@ export default function Input({
               disabled={disabled}
               placeholder={placeholder}
               {...rest}
+              style={customStyle}
             />
           </div>
           {errors[name] && errors[name].type === "required" && (
@@ -62,6 +65,7 @@ export default function Input({
               type={type}
               onChange={onChange}
               value={value}
+              style={customStyle}
               disabled={disabled}
               placeholder={placeholder}
               {...rest}

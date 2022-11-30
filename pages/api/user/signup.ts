@@ -37,6 +37,11 @@ export default async function Signup(
             email: userEmail,
           },
         });
+        const walletAddressExist = await prisma.user.findFirst({
+          where: {
+            walletAddress: address,
+          },
+        });
 
         if (!userEmail && !password && !address)
           return res.status(400).json({
@@ -57,7 +62,13 @@ export default async function Signup(
               "User already exist, please login or click on forgot password to reset your password",
           });
         }
+        if (walletAddressExist) {
+          console.log("walletAddressExist", walletAddressExist);
 
+          return res.status(409).json({
+            message: "Wallet address already exist",
+          });
+        }
         const encryptedPassword = await bcrypt.hash(password, 10);
         // console.log("User email:", userEmail);
 

@@ -5,6 +5,8 @@ import styles from "./index.module.scss";
 import { AuctionDs } from "../../../ds";
 import { toast } from "react-toastify";
 import { useSWRConfig } from "swr";
+import Input from "../../global/Form/Input";
+import Button from "../../global/Button/Button";
 
 export default function Index({ open, handleClose, item, edit }: any) {
   const [startPrice, setStartPrice] = useState(item?.auction?.openPrice);
@@ -73,48 +75,80 @@ export default function Index({ open, handleClose, item, edit }: any) {
           </p>
 
           <section>
-            <div>
+            <div className={styles.bidinput}>
               <span>Starting Price </span>
-              <div className={styles.bidinput}>
-                <section className={styles.auctionAmount}>
-                  <strong>
-                    <input
-                      type="number"
-                      value={startPrice}
-                      placeholder="Enter amount"
-                      onChange={handleChange}
-                    />
-                    ETH
-                  </strong>
-                </section>
+              <div>
+                <Input
+                  name="amount"
+                  label=""
+                  customStyle={{
+                    background: "transparent",
+                    border: "none",
+                    borderBottom: "1px solid white",
+                    color: "white",
+                    width: "15rem",
+
+                    borderRadius: 0,
+                  }}
+                  type="number"
+                  value={startPrice}
+                  placeholder="Enter amount"
+                  onChange={handleChange}
+                />
+                <strong>ETH</strong>
               </div>
             </div>
             <div>
               <span>Start Date</span>
-              <input
-                type="datetime-local"
+
+              <Input
+                name="amount"
+                label=""
+                customStyle={{
+                  background: "transparent",
+                  border: "none",
+                  borderBottom: "1px solid white",
+                  width: "15rem",
+                  color: "white",
+                  borderRadius: 0,
+                }}
                 value={startTime || ""}
-                onChange={(e) => setStartTime(e.target.value)}
+                onChange={(e: any) => setStartTime(e.target.value)}
+                type="datetime-local"
               />
             </div>
             <div>
               <span>End Time</span>
-              <input
-                type="datetime-local"
+              <Input
+                name="amount"
+                label=""
+                customStyle={{
+                  background: "transparent",
+                  border: "none",
+                  width: "15rem",
+                  borderBottom: "1px solid white",
+                  color: "white",
+                  borderRadius: 0,
+                }}
                 value={endTime || ""}
-                onChange={(e) => setEndTime(e.target.value)}
+                onChange={(e: any) => setEndTime(e.target.value)}
+                type="datetime-local"
               />
             </div>
           </section>
           <section className={styles.button}>
-            <button
-              className={styles.accept}
+            <Button
               disabled={startPrice <= 0 || startTime == null || endTime == null}
               onClick={handleSubmit}
             >
               {edit ? "Edit Auction" : "Place on Action"}
-            </button>
-            <button onClick={handleClose}>Cancel</button>
+            </Button>
+            <Button
+              onClick={handleClose}
+              customStyle={{ background: "#23262f" }}
+            >
+              Cancel
+            </Button>
           </section>
         </main>
       </Dialog>
