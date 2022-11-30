@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import LoadingSpinner from "../components/global/LoadingSpinner";
 const MainAppWrapper: any = dynamic(
-  () => import("../components/MainAppWrapper")
+  () => import("../components/global/MainAppWrapper")
 );
 function MyApp({ Component, pageProps }: AppProps) {
   const [open, setOpen] = useState(false);

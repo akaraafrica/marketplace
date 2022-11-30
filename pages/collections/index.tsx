@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { CollectionDs } from "../../ds";
-import { ICollection } from "../../types/collection.interface";
 import { BiSearch } from "react-icons/bi";
 import useSWR, { SWRConfig, unstable_serialize, mutate } from "swr";
 import useDebounce from "../../hooks/useDebounce";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-const LandingLayout: any = dynamic(() => import("../../components/Layout"));
+const LandingLayout: any = dynamic(
+  () => import("../../components/global/Layout")
+);
 const HotCollectionCard: any = dynamic(
-  () => import("../../components/HotCollectionsCard")
+  () => import("../../components/Collections/HotCollectionsCard")
 );
 
 const preFechedData = (page: any) => {

@@ -1,7 +1,3 @@
-import { useContext } from "react";
-import { toast } from "react-toastify";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { CollectionDs } from "../../../ds";
 import Dialog from "../../global/Dialog/Dialog";
 import styles from "./index.module.scss";
 

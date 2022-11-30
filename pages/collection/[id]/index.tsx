@@ -10,8 +10,7 @@ import parse from "html-react-parser";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Plyr from "plyr-react";
-const Layout: any = dynamic(() => import("../../../components/Layout"));
-// const DefaultAvatar: any = () => import("../../../components/DefaultAvatar");
+const Layout: any = dynamic(() => import("../../../components/global/Layout"));
 import DefaultAvatar from "../../../components/global/DefaultAvatar";
 const ItemGrid: any = dynamic(
   () => import("../../../components/CollectionAdmin/ItemGrid")

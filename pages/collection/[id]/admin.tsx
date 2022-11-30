@@ -13,7 +13,7 @@ import { getCookies } from "cookies-next";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import collectionsDs from "../../../ds/collections.ds";
 import dynamic from "next/dynamic";
-const Layout: any = dynamic(() => import("../../../components/Layout"));
+const Layout: any = dynamic(() => import("../../../components/global/Layout"));
 const ItemGrid: any = dynamic(
   () => import("../../../components/CollectionAdmin/ItemGrid")
 );
@@ -24,7 +24,7 @@ const DefaultAvatar: any = dynamic(
   () => import("../../../components/global/DefaultAvatar")
 );
 const LunchTimeDialog: any = dynamic(
-  () => import("../../../components/LunchTimeDialog")
+  () => import("../../../components/CollectionAdmin/LunchTimeDialog")
 );
 const AddBeneficiaryDialog: any = dynamic(
   () => import("../../../components/CollectionAdmin/AddBeneficiaryDialog")
@@ -33,7 +33,8 @@ const MintCollectionDialog: any = dynamic(
   () => import("../../../components/CollectionAdmin/MintCollectionDialog")
 );
 const UpdateCollectionAdminDialog: any = dynamic(
-  () => import("../../../components/UpdateCollectionAdminDialog")
+  () =>
+    import("../../../components/CollectionAdmin/UpdateCollectionAdminDialog")
 );
 const WarningDialog: any = dynamic(
   () => import("../../../components/CollectionAdmin/WarningDialog")

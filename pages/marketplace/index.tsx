@@ -8,19 +8,21 @@ import {
   handleChange,
   handleResetFilter,
   handleSliderChange,
-} from "../../components/DiscoverSection/utils";
+} from "../../components/Home/DiscoverSection/utils";
 import useSWR, { SWRConfig, unstable_serialize, mutate } from "swr";
 import itemDs from "../../ds/item.ds";
 import useDebounce from "../../hooks/useDebounce";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-const Layout: any = dynamic(() => import("../../components/Layout"));
-const ProgressBar: any = dynamic(() => import("../../components/ProgressBar"));
+const Layout: any = dynamic(() => import("../../components/global/Layout"));
+const ProgressBar: any = dynamic(
+  () => import("../../components/MarketPlace/ProgressBar")
+);
 const DiscoveryItems: any = dynamic(
-  () => import("../../components/DiscoveryItems")
+  () => import("../../components/global/DiscoveryItems")
 );
 const CustomSelect: any = dynamic(
-  () => import("../../components/CustomSelect")
+  () => import("../../components/MarketPlace/CustomSelect")
 );
 
 const preFechedData = (page: any, filter: any) => {

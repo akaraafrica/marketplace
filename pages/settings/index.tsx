@@ -1,6 +1,6 @@
 import React from "react";
-import SettingsForm from "../../components/SettingsForm";
-import Layout from "../../components/Layout";
+import SettingsForm from "../../components/Settings/SettingsForm";
+import Layout from "../../components/global/Layout";
 import { BiArrowBack } from "react-icons/bi";
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";

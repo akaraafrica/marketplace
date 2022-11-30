@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import Footer from "../../components/Footer/index";
-import Header from "../../components/Header/index";
+import Footer from "../../components/global/Footer/index";
+import Header from "../../components/global/Header/index";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -17,7 +17,6 @@ import DefaultAvatar from "../../components/global/DefaultAvatar";
 import useWindowSize from "../../hooks/useWindowSize";
 import { GetServerSideProps } from "next";
 import withAuth from "../../HOC/withAuth";
-import collectionsDs from "../../ds/collections.ds";
 
 interface ListItemProps {
   title: string;
@@ -352,6 +351,5 @@ const Page = ({ fallback }: any) => {
     </SWRConfig>
   );
 };
-export default Page;
 
-// export default withAuth(Page);
+export default withAuth(Page);
