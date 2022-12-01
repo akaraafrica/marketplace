@@ -24,8 +24,8 @@ export default function Index({
                   <NextImage
                     className={styles.cardImg}
                     src={item.images[0]}
-                    width="200px"
-                    height="200px"
+                    width="250px"
+                    height="250px"
                     alt="product"
                   />
                 )}

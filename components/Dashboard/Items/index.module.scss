@@ -1,11 +1,13 @@
 .container {
   display: flex;
   gap: 1rem;
-  max-width: 45rem;
+  // max-width: 45rem;
   height: 15rem;
   overflow-x: scroll;
   overflow-y: hidden;
   user-select: none;
+  width: 100%;
+  margin-bottom: 50px;
 
   @media screen and (max-width: 800px) {
     max-width: 40rem;
@@ -18,4 +20,10 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+.header3 {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
