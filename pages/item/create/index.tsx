@@ -1,6 +1,6 @@
 import React from "react";
-import SingleCollectibleItemForm from "../../../components/SingleItemForm";
-import Layout from "../../../components/Layout";
+import SingleCollectibleItemForm from "../../../components/CreateItem/CreateItem";
+import Layout from "../../../components/global/Layout";
 import { ItemDs } from "../../../ds";
 import { GetServerSideProps } from "next";
 import { IItem } from "../../../types/item.interface";

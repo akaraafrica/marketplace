@@ -1,0 +1,265 @@
+@use "../../../styles/colors" as *;
+
+.main {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  .top {
+    display: flex;
+    margin: 30px 0;
+
+    span {
+      width: 50%;
+      text-align: center;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+    }
+  }
+
+  hr {
+    color: #777e91;
+  }
+
+  .itemdetailsforminputSearch {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+
+    .add {
+      background-color: transparent;
+      border: 1px solid #f2994a;
+      padding: 10px;
+      color: #f2994a;
+      border-radius: 5px;
+      cursor: pointer;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+    }
+
+    label {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 12px;
+    }
+
+    input,
+    select {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 2px 2px;
+      gap: 10px;
+      border: 2px solid #353945;
+      border-radius: 12px;
+      background-color: transparent;
+      color: #ffffff;
+      // height: 48px;
+      // width: 90%;
+      outline: none;
+
+      ::placeholder {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 24px;
+      }
+
+      :focus {
+        outline: none;
+        color: #fcfcfd;
+      }
+    }
+
+    select {
+      line-height: 30px;
+      color: #777e91;
+
+      option {
+        color: #777e91;
+        background-color: #000000;
+      }
+    }
+
+    span {
+      color: orangered;
+    }
+
+    .itemImagesDiv {
+      position: relative;
+      display: flex;
+      gap: 8px;
+      // overflow-x: scroll !important;
+      overflow-y: hidden;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 20px 0;
+
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        width: 100%;
+
+        .userImage {
+          position: relative;
+          border: 2px solid #353945;
+          width: 112px;
+          height: 88px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 12px;
+          -webkit-border-radius: 12px;
+          -moz-border-radius: 12px;
+          -ms-border-radius: 12px;
+          -o-border-radius: 12px;
+
+          .closeIcon {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            cursor: pointer;
+            z-index: 9;
+          }
+
+          img {
+            border-radius: 12px;
+            width: 112px;
+            height: 88px;
+          }
+        }
+
+        input[type="number"]::-webkit-inner-spin-button {
+          appearance: none;
+          -webkit-appearance: none;
+        }
+      }
+    }
+
+    .searchResults {
+      position: absolute;
+      top: 65px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background-color: #353945;
+      z-index: 10;
+      padding: 10px;
+      border-radius: 12px;
+      -webkit-border-radius: 12px;
+      -moz-border-radius: 12px;
+      -ms-border-radius: 12px;
+      -o-border-radius: 12px;
+
+      span {
+        color: #fcfcfd;
+        cursor: pointer;
+
+        .avatarFlex {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+      }
+    }
+
+    .itemImagesDiv::-webkit-scrollbar {
+      display: none;
+      height: 5px;
+    }
+
+    .inputDiv {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      button {
+        cursor: pointer;
+      }
+
+      input {
+        height: 40px;
+        outline: none;
+        border: none;
+        background-color: $grey;
+        color: $white-color;
+        padding: 8px;
+        border-radius: 12px;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        -ms-border-radius: 12px;
+        -o-border-radius: 12px;
+      }
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .inputDiv {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      label {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      input {
+        height: 40px;
+        max-width: 22rem;
+        outline: none;
+        border: none;
+        background-color: $grey;
+        color: $white-color;
+        padding: 8px;
+        border-radius: 12px;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        -ms-border-radius: 12px;
+        -o-border-radius: 12px;
+      }
+    }
+
+    button {
+      height: 40px;
+      border: 1px solid $secondary-color;
+      color: $white-color;
+      background-color: $secondary-color;
+      border-radius: 12px;
+      cursor: pointer;
+      -webkit-border-radius: 12px;
+      -moz-border-radius: 12px;
+      -ms-border-radius: 12px;
+      -o-border-radius: 12px;
+    }
+  }
+
+  h4 {
+    text-align: center;
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+}

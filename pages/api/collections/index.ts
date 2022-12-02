@@ -7,6 +7,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     try {
       const data = await prisma.collection.findMany({
+        where: {
+          status: "PUBLISHED",
+        },
         include: {
           author: {
             include: {
@@ -37,10 +40,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           title: data.title,
           description: data.description,
           tokenId: randStr(10),
-          images: data.image,
-          visible: data.visible,
+          visible: false,
           type: data.type,
-          videos: data.videos,
           status: status,
           updatedAt: new Date(),
           worth: data?.worth,
@@ -51,13 +52,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           draftItems: {
             create: data?.items.map((item: IItem) => ({
-              id: item.id,
+              itemId: item.id,
               title: item.title,
               description: item.description,
               price: item.price,
-              ownerId: item.ownerId,
-              video: item.video,
               images: item.images,
+              ownerId: item.ownerId,
             })),
           },
           contributors: {

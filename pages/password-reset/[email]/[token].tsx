@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
-import OnboardingInput from "../../../components/OnboardingInput";
-import OnboardingLayout from "../../../components/OnboardingLayout";
-import OnboardingButton from "../../../components/OnboardingButton";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/router";
+import OnboardingLayout from "../../../components/global/OnboardingLayout";
 
 const Index = () => {
   const [password, setPassword] = useState("");
@@ -58,25 +56,23 @@ const Index = () => {
         <p className={styles.text}>Reset your account password</p>
         {error !== "" && <span className={styles.error}>{error}</span>}
         <div className={styles.inputs}>
-          <OnboardingInput
-            onChange={handleChange}
+          {/* <OnboardingInput
             name="password"
             label="New Password"
             type="password"
             placeholder="************"
-          />
-          <OnboardingInput
-            onChange={handleChangeConfirm}
+          /> */}
+          {/* <OnboardingInput
             name="password"
             label="Confirm New Password"
             type="password"
             placeholder="***********"
-          />
+          /> */}
           {password && confirm && password !== confirm && (
             <span className={styles.match}>Password does not match</span>
           )}
         </div>
-        <OnboardingButton onClick={handleSubmit} text="Reset Password" />
+        {/* <OnboardingButton onClick={handleSubmit} text="Reset Password" /> */}
       </div>
     </OnboardingLayout>
   );

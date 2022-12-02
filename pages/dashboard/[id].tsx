@@ -1,6 +1,6 @@
 import Items from "../../components/Dashboard/Items";
 import ItemGrid from "../../components/Dashboard/ItemGrid";
-import Layout from "../../components/Layout";
+import Layout from "../../components/global/Layout";
 import { IItem } from "../../types/item.interface";
 import Box from "@mui/material/Box";
 import { useContext, useState } from "react";
@@ -83,44 +83,6 @@ const Dashboard = () => {
                 </div>
               </div>
             )}
-            {/* <div className={styles.main}>
-              <Box className={styles.tabs}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  textColor="primary"
-                  indicatorColor="primary"
-                >
-                  <Tab sx={{ color: "white" }} label="Items" {...a11yProps(0)} />
-                  <Tab
-                    sx={{ color: "white" }}
-                    label="Collections"
-                    {...a11yProps(1)}
-                  />
-                  <Tab
-                    sx={{ color: "white" }}
-                    label="Auction"
-                    {...a11yProps(2)}
-                  />
-                </Tabs>
-              </Box>
-              <TabPanel value={value} index={0}>
-                <Items items={items} />
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                <Items items={items} auction={true} />
-              </TabPanel>
-
-              <TabPanel value={value} index={1}>
-                <div className={styles.collections}>
-                  {collections.map((collection) => (
-                    <div className={styles.collection} key={collection.id}>
-                      <Collections collection={collection} />
-                    </div>
-                  ))}
-                </div>
-              </TabPanel>
-            </div> */}
             {value === 2 && (
               <div>
                 <Items items={items} title="All Items" />

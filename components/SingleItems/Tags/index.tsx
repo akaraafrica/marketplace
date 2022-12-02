@@ -5,7 +5,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import AcceptBid from "../AcceptBid";
 import PlaceBid from "../PlaceBid";
 import styles from "./index.module.scss";
-import Link from "../../Link";
+import Link from "../../global/Link";
 import { IItem } from "../../../types/item.interface";
 import Index from "../AuctionDialog";
 import DefaultAvatar from "../../global/DefaultAvatar";
@@ -77,7 +77,7 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
             </div>
           </Link>
           <div className={styles.desc}>
-            <p>{item && parse(item.description).toString()}</p>
+            <div>{item && parse(item.description)}</div>
           </div>
         </div>
         {user && (

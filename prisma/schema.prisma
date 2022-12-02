@@ -24,9 +24,9 @@ model Purchase {
   amount          Float
   createdAt       DateTime @default(now())
   transactionId   String   @unique
-  isAuction       Boolean  @default(false)
   itemId          Int
   userId          Int
+  isAuction       Boolean  @default(false)
   itemPrevOwnerId Int?
   inCollectionId  Boolean  @default(false)
   item            Item     @relation(fields: [itemId], references: [id])
@@ -55,7 +55,6 @@ model Auction {
 model Item {
   id                Int            @id @default(autoincrement())
   ownerId           Int
-  authorId          Int?
   collectionId      Int?
   tokenId           String         @unique
   title             String
@@ -74,6 +73,7 @@ model Item {
   terms             Boolean?
   category          Category?      @default(ART)
   collectionOnChain Boolean?       @default(true)
+  authorId          Int?
   collection        Collection?    @relation(fields: [collectionId], references: [id])
   owner             User           @relation(fields: [ownerId], references: [id])
   auction           Auction?
@@ -163,6 +163,7 @@ model Collection {
 
 model DraftItems {
   id           Int         @id @default(autoincrement())
+  itemId       Int
   ownerId      Int
   collectionId Int?
   title        String
@@ -223,7 +224,7 @@ model Like {
   itemId       Int?
   userId       Int?
   collectionId Int?
-  collection   Collection? @relation(fields: [collectionId], references: [id])
+  collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   item         Item?       @relation(fields: [itemId], references: [id])
   user         User?       @relation(fields: [userId], references: [id])
 }
@@ -235,7 +236,7 @@ model Contributor {
   updatedAt    DateTime          @updatedAt
   confirmation ContributorStatus @default(PENDING)
   percentage   Int               @default(0)
-  collection   Collection        @relation(fields: [collectionId], references: [id])
+  collection   Collection        @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   user         User              @relation(fields: [userId], references: [id])
 }
 
@@ -248,7 +249,7 @@ model Beneficiary {
   name          String?
   email         String
   walletAddress String
-  Collection    Collection @relation(fields: [collectionId], references: [id])
+  Collection    Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   user          User?      @relation(fields: [userId], references: [id])
 }
 

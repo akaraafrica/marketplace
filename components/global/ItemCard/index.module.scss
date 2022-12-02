@@ -1,0 +1,208 @@
+.cardBackground {
+  background: #23262f;
+  box-shadow: 0px 64px 64px -48px rgba(31, 47, 70, 0.12);
+  border-radius: 20px;
+  padding: 12px;
+  display: flex;
+  height: fit-content;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+
+  .previewcardimg {
+    width: 100%;
+
+    img {
+      width: 100%;
+      border-radius: 20px;
+    }
+  }
+
+  .previewcardnamebox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 5px;
+    color: #fcfcfd;
+
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 6rem;
+      white-space: nowrap;
+    }
+
+    .previewcardprice {
+      span {
+        border: 1px solid #45b36b;
+        color: #45b36b;
+        padding: 3px 3px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .previewstockcon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .avatars {
+      display: flex;
+      align-items: center;
+
+      .image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        margin: -8px;
+        border: 2px solid #353945;
+      }
+
+      :first-child {
+        margin: 0;
+      }
+    }
+  }
+
+  hr {
+    color: #353945;
+    border: 1px solid #353945;
+  }
+
+  .bidsec {
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+
+    .bidsec1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3px;
+      color: #353945 !important;
+
+      span {
+        color: #fcfcfd !important;
+      }
+    }
+  }
+}
+
+.previewcardcontentcon {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 10rem;
+  cursor: pointer;
+
+  button {
+    color: white;
+    background: #000;
+    padding: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 20px;
+  }
+
+  .previewcardimg {
+    width: 100%;
+
+    img {
+      width: 100%;
+      border-radius: 20px;
+    }
+  }
+
+  .previewcardnamebox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 5px;
+    color: #fcfcfd;
+    cursor: pointer;
+
+    .previewcardprice {
+      span {
+        border: 1px solid #45b36b;
+        color: #45b36b;
+        padding: 3px 3px;
+        border-radius: 4px;
+        font-size: 12px;
+        width: 20rem;
+        word-break: keep-all;
+      }
+    }
+  }
+
+  .previewstockcon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .avatars {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+
+      .image {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin: -8px;
+        // border: 1px solid #353945;
+        background-color: #000;
+      }
+
+      :first-child {
+        margin: 0;
+      }
+    }
+  }
+
+  hr {
+    color: #353945;
+    border: 1px solid #353945;
+  }
+
+  .bidsec {
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: space-between;
+
+    .bidsec1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+      color: #353945 !important;
+
+      span {
+        color: #fcfcfd !important;
+      }
+    }
+    p {
+      color: #353945 !important;
+    }
+  }
+
+  .collectionsimgs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+
+    .image {
+      border-radius: 8px;
+    }
+  }
+}

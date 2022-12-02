@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import styles from "./index.module.scss";
-import OnboardingLayout from "../../components/OnboardingLayout";
-import OnboardingInput from "../../components/OnboardingInput";
-import OnboardingButton from "../../components/OnboardingButton";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { useRouter } from "next/router";
@@ -13,17 +10,40 @@ import { AuthContext } from "../../contexts/AuthContext";
 import googleLogin from "../../utils/auth/googleLogin";
 import facebookLogin from "../../utils/auth/facebookLogin";
 import twitterLogin from "../../utils/auth/twitterLogin";
+import OnboardingLayout from "../../components/global/OnboardingLayout";
+import OnboardingInput from "../../components/global/OnboardingInput";
+import { useForm } from "react-hook-form";
+import Button from "../../components/global/Button/Button";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const Index = () => {
-  const [state, setState] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
   const router = useRouter();
   const { account, active, activate } = useWeb3React();
   const { signIn, completeLogin } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const formSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(4, "Password length should be at least 4 characters")
+      .max(25, "Password cannot exceed more than 20 characters"),
+  });
 
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    mode: "onTouched",
+    resolver: yupResolver(formSchema),
+  });
   useEffect(() => {
     if (!active) activate(injected);
-    setError("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleTwitterLogin = async () => {
@@ -64,40 +84,31 @@ const Index = () => {
       console.log("google login ", res);
       completeLogin(res);
     } catch (error: any) {
-      // toast.error(error.error?.message || error.message);
+      console.log(error);
+      toast.error(error.error?.message || error.message);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setState((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    setError("");
+  const submit = async () => {
     if (!account) {
       toast.info("Please connect with metamask to login");
+      setError("Please connect with metamask to signup");
       return;
     }
-
-    const pattern =
-      /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
-    const result = pattern.test(state.email);
-    if (!state.email) return setError("Email field is empty");
-    if (!state.password) return setError("Password field is empty");
-    if (!result) return setError("Invalid email, check email and try again");
-    if (state.password.length < 6)
-      return setError("Password must have six (6) characters");
-
+    const data = getValues();
+    setLoading(true);
     try {
       const res = await signIn({
-        email: state.email,
-        password: state.password,
+        email: data.email,
+        password: data.password,
       });
-      toast.success("Welcome to Akara, Login successful.");
       console.log("new signin result here ", res);
     } catch (error: any) {
-      // toast.error(error.error?.message || error.message);
+      console.log("error here ", error.error?.message);
+
+      setLoading(false);
+      toast.error(error.error?.message || error.message);
+      setError(error.error?.message || error.message);
     }
   };
 
@@ -107,23 +118,28 @@ const Index = () => {
         <h6 className={styles.title}>Login</h6>
         <p className={styles.text}>Log in with your email address</p>
         {error !== "" && <span className={styles.error}>{error}</span>}
-        <div className={styles.inputs}>
-          <OnboardingInput
-            onChange={handleChange}
-            name="email"
-            label="Email"
-            type="email"
-            placeholder="sarah@gmail.com"
-          />
-          <OnboardingInput
-            onChange={handleChange}
-            name="password"
-            label="Password"
-            type="password"
-            placeholder="***********"
-          />
-        </div>
-        <OnboardingButton onClick={handleSubmit} text="Log in" />
+
+        <form onSubmit={handleSubmit(submit)}>
+          <div className={styles.inputs}>
+            <OnboardingInput
+              name="email"
+              register={register}
+              errors={errors}
+              label="Email"
+              type="email"
+              placeholder="sarah@gmail.com"
+            />
+            <OnboardingInput
+              name="password"
+              register={register}
+              errors={errors}
+              label="Password"
+              type="password"
+              placeholder="***********"
+            />
+            <Button loading={loading}>Log in</Button>
+          </div>
+        </form>
         <span
           className={styles.forgot}
           onClick={() => router.push("/forgot-password")}

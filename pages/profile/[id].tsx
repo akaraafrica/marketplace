@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import Layout from "../../components/Layout";
+import Layout from "../../components/global/Layout";
 import NextImage from "next/image";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { TbWorld, TbBrandTwitter, TbBrandInstagram } from "react-icons/tb";
@@ -11,14 +11,15 @@ import { RiFacebookCircleLine } from "react-icons/ri";
 import { ProfileDs } from "../../ds";
 import { GetServerSideProps } from "next";
 import getNiceDate from "../../utils/helpers/dateFormatter";
-import ProfileItem from "../../components/ProfileItem";
+import ProfileItem from "../../components/Profile/ProfileItem";
 import { UserDs } from "../../ds";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IProfile } from "../../types/profile.interface";
 import { useRouter } from "next/router";
-import NextLink from "../../components/Link";
+import NextLink from "../../components/global/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import dynamic from "next/dynamic";
+import withAuth from "../../HOC/withAuth";
 
 const DefaultAvatar = dynamic(
   () => import("../../components/global/DefaultAvatar"),
@@ -215,10 +216,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
-export default function Page({ fallback }: any) {
+function Page({ fallback }: any) {
   return (
     <SWRConfig value={{ fallback }}>
       <Index />
     </SWRConfig>
   );
 }
+
+export default withAuth(Page);

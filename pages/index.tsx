@@ -3,32 +3,33 @@ import React from "react";
 import lottieJson from "../lotties/json-background.json";
 import dynamic from "next/dynamic";
 import styles from "./index.module.scss";
-import { Filter } from "../ds/discovery.ds";
 import { CollectionDs, DiscoveryDs, ItemDs, UserDs } from "../ds/index";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import { ICollection } from "../types/collection.interface";
 import { IItem } from "../types/item.interface";
 import { IUser } from "../types/user.interface";
-const SellersSec: any = dynamic(() => import("../components/SellersSec"), {
+const SellersSec: any = dynamic(() => import("../components/Home/SellersSec"), {
   ssr: false,
 });
-const HotItems: any = dynamic(() => import("../components/HotItems"));
-const Layout: any = dynamic(() => import("../components/Layout"));
+const HotItems: any = dynamic(() => import("../components/Home/HotItems"));
+const Layout: any = dynamic(() => import("../components/global/Layout"));
 const HotCollectionsSection: any = dynamic(
-  () => import("../components/HotCollectionsSection")
+  () => import("../components/Home/HotCollectionsSection")
 );
 
 const LandingMainSection: any = dynamic(
-  () => import("../components/LandingMainSection")
+  () => import("../components/Home/LandingMainSection")
 );
 
 const Discover: any = dynamic(
-  () => import("../components/DiscoverSection/index")
+  () => import("../components/Home/DiscoverSection/index")
 );
 const SubscribeModal: any = dynamic(
-  () => import("../components/SubscribeModal/index")
+  () => import("../components/Home/SubscribeModal/index")
 );
-const HowItWorks: any = dynamic(() => import("../components/HowItWorks/index"));
+const HowItWorks: any = dynamic(
+  () => import("../components/Home/HowItWorks/index")
+);
 const Lottie: any = dynamic(() => import("react-lottie-player"));
 
 const filter = {
