@@ -8,12 +8,13 @@ import PurchaseDialog from "../PurchaseDialog";
 import SuccessDialog from "../SuccessDialog";
 import { IItem } from "../../../types/item.interface";
 import { useSWRConfig } from "swr";
+import CountdownTimer from "../CountdownTimer";
+import { differenceInSeconds, isPast } from "date-fns";
 
 export default function PlaceBid({ item }: { item: IItem }) {
   const [openPlaceBidDialog, setOpenPlaceBidDialog] = useState(false);
   const [openPurchaseDialog, setOpenPurchaseDialog] = useState(false);
   const [openSucceesDialog, setOpenSuccessDialog] = useState(false);
-
   const [amount, setAmount] = useState<number | null>(null);
   const { user } = useContext(AuthContext);
   const { mutate } = useSWRConfig();
@@ -85,8 +86,24 @@ export default function PlaceBid({ item }: { item: IItem }) {
 
   const itemUserBid = item?.bids?.filter((x) => x.bidderId === user?.id);
 
+  const auctionHasEnd =
+    isPast(new Date(item.auction?.endTime)) || !item.auction?.open;
+  const auctionHasStart =
+    differenceInSeconds(new Date(item.auction?.startTime), new Date()) < 0;
+
+  const auctionStartDate = new Date(item?.auction?.startTime).getTime();
+  const auctionEndDate = new Date(item?.auction?.endTime).getTime();
+
   return (
     <>
+      {!auctionHasEnd && (
+        <div>
+          {auctionHasStart ? "Auction Ending" : "Auction Starting"}
+          <CountdownTimer
+            targetDate={auctionHasStart ? auctionEndDate : auctionStartDate}
+          />
+        </div>
+      )}
       <PlaceBidDialog
         open={openPlaceBidDialog}
         handleClose={handleBidClose}
@@ -107,6 +124,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
         handleClose={handleSuccessClose}
         item={item}
       />
+
       <div className={styles.placebid}>
         {item?.auction?.open && itemUserBid?.length > 0 && (
           <section className={styles.top}>
@@ -138,7 +156,7 @@ export default function PlaceBid({ item }: { item: IItem }) {
                 Purchase now
               </button>
             )}
-            {item?.auction?.open && (
+            {item?.auction?.open && auctionHasStart && !auctionHasEnd && (
               <button
                 onClick={() => {
                   if (!user) {
