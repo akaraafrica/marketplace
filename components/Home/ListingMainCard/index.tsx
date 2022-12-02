@@ -141,6 +141,9 @@ function ListingMainCard() {
                           walletAddress={user.walletAddress}
                           width="60px"
                           height="60px"
+                          verify={user.verified}
+                          showVerify={true}
+                          iconRight="-10px"
                         />
                       </div>
                       <div className={styles.creatorNameDiv}>

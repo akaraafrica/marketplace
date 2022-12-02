@@ -13,7 +13,7 @@ export interface IUser {
   email: string;
   accessToken?: string;
   joined?: string;
-  isVerified?: boolean;
+  verified?: boolean;
   profile: IProfile | null;
   bids?: IBid[];
   likes?: ILike[];
@@ -26,7 +26,7 @@ export const initialState: IUser = {
   accessToken: "",
   walletAddress: "",
   joined: date,
-  isVerified: false,
+  verified: false,
   profile: profileInitialState,
   bids: [],
   likes: [],

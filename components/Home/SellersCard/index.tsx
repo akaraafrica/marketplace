@@ -5,7 +5,7 @@ import { Avatar } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import styles from "./styles.module.scss";
-import { MdOutlineAddBox } from "react-icons/md";
+import { MdOutlineAddBox, MdVerified } from "react-icons/md";
 import { CgArrowTopRight } from "react-icons/cg";
 import DefaultAvatar from "../../global/DefaultAvatar";
 import Link from "next/link";
@@ -62,15 +62,16 @@ const SellersCard = ({ seller, index }: any) => {
               overlap="circular"
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               badgeContent={
-                <SmallAvatar
-                  alt="Payton Harris"
-                  src="/assets/diamond.png"
-                  sx={{
-                    backgroundColor: "#FF8060",
-                    border: "1px solid #000",
-                    clipPath: `polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`,
-                  }}
-                />
+                // <SmallAvatar
+                //   alt="Payton Harris"
+                //   src="/assets/diamond.png"
+                //   sx={{
+                //     backgroundColor: "#FF8060",
+                //     border: "1px solid #000",
+                //     clipPath: `polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`,
+                //   }}
+                // />
+                seller.verified ? <MdVerified size={25} /> : <></>
               }
             >
               {seller.profile && seller.profile.avatar ? (

@@ -102,6 +102,9 @@ const Index = () => {
                   height="160px"
                   walletAddress={walletAddress!}
                   fontSize="1.2em"
+                  verify={true}
+                  showVerify={true}
+                  iconSize={30}
                 />
               )}
               <span className={styles.name}>{profile?.profile?.name}</span>
