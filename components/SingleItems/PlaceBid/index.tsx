@@ -98,7 +98,9 @@ export default function PlaceBid({ item }: { item: IItem }) {
     <>
       {!auctionHasEnd && (
         <div>
-          {auctionHasStart ? "Auction Ending" : "Auction Starting"}
+          <h5 className={styles.headiing}>
+            {auctionHasStart ? "Auction Ending" : "Auction Starting"}
+          </h5>
           <CountdownTimer
             targetDate={auctionHasStart ? auctionEndDate : auctionStartDate}
           />
