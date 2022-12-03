@@ -57,8 +57,15 @@ const Index = () => {
   if (!profile) {
     return <h1>404</h1>;
   }
-  const { walletAddress, createdAt, items, followers, following, collections } =
-    profile;
+  const {
+    walletAddress,
+    createdAt,
+    items,
+    followers,
+    following,
+    collections,
+    verified,
+  } = profile;
 
   const handleFollow = async () => {
     if (!user) {
@@ -102,7 +109,7 @@ const Index = () => {
                   height="160px"
                   walletAddress={walletAddress!}
                   fontSize="1.2em"
-                  verify={true}
+                  verify={verified}
                   showVerify={true}
                   iconSize={30}
                 />

@@ -1,6 +1,7 @@
 import { ICollection } from "./collection.interface";
 import { IItem } from "./item.interface";
 import { ILike } from "./like.interface";
+import { IUser } from "./user.interface";
 
 export interface IProfile {
   profile?: any;
@@ -12,6 +13,7 @@ export interface IProfile {
   createdAt?: string;
   items?: IItem[];
   likes?: ILike[];
+  verified?: boolean;
   collections?: ICollection[];
   following?: {
     followerId: number;
