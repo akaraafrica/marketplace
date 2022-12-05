@@ -3,8 +3,8 @@ import { IItem } from "./item.interface";
 export interface IAuction {
   id: number;
   open: boolean;
-  startDate: Date;
-  endData: Date;
+  startTime: Date;
+  endTime: Date;
   openPrice: number;
   itemId: number;
   item: IItem;
