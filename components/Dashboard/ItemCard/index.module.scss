@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 14rem;
+  width: 16rem;
   cursor: pointer;
 
   a:hover {
@@ -10,16 +10,20 @@
   }
 
   @media screen and (max-width: 500px) {
-    width: 14rem;
+    width: 16rem;
   }
 
   .previewcardimg {
     img {
-      width: 14rem;
-      border-radius: 20px;
+      width: 16rem;
+      border-radius: 8px;
       height: 13rem;
-      // margin-right: 10px;
+      //margin-right: 10px;
       margin-right: 10rem;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      -ms-border-radius: 8px;
+      -o-border-radius: 8px;
 
       @media screen and (max-width: 500px) {
         width: 16rem;
