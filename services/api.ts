@@ -12,9 +12,17 @@ let failedRequestQueue: {
 
 export function setupAPIClient(ctx = undefined): any {
   let cookies = getCookies();
+  console.log(
+    "process.env.NODE_ENV " + (process.env.NODE_ENV == "development")
+  );
+
+  console.log("process.env.VERCEL_URL " + process.env.VERCEL_URL);
 
   const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_DOMAIN!,
+    baseURL:
+      process.env.NODE_ENV == "development"
+        ? process.env.NEXT_PUBLIC_DOMAIN!
+        : process.env.VERCEL_URL,
     headers: {
       Authorization: `Bearer ${cookies["nextauth.token"]}`,
     },

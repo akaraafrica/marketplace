@@ -16,6 +16,7 @@ exports.auctionQueue = functions.tasks
     },
   })
   .onDispatch(async (data) => {
+    console.log("Received task", data);
     try {
       await fetch("https://vercel-sdqumar.vercel.app/api", {
         method: "POST",
@@ -29,6 +30,8 @@ exports.auctionQueue = functions.tasks
 exports.enqueueTasks = functions.https.onRequest(async (request, response) => {
   console.log(request.body);
   const data = request.body;
+  console.log("data", data.endTime);
+
   const queue = getFunctions().taskQueue("auctionQueue");
   const scheduleDelaySeconds = 60;
   queue.enqueue(data, {
