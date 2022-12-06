@@ -18,7 +18,7 @@ export function setupAPIClient(ctx = undefined): any {
     baseURL:
       process.env.NODE_ENV == "development"
         ? process.env.NEXT_PUBLIC_DOMAIN!
-        : process.env.NEXT_PUBLIC_VERCEL_URL,
+        : `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`,
     headers: {
       Authorization: `Bearer ${cookies["nextauth.token"]}`,
     },
