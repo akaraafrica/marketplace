@@ -24,6 +24,7 @@ export default function Button({
         {...rest}
         disabled={disabled || loading}
         style={customStyle}
+        className={styles.btn}
       >
         {loading ? (
           <Image
