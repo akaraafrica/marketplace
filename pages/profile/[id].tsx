@@ -20,6 +20,7 @@ import NextLink from "../../components/global/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import dynamic from "next/dynamic";
 import withAuth from "../../HOC/withAuth";
+import SocialShareDialog from "../../components/Profile/SocialShareDialog";
 
 const DefaultAvatar = dynamic(
   () => import("../../components/global/DefaultAvatar"),
@@ -38,6 +39,7 @@ const Index = () => {
     ProfileDs.fetch(id)
   );
   const [isFollowing, setIsFollowing] = useState<any>(false);
+  const [share, setShare] = useState(false);
 
   useEffect(() => {
     setOpen(0);
@@ -134,7 +136,7 @@ const Index = () => {
                   {isFollowing ? "unfollow" : "follow"}
                 </button>
               )}
-              <span className={styles.icon}>
+              <span onClick={() => setShare(true)} className={styles.icon}>
                 <IoShareOutline />
               </span>
               <span className={styles.icon}>
@@ -209,6 +211,11 @@ const Index = () => {
           </div>
         </div>
       </div>
+      <SocialShareDialog
+        open={share}
+        handleClose={() => setShare(false)}
+        name={profile?.profile?.name}
+      />
     </Layout>
   );
 };
