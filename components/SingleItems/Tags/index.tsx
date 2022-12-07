@@ -12,6 +12,7 @@ import DefaultAvatar from "../../global/DefaultAvatar";
 import { getUserName } from "../../../utils/helpers/getUserName";
 import LeaveCollectionDialog from "../LeaveCollectionDialog";
 import PutOnSaleDialog from "../PutOnSaleDialog";
+import PutAuctionDialog from "../PutAuctionDialog";
 import { MdCancel, MdEdit } from "react-icons/md";
 import parse from "html-react-parser";
 import CloseAuctionDialog from "../CloseAuctionDialog";
@@ -23,6 +24,7 @@ interface infoProperties {
 }
 const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
   const [open, setOpen] = useState(false);
+  const [openAuction, setOpenAuction] = useState(false);
   const [openLeaveCollection, setOpenLeaveCollection] = useState(false);
   const [openPutOnSale, setOpenPutOnSale] = useState(false);
   const [openCloseAuction, setOpenCloseAuction] = useState(false);
@@ -46,6 +48,7 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
         }}
         item={item}
       />
+
       <CloseAuctionDialog
         open={openCloseAuction}
         handleClose={() => {
@@ -53,14 +56,21 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
         }}
         item={item}
       />
-      {open && (
-        <Index
-          open={open}
-          handleClose={handleClose}
-          item={item}
-          edit={item?.auction?.open ? true : false}
-        />
-      )}
+
+      <PutAuctionDialog
+        open={openAuction}
+        handleClose={() => {
+          setOpenAuction(false);
+        }}
+        item={item}
+        setOpen={setOpen}
+      />
+      <Index
+        open={open}
+        handleClose={handleClose}
+        item={item}
+        edit={item?.auction?.open ? true : false}
+      />
       <div>
         <div className={styles.profileInfoCard}>
           <Link href={`/profile/${Itemuser.id}`}>
@@ -94,18 +104,9 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
 
               <div>
                 {user.id === Itemuser.id && (
-                  <span onClick={() => setOpen(true)}>
-                    {item?.auction?.open ? (
-                      <>
-                        <MdEdit size={30} />
-                        edit auction
-                      </>
-                    ) : (
-                      <>
-                        <RiAuctionFill size={25} />
-                        place on auction
-                      </>
-                    )}
+                  <span onClick={() => setOpenAuction(true)}>
+                    <RiAuctionFill size={25} />
+                    place on auction
                   </span>
                 )}
 

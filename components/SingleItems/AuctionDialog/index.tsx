@@ -5,11 +5,11 @@ import { useSWRConfig } from "swr";
 import Input from "../../global/Form/Input";
 import Button from "../../global/Button/Button";
 import Error from "../../global/Error/Error";
-import { differenceInDays, differenceInSeconds, isPast } from "date-fns";
+import { differenceInDays, isPast } from "date-fns";
 import { toast } from "react-toastify";
 import { AuctionDs } from "../../../ds";
 
-export default function Index({ open, handleClose, item, edit }: any) {
+export default function Index({ open, handleClose, item }: any) {
   const [startPrice, setStartPrice] = useState(item?.auction?.openPrice);
   const [startTime, setStartTime] = useState<null | string>(
     item?.auction?.startTime
@@ -32,43 +32,29 @@ export default function Index({ open, handleClose, item, edit }: any) {
       if (endDateDifference > 29) {
         setError("Auction can't be longer than 30 days");
       }
+      if (isPast(new Date(endTime))) {
+        setError("Auction cannot be in the past");
+      }
     }
   }, [endTime]);
 
   const handleSubmit = async () => {
-    if (edit) {
-      // TODO ONCHAIN INTERACTION
-      handleClose();
-      toast.success("Auction updated");
-      try {
-        await AuctionDs.updateData({
-          id: item.auction.id,
-          startPrice,
-          startTime,
-          endTime,
-        });
-        mutate("item" + item.id);
-      } catch (error) {
-        toast.error("Error updating auction");
-      }
-    } else {
-      // TODO ONCHAIN INTERACTION
-      const newData = { ...item, auction: { open: true } };
-      mutate("item" + item.id, () => newData, false);
-      handleClose();
-      toast.success("placed on auction");
-      try {
-        await AuctionDs.postData({
-          itemId: item.id,
-          startPrice,
-          startTime,
-          endTime,
-        });
-        mutate(["item", item.id]);
-        setTimeout(() => {}, 2000);
-      } catch (error) {
-        toast.error("error placing auction");
-      }
+    // TODO ONCHAIN INTERACTION
+    const newData = { ...item, auction: { open: true } };
+    mutate("item" + item.id, () => newData, false);
+    handleClose();
+    toast.success("placed on auction");
+    try {
+      await AuctionDs.postData({
+        itemId: item.id,
+        startPrice,
+        startTime,
+        endTime,
+      });
+      mutate(["item", item.id]);
+      setTimeout(() => {}, 2000);
+    } catch (error) {
+      toast.error("error placing auction");
     }
   };
   const handleChange = (e: any) => {
@@ -78,11 +64,7 @@ export default function Index({ open, handleClose, item, edit }: any) {
 
   return (
     <>
-      <Dialog
-        open={open}
-        handleClose={handleClose}
-        title={edit ? "edit auction" : "place on auction"}
-      >
+      <Dialog open={open} handleClose={handleClose} title="place on auction">
         <main className={styles.main}>
           <p>
             You are about to place <strong>{item.title} </strong>
@@ -157,7 +139,7 @@ export default function Index({ open, handleClose, item, edit }: any) {
               disabled={startPrice <= 0 || startTime == null || endTime == null}
               onClick={handleSubmit}
             >
-              {edit ? "Edit Auction" : "Place on Action"}
+              Place on Action
             </Button>
             <Button
               onClick={handleClose}
