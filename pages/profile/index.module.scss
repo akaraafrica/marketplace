@@ -184,6 +184,9 @@
           width: 24px;
           height: 24px;
           cursor: pointer;
+          &:hover {
+            scale: 1.1;
+          }
         }
       }
 

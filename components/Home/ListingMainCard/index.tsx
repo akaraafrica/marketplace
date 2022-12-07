@@ -136,7 +136,7 @@ function ListingMainCard() {
                     <div key={user.id} className={styles.creator}>
                       <div className={styles.creatorImgDiv}>
                         <DefaultAvatar
-                          id={user.id}
+                          username={user.username}
                           url={user.profile?.avatar}
                           walletAddress={user.walletAddress}
                           width="60px"

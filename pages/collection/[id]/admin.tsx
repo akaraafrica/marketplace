@@ -488,7 +488,7 @@ const Index = () => {
                         {contributor && (
                           <DefaultAvatar
                             url={contributor?.user?.profile?.avatar}
-                            id={contributor.user.id}
+                            username={contributor.user.username}
                             width={"88px"}
                             height={"88px"}
                             walletAddress={contributor?.user.walletAddress}
@@ -661,6 +661,7 @@ const Index = () => {
                         height={"88px"}
                         walletAddress={beneficiary.walletAddress}
                         fontSize={"8px"}
+                        // username={beneficiary.user.username}
                       />
                       <div className={styles.details}>
                         <div className={styles.dtop}>

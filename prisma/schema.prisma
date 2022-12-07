@@ -121,11 +121,11 @@ model Profile {
   phoneNumber String?
   bio         String?   @db.VarChar(250)
   gender      String?
-  user        User      @relation(fields: [userId], references: [id])
-  website     String?
-  twitter     String?
   facebook    String?
   instagram   String?
+  twitter     String?
+  website     String?
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model Rating {
@@ -183,6 +183,7 @@ model User {
   id                    Int            @id @default(autoincrement())
   walletAddress         String         @unique
   email                 String         @unique
+  username              String         @unique
   password              String
   verified              Boolean        @default(false)
   profileId             Int?

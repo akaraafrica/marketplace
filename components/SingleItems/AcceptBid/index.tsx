@@ -83,6 +83,7 @@ export default function AcceptBid({
                     height="40px"
                     fontSize="8px"
                     walletAddress={bid.user.walletAddress}
+                    username={bid.user.username}
                   />
                   <div>
                     <h5>
@@ -117,6 +118,7 @@ export default function AcceptBid({
                   height="40px"
                   fontSize="8px"
                   walletAddress={highestBid?.user?.walletAddress}
+                  username={highestBid?.user.username}
                 />
                 <div>
                   <h5>

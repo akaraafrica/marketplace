@@ -19,7 +19,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 const SellersCard = ({ seller, index }: any) => {
   return (
     <div className={styles.sellerCardMain}>
-      <Link href={`/profile/${seller.id}`}>
+      <Link href={`/profile/${seller.username}`}>
         <a>
           <div className={styles.sellerCardHeaderCon}>
             <div className={styles.sellerCardHeader}>
@@ -83,7 +83,7 @@ const SellersCard = ({ seller, index }: any) => {
               ) : (
                 <div className={styles.defaultAvatar}>
                   <DefaultAvatar
-                    id={seller.id}
+                    username={seller.username}
                     url={seller.profile && seller.profile.avatar}
                     width="80px"
                     height="80px"

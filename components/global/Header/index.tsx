@@ -170,7 +170,7 @@ function Header() {
               }}
             >
               <DefaultAvatar
-                id={user?.id}
+                username={user?.username}
                 url={user?.profile?.avatar}
                 width="30px"
                 height="30px"

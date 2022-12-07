@@ -11,7 +11,7 @@ function FollowingSec({ person }: any) {
     <div className={styles.followingsec}>
       <div className={styles.followingsec1con}>
         <DefaultAvatar
-          id={person?.id}
+          username={person?.username}
           url={person?.profile?.avatar}
           width="100px"
           height="100px"
