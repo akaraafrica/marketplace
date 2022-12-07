@@ -21,7 +21,8 @@ export default async function profile(
       console.log("data", data);
 
       console.log("auction added");
-      createQueue(url, req.body.itemId, req.body.endTime, data.id);
+      await createQueue(url, req.body.itemId, req.body.endTime, data.id);
+      console.log("queue added success");
 
       res.status(200).json("auction added");
     } catch (error) {
@@ -45,7 +46,9 @@ export default async function profile(
         },
       });
       console.log("auction updated");
-      createQueue(url, req.body.id, req.body.endTime, data.id);
+      await createQueue(url, req.body.id, req.body.endTime, data.id);
+      console.log("queue added success");
+
       res.status(200).json(data);
     } catch (error) {
       console.log(error);
