@@ -6,7 +6,7 @@ export default async function profile(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const url = `https://${req.headers.host}/api/auctionEnd`;
+  const url = `https://${req.headers.host}/api/auction/auctionEnd`;
   if (req.method === "POST") {
     try {
       const data = await prisma.auction.create({
