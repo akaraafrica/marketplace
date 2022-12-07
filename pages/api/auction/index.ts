@@ -18,12 +18,8 @@ export default async function profile(
           endTime: req.body.endTime,
         },
       });
-      console.log("data", data);
-
-      console.log("auction added");
       await createQueue(url, req.body.itemId, req.body.endTime, data.id);
       console.log("queue added success");
-
       res.status(200).json("auction added");
     } catch (error) {
       console.log(error);
@@ -45,10 +41,8 @@ export default async function profile(
           endTime: req.body.endTime,
         },
       });
-      console.log("auction updated");
       await createQueue(url, req.body.id, req.body.endTime, data.id);
       console.log("queue added success");
-
       res.status(200).json(data);
     } catch (error) {
       console.log(error);

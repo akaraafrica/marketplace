@@ -16,7 +16,6 @@ exports.auctionQueue = functions.tasks
     },
   })
   .onDispatch(async (data) => {
-    console.log("url", data.url);
     try {
       await fetch(data.url, {
         method: "POST",
