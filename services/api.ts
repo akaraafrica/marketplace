@@ -1,6 +1,5 @@
-import axios, { AxiosError, AxiosInstance } from "axios";
-import { getCookies, setCookies, removeCookies } from "cookies-next";
-import { TbChevronDownLeft } from "react-icons/tb";
+import axios, { AxiosError } from "axios";
+import { getCookies, setCookies } from "cookies-next";
 import { signOut } from "../contexts/AuthContext";
 import { AuthTokenError } from "./errors/AuthTokenError";
 
@@ -12,12 +11,11 @@ let failedRequestQueue: {
 
 export function setupAPIClient(ctx = undefined): any {
   let cookies = getCookies();
-  console.log("process.env.VERCEL_URL " + process.env.NEXT_PUBLIC_VERCEL_URL);
 
   const api = axios.create({
     baseURL:
       process.env.NODE_ENV == "development"
-        ? process.env.NEXT_PUBLIC_DOMAIN!
+        ? process.env.NEXT_PUBLIC_DOMAIN
         : `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`,
     headers: {
       Authorization: `Bearer ${cookies["nextauth.token"]}`,

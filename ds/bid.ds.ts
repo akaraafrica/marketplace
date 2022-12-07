@@ -5,7 +5,7 @@ import { IUser } from "../types/user.interface";
 
 const url = `/api/bid`;
 
-type route = "purchase" | "placeBid" | "acceptBid";
+type route = "purchase" | "placeBid";
 
 class Bid {
   async postData(

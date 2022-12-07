@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material";
 import { useState, useContext } from "react";
 import { IUser } from "../../../types/user.interface";
 import { AuthContext } from "../../../contexts/AuthContext";
-import AcceptBid from "../AcceptBid";
+import ViewBid from "../ViewBid";
 import PlaceBid from "../PlaceBid";
 import styles from "./index.module.scss";
 import Link from "../../global/Link";
@@ -10,7 +10,6 @@ import { IItem } from "../../../types/item.interface";
 import Index from "../AuctionDialog";
 import DefaultAvatar from "../../global/DefaultAvatar";
 import { getUserName } from "../../../utils/helpers/getUserName";
-import { useSWRConfig } from "swr";
 import LeaveCollectionDialog from "../LeaveCollectionDialog";
 import PutOnSaleDialog from "../PutOnSaleDialog";
 import { MdCancel, MdEdit } from "react-icons/md";
@@ -165,11 +164,11 @@ export default function Tags({ item }: { item: IItem }) {
           <InfoComponent user={item.owner} item={item} />
 
           {isOwner
-            ? item?.auction?.open && <AcceptBid item={item} setTag={setTag} />
+            ? item?.auction?.open && <ViewBid item={item} setTag={setTag} />
             : user && <PlaceBid item={item} />}
         </>
       )}
-      {tag === 3 && isOwner && <AcceptBid viewall={true} item={item} />}
+      {tag === 3 && isOwner && <ViewBid viewall={true} item={item} />}
     </>
   );
 }
