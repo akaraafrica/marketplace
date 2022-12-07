@@ -7,9 +7,10 @@ export default async function profile(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("req.body", req.body);
+
   try {
-    // const data = JSON.parse(req.body);
-    const data = req.body.data;
+    const data = JSON.parse(req.body);
 
     console.log("data", data);
 
