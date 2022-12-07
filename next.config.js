@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  // reactStrictMode: true,
+  ignoreBuildErrors: true,
+
   images: {
     domains: [
       "ak-marketplace.s3.eu-west-3.amazonaws.com",
