@@ -61,6 +61,7 @@ const Index = ({ balance }: properties) => {
           <span>Dashboard</span>
         </Link>
       </div>
+      <div className={styles.line}></div>
       <div className={styles.list}>
         <NextImage
           width="20px"
