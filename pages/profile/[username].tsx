@@ -33,10 +33,10 @@ const Index = () => {
   const [open, setOpen] = React.useState(0);
   const user = useContext(AuthContext).user;
   const router = useRouter();
-  const id = router.query.id as unknown as number;
+  const username = router.query.username as unknown as string;
 
-  const { data: profile, mutate } = useSWR<IProfile>("profile" + id, () =>
-    ProfileDs.fetch(id)
+  const { data: profile, mutate } = useSWR<IProfile>("profile" + username, () =>
+    ProfileDs.fetchProfile(username)
   );
   const [isFollowing, setIsFollowing] = useState<any>(false);
   const [share, setShare] = useState(false);
@@ -105,7 +105,7 @@ const Index = () => {
             <div className={styles.leftTop}>
               {profile && (
                 <DefaultAvatar
-                  id={profile!.id}
+                  username={profile!.username}
                   url={profile?.profile?.avatar}
                   width="160px"
                   height="160px"
@@ -221,14 +221,14 @@ const Index = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { id }: any = ctx.params;
-  const profile = await ProfileDs.fetch(id);
+  const { username }: any = ctx.params;
+  const profile = await ProfileDs.fetchProfile(username);
   if (!profile) return { notFound: true };
 
   return {
     props: {
       fallback: {
-        [unstable_serialize("profile" + id)]: profile,
+        [unstable_serialize("profile" + username)]: profile,
       },
     },
   };

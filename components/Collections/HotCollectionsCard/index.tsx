@@ -60,7 +60,7 @@ function HotCollectionCard(props: properties) {
               )}
               <div className={styles.owner}>
                 <DefaultAvatar
-                  id={author?.id}
+                  username={author?.username}
                   url={author?.profile?.avatar}
                   width="40px"
                   height="40px"

@@ -27,33 +27,33 @@ const Index = ({ open, handleClose, name }: any) => {
         <div className={styles.social}>
           <FacebookShareButton
             url={url}
-            quote={`Ckeckout this profile of ${name}`}
+            quote={`Check out this awesome profile of ${name} on the Akara NFT marketplace`}
             hashtag="#Akara4Africa"
           >
             <FacebookIcon size={32} round />
           </FacebookShareButton>
           <TwitterShareButton
             url={url}
-            title={`Ckeckout this profile of ${name}`}
+            title={`Check out this awesome profile of ${name} on the Akara NFT marketplace`}
             hashtags={["Akara4Africa"]}
           >
             <TwitterIcon size={32} round />
           </TwitterShareButton>
           <WhatsappShareButton
             url={url}
-            title={`Ckeckout this profile of ${name}`}
+            title={`Check out this awesome profile of ${name} on the Akara NFT marketplace`}
           >
             <WhatsappIcon size={32} round />
           </WhatsappShareButton>
           <TelegramShareButton
             url={url}
-            title={`Ckeckout this profile of ${name}`}
+            title={`Check out this awesome profile of ${name} on the Akara NFT marketplace`}
           >
             <TelegramIcon size={32} round />
           </TelegramShareButton>
           <RedditShareButton
             url={url}
-            title={`Ckeckout this profile of ${name}`}
+            title={`Check out this awesome profile of ${name} on the Akara NFT marketplace`}
           >
             <RedditIcon size={32} round />
           </RedditShareButton>

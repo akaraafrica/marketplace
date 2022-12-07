@@ -9,6 +9,7 @@ const date =
 
 export interface IUser {
   id: number;
+  username: string;
   walletAddress: string;
   email: string;
   accessToken?: string;
@@ -22,6 +23,7 @@ export interface IUser {
 
 export const initialState: IUser = {
   id: 0,
+  username: "",
   email: "",
   accessToken: "",
   walletAddress: "",

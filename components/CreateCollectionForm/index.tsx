@@ -584,7 +584,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                         <div className={styles.avatarFlex}>
                           <DefaultAvatar
                             fontSize=".6rem"
-                            id={user!.id}
+                            username={user!.username}
                             url={user?.profile?.avatar}
                             walletAddress={user.walletAddress}
                             width="56px"
@@ -619,7 +619,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
-                      id={user!.id}
+                      username={user!.username}
                       url={user?.profile?.avatar}
                       walletAddress={selUser.walletAddress}
                       width="56px"

@@ -13,6 +13,14 @@ class Profile {
       console.log(error);
     }
   }
+  async fetchProfile(username: string) {
+    try {
+      const res = await api.get(`${url}/profile/${username}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async fetchSettings(id: number) {
     try {
       const res = await api.get(`/api/settings/${id}`);

@@ -37,7 +37,7 @@ export default function Index({
                   <div className={styles.owner}>
                     <DefaultAvatar
                       fontSize=".6rem"
-                      id={item?.owner?.id}
+                      username={item?.owner?.username}
                       url={item?.owner?.profile?.avatar}
                       walletAddress={item?.owner?.walletAddress}
                       width="40px"
