@@ -260,7 +260,7 @@ const Index: React.FC<Properties> = ({
                     <div className={styles.avatarFlex}>
                       <DefaultAvatar
                         fontSize=".6rem"
-                        id={user!.id}
+                        username={user!.username}
                         url={user?.profile?.avatar}
                         walletAddress={user.walletAddress}
                         width="56px"
@@ -296,7 +296,7 @@ const Index: React.FC<Properties> = ({
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
-                      id={selUser!.id}
+                      username={selUser!.username}
                       url={selUser?.profile?.avatar}
                       walletAddress={selUser.walletAddress}
                       width="56px"

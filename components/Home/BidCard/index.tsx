@@ -22,7 +22,7 @@ const BidCard = ({ collection }: properties) => {
           <div className={styles.profileInfoCardCon}>
             <div className={styles.profileInfoCard}>
               <DefaultAvatar
-                id={collection.author.id}
+                username={collection.author.username}
                 url={collection.author.profile?.avatar}
                 walletAddress={collection.author.walletAddress}
               />

@@ -20,6 +20,7 @@ import NextLink from "../../components/global/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import dynamic from "next/dynamic";
 import withAuth from "../../HOC/withAuth";
+import SocialShareDialog from "../../components/Profile/SocialShareDialog";
 
 const DefaultAvatar = dynamic(
   () => import("../../components/global/DefaultAvatar"),
@@ -32,12 +33,13 @@ const Index = () => {
   const [open, setOpen] = React.useState(0);
   const user = useContext(AuthContext).user;
   const router = useRouter();
-  const id = router.query.id as unknown as number;
+  const username = router.query.username as unknown as string;
 
-  const { data: profile, mutate } = useSWR<IProfile>("profile" + id, () =>
-    ProfileDs.fetch(id)
+  const { data: profile, mutate } = useSWR<IProfile>("profile" + username, () =>
+    ProfileDs.fetchProfile(username)
   );
   const [isFollowing, setIsFollowing] = useState<any>(false);
+  const [share, setShare] = useState(false);
 
   useEffect(() => {
     setOpen(0);
@@ -103,7 +105,7 @@ const Index = () => {
             <div className={styles.leftTop}>
               {profile && (
                 <DefaultAvatar
-                  id={profile!.id}
+                  username={profile!.username}
                   url={profile?.profile?.avatar}
                   width="160px"
                   height="160px"
@@ -134,7 +136,7 @@ const Index = () => {
                   {isFollowing ? "unfollow" : "follow"}
                 </button>
               )}
-              <span className={styles.icon}>
+              <span onClick={() => setShare(true)} className={styles.icon}>
                 <IoShareOutline />
               </span>
               <span className={styles.icon}>
@@ -209,19 +211,24 @@ const Index = () => {
           </div>
         </div>
       </div>
+      <SocialShareDialog
+        open={share}
+        handleClose={() => setShare(false)}
+        name={profile?.profile?.name}
+      />
     </Layout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { id }: any = ctx.params;
-  const profile = await ProfileDs.fetch(id);
+  const { username }: any = ctx.params;
+  const profile = await ProfileDs.fetchProfile(username);
   if (!profile) return { notFound: true };
 
   return {
     props: {
       fallback: {
-        [unstable_serialize("profile" + id)]: profile,
+        [unstable_serialize("profile" + username)]: profile,
       },
     },
   };

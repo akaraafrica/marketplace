@@ -11,7 +11,7 @@ interface AvatarProps {
   walletAddress: string;
   fontSize?: string;
   length?: number;
-  id?: number;
+  username?: string;
   verify?: boolean;
   showVerify?: boolean;
   iconSize?: number;
@@ -19,7 +19,7 @@ interface AvatarProps {
 }
 const Index: React.FC<AvatarProps> = ({
   url,
-  id,
+  username,
   walletAddress,
   width = "40px",
   height = "40px",
@@ -30,7 +30,7 @@ const Index: React.FC<AvatarProps> = ({
 }) => {
   if (url === undefined || url === null || url === "") {
     return (
-      <Link href={id ? `/profile/${id}` : "#"}>
+      <Link href={username ? `/profile/${username}` : "#"}>
         <a>
           <div
             style={{
@@ -66,7 +66,7 @@ const Index: React.FC<AvatarProps> = ({
     );
   } else {
     return (
-      <Link href={id ? `/profile/${id}` : "#"}>
+      <Link href={username ? `/profile/${username}` : "#"}>
         <a
           style={{
             border: "2px solid #353945",

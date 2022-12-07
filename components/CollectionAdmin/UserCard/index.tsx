@@ -43,7 +43,7 @@ const UserCard = ({ contributor, isAuthor, handleDelete }: any) => {
           <div className={styles.defaultAvatar}>
             {user?.walletAddress && (
               <DefaultAvatar
-                id={user.id}
+                username={user.username}
                 url={user?.profile?.avatar}
                 width="80px"
                 height="80px"

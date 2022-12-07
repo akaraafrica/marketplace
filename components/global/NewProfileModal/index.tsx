@@ -34,7 +34,7 @@ const Index = ({ balance }: properties) => {
       <div className={styles.list}>
         {user && (
           <DefaultAvatar
-            id={user.id}
+            username={user.username}
             url={user?.profile?.avatar}
             width="40px"
             height="40px"

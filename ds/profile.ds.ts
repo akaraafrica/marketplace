@@ -13,6 +13,22 @@ class Profile {
       console.log(error);
     }
   }
+  async fetchProfile(username: string) {
+    try {
+      const res = await api.get(`${url}/profile/${username}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async fetchSettings(id: number) {
+    try {
+      const res = await api.get(`/api/settings/${id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async getDashboradData(id: number) {
     try {
       const res = await api.get(`${url}/${id}/dashboard`);
@@ -33,13 +49,33 @@ class Profile {
           twitter: data.twitter,
           facebook: data.facebook,
           instagram: data.instagram,
-          itemMinOffer: parseFloat(data.itemMinOffer),
-          itemMaxOffer: parseFloat(data.itemMaxOffer),
-          turnOnNotify: data.turnOnNotify,
+          // itemMinOffer: parseFloat(data.itemMinOffer),
+          // itemMaxOffer: parseFloat(data.itemMaxOffer),
+          // turnOnNotify: data.turnOnNotify,
           id: id,
         },
         {
           method: "PUT",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updateSettingsData(data: any, id: number, accessToken: string) {
+    try {
+      await api.patch(
+        `/api/settings/${id}`,
+        {
+          ...data,
+          id: id,
+        },
+        {
+          method: "PATCH",
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

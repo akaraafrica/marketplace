@@ -4,6 +4,7 @@ import { ILike } from "./like.interface";
 import { IUser } from "./user.interface";
 
 export interface IProfile {
+  username: string;
   profile?: any;
   id: number;
   avatar?: string;
@@ -29,4 +30,5 @@ export const profileInitialState: IProfile = {
   id: 0,
   name: "John Snow",
   avatar: "",
+  username: "",
 };
