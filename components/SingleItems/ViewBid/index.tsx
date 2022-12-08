@@ -1,17 +1,11 @@
-import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useState, useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { toast } from "react-toastify";
+import { Dispatch, SetStateAction } from "react";
 import { IItem } from "../../../types/item.interface";
 import styles from "./index.module.scss";
-import AcceptBidDialog from "./../AcceptBidDialog";
-import { BidDs } from "../../../ds";
 import { IBid } from "../../../types/bid.interface";
 import { getUserName } from "../../../utils/helpers/getUserName";
 import DefaultAvatar from "../../global/DefaultAvatar";
-import { useSWRConfig } from "swr";
 
-export default function AcceptBid({
+export default function ViewBid({
   viewall,
   item,
   setTag,
@@ -24,54 +18,10 @@ export default function AcceptBid({
     (prev, current) => (prev.amount > current.amount ? prev : current),
     { amount: 1 } as IBid
   );
-  const { user } = useContext(AuthContext);
-  const { mutate } = useSWRConfig();
 
-  const [open, setOpen] = useState(false);
-  const [selectedBid, setSelectedBid] = useState<null | IBid>(null);
-
-  const handleClose = () => setOpen(false);
-  const handleAcceptBid = async () => {
-    // TODO ONCHAIN INTERACTION
-
-    if (!user) {
-      return;
-    }
-    try {
-      const newData = {
-        ...item,
-        owner: selectedBid?.user,
-        published: false,
-        ownerId: selectedBid?.bidderId,
-        auction: { open: false },
-      };
-      mutate("item" + item.id, () => newData, false);
-      handleClose();
-      toast.success("Bid Accepted Successfully");
-      await BidDs.postData(
-        "acceptBid",
-        item,
-        user,
-        highestBid.amount,
-        highestBid
-      );
-      mutate("item" + item.id);
-    } catch (error) {
-      toast.error("Error Placing Bid");
-    }
-  };
   return (
     highestBid.user && (
-      <div className={styles.acceptbid}>
-        {open && (
-          <AcceptBidDialog
-            open={open}
-            handleAcceptBid={handleAcceptBid}
-            handleClose={handleClose}
-            item={item}
-            selectedBid={selectedBid}
-          />
-        )}
+      <div className={styles.viewBid}>
         {viewall &&
           item?.bids?.map((bid, index) => {
             return (
@@ -93,17 +43,6 @@ export default function AcceptBid({
                       <span>{bid.amount} ETH</span>
                     </h3>
                   </div>
-                </section>
-                <section className={styles.button}>
-                  <button
-                    className={styles.accept}
-                    onClick={() => {
-                      setOpen(true);
-                      setSelectedBid(bid);
-                    }}
-                  >
-                    Accept
-                  </button>
                 </section>
               </div>
             );
@@ -133,15 +72,6 @@ export default function AcceptBid({
             )}{" "}
             <section className={styles.button}>
               <button onClick={() => setTag && setTag(3)}>View all</button>
-              <button
-                className={styles.accept}
-                onClick={() => {
-                  setOpen(true);
-                  setSelectedBid(highestBid);
-                }}
-              >
-                Accept
-              </button>
             </section>
           </div>
         )}
