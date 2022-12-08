@@ -90,6 +90,15 @@ class User {
       throw error;
     }
   }
+  async fetchSearchedUsername(userString: string) {
+    try {
+      const response = await api.get(`${url}/profile/search/${userString}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   async follow(profile: IProfile, user: IUser) {
     try {
       const response = await api.post(`${url}/follow`, { profile, user });
