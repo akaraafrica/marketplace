@@ -21,6 +21,7 @@ import DefaultAvatar from "../DefaultAvatar";
 import useSWR from "swr";
 import { NotificationDs } from "../../../ds";
 import { INotification } from "../../../types/notification.interface";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 function Header() {
   const [notificationOpen, setNotificationOpen] = React.useState(false);
@@ -34,6 +35,12 @@ function Header() {
     CHAIN_TO_WETH_ADDRESS[chainId as SupportedChainId],
     WETH_ABI
   );
+  const handleNotificationAway = () => {
+    setNotificationOpen(false);
+  };
+  const handleProfileAway = () => {
+    setProfileOpen(false);
+  };
   async function getBalance() {
     const balance = await wethContract?.balanceOf(account);
     const formattedBalance = web3.utils.fromWei(balance?.toString() || "0");
@@ -133,26 +140,28 @@ function Header() {
             <img alt="search icon" src={`/assets/searchIcon.svg`} />
           </div>
           {user && (
-            <div
-              className={styles.notification}
-              onClick={() => {
-                setNotificationOpen(!notificationOpen);
-              }}
-            >
+            <ClickAwayListener onClickAway={handleNotificationAway}>
               <div
-                className={
-                  notifications && notifications.data.length
-                    ? styles.active
-                    : ""
-                }
-              ></div>
-              <MdNotificationsNone size={40} />
-              {notificationOpen && (
-                <div className={styles.dialog}>
-                  <NewNotificationModal data={notifications?.data} />
-                </div>
-              )}
-            </div>
+                className={styles.notification}
+                onClick={() => {
+                  setNotificationOpen(true);
+                }}
+              >
+                <div
+                  className={
+                    notifications && notifications.data.length
+                      ? styles.active
+                      : ""
+                  }
+                ></div>
+                <MdNotificationsNone size={40} />
+                {notificationOpen && (
+                  <div className={styles.dialog}>
+                    <NewNotificationModal data={notifications?.data} />
+                  </div>
+                )}
+              </div>
+            </ClickAwayListener>
           )}
           <button
             type="button"
@@ -162,31 +171,32 @@ function Header() {
             Upload
           </button>
           {user ? (
-            <div
-              className={styles.balanceSec}
-              onClick={() => {
-                setProfileOpen(!profileOpen);
-                setNotificationOpen(false);
-              }}
-            >
-              <DefaultAvatar
-                username={user?.username}
-                url={user?.profile?.avatar}
-                width="30px"
-                height="30px"
-                walletAddress={user?.walletAddress || ""}
-                fontSize="0.7em"
-                length={1}
-              />
-              <div className={styles.amt}>
-                {balance} <span>ETH</span>
-              </div>
-              {profileOpen && (
-                <div className={styles.profile}>
-                  <NewProfileModal balance={balance} />
+            <ClickAwayListener onClickAway={handleProfileAway}>
+              <div
+                className={styles.balanceSec}
+                onClick={() => {
+                  setProfileOpen(true);
+                }}
+              >
+                <DefaultAvatar
+                  username={user?.username}
+                  url={user?.profile?.avatar}
+                  width="30px"
+                  height="30px"
+                  walletAddress={user?.walletAddress || ""}
+                  fontSize="0.7em"
+                  length={1}
+                />
+                <div className={styles.amt}>
+                  {balance} <span>ETH</span>
                 </div>
-              )}
-            </div>
+                {profileOpen && (
+                  <div className={styles.profile}>
+                    <NewProfileModal balance={balance} />
+                  </div>
+                )}
+              </div>
+            </ClickAwayListener>
           ) : (
             <div className={styles.auth}>
               <Link href={"/login"}>

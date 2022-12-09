@@ -21,7 +21,6 @@ import Button from "../../components/global/Button/Button";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-
 const Index = () => {
   const { completeLogin } = useContext(AuthContext);
   const formSchema = Yup.object().shape({
