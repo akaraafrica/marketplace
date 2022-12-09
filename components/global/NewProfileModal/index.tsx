@@ -44,7 +44,7 @@ const Index = ({ balance }: properties) => {
           />
         )}
 
-        <Link href={`/profile/${user?.id}`}>
+        <Link href={`/profile/${user?.username}`}>
           <span>Profile</span>
         </Link>
       </div>
@@ -68,7 +68,7 @@ const Index = ({ balance }: properties) => {
           alt="user icon"
           src="/assets/collectionicon.svg"
         />
-        <Link href={`/profile/${user?.id}?open=1`}>
+        <Link href={`/profile/${user?.username}?open=1`}>
           <span>Collections</span>
         </Link>
       </div>

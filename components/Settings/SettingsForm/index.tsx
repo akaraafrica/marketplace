@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import { ProfileDs } from "../../../ds";
@@ -13,6 +13,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { getFileUploadURL } from "../../../utils/upload/fileUpload";
 import userDs from "../../../ds/user.ds";
 import { IUser } from "../../../types/user.interface";
+import { watch } from "fs";
+import useDebounce from "../../../hooks/useDebounce";
 
 type UnknownArrayOrObject = unknown[] | Record<string, unknown>;
 
@@ -24,16 +26,22 @@ const SettingsForm = () => {
     ProfileDs.fetchSettings(id)
   );
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [foto, setFoto] = useState();
   const {
     register,
     handleSubmit,
     getValues,
+    setError: seterror,
+    clearErrors,
+    watch,
     reset,
     formState: { errors, isDirty, dirtyFields },
   } = useForm({
     defaultValues: {
       name: profile?.profile?.name,
+      username: profile?.profile?.username,
       phoneNumber: profile?.profile?.phoneNumber,
       bio: profile?.profile?.bio,
       website: profile?.profile?.website,
@@ -45,6 +53,7 @@ const SettingsForm = () => {
   });
 
   const onSubmit = async () => {
+    setLoading(true);
     const dirtyValues = (
       dirtyFields: UnknownArrayOrObject | boolean,
       allValues: UnknownArrayOrObject
@@ -67,34 +76,73 @@ const SettingsForm = () => {
       );
     };
 
-    console.log("values", dirtyValues(dirtyFields, getValues()));
-    const accessToken: string = localStorage.getItem("accessToken")!;
+    try {
+      if (dirtyValues(dirtyFields, getValues()).hasOwnProperty("username")) {
+        const data = await userDs.fetchSearchedUsername(
+          getValues("username") as string
+        );
+        if (data) {
+          setError("Username selected is not available");
+          seterror("username", {
+            type: "custom",
+            message: "Username is not available",
+          });
+          setLoading(false);
+          return;
+        }
+      }
+      // console.log("values", dirtyValues(dirtyFields, getValues()));
+      const accessToken: string = localStorage.getItem("accessToken")!;
 
-    if (foto) {
-      console.log(foto);
+      if (foto) {
+        // console.log(foto);
 
-      const imageUrl = await getFileUploadURL(foto, `user/profile/${id}/`);
-      // await userDs.updateProfile({
-      //   id: id,
-      //   avatar: imageUrl,
-      // });
-      await ProfileDs.updateSettingsData(
-        { ...dirtyValues(dirtyFields, getValues()), avatar: imageUrl },
-        id,
-        accessToken
-      );
-      reset();
-    } else {
-      await ProfileDs.updateSettingsData(
-        dirtyValues(dirtyFields, getValues()),
-        id,
-        accessToken
-      );
-      reset();
+        const imageUrl = await getFileUploadURL(foto, `user/profile/${id}/`);
+        // await userDs.updateProfile({
+        //   id: id,
+        //   avatar: imageUrl,
+        // });
+        await ProfileDs.updateSettingsData(
+          { ...dirtyValues(dirtyFields, getValues()), avatar: imageUrl },
+          id,
+          accessToken
+        );
+        setLoading(false);
+        reset();
+        mutate();
+      } else {
+        await ProfileDs.updateSettingsData(
+          dirtyValues(dirtyFields, getValues()),
+          id,
+          accessToken
+        );
+        setLoading(false);
+        reset();
+        mutate();
+      }
+    } catch (error) {
+      setError("Something went wrong, try again!");
+      console.log(error);
     }
-
-    mutate();
   };
+
+  const debouncedSearchTerm = useDebounce(watch("username"), 500) as string;
+
+  useEffect(() => {
+    (async () => {
+      if (debouncedSearchTerm?.length >= 3) {
+        const data = await userDs.fetchSearchedUsername(debouncedSearchTerm);
+        if (data) {
+          seterror("username", {
+            type: "custom",
+            message: "Username is not available",
+          });
+        }
+        // console.log(data);
+      }
+    })();
+    clearErrors();
+  }, [clearErrors, debouncedSearchTerm, seterror]);
 
   const target = useRef<HTMLInputElement>(null);
   const handleChange = (e: any) => {
@@ -147,6 +195,7 @@ const SettingsForm = () => {
                       minWidth: "100px",
                       padding: "1px",
                     }}
+                    type="button"
                   >
                     Upload
                   </Button>
@@ -183,7 +232,15 @@ const SettingsForm = () => {
                       profile?.profile?.name || "Enter your display name"
                     }
                   />
-
+                  <Input
+                    label="USERNAME"
+                    register={register}
+                    errors={errors}
+                    name="username"
+                    placeholder={
+                      profile?.profile?.username || "Enter your username"
+                    }
+                  />
                   <Input
                     label="PHONE NUMBER"
                     register={register}
@@ -209,11 +266,8 @@ const SettingsForm = () => {
                 register={register}
                 errors={errors}
                 name="website"
-                placeholder={
-                  profile?.profile?.website || "Enter your portfolio or website"
-                }
+                placeholder={profile?.profile?.website || "www.mywebsite.com"}
               />
-
               <Input
                 label="Twitter"
                 register={register}
@@ -250,12 +304,14 @@ const SettingsForm = () => {
               <div className={styles.socialtext}>
                 <p>
                   To update your profile settings click the button below.
-                  Profile avatar may take some seconds to reflect.
+                  Profile update may take some seconds to reflect.
                 </p>
               </div>
               <div className={styles.clearallsec}></div>
               <div className={styles.clearallsec}>
-                <Button disabled={!isDirty && !foto}>Update Profile</Button>
+                <Button disabled={!isDirty && !foto} loading={loading}>
+                  Update Profile
+                </Button>
               </div>
             </div>
           </form>

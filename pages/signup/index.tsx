@@ -51,6 +51,7 @@ const Index = () => {
     handleSubmit,
     getValues,
     setError: seterror,
+    clearErrors,
     setValue,
     watch,
     formState: { errors },
@@ -74,6 +75,7 @@ const Index = () => {
         console.log(data);
       }
     })();
+    clearErrors();
   }, [debouncedSearchTerm, seterror]);
 
   console.log(errors);
