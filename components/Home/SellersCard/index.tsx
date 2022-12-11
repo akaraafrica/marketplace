@@ -95,9 +95,9 @@ const SellersCard = ({ seller, index }: any) => {
             </Badge>
             <div className={styles.sellerCardBody}>
               <span className={styles.sellerName}>{seller?.profile?.name}</span>
-              <span className={styles.sellerPrice}>
+              {/* <span className={styles.sellerPrice}>
                 2.456 <span className={styles.sellerPriceETHColor}>ETH</span>
-              </span>
+              </span> */}
             </div>
           </div>
         </a>

@@ -8,6 +8,7 @@ interface Props {
   name: string;
   register: any;
   errors: any;
+  autoComplete?: string;
 }
 const OnboardingInput = ({
   label,
@@ -16,6 +17,7 @@ const OnboardingInput = ({
   name,
   register,
   errors,
+  autoComplete,
 }: Props) => {
   return (
     <div className={errors && errors[name] && errors[name] ? styles.error : ""}>
@@ -26,6 +28,7 @@ const OnboardingInput = ({
           type={type}
           placeholder={placeholder}
           name={name}
+          autoComplete={autoComplete}
         />
       </div>
       {errors[name] && <span>{errors[name].message}</span>}

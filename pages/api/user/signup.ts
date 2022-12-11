@@ -15,8 +15,17 @@ export default async function Signup(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { password, address, name, dob, gender, avatar, phoneNumber, bio } =
-    req.body;
+  const {
+    password,
+    address,
+    name,
+    dob,
+    gender,
+    avatar,
+    phoneNumber,
+    bio,
+    username,
+  } = req.body;
   const userEmail = await req.body.email;
   let link = "";
   console.log({
@@ -79,7 +88,7 @@ export default async function Signup(
             email: userEmail,
             password: encryptedPassword,
             walletAddress: address,
-            username: userEmail.split("@")[0],
+            username: username,
             receivedNotifications: {},
             updatedAt: new Date(),
             profile: {
