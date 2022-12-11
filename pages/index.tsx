@@ -53,44 +53,41 @@ const Home = () => {
   const { data: sellers } = useSWR<IUser[]>(["sellers"], () =>
     UserDs.fetchSellers()
   );
-  console.log(item);
 
   return (
-    <>
-      <Layout>
-        <div className={styles.styles}>
-          <div className={styles.lottieBg}>
-            <Lottie
-              loop
-              animationData={lottieJson}
-              play
-              style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                left: 0,
-                right: 0,
-              }}
-            />
-          </div>
+    <Layout>
+      <div className={styles.styles}>
+        <div className={styles.lottieBg}>
+          <Lottie
+            loop
+            animationData={lottieJson}
+            play
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "absolute",
+              left: 0,
+              right: 0,
+            }}
+          />
         </div>
-        {collection ? <LandingMainSection collection={collection[0]} /> : <></>}
-        {sellers ? <SellersSec sellers={sellers} /> : <></>}
-        {item ? <HotItems items={item} /> : <></>}
-        {collection ? (
-          <HotCollectionsSection collections={collection} />
-        ) : (
-          <></>
-        )}
-        {discovery ? <Discover items={discovery[1]} /> : <></>}
-        <div className={styles.discoverdividercon}></div>
-        <div id="subscribe">
-          <SubscribeModal />
-        </div>
-        <div className={styles.discoverdividercon}></div>
-        <HowItWorks />
-      </Layout>
-    </>
+      </div>
+      {collection && collection?.length > 0 && (
+        <LandingMainSection collection={collection[0]} />
+      )}
+      {sellers && sellers.length > 0 && <SellersSec sellers={sellers} />}
+      {item && item?.length > 0 && <HotItems items={item} />}
+      {collection && collection.length > 0 && (
+        <HotCollectionsSection collections={collection} />
+      )}
+      {discovery && discovery.length > 0 && <Discover items={discovery[1]} />}
+      <div className={styles.discoverdividercon}></div>
+      <div id="subscribe">
+        <SubscribeModal />
+      </div>
+      <div className={styles.discoverdividercon}></div>
+      <HowItWorks />
+    </Layout>
   );
 };
 

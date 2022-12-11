@@ -1,11 +1,10 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import Router from "next/router";
 import { useWeb3React } from "@web3-react/core";
-import { getCookies, setCookies, removeCookies } from "cookies-next";
+import { setCookies, removeCookies } from "cookies-next";
 import { api } from "../services/apiClient";
 import { IUser } from "../types/user.interface";
 import { AxiosError } from "axios";
-import { toast } from "react-toastify";
 
 type SignInCredential = {
   email: string;
@@ -30,6 +29,7 @@ export const AuthContext = createContext({} as AuthContextData);
 let authChannel: BroadcastChannel;
 
 export function signOut() {
+  Router.push("/");
   removeCookies("nextauth.token");
   removeCookies("nextauth.refreshToken");
   removeCookies("address");
@@ -82,9 +82,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (response?.data) {
       const { accessToken, user, refreshToken } = response?.data;
       if (account && account != user.walletAddress) {
-        toast.error(
-          "Please connect the metamask account attached to this credentials to login."
-        );
         throw new AxiosError(
           "Please connect the metamask account attached to this credentials to login.",
           "500"
