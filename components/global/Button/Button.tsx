@@ -7,6 +7,7 @@ type Prop = {
   loading?: boolean;
   customStyle?: {};
   onClick?: () => void;
+  type?: "button" | "reset" | "submit" | undefined;
 };
 
 export default function Button({
@@ -15,6 +16,7 @@ export default function Button({
   onClick,
   disabled,
   customStyle,
+  type,
   ...rest
 }: Prop) {
   return (
@@ -25,6 +27,7 @@ export default function Button({
         disabled={disabled || loading}
         style={customStyle}
         className={styles.btn}
+        type={type}
       >
         {loading ? (
           <Image

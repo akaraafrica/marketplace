@@ -126,9 +126,11 @@ const Index = () => {
                 />
               </div>
               <span className={styles.desc}>{profile?.profile?.bio}</span>
-              <span className={styles.web}>
-                <TbWorld /> https://ui8.net
-              </span>
+              {profile?.profile?.website && (
+                <span className={styles.web}>
+                  <TbWorld /> profile?.profile?.website
+                </span>
+              )}
             </div>
             <div className={styles.leftCenter}>
               {user && user?.walletAddress != walletAddress && (
@@ -144,9 +146,15 @@ const Index = () => {
               </span>
             </div>
             <div className={styles.social}>
-              <TbBrandTwitter size={25} color="#777E91" />
-              <TbBrandInstagram size={25} color="#777E91" />
-              <RiFacebookCircleLine size={25} color="#777E91" />
+              {profile?.profile?.twitter && (
+                <TbBrandTwitter size={25} color="#777E91" />
+              )}
+              {profile.profile?.instagram && (
+                <TbBrandInstagram size={25} color="#777E91" />
+              )}
+              {profile.profile?.facebook && (
+                <RiFacebookCircleLine size={25} color="#777E91" />
+              )}
             </div>
             <hr />
             <span className={styles.date}>

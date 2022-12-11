@@ -60,7 +60,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
 
-      return res.status(204).json({ message: "Updated successfully" });
+      return res.status(204).json("Updated successfully");
     } catch (error: any) {
       console.log(error);
       return res.status(500).json({ message: error.response });

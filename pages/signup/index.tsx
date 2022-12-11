@@ -21,11 +21,15 @@ import Button from "../../components/global/Button/Button";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import useDebounce from "../../hooks/useDebounce";
 
 const Index = () => {
   const { completeLogin } = useContext(AuthContext);
   const formSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
+    username: Yup.string()
+      .required("Username is required")
+      .min(3, "Username shouldbe at least 3 characters"),
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
@@ -47,12 +51,34 @@ const Index = () => {
     handleSubmit,
     getValues,
     setError: seterror,
+    clearErrors,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     mode: "onTouched",
     resolver: yupResolver(formSchema),
   });
+
+  const debouncedSearchTerm: string = useDebounce(watch("username"), 500);
+
+  useEffect(() => {
+    (async () => {
+      if (debouncedSearchTerm?.length >= 3) {
+        const data = await userDs.fetchSearchedUsername(debouncedSearchTerm);
+        if (data) {
+          seterror("username", {
+            type: "custom",
+            message: "Username is not available",
+          });
+        }
+        console.log(data);
+      }
+    })();
+    clearErrors();
+  }, [debouncedSearchTerm, seterror]);
+
+  console.log(errors);
 
   const handlegoogleLogin = async () => {
     try {
@@ -123,10 +149,16 @@ const Index = () => {
       toast.info("Please connect with metamask to login");
       return;
     }
-    const { name, email, birthdate, password } = getValues();
+    const { name, email, birthdate, password, username } = getValues();
 
     try {
       setLoading(true);
+      const data = await userDs.fetchSearchedUsername(username);
+      if (data) {
+        setError("Username selected is not available");
+        setLoading(false);
+        return;
+      }
       const res = await userDs.create({
         address: account,
         email: email,
@@ -134,6 +166,7 @@ const Index = () => {
         name: name,
         dob: birthdate,
         gender: gender,
+        username: username,
       });
       if (image) {
         const imageUrl = await getFileUploadURL(
@@ -201,7 +234,7 @@ const Index = () => {
             <OnboardingInput
               register={register}
               errors={errors}
-              label="Name"
+              label="Full Name"
               name="name"
               type="text"
               placeholder="John Smith"
@@ -209,10 +242,19 @@ const Index = () => {
             <OnboardingInput
               register={register}
               errors={errors}
+              label="Username"
+              name="username"
+              type="text"
+              placeholder="Johnsmith"
+              autoComplete="off"
+            />
+            <OnboardingInput
+              register={register}
+              errors={errors}
               label="Email"
               name="email"
               type="email"
-              placeholder="sarah@gmail.com"
+              placeholder="johnsmith@gmail.com"
             />
             <OnboardingInput
               register={register}

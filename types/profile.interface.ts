@@ -3,9 +3,23 @@ import { IItem } from "./item.interface";
 import { ILike } from "./like.interface";
 import { IUser } from "./user.interface";
 
+export interface UProfile {
+  name: string;
+  username: string;
+  avatar: string;
+  website: string;
+  twitter: string;
+  facebook: string;
+  instagram: string;
+  dob: string;
+  bio: string;
+  gender: string;
+  rating: string;
+  phoneNumber: string;
+}
 export interface IProfile {
   username: string;
-  profile?: any;
+  profile?: UProfile;
   id: number;
   avatar?: string;
   bio?: string;
