@@ -108,8 +108,6 @@ export default async function Signup(
           expiresIn: "2d",
         });
         link = `${process.env.NEXT_PUBLIC_DOMAIN}api/user/activate/${userEmail}/${token}`;
-        // console.log("Secret:", token);
-
         const Emaildata = {
           to: userEmail,
           from: "info@mbizi.org",

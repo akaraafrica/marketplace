@@ -7,22 +7,42 @@ export default async function profile(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
-    const { user, item, bid } = req.body;
+  try {
+    const data = JSON.parse(req.body);
 
-    try {
+    console.log("data", data);
+
+    const item = await prisma.item.findUnique({
+      where: {
+        id: data.itemId,
+      },
+      include: {
+        bids: {
+          orderBy: {
+            amount: "desc",
+          },
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+    if (item) {
+      const bid = item.bids[0];
+
+      console.log("bid", bid);
+
       const createPurchase = prisma.purchase.create({
         data: {
           amount: bid.amount,
-          userId: user.id,
+          userId: bid.bidderId,
           transactionId: randStr(10),
           itemId: item.id,
           itemPrevOwnerId: item.ownerId,
           isAuction: true,
-          inCollectionId: !!item?.inCollectionId,
+          inCollectionId: !!item?.collectionId,
         },
       });
-
       const updateItemOwner = prisma.item.update({
         where: {
           id: item.id,
@@ -33,7 +53,6 @@ export default async function profile(
           updatedAt: new Date(),
         },
       });
-
       const deleteBids = prisma.bid.deleteMany({
         where: {
           itemId: item.id,
@@ -51,17 +70,14 @@ export default async function profile(
         createPurchase,
       ]);
       await TriggerAction({
-        action: Actions.AcceptBid,
-        user: bid.user,
-        item,
+        action: Actions.wonBid,
+        user: bid.user as any,
+        item: item as any,
         bidAmount: bid.amount,
       });
-      res.status(200).json("successful");
-    } catch (error) {
-      console.log(error);
-      res.json({
-        error: "There was an error",
-      });
+      res.status(200).json({ message: "success" });
     }
+  } catch (error) {
+    console.log("error", error);
   }
 }
