@@ -3,6 +3,7 @@ import { Backdrop } from "@mui/material";
 import styles from "./index.module.scss";
 import ClickAwayListener from "@mui/base/ClickAwayListener";
 import itemDs from "../../../ds/item.ds";
+import Link from "next/link";
 
 interface Properties {
   open: boolean;
@@ -24,16 +25,24 @@ const Index = ({ open, data, handleClose }: Properties) => {
             {data &&
               data[0] &&
               data[0].map((user: any) => (
-                <div key={user.id}>{user?.profile?.name}</div>
+                <Link href={`/profile/${user.username}`} key={user.id}>
+                  <div>{user?.profile?.name}</div>
+                </Link>
               ))}
             {data &&
               data[1] &&
               data[1].map((collection: any) => (
-                <div key={collection.id}>{collection.title}</div>
+                <Link href={`/collection/${collection.id}`} key={collection.id}>
+                  <div>{collection.title}</div>
+                </Link>
               ))}
             {data &&
               data[2] &&
-              data[2].map((item: any) => <div key={item.id}>{item.title}</div>)}
+              data[2].map((item: any) => (
+                <Link href={`/item/${item.id}`} key={item.id}>
+                  <div>{item.title}</div>
+                </Link>
+              ))}
           </div>
         </div>
       </ClickAwayListener>
