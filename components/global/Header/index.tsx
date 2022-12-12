@@ -19,10 +19,14 @@ import CustomSelect from "../../MarketPlace/CustomSelect";
 import Link from "../Link";
 import DefaultAvatar from "../DefaultAvatar";
 import useSWR from "swr";
-import { NotificationDs } from "../../../ds";
+import { GeneralDs, NotificationDs } from "../../../ds";
 import { INotification } from "../../../types/notification.interface";
+import GlobalSearchDialog from "../GlobalSearchDialog";
 
 function Header() {
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState(false);
+  const [searchData, setSearchData] = useState();
   const [notificationOpen, setNotificationOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [mobile, setMobile] = React.useState(false);
@@ -60,6 +64,20 @@ function Header() {
     () => NotificationDs.fetch(user!.id)
   );
 
+  const handleSearch = (e: any) => {
+    setSearch(e.target.value);
+  };
+  const handleSearchSubmit = async () => {
+    try {
+      const data = await GeneralDs.search(search);
+      setSearchData(data);
+      setSearchResult(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(search);
+
   return (
     <div className={styles.headerCon}>
       <div className={styles.mobile}>
@@ -80,8 +98,17 @@ function Header() {
             <IoMenuSharp onClick={() => setMobile(true)} size={40} />
           )}
         </div>
-        <div>
-          <CustomSelect placeholder="Search" />
+        <div className={styles.search1}>
+          <input
+            type="text"
+            placeholder="Search Users, Items or Collections"
+            onChange={(e) => handleSearch(e)}
+          />
+          <img
+            onClick={handleSearchSubmit}
+            alt="search icon"
+            src={`/assets/searchIcon.svg`}
+          />
         </div>
         <div className={mobile ? styles.mobileContent : styles.contentNone}>
           <Link href={`/marketplace`}>
@@ -129,8 +156,16 @@ function Header() {
         </div>
         <div className={styles.right}>
           <div className={styles.search}>
-            <input type="text" placeholder="Search" />
-            <img alt="search icon" src={`/assets/searchIcon.svg`} />
+            <input
+              type="text"
+              placeholder="Search Users, Items or Collections"
+              onChange={(e) => handleSearch(e)}
+            />
+            <img
+              onClick={handleSearchSubmit}
+              alt="search icon"
+              src={`/assets/searchIcon.svg`}
+            />
           </div>
           {user && (
             <div
@@ -211,6 +246,11 @@ function Header() {
         draggable
         pauseOnHover
         theme="dark"
+      />
+      <GlobalSearchDialog
+        open={searchResult}
+        data={searchData}
+        handleClose={() => setSearchResult(false)}
       />
     </div>
   );

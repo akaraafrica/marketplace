@@ -91,6 +91,30 @@
           border-radius: 25px;
         }
       }
+
+      .search1 {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px 10px 16px;
+        gap: 10px;
+        border: 2px solid #353945;
+        border-radius: 8px;
+
+        input {
+          background-color: #000000;
+          color: #fcfcfd;
+          outline: none;
+          border: none;
+          flex: 1;
+        }
+
+        img {
+          margin-right: 20px;
+        }
+      }
     }
   }
 
