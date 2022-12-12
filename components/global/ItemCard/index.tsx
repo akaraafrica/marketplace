@@ -100,6 +100,7 @@ function ItemCard(props: ItemCardProps) {
                         <DefaultAvatar
                           url={bid.user.profile?.avatar}
                           walletAddress={bid.user.walletAddress}
+                          username={bid.user.username}
                         />
                       </div>
                     ))}

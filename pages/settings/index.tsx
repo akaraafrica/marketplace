@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import SettingsForm from "../../components/Settings/SettingsForm";
 import Layout from "../../components/global/Layout";
 import { BiArrowBack } from "react-icons/bi";
@@ -8,6 +8,7 @@ import withAuth from "../../HOC/withAuth";
 
 const Settings = () => {
   const router = useRouter();
+
   return (
     <Layout>
       <div className={styles.breadcrumbWrap}>

@@ -157,7 +157,7 @@ const Index = ({ collection }: properties) => {
                         {contributor && (
                           <DefaultAvatar
                             url={contributor?.user?.profile?.avatar || ""}
-                            id={contributor.user.id}
+                            username={contributor.user.username}
                             width={"88px"}
                             height={"88px"}
                             walletAddress={contributor?.user.walletAddress}

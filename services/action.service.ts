@@ -21,7 +21,7 @@ export const enum MailTemplateIDs {
   SignUp = "d-1fbec631dc1248fc9b79e51299b0917f",
   ForgotPassword = "d-903bdb62e29f4f3a9b0f504ed8c0aefa",
   PlaceBid = "d-dde581e5172d48f596db1b48cbd28773",
-  AcceptBid = "d-c1c0221f09144b19b350b30a759aa2d6",
+  wonBid = "d-c1c0221f09144b19b350b30a759aa2d6",
   Purchase = "d-dd6a356d09a5451bbefed7a80d39e8fb",
   CreateItem = "d-c682315847e647ec9aed19d0178d7836",
   CreateCollection = "d-d0ee395b7aa1424fa0a7d55d11e15d95",
@@ -34,7 +34,7 @@ export const enum MailTemplateIDs {
 
 export const enum Actions {
   PlaceBid = "place-bid",
-  AcceptBid = "accept-bid",
+  wonBid = "won-bid",
   Follow = "follow",
   Purchase = "purchase",
   BeneficiaryNotice = "beneficiary-notice",
@@ -121,24 +121,24 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.PlaceBid,
         title: item.title,
         amount: bidAmount,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}/`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}item/${item.id}/`,
       });
       if (data && emailData) {
         await inApp(data);
         await email(emailData);
       }
       break;
-    case Actions.AcceptBid:
+    case Actions.wonBid:
       if (!item || !bidAmount) throw Error("invalid action");
 
       data.push({
         receiverId: user.id,
-        senderId: item.owner.id,
+        senderId: item.ownerId,
         action: action,
-        title: "Your Bid has been accepted",
-        description: `congratulation 
-        ${getUserName(user)}
-         your bid on ${item?.title} for ${item.price} ETH is accepted`,
+        title: "Bid Won",
+        description: `congratulation ${getUserName(user)} you won bid on ${
+          item?.title
+        } for ${bidAmount} ETH`,
         itemType: ItemType.Bid,
         itemId: item.id,
       });
@@ -146,10 +146,10 @@ export async function TriggerAction(props: ActionProps) {
       emailData.push({
         to: user.email,
         from: "info@mbizi.org",
-        templateId: MailTemplateIDs.AcceptBid,
+        templateId: MailTemplateIDs.wonBid,
         title: item.title,
         amount: bidAmount,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}/`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}item/${item.id}/`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -206,7 +206,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.Purchase,
         title: item.title,
         amount: item.price,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/item/${item.id}/`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}item/${item.id}/`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -222,7 +222,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.BeneficiaryNotice,
         title: collection.title,
         author: getUserName(user),
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}collection/${collection.id}/admin/`,
       });
       if (emailData) {
         await email(emailData);
@@ -237,7 +237,7 @@ export async function TriggerAction(props: ActionProps) {
         templateId: MailTemplateIDs.NewBeneficiaryNotice,
         title: collection.title,
         author: getUserName(user),
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/signup/`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}signup/`,
       });
       if (emailData) {
         await email(emailData);
@@ -266,7 +266,7 @@ export async function TriggerAction(props: ActionProps) {
         contributor: getUserName(user),
         action: contributorStatus,
         contributorStatus: contributorStatus,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}collection/${collection.id}/admin/`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -289,7 +289,7 @@ export async function TriggerAction(props: ActionProps) {
         from: "info@mbizi.org",
         templateId: MailTemplateIDs.CollectionApproved,
         title: collection.title,
-        link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+        link: `${process.env.NEXT_PUBLIC_DOMAIN}collection/${collection.id}/admin/`,
       });
       if (data && emailData) {
         await inApp(data);
@@ -321,7 +321,7 @@ export async function TriggerAction(props: ActionProps) {
           templateId: MailTemplateIDs.ContributorNotice,
           title: collection.title,
           author: getUserName(user),
-          link: `${process.env.NEXT_PUBLIC_DOMAIN}/collection/${collection.id}/admin/`,
+          link: `${process.env.NEXT_PUBLIC_DOMAIN}collection/${collection.id}/admin/`,
         };
         if (data && emailData) {
           if (contributor.userId === user.id) {

@@ -34,7 +34,7 @@ const Index = ({ balance }: properties) => {
       <div className={styles.list}>
         {user && (
           <DefaultAvatar
-            id={user.id}
+            username={user.username}
             url={user?.profile?.avatar}
             width="40px"
             height="40px"
@@ -44,7 +44,7 @@ const Index = ({ balance }: properties) => {
           />
         )}
 
-        <Link href={`/profile/${user?.id}`}>
+        <Link href={`/profile/${user?.username}`}>
           <span>Profile</span>
         </Link>
       </div>
@@ -61,6 +61,7 @@ const Index = ({ balance }: properties) => {
           <span>Dashboard</span>
         </Link>
       </div>
+      <div className={styles.line}></div>
       <div className={styles.list}>
         <NextImage
           width="20px"
@@ -68,7 +69,7 @@ const Index = ({ balance }: properties) => {
           alt="user icon"
           src="/assets/collectionicon.svg"
         />
-        <Link href={`/profile/${user?.id}?open=1`}>
+        <Link href={`/profile/${user?.username}?open=1`}>
           <span>Collections</span>
         </Link>
       </div>

@@ -15,8 +15,17 @@ export default async function Signup(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { password, address, name, dob, gender, avatar, phoneNumber, bio } =
-    req.body;
+  const {
+    password,
+    address,
+    name,
+    dob,
+    gender,
+    avatar,
+    phoneNumber,
+    bio,
+    username,
+  } = req.body;
   const userEmail = await req.body.email;
   let link = "";
   console.log({
@@ -79,6 +88,7 @@ export default async function Signup(
             email: userEmail,
             password: encryptedPassword,
             walletAddress: address,
+            username: username,
             receivedNotifications: {},
             updatedAt: new Date(),
             profile: {
@@ -98,13 +108,11 @@ export default async function Signup(
           expiresIn: "2d",
         });
         link = `${process.env.NEXT_PUBLIC_DOMAIN}api/user/activate/${userEmail}/${token}`;
-        // console.log("Secret:", token);
-
         const Emaildata = {
           to: userEmail,
           from: "info@mbizi.org",
           templateId: "d-1fbec631dc1248fc9b79e51299b0917f",
-          name: userEmail,
+          name: userEmail.split("@")[0],
           email: userEmail,
           link: link,
           subject: "👋 Please confirm your email",

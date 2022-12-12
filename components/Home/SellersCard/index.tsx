@@ -5,7 +5,7 @@ import { Avatar } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import styles from "./styles.module.scss";
-import { MdOutlineAddBox } from "react-icons/md";
+import { MdOutlineAddBox, MdVerified } from "react-icons/md";
 import { CgArrowTopRight } from "react-icons/cg";
 import DefaultAvatar from "../../global/DefaultAvatar";
 import Link from "next/link";
@@ -19,7 +19,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 const SellersCard = ({ seller, index }: any) => {
   return (
     <div className={styles.sellerCardMain}>
-      <Link href={`/profile/${seller.id}`}>
+      <Link href={`/profile/${seller.username}`}>
         <a>
           <div className={styles.sellerCardHeaderCon}>
             <div className={styles.sellerCardHeader}>
@@ -62,15 +62,16 @@ const SellersCard = ({ seller, index }: any) => {
               overlap="circular"
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               badgeContent={
-                <SmallAvatar
-                  alt="Payton Harris"
-                  src="/assets/diamond.png"
-                  sx={{
-                    backgroundColor: "#FF8060",
-                    border: "1px solid #000",
-                    clipPath: `polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`,
-                  }}
-                />
+                // <SmallAvatar
+                //   alt="Payton Harris"
+                //   src="/assets/diamond.png"
+                //   sx={{
+                //     backgroundColor: "#FF8060",
+                //     border: "1px solid #000",
+                //     clipPath: `polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`,
+                //   }}
+                // />
+                seller.verified ? <MdVerified size={25} /> : <></>
               }
             >
               {seller.profile && seller.profile.avatar ? (
@@ -82,7 +83,7 @@ const SellersCard = ({ seller, index }: any) => {
               ) : (
                 <div className={styles.defaultAvatar}>
                   <DefaultAvatar
-                    id={seller.id}
+                    username={seller.username}
                     url={seller.profile && seller.profile.avatar}
                     width="80px"
                     height="80px"
@@ -93,12 +94,10 @@ const SellersCard = ({ seller, index }: any) => {
               )}
             </Badge>
             <div className={styles.sellerCardBody}>
-              <span className={styles.sellerName}>
-                {seller.profile && seller.profile.name && seller.profile.name}
-              </span>
-              <span className={styles.sellerPrice}>
+              <span className={styles.sellerName}>{seller?.profile?.name}</span>
+              {/* <span className={styles.sellerPrice}>
                 2.456 <span className={styles.sellerPriceETHColor}>ETH</span>
-              </span>
+              </span> */}
             </div>
           </div>
         </a>

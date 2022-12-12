@@ -1,28 +1,148 @@
 /* eslint-disable @next/next/no-img-element */
 // TODO: convert this to NextImage when given the chance
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import styles from "./index.module.scss";
 import { useForm } from "react-hook-form";
 import { ProfileDs } from "../../../ds";
+import useSWR from "swr";
 import Button from "../../global/Button/Button";
 import Input from "../../global/Form/Input";
+import { IProfile } from "../../../types/profile.interface";
+import DefaultAvatar from "../../global/DefaultAvatar";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { getFileUploadURL } from "../../../utils/upload/fileUpload";
+import userDs from "../../../ds/user.ds";
+import { IUser } from "../../../types/user.interface";
+import { watch } from "fs";
+import useDebounce from "../../../hooks/useDebounce";
 
-function SettingsForm() {
-  const [foto, setFoto] = useState(null);
+type UnknownArrayOrObject = unknown[] | Record<string, unknown>;
 
+const SettingsForm = () => {
+  const user = useContext(AuthContext).user;
+  const id = user?.id as number;
+
+  const { data: profile, mutate } = useSWR<IProfile>("profile" + id, () =>
+    ProfileDs.fetchSettings(id)
+  );
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [foto, setFoto] = useState();
   const {
     register,
     handleSubmit,
     getValues,
-    formState: { errors },
-  } = useForm();
+    setError: seterror,
+    clearErrors,
+    watch,
+    reset,
+    formState: { errors, isDirty, dirtyFields },
+  } = useForm({
+    defaultValues: {
+      name: profile?.profile?.name,
+      username: profile?.profile?.username,
+      phoneNumber: profile?.profile?.phoneNumber,
+      bio: profile?.profile?.bio,
+      website: profile?.profile?.website,
+      twitter: profile?.profile?.twitter,
+      facebook: profile?.profile?.facebook,
+      instagram: profile?.profile?.instagram,
+      avatar: profile?.profile?.avatar,
+    },
+  });
 
-  const onSubmit = () => {
-    const id: number = parseInt(localStorage.getItem("id")!);
-    const accessToken: string = localStorage.getItem("accessToken")!;
-    const data = getValues();
-    ProfileDs.updateData(data, id, accessToken);
+  const onSubmit = async () => {
+    setLoading(true);
+    const dirtyValues = (
+      dirtyFields: UnknownArrayOrObject | boolean,
+      allValues: UnknownArrayOrObject
+    ): UnknownArrayOrObject => {
+      // NOTE: Recursive function.
+
+      // If *any* item in an array was modified, the entire array must be submitted, because there's no
+      // way to indicate "placeholders" for unchanged elements. `dirtyFields` is `true` for leaves.
+      if (dirtyFields === true || Array.isArray(dirtyFields)) {
+        return allValues;
+      }
+
+      // Here, we have an object.
+      return Object.fromEntries(
+        Object.keys(dirtyFields).map((key) => [
+          key,
+          // @ts-ignore
+          dirtyValues(dirtyFields[key], allValues[key]),
+        ])
+      );
+    };
+
+    try {
+      if (dirtyValues(dirtyFields, getValues()).hasOwnProperty("username")) {
+        const data = await userDs.fetchSearchedUsername(
+          getValues("username") as string
+        );
+        if (data) {
+          setError("Username selected is not available");
+          seterror("username", {
+            type: "custom",
+            message: "Username is not available",
+          });
+          setLoading(false);
+          return;
+        }
+      }
+      // console.log("values", dirtyValues(dirtyFields, getValues()));
+      const accessToken: string = localStorage.getItem("accessToken")!;
+
+      if (foto) {
+        // console.log(foto);
+
+        const imageUrl = await getFileUploadURL(foto, `user/profile/${id}/`);
+        // await userDs.updateProfile({
+        //   id: id,
+        //   avatar: imageUrl,
+        // });
+        await ProfileDs.updateSettingsData(
+          { ...dirtyValues(dirtyFields, getValues()), avatar: imageUrl },
+          id,
+          accessToken
+        );
+        setLoading(false);
+        reset();
+        mutate();
+      } else {
+        await ProfileDs.updateSettingsData(
+          dirtyValues(dirtyFields, getValues()),
+          id,
+          accessToken
+        );
+        setLoading(false);
+        reset();
+        mutate();
+      }
+    } catch (error) {
+      setError("Something went wrong, try again!");
+      console.log(error);
+    }
   };
+
+  const debouncedSearchTerm = useDebounce(watch("username"), 500) as string;
+
+  useEffect(() => {
+    (async () => {
+      if (debouncedSearchTerm?.length >= 3) {
+        const data = await userDs.fetchSearchedUsername(debouncedSearchTerm);
+        if (data) {
+          seterror("username", {
+            type: "custom",
+            message: "Username is not available",
+          });
+        }
+        // console.log(data);
+      }
+    })();
+    clearErrors();
+  }, [clearErrors, debouncedSearchTerm, seterror]);
 
   const target = useRef<HTMLInputElement>(null);
   const handleChange = (e: any) => {
@@ -48,13 +168,20 @@ function SettingsForm() {
               <div className={styles.settingformsec1profilecard}>
                 <img
                   className={styles.pic}
-                  alt="profile photo"
                   src={
                     foto
                       ? URL.createObjectURL(foto)
-                      : `/assets/placeholder-image.jpg`
+                      : profile?.profile?.avatar ||
+                        `/assets/placeholder-image.jpg`
                   }
+                  alt=""
                 />
+                {/* <DefaultAvatar
+                  url={new MediaStream(foto) as unknown as string}
+                  walletAddress={profile?.walletAddress as string}
+                  width='150rem'
+                  height='150rem'
+                /> */}
                 <div className={styles.settingformprofilecardtext}>
                   <h4>Profile photo</h4>
                   <p>
@@ -68,6 +195,7 @@ function SettingsForm() {
                       minWidth: "100px",
                       padding: "1px",
                     }}
+                    type="button"
                   >
                     Upload
                   </Button>
@@ -100,21 +228,33 @@ function SettingsForm() {
                     register={register}
                     errors={errors}
                     name="name"
-                    placeholder="Enter your display name"
+                    placeholder={
+                      profile?.profile?.name || "Enter your display name"
+                    }
                   />
-
+                  <Input
+                    label="USERNAME"
+                    register={register}
+                    errors={errors}
+                    name="username"
+                    placeholder={
+                      profile?.profile?.username || "Enter your username"
+                    }
+                  />
                   <Input
                     label="PHONE NUMBER"
                     register={register}
                     errors={errors}
                     name="phoneNumber"
-                    placeholder="+2348010203040"
+                    placeholder={profile?.profile?.phoneNumber || "+2340000000"}
                   />
 
                   <div className={styles.itemsettingforminputsec2}>
                     <label>Bio</label>
                     <textarea
-                      placeholder='About yourselt in a few words"'
+                      placeholder={
+                        profile?.profile?.bio || "About yourselt in a few words"
+                      }
                       {...register("bio", {})}
                     ></textarea>
                   </div>
@@ -125,30 +265,31 @@ function SettingsForm() {
                 label="PORTFOLIO OR WEBSITE"
                 register={register}
                 errors={errors}
-                name="websites"
-                placeholder="Enter your portfolio or website"
+                name="website"
+                placeholder={profile?.profile?.website || "www.mywebsite.com"}
               />
-
               <Input
                 label="Twitter"
                 register={register}
                 errors={errors}
                 name="twitter"
-                placeholder="@twitter username"
+                placeholder={profile?.profile?.twitter || "@twitter username"}
               />
               <Input
                 label="Facebook"
                 register={register}
                 errors={errors}
                 name="facebook"
-                placeholder="@facebook username"
+                placeholder={profile?.profile?.facebook || "@facebook username"}
               />
               <Input
                 label="Instagram"
                 register={register}
                 errors={errors}
                 name="instagram"
-                placeholder="instagram username"
+                placeholder={
+                  profile?.profile?.instagram || "@instagram username"
+                }
               />
               {/* <div className={styles.addsocialaccountbtn}>
                   <button type="button" onClick={() => setshow(!show)}>
@@ -162,13 +303,15 @@ function SettingsForm() {
                 </div> */}
               <div className={styles.socialtext}>
                 <p>
-                  To update your settings you should sign message through your
-                  wallet. Click &apos Update profile &apos then sign the message
+                  To update your profile settings click the button below.
+                  Profile update may take some seconds to reflect.
                 </p>
               </div>
               <div className={styles.clearallsec}></div>
               <div className={styles.clearallsec}>
-                <Button>Update Profile</Button>
+                <Button disabled={!isDirty && !foto} loading={loading}>
+                  Update Profile
+                </Button>
               </div>
             </div>
           </form>
@@ -176,5 +319,5 @@ function SettingsForm() {
       </div>
     </div>
   );
-}
+};
 export default SettingsForm;

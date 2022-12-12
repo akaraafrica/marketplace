@@ -121,6 +121,10 @@ model Profile {
   phoneNumber String?
   bio         String?   @db.VarChar(250)
   gender      String?
+  facebook    String?
+  instagram   String?
+  twitter     String?
+  website     String?
   user        User      @relation(fields: [userId], references: [id])
 }
 
@@ -163,7 +167,6 @@ model Collection {
 
 model DraftItems {
   id           Int         @id @default(autoincrement())
-  itemId       Int
   ownerId      Int
   collectionId Int?
   title        String
@@ -172,6 +175,7 @@ model DraftItems {
   video        String?
   createdAt    DateTime    @default(now())
   price        Float
+  itemId       Int
   Collection   Collection? @relation(fields: [collectionId], references: [id])
 }
 
@@ -179,6 +183,7 @@ model User {
   id                    Int            @id @default(autoincrement())
   walletAddress         String         @unique
   email                 String         @unique
+  username              String         @unique
   password              String
   verified              Boolean        @default(false)
   profileId             Int?
@@ -224,7 +229,7 @@ model Like {
   itemId       Int?
   userId       Int?
   collectionId Int?
-  collection   Collection? @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collection   Collection? @relation(fields: [collectionId], references: [id])
   item         Item?       @relation(fields: [itemId], references: [id])
   user         User?       @relation(fields: [userId], references: [id])
 }
@@ -236,7 +241,7 @@ model Contributor {
   updatedAt    DateTime          @updatedAt
   confirmation ContributorStatus @default(PENDING)
   percentage   Int               @default(0)
-  collection   Collection        @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collection   Collection        @relation(fields: [collectionId], references: [id])
   user         User              @relation(fields: [userId], references: [id])
 }
 
@@ -249,7 +254,7 @@ model Beneficiary {
   name          String?
   email         String
   walletAddress String
-  Collection    Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  Collection    Collection @relation(fields: [collectionId], references: [id])
   user          User?      @relation(fields: [userId], references: [id])
 }
 

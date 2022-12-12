@@ -14,6 +14,9 @@
     color: #fcfcfd;
     border: 0;
   }
+  .btn:disabled {
+    background-color: #777e90;
+  }
 }
 
 .spinner {

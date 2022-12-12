@@ -51,6 +51,9 @@ export default function Input({
           {errors[name] && errors[name].type === "required" && (
             <span>This field is required</span>
           )}
+          {errors[name] && errors[name].type === "custom" && (
+            <span>Username is not available</span>
+          )}
         </div>
       ) : (
         <div

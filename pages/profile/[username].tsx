@@ -20,6 +20,7 @@ import NextLink from "../../components/global/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import dynamic from "next/dynamic";
 import withAuth from "../../HOC/withAuth";
+import SocialShareDialog from "../../components/Profile/SocialShareDialog";
 
 const DefaultAvatar = dynamic(
   () => import("../../components/global/DefaultAvatar"),
@@ -32,12 +33,13 @@ const Index = () => {
   const [open, setOpen] = React.useState(0);
   const user = useContext(AuthContext).user;
   const router = useRouter();
-  const id = router.query.id as unknown as number;
+  const username = router.query.username as unknown as string;
 
-  const { data: profile, mutate } = useSWR<IProfile>("profile" + id, () =>
-    ProfileDs.fetch(id)
+  const { data: profile, mutate } = useSWR<IProfile>("profile" + username, () =>
+    ProfileDs.fetchProfile(username)
   );
   const [isFollowing, setIsFollowing] = useState<any>(false);
+  const [share, setShare] = useState(false);
 
   useEffect(() => {
     setOpen(0);
@@ -57,8 +59,15 @@ const Index = () => {
   if (!profile) {
     return <h1>404</h1>;
   }
-  const { walletAddress, createdAt, items, followers, following, collections } =
-    profile;
+  const {
+    walletAddress,
+    createdAt,
+    items,
+    followers,
+    following,
+    collections,
+    verified,
+  } = profile;
 
   const handleFollow = async () => {
     if (!user) {
@@ -96,12 +105,15 @@ const Index = () => {
             <div className={styles.leftTop}>
               {profile && (
                 <DefaultAvatar
-                  id={profile!.id}
+                  username={profile!.username}
                   url={profile?.profile?.avatar}
                   width="160px"
                   height="160px"
                   walletAddress={walletAddress!}
                   fontSize="1.2em"
+                  verify={verified}
+                  showVerify={true}
+                  iconSize={30}
                 />
               )}
               <span className={styles.name}>{profile?.profile?.name}</span>
@@ -114,9 +126,11 @@ const Index = () => {
                 />
               </div>
               <span className={styles.desc}>{profile?.profile?.bio}</span>
-              <span className={styles.web}>
-                <TbWorld /> https://ui8.net
-              </span>
+              {profile?.profile?.website && (
+                <span className={styles.web}>
+                  <TbWorld /> profile?.profile?.website
+                </span>
+              )}
             </div>
             <div className={styles.leftCenter}>
               {user && user?.walletAddress != walletAddress && (
@@ -124,7 +138,7 @@ const Index = () => {
                   {isFollowing ? "unfollow" : "follow"}
                 </button>
               )}
-              <span className={styles.icon}>
+              <span onClick={() => setShare(true)} className={styles.icon}>
                 <IoShareOutline />
               </span>
               <span className={styles.icon}>
@@ -132,9 +146,15 @@ const Index = () => {
               </span>
             </div>
             <div className={styles.social}>
-              <TbBrandTwitter size={25} color="#777E91" />
-              <TbBrandInstagram size={25} color="#777E91" />
-              <RiFacebookCircleLine size={25} color="#777E91" />
+              {profile?.profile?.twitter && (
+                <TbBrandTwitter size={25} color="#777E91" />
+              )}
+              {profile.profile?.instagram && (
+                <TbBrandInstagram size={25} color="#777E91" />
+              )}
+              {profile.profile?.facebook && (
+                <RiFacebookCircleLine size={25} color="#777E91" />
+              )}
             </div>
             <hr />
             <span className={styles.date}>
@@ -199,19 +219,24 @@ const Index = () => {
           </div>
         </div>
       </div>
+      <SocialShareDialog
+        open={share}
+        handleClose={() => setShare(false)}
+        name={profile?.profile?.name}
+      />
     </Layout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { id }: any = ctx.params;
-  const profile = await ProfileDs.fetch(id);
+  const { username }: any = ctx.params;
+  const profile = await ProfileDs.fetchProfile(username);
   if (!profile) return { notFound: true };
 
   return {
     props: {
       fallback: {
-        [unstable_serialize("profile" + id)]: profile,
+        [unstable_serialize("profile" + username)]: profile,
       },
     },
   };

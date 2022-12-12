@@ -225,7 +225,7 @@ const Index = () => {
               </div>
               <div className={styles.description}>
                 <DefaultAvatar
-                  id={selectedNotification?.sender?.id}
+                  username={selectedNotification?.sender?.username}
                   url={selectedNotification?.sender?.profile?.avatar}
                   walletAddress={
                     selectedNotification?.sender?.walletAddress || ""

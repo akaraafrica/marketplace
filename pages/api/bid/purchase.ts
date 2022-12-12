@@ -1,9 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import {
-  Actions,
-  ItemType,
-  TriggerAction,
-} from "../../../services/action.service";
+import { Actions, TriggerAction } from "../../../services/action.service";
 import { randStr } from "../../../utils/helpers/randomStr";
 import prisma from "../../../utils/lib/prisma";
 

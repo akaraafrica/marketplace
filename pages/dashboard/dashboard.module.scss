@@ -1,11 +1,22 @@
 @use "../../styles/colors" as *;
 
+.root {
+  @media screen and (max-width: 640px) {
+    padding: 150px 20px;
+  }
+  @media screen and (min-width: 1440px) {
+    padding: 150px 15%;
+  }
+  @media screen and (max-width: 1024px) {
+    padding: 150px 20px;
+  }
+}
 .container {
-  margin: auto;
-  margin-top: 10rem;
+  // margin: auto 12%;
+  // margin-top: 10rem;
   display: flex;
-  padding: auto 10rem;
-  max-width: 70rem;
+  // padding: auto 15vw;
+  // max-width: 70%;
   position: relative;
 
   @media screen and (max-width: 500px) {
@@ -82,12 +93,20 @@
       cursor: pointer;
     }
   }
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: calc(100% - 20rem);
+  }
 }
 
 .stats {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   flex-wrap: wrap;
   gap: 1rem;
+  width: 100%;
 
   @media only screen and (max-width: 500px) {
     justify-content: center;
@@ -96,9 +115,14 @@
   div {
     background: $grey2;
     border-radius: 10px;
-    padding: 2rem 3rem;
-    color: white;
+    padding: 2.5rem 2rem;
+    color: #f2994a;
     text-align: center;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-rows: 2fr;
+    gap: 20px;
 
     span {
       font-size: 1.2rem;
@@ -106,7 +130,7 @@
     }
 
     h3 {
-      font-size: 1rem;
+      font-size: 0.8rem;
       margin: 0;
       font-weight: 700;
       color: white;
