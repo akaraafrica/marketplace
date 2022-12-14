@@ -8,6 +8,7 @@ import BidDs from "./bid.ds";
 import LikeDs from "./like.ds";
 import AuctionDs from "./auction.ds";
 import ContributorDs from "./contributor.ds";
+import GeneralDs from "./general.ds";
 export {
   NotificationDs,
   UserDs,
@@ -19,4 +20,5 @@ export {
   BidDs,
   LikeDs,
   ContributorDs,
+  GeneralDs,
 };
