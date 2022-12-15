@@ -47,36 +47,47 @@ const Index = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleTwitterLogin = async () => {
+    console.log("twitterlogin");
     if (!account) {
-      toast.info("Please connect with metamask to login");
+      setError("Please connect with metamask to login");
       return;
     }
+
     try {
       const res = await twitterLogin(account, setError);
       console.log("twitter login", res);
       completeLogin(res);
     } catch (error: any) {
+      console.log(error);
+
       toast.error(error.error?.message || error.message);
     }
   };
 
   const handlefacebookLogin = async () => {
+    console.log("facebooklogin");
+
     if (!account) {
-      toast.info("Please connect with metamask to login");
+      setError("Please connect with metamask to login");
       return;
     }
+
     try {
       const res = await facebookLogin(account, setError);
       console.log("facebook login", res);
       completeLogin(res);
     } catch (error: any) {
+      console.log(setError);
+
       toast.error(error.error?.message || error.message);
     }
   };
 
   const handlegoogleLogin = async () => {
+    console.log("googlelogin");
+
     if (!account) {
-      toast.info("Please connect with metamask to login");
+      setError("Please connect with metamask to login");
       return;
     }
     try {
