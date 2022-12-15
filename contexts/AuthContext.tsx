@@ -34,7 +34,7 @@ export async function signOut() {
   removeCookies("address");
   localStorage.clear();
   authChannel.postMessage("signOut");
-  Router.push("/login");
+  location.assign("/login");
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
