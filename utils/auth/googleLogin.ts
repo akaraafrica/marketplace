@@ -20,12 +20,12 @@ const googleLogin = async (account: any, setError: any, setVerify?: any) => {
         error.response.data.message ===
         "You have not been signed up. Please signup to login"
       ) {
-        console.log("no user found");
         const res = await userDs.create({
           address: account,
           email: user.email,
           password: user.uid,
           name: user.displayName,
+          username: user.email?.split("@")[0],
           dob: null,
           gender: null,
         });

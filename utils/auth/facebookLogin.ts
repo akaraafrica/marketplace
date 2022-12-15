@@ -28,6 +28,7 @@ const facebookLogin = async (account: any, setError: any, setVerify?: any) => {
           email: user.email,
           password: user.uid,
           name: user.displayName,
+          username: user.email?.split("@")[0],
           dob: null,
           gender: null,
         });
