@@ -105,9 +105,7 @@ const Index = () => {
       console.log("new signin result here ", res);
     } catch (error: any) {
       console.log("error here ", error.error?.message);
-
       setLoading(false);
-      toast.error(error.error?.message || error.message);
       setError(error.error?.message || error.message);
     }
   };
