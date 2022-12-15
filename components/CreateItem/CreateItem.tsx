@@ -178,12 +178,10 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
 
   const handleUpload = async () => {
     if (!user) return;
-    setStep({ ...step, loading: true });
     const data = getValues();
 
     try {
       setStep({ ...step, loading: true });
-      data.description = state.description;
       const result = await ItemDs.createData(data, user);
 
       setUploadId(result.data.id);
