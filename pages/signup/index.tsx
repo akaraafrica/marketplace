@@ -87,8 +87,6 @@ const Index = () => {
       completeLogin(res);
     } catch (error: any) {
       console.log(error);
-
-      toast.error(error.error?.message || error.message);
     }
   };
   const handleTwitterLogin = async () => {

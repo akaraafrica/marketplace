@@ -2,10 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  // console.log(req.query);
-
   if (req.method === "GET") {
-    const lastIndex = Number(req.query.lastIndex) + 1;
     const priceRange = req.query.priceRange;
     const sort = req.query.sort as
       | "Most liked"
@@ -15,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       | "Recently added"
       | "First added";
     const verifiedCreator = req.query.verifiedCreator as unknown as string;
-    const category = req.query.category as unknown as any; // console.log("fetchmore");
+    const category = req.query.category as unknown as any;
     const page =
       Number(req?.query?.page) === 0 ? 0 : Number(req?.query?.page) - 1;
 
@@ -26,12 +23,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             prisma.item.count({
               where: {
                 published: true,
-                price: {
-                  lte: Number(priceRange),
-                },
-                owner: {
-                  verified: verifiedCreator.toLowerCase() === "true",
-                },
               },
             }),
             prisma.item.findMany({
@@ -41,12 +32,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               },
               where: {
                 published: true,
-                price: {
-                  lte: Number(priceRange),
-                },
-                owner: {
-                  verified: verifiedCreator.toLowerCase() === "true",
-                },
               },
               orderBy: {
                 likes: {
