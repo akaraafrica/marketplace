@@ -28,13 +28,13 @@ export const AuthContext = createContext({} as AuthContextData);
 
 let authChannel: BroadcastChannel;
 
-export function signOut() {
-  Router.push("/");
+export async function signOut() {
   removeCookies("nextauth.token");
   removeCookies("nextauth.refreshToken");
   removeCookies("address");
   localStorage.clear();
   authChannel.postMessage("signOut");
+  location.assign("/login");
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
