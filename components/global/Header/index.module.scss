@@ -41,7 +41,7 @@
 
       .mobileContent {
         position: absolute;
-        top: 120px;
+        top: 60px;
         right: 0;
         transition: 0.9s ease-in-out;
         background-color: #000000;
@@ -331,87 +331,3 @@
     }
   }
 }
-
-// @media (max-width: 640px) {
-
-//   .mobile {
-//     width: 100%;
-//     display: flex;
-//     flex-direction: column;
-//     gap: 10px;
-//     position: relative;
-//     padding: 20px;
-
-//     .mobileTop {
-//       display: flex;
-//       align-items: center;
-//       justify-content: space-between;
-//     }
-
-//     .mobileContent {
-//       position: absolute;
-//       top: 120px;
-//       right: 0;
-//       transition: 0.9s ease-in-out;
-//       background-color: #000000;
-//       z-index: 99;
-//       width: 100%;
-//       display: flex;
-//       flex-direction: column;
-//       align-items: center;
-//       gap: 20px;
-//       padding: 20px;
-
-//       span {
-//         font-size: 24px;
-//         color: #777e90;
-//       }
-
-//       button {
-//         background-color: #f2994a;
-//         padding: 6px;
-//         border: 1px solid #f2994a;
-//         color: #fcfcfd;
-//         width: 150px;
-//         font-size: 20px;
-//         border-radius: 25px;
-//       }
-//     }
-
-//     .contentNone {
-//       position: absolute;
-//       top: 120px;
-//       right: -120%;
-//       transition: 0.9s ease-in-out;
-//       background-color: #000000;
-//       z-index: 99;
-//       width: 100%;
-//       display: flex;
-//       flex-direction: column;
-//       align-items: center;
-//       gap: 20px;
-//       padding: 20px;
-
-//       span {
-//         font-size: 24px;
-//         color: #777e90;
-//       }
-
-//       button {
-//         background-color: #f2994a;
-//         padding: 6px;
-//         border: 1px solid #f2994a;
-//         color: #fcfcfd;
-//         width: 150px;
-//         font-size: 20px;
-//         border-radius: 25px;
-//       }
-//     }
-//   }
-// }
-
-// @media (min-width: 1440px) {
-//   .header {
-//     padding: 20px 15vw;
-//   }
-// }
