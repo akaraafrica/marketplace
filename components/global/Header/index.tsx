@@ -35,7 +35,7 @@ function Header() {
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [mobile, setMobile] = React.useState(false);
   const router = useRouter();
-  const { user, isAuthenticated } = useContext(AuthContext);
+  const { user, isAuthenticated, signOut } = useContext(AuthContext);
   const [balance, setBalance] = useState("0");
   const { account, active, activate, chainId } = useWeb3React();
   const wethContract = useContract(
@@ -160,7 +160,7 @@ function Header() {
             <span>Notifications</span>
           </Link>
           {user?.id && (
-            <Link href={`/profile/${user?.id}`}>
+            <Link href={`/profile/${user?.username}`}>
               <span>Profile</span>
             </Link>
           )}
@@ -168,7 +168,7 @@ function Header() {
             <span>Settings</span>
           </Link>
           <button onClick={() => handleUpload()}>Upload</button>
-          <span>Logout</span>
+          {user && <span onClick={() => signOut()}>Logout</span>}
         </div>
       </div>
       <div className={styles.header}>
