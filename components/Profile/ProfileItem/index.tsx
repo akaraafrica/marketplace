@@ -62,10 +62,7 @@ const Index = ({
             {collections &&
               collections.map((collection) => (
                 <div key={collection.id}>
-                  <HotCollectionCard
-                    key={collection.id}
-                    collection={collection}
-                  />
+                  <HotCollectionCard collection={collection} />
                 </div>
               ))}
           </div>

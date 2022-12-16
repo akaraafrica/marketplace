@@ -21,8 +21,15 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
             },
           },
           collections: {
+            where: {
+              status: "PUBLISHED",
+            },
             include: {
-              author: true,
+              author: {
+                include: {
+                  profile: true,
+                },
+              },
               items: true,
             },
           },
