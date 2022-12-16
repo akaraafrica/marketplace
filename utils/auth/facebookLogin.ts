@@ -47,15 +47,15 @@ const facebookLogin = async (account: any, setError: any, setVerify?: any) => {
   } catch (error: any) {
     console.log(error);
     if (error.code === "auth/account-exists-with-different-credential") {
-      setError("Use email or google to login");
+      throw new Error("Use email or google to login");
     }
     console.log(error.message);
     if (error.response?.status === 401)
-      return setError(error?.response?.data?.message);
+      throw new Error(error?.response?.data?.message);
     if (error?.response?.status === 409)
-      return setError(error?.response?.data?.message);
+      throw new Error(error?.response?.data?.message);
     if (error?.response?.status === 500)
-      return setError("Server error, please try again later");
+      throw new Error("Server error, please try again later");
   }
 };
 export default facebookLogin;
