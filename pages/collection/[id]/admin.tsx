@@ -488,11 +488,11 @@ const Index = () => {
                         {contributor && (
                           <DefaultAvatar
                             url={contributor?.user?.profile?.avatar}
-                            username={contributor.user.username}
-                            width={"88px"}
-                            height={"88px"}
+                            username={contributor?.user.username}
+                            width="88px"
+                            height="88px"
                             walletAddress={contributor?.user.walletAddress}
-                            fontSize={"8px"}
+                            // fontSize={"8px"}
                           />
                         )}
                         <div className={styles.details}>

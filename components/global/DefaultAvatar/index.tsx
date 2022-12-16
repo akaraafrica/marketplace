@@ -34,7 +34,7 @@ const Index: React.FC<AvatarProps> = ({
         <a>
           <div
             style={{
-              border: "2px solid #353945",
+              // border: "2px solid #353945",
               borderRadius: "50%",
               display: "flex",
               justifyContent: "center",
@@ -69,7 +69,7 @@ const Index: React.FC<AvatarProps> = ({
       <Link href={username ? `/profile/${username}` : "#"}>
         <a
           style={{
-            border: "2px solid #353945",
+            // border: "2px solid #353945",
             borderRadius: "50%",
             display: "flex",
             justifyContent: "center",

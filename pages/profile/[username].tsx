@@ -105,7 +105,7 @@ const Index = () => {
             <div className={styles.leftTop}>
               {profile && (
                 <DefaultAvatar
-                  username={profile!.username}
+                  username={profile?.username}
                   url={profile?.profile?.avatar}
                   width="160px"
                   height="160px"

@@ -15,6 +15,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           // cursor: {
           //   id: 6,
           // },
+          where: {
+            status: "PUBLISHED",
+          },
           include: {
             author: {
               include: {
