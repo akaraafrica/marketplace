@@ -20,12 +20,12 @@ const googleLogin = async (account: any, setError: any, setVerify?: any) => {
         error.response.data.message ===
         "You have not been signed up. Please signup to login"
       ) {
-        console.log("no user found");
         const res = await userDs.create({
           address: account,
           email: user.email,
           password: user.uid,
           name: user.displayName,
+          username: user.email?.split("@")[0],
           dob: null,
           gender: null,
         });
@@ -39,29 +39,17 @@ const googleLogin = async (account: any, setError: any, setVerify?: any) => {
           email: user.email,
         });
         return resp;
-        // if (res.status === 200) {
-        //     setVerify(true);
-        // }
       }
     }
   } catch (error: any) {
     console.log(error);
 
     if (error.response?.status === 401)
-      return setError(error?.response?.data?.message);
+      throw new Error(error?.response?.data?.message);
     if (error?.response?.status === 409)
-      return setError(error?.response?.data?.message);
+      throw new Error(error?.response?.data?.message);
     if (error?.response?.status === 500)
-      return setError("Server error, please try again later");
+      throw new Error("Server error, please try again later");
   }
-  // .then((result) => {
-  //     const user = result.user;
-  //     console.log(result);
-  //     console.log({ user });
-
-  // }).catch((error) => {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  // });
 };
 export default googleLogin;

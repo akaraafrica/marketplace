@@ -119,10 +119,14 @@ const Index = () => {
 
   const handlegoogleLogin = async () => {
     try {
+      setLoading(true);
       const res = await googleLogin(account, setError, setVerify);
+      console.log("google login ", res);
       completeLogin(res);
     } catch (error: any) {
+      setLoading(false);
       console.log(error);
+      setError(error.error?.message || error.message);
     }
   };
   const handleTwitterLogin = async () => {
@@ -131,11 +135,14 @@ const Index = () => {
       return;
     }
     try {
+      setLoading(true);
       const res = await twitterLogin(account, setError);
       console.log("twitter login", res);
       completeLogin(res);
     } catch (error: any) {
-      toast.error(error.error?.message || error.message);
+      console.log(error);
+      setLoading(false);
+      setError(error.error?.message || error.message);
     }
   };
   const handlefacebookLogin = async () => {
@@ -144,12 +151,14 @@ const Index = () => {
       return;
     }
     try {
+      setLoading(true);
       const res = await facebookLogin(account, setError, setVerify);
       console.log("facebook login", res);
       completeLogin(res);
     } catch (error: any) {
       console.log(error);
-      toast.error(error.error?.message || error.message);
+      setLoading(true);
+      setError(error.error?.message || error.message);
     }
   };
 

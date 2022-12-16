@@ -112,7 +112,7 @@ export default async function Signup(
           to: userEmail,
           from: "info@mbizi.org",
           templateId: "d-1fbec631dc1248fc9b79e51299b0917f",
-          name: userEmail.split("@")[0],
+          name: username,
           email: userEmail,
           link: link,
           subject: "👋 Please confirm your email",

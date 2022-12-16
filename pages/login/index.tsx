@@ -47,45 +47,59 @@ const Index = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleTwitterLogin = async () => {
+    console.log("twitterlogin");
     if (!account) {
-      toast.info("Please connect with metamask to login");
+      setError("Please connect with metamask to login");
       return;
     }
+
     try {
+      setLoading(true);
       const res = await twitterLogin(account, setError);
       console.log("twitter login", res);
       completeLogin(res);
     } catch (error: any) {
-      toast.error(error.error?.message || error.message);
+      setLoading(false);
+      console.log(error);
+      setError(error.error?.message || error.message);
     }
   };
 
   const handlefacebookLogin = async () => {
+    console.log("facebooklogin");
+
     if (!account) {
-      toast.info("Please connect with metamask to login");
+      setError("Please connect with metamask to login");
       return;
     }
+
     try {
+      setLoading(true);
       const res = await facebookLogin(account, setError);
       console.log("facebook login", res);
       completeLogin(res);
     } catch (error: any) {
-      toast.error(error.error?.message || error.message);
+      setLoading(false);
+      console.log(setError);
+      setError(error.error?.message || error.message);
     }
   };
 
   const handlegoogleLogin = async () => {
     if (!account) {
-      toast.info("Please connect with metamask to login");
+      setError("Please connect with metamask to login");
       return;
     }
     try {
+      setLoading(true);
       const res = await googleLogin(account, setError);
       console.log("google login ", res);
-      completeLogin(res);
+      const resp = await completeLogin(res);
+      console.log("google login resp ", resp);
     } catch (error: any) {
+      setLoading(false);
       console.log(error);
-      toast.error(error.error?.message || error.message);
+      setError(error.error?.message || error.message);
     }
   };
 

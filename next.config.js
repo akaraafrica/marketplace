@@ -6,6 +6,7 @@ const nextConfig = {
       "ak-marketplace.s3.eu-west-3.amazonaws.com",
       "avatars.dicebear.com",
       "firebasestorage.googleapis.com",
+      "graph.facebook.com",
       "lh3.googleusercontent.com",
       "pbs.twimg.com",
     ],
