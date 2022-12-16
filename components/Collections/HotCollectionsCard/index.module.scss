@@ -58,10 +58,12 @@
     .bottom {
       display: flex;
       justify-content: space-between;
+      align-items: center;
 
       .left {
         display: flex;
         gap: 15px;
+        align-items: center;
 
         .image {
           border-radius: 50%;
@@ -71,14 +73,20 @@
           font-style: normal;
           font-weight: 500;
           font-size: 18px;
-          line-height: 24px;
+          // line-height: 24px;
           display: flex;
           align-items: center;
+          color: #e6e8ec;
+        }
+
+        p {
+          font-size: 18px;
           color: #e6e8ec;
         }
       }
 
       span {
+        height: fit-content;
         padding: 8px 8px 6px;
         border: 2px solid #e6e8ec;
         border-radius: 4px;

@@ -103,7 +103,7 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
               )}
 
               <div>
-                {user.id === Itemuser.id && (
+                {user.id === Itemuser.id && !item?.auction?.open && (
                   <span onClick={() => setOpenAuction(true)}>
                     <RiAuctionFill size={25} />
                     place on auction
