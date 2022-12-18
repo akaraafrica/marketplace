@@ -149,6 +149,35 @@ function Header() {
           )}
         </div>
         <div className={mobile ? styles.mobileContent : styles.contentNone}>
+          <div className={styles.balCard}>
+            <NextImage
+              width="50px"
+              height="50px"
+              src="/assets/balancecardimg.svg"
+            />
+            <div className={styles.balDiv}>
+              <span className={styles.bal}>Balance</span>
+              <span className={styles.amt}>{balance} ETH</span>
+            </div>
+          </div>
+          <div className={styles.list}>
+            {user && (
+              <DefaultAvatar
+                username={user.username}
+                url={user?.profile?.avatar}
+                width="40px"
+                height="40px"
+                walletAddress={user?.walletAddress || ""}
+                fontSize="0.7em"
+                length={2}
+              />
+            )}
+            {user && (
+              <Link href={`/profile/${user?.username}`}>
+                <span>Profile</span>
+              </Link>
+            )}
+          </div>
           <Link href={`/marketplace`}>
             <span>Marketplace</span>
           </Link>
@@ -156,17 +185,21 @@ function Header() {
             <span>Collections</span>
           </Link>
           {/* <span>How it works</span> */}
-          <Link href={`/notifications`}>
-            <span>Notifications</span>
-          </Link>
-          {user?.id && (
+          {user && (
+            <Link href={`/notifications`}>
+              <span>Notifications</span>
+            </Link>
+          )}
+          {/* {user?.id && (
             <Link href={`/profile/${user?.username}`}>
               <span>Profile</span>
             </Link>
+          )} */}
+          {user && (
+            <Link href="/settings">
+              <span>Settings</span>
+            </Link>
           )}
-          <Link href="/settings">
-            <span>Settings</span>
-          </Link>
           <button onClick={() => handleUpload()}>Upload</button>
           {user && <span onClick={() => signOut()}>Logout</span>}
         </div>
