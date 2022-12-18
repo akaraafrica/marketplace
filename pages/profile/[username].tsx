@@ -19,7 +19,6 @@ import { useRouter } from "next/router";
 import NextLink from "../../components/global/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import dynamic from "next/dynamic";
-import withAuth from "../../HOC/withAuth";
 import SocialShareDialog from "../../components/Profile/SocialShareDialog";
 
 const DefaultAvatar = dynamic(
@@ -249,4 +248,4 @@ function Page({ fallback }: any) {
   );
 }
 
-export default withAuth(Page);
+export default Page;
