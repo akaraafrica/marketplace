@@ -12,11 +12,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           data: {
             status: req.body.status,
             items: {
-              connect: req.body.collection.draftItems.map(
-                (item: { id: number }) => ({
-                  id: item.id,
-                })
-              ),
+              connect: req.body.collection.draftItems.map((item: any) => ({
+                id: item.itemId,
+              })),
             },
             draftItems: {
               set: [],

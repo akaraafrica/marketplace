@@ -215,6 +215,7 @@ const Index = () => {
       }),
       collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" }),
     ]);
+    mutate();
     toast.success("Notifications sent successfully");
   };
   if (!collection) {

@@ -13,6 +13,7 @@ import {
 } from "../../../constants";
 import token from "../../../artifacts/nft.json";
 import { ICollection } from "../../../types/collection.interface";
+import collectionsDs from "../../../ds/collections.ds";
 
 export interface Step {
   count: number;
@@ -71,7 +72,11 @@ export default function MintCollectionDialog({
   };
   const handleSubmit = async () => {
     // TODO ONCHAIN INTERACTION
-
+    await collectionsDs.updateStatus({
+      id: collection.id,
+      status: "PUBLISHED",
+      collection,
+    });
     setStep({ ...step, complete: true });
     mutate();
     handleClose();
