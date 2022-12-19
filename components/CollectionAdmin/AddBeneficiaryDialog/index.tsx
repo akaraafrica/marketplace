@@ -107,6 +107,7 @@ const Index: React.FC<Properties> = ({
           mutate();
           setBeneficiary(null);
           handleClose();
+          setLoading(false);
         }
         await CollectionDs.updateBeneficiary(collection.id, data);
         setName("");
@@ -118,6 +119,7 @@ const Index: React.FC<Properties> = ({
         mutate();
         setBeneficiary(null);
         handleClose();
+        setLoading(false);
       } catch (error) {
         toast.success("Error updating beneficiary");
         console.log(error);
@@ -140,6 +142,7 @@ const Index: React.FC<Properties> = ({
           mutate();
           setBeneficiary(null);
           handleClose();
+          setLoading(false);
         }
         await CollectionDs.addBeneficiary(collection, data);
         setName("");
@@ -151,6 +154,7 @@ const Index: React.FC<Properties> = ({
         mutate();
         setBeneficiary(null);
         handleClose();
+        setLoading(false);
       } catch (error) {
         toast.success("Error adding beneficiary");
         console.log(error);
@@ -265,6 +269,7 @@ const Index: React.FC<Properties> = ({
                         walletAddress={user.walletAddress}
                         width="56px"
                         height="56px"
+                        notActiveLink={true}
                       />
                       <p>{user.email && user.email}</p>
                     </div>
@@ -301,6 +306,7 @@ const Index: React.FC<Properties> = ({
                       walletAddress={selUser.walletAddress}
                       width="56px"
                       height="56px"
+                      notActiveLink={true}
                     />
                   </div>
                   <div className={styles.inputDiv}>
