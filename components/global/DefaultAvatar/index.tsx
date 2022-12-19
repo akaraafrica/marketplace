@@ -16,7 +16,9 @@ interface AvatarProps {
   showVerify?: boolean;
   iconSize?: number;
   iconRight?: string | number;
+  notActiveLink?: boolean;
 }
+
 const Index: React.FC<AvatarProps> = ({
   url,
   username,
@@ -27,12 +29,83 @@ const Index: React.FC<AvatarProps> = ({
   verify,
   iconSize = 20,
   iconRight = "15px",
+  notActiveLink = false,
 }) => {
   if (url === undefined || url === null || url === "") {
-    return (
-      <Link href={username ? `/profile/${username}` : "#"}>
-        <a>
-          <div
+    if (!notActiveLink) {
+      return (
+        <Link href={username ? `/profile/${username}` : "#"}>
+          <a>
+            <div
+              style={{
+                // border: "2px solid #353945",
+                borderRadius: "50%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                position: "relative",
+              }}
+            >
+              <NextImage
+                src={`https://avatars.dicebear.com/api/micah/${walletAddress}.svg`}
+                width={width}
+                height={height}
+                style={{ borderRadius: "50%" }}
+                className={styles.avatar}
+              />
+              {showVerify && verify && (
+                <div
+                  style={{
+                    position: "absolute",
+                    right: iconRight,
+                    bottom: "5px",
+                  }}
+                >
+                  <MdVerified size={iconSize} />
+                </div>
+              )}
+            </div>
+          </a>
+        </Link>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            // border: "2px solid #353945",
+            borderRadius: "50%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "relative",
+          }}
+        >
+          <NextImage
+            src={`https://avatars.dicebear.com/api/micah/${walletAddress}.svg`}
+            width={width}
+            height={height}
+            style={{ borderRadius: "50%" }}
+            className={styles.avatar}
+          />
+          {showVerify && verify && (
+            <div
+              style={{
+                position: "absolute",
+                right: iconRight,
+                bottom: "5px",
+              }}
+            >
+              <MdVerified size={iconSize} />
+            </div>
+          )}
+        </div>
+      );
+    }
+  } else {
+    if (!notActiveLink) {
+      return (
+        <Link href={username ? `/profile/${username}` : "#"}>
+          <a
             style={{
               // border: "2px solid #353945",
               borderRadius: "50%",
@@ -43,10 +116,10 @@ const Index: React.FC<AvatarProps> = ({
             }}
           >
             <NextImage
-              src={`https://avatars.dicebear.com/api/micah/${walletAddress}.svg`}
+              src={url as string}
               width={width}
               height={height}
-              style={{ borderRadius: "50%" }}
+              // style={{ borderRadius: "50%" }}
               className={styles.avatar}
             />
             {showVerify && verify && (
@@ -60,13 +133,11 @@ const Index: React.FC<AvatarProps> = ({
                 <MdVerified size={iconSize} />
               </div>
             )}
-          </div>
-        </a>
-      </Link>
-    );
-  } else {
-    return (
-      <Link href={username ? `/profile/${username}` : "#"}>
+          </a>
+        </Link>
+      );
+    } else {
+      return (
         <a
           style={{
             // border: "2px solid #353945",
@@ -96,8 +167,8 @@ const Index: React.FC<AvatarProps> = ({
             </div>
           )}
         </a>
-      </Link>
-    );
+      );
+    }
   }
 };
 

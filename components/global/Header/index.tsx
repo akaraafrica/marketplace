@@ -170,6 +170,7 @@ function Header() {
                 walletAddress={user?.walletAddress || ""}
                 fontSize="0.7em"
                 length={2}
+                notActiveLink={true}
               />
             )}
             {user && (
@@ -295,6 +296,7 @@ function Header() {
                   walletAddress={user?.walletAddress || ""}
                   fontSize="0.7em"
                   length={1}
+                  notActiveLink={true}
                 />
                 <div className={styles.amt}>
                   {balance} <span>ETH</span>

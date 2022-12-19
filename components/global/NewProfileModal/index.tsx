@@ -41,6 +41,7 @@ const Index = ({ balance }: properties) => {
             walletAddress={user?.walletAddress || ""}
             fontSize="0.7em"
             length={2}
+            notActiveLink={true}
           />
         )}
 

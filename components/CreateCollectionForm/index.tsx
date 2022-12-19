@@ -589,6 +589,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                             walletAddress={userS.walletAddress}
                             width="56px"
                             height="56px"
+                            notActiveLink={true}
                           />
                           <p>{userS.email && userS.email}</p>
                         </div>
@@ -624,6 +625,7 @@ const Index = ({ collection }: { collection: ICollection }) => {
                       walletAddress={selUser.walletAddress}
                       width="56px"
                       height="56px"
+                      notActiveLink={true}
                     />
                   </div>
                 ))}

@@ -114,6 +114,7 @@ const Index = () => {
                   verify={verified}
                   showVerify={true}
                   iconSize={30}
+                  notActiveLink={true}
                 />
               )}
               <span className={styles.name}>{profile?.profile?.name}</span>
