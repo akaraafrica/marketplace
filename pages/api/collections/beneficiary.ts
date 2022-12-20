@@ -73,7 +73,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 email: email,
                 walletAddress: walletAddress,
                 description: description,
-                percentage: percentage,
+                percentage: parseInt(percentage),
               },
             },
           },

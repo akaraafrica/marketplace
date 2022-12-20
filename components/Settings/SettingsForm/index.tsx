@@ -228,25 +228,24 @@ const SettingsForm = () => {
                     register={register}
                     errors={errors}
                     name="name"
-                    placeholder={
-                      profile?.profile?.name || "Enter your display name"
-                    }
+                    placeholder={"Enter your display name"}
+                    value={watch("name")}
                   />
                   <Input
                     label="USERNAME"
                     register={register}
                     errors={errors}
                     name="username"
-                    placeholder={
-                      profile?.profile?.username || "Enter your username"
-                    }
+                    placeholder={"Enter your username"}
+                    value={watch("username")}
                   />
                   <Input
                     label="PHONE NUMBER"
                     register={register}
                     errors={errors}
                     name="phoneNumber"
-                    placeholder={profile?.profile?.phoneNumber || "+2340000000"}
+                    placeholder={"+2340000000"}
+                    value={watch("phoneNumber")}
                   />
 
                   <div className={styles.itemsettingforminputsec2}>
@@ -266,30 +265,32 @@ const SettingsForm = () => {
                 register={register}
                 errors={errors}
                 name="website"
-                placeholder={profile?.profile?.website || "www.mywebsite.com"}
+                placeholder={"www.mywebsite.com"}
+                value={watch("website")}
               />
               <Input
                 label="Twitter"
                 register={register}
                 errors={errors}
                 name="twitter"
-                placeholder={profile?.profile?.twitter || "@twitter username"}
+                placeholder={"@twitter username"}
+                value={watch("twitter")}
               />
               <Input
                 label="Facebook"
                 register={register}
                 errors={errors}
                 name="facebook"
-                placeholder={profile?.profile?.facebook || "@facebook username"}
+                placeholder={"@facebook username"}
+                value={watch("facebook")}
               />
               <Input
                 label="Instagram"
                 register={register}
                 errors={errors}
                 name="instagram"
-                placeholder={
-                  profile?.profile?.instagram || "@instagram username"
-                }
+                placeholder={"@instagram username"}
+                value={watch("instagram")}
               />
               {/* <div className={styles.addsocialaccountbtn}>
                   <button type="button" onClick={() => setshow(!show)}>

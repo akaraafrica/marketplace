@@ -376,11 +376,13 @@ const Index = () => {
                 )}
 
                 {/* <button>Payout Funds</button> */}
-                <Link href={`/collection/create?id=${collection?.id}`}>
-                  <button>
-                    Edit Collection Details <BiRightArrowAlt />
-                  </button>
-                </Link>
+                {collection.status !== "PUBLISHED" && (
+                  <Link href={`/collection/create?id=${collection?.id}`}>
+                    <button>
+                      Edit Collection Details <BiRightArrowAlt />
+                    </button>
+                  </Link>
+                )}
                 {collection.status === "VERIFIED" && (
                   <button className={styles.btnPublish} onClick={handlePublish}>
                     publish
@@ -512,7 +514,8 @@ const Index = () => {
                           </div>
                           <div className={styles.btnDiv}>
                             {contributor.userId !== user?.id &&
-                              collection.author.id === user?.id && (
+                              collection.author.id === user?.id &&
+                              collection.status !== "PUBLISHED" && (
                                 <>
                                   <button
                                     style={{
