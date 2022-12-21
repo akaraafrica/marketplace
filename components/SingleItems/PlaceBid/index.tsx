@@ -91,21 +91,8 @@ export default function PlaceBid({ item }: { item: IItem }) {
   const auctionHasStart =
     differenceInSeconds(new Date(item.auction?.startTime), new Date()) < 0;
 
-  const auctionStartDate = new Date(item?.auction?.startTime).getTime();
-  const auctionEndDate = new Date(item?.auction?.endTime).getTime();
-
   return (
     <>
-      {!auctionHasEnd && (
-        <div>
-          <h5 className={styles.headiing}>
-            {auctionHasStart ? "Auction Ending" : "Auction Starting"}
-          </h5>
-          <CountdownTimer
-            targetDate={auctionHasStart ? auctionEndDate : auctionStartDate}
-          />
-        </div>
-      )}
       <PlaceBidDialog
         open={openPlaceBidDialog}
         handleClose={handleBidClose}

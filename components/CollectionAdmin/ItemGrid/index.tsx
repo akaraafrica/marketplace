@@ -20,7 +20,7 @@ export default function ItemGrid({
   const handleRemoveItem = async (item: any) => {
     try {
       await collectionsDs.removeItem(item.collectionId, item.id, "draft");
-      toast.success("item successfully remmoved");
+      toast.success("item successfully removed");
     } catch (error) {
       console.log(error);
       toast.error("error removing item");
@@ -54,7 +54,8 @@ export default function ItemGrid({
                   </div>
                 </div>
 
-                {collection.status === "DRAFT" &&
+                {collection.status !== "VERIFIED" &&
+                  collection.status !== "PUBLISHED" &&
                   collection.author.id === user?.id &&
                   !view && (
                     <button onClick={() => handleRemoveItem(item)}>

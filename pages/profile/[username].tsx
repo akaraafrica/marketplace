@@ -19,7 +19,6 @@ import { useRouter } from "next/router";
 import NextLink from "../../components/global/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import dynamic from "next/dynamic";
-import withAuth from "../../HOC/withAuth";
 import SocialShareDialog from "../../components/Profile/SocialShareDialog";
 
 const DefaultAvatar = dynamic(
@@ -105,7 +104,7 @@ const Index = () => {
             <div className={styles.leftTop}>
               {profile && (
                 <DefaultAvatar
-                  username={profile!.username}
+                  username={profile?.username}
                   url={profile?.profile?.avatar}
                   width="160px"
                   height="160px"
@@ -114,6 +113,7 @@ const Index = () => {
                   verify={verified}
                   showVerify={true}
                   iconSize={30}
+                  notActiveLink={true}
                 />
               )}
               <span className={styles.name}>{profile?.profile?.name}</span>
@@ -249,4 +249,4 @@ function Page({ fallback }: any) {
   );
 }
 
-export default withAuth(Page);
+export default Page;

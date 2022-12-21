@@ -563,20 +563,20 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 {searchUser &&
                   searchedUser
                     ?.filter((userS) => userS.id !== user?.id)
-                    .map((user, index) => (
+                    .map((userS, index) => (
                       <span
                         key={index}
                         onClick={() => {
                           for (let i = 0; i < selectedUser.length; i++) {
                             if (
                               selectedUser[i].walletAddress ===
-                              user.walletAddress
+                              userS.walletAddress
                             ) {
                               toast.warning("User already selected");
                               return;
                             }
                           }
-                          setSelectedUser([...selectedUser, user]);
+                          setSelectedUser([...selectedUser, userS]);
                           setSearchUser("");
                           setResultDisplay(false);
                         }}
@@ -584,13 +584,14 @@ const Index = ({ collection }: { collection: ICollection }) => {
                         <div className={styles.avatarFlex}>
                           <DefaultAvatar
                             fontSize=".6rem"
-                            username={user!.username}
-                            url={user?.profile?.avatar}
-                            walletAddress={user.walletAddress}
+                            username={userS!.username}
+                            url={userS?.profile?.avatar}
+                            walletAddress={userS.walletAddress}
                             width="56px"
                             height="56px"
+                            notActiveLink={true}
                           />
-                          <p>{user.email && user.email}</p>
+                          <p>{userS.email && userS.email}</p>
                         </div>
                       </span>
                     ))}
@@ -619,11 +620,12 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
-                      username={user!.username}
-                      url={user?.profile?.avatar}
+                      username={selUser!.username}
+                      url={selUser?.profile?.avatar}
                       walletAddress={selUser.walletAddress}
                       width="56px"
                       height="56px"
+                      notActiveLink={true}
                     />
                   </div>
                 ))}

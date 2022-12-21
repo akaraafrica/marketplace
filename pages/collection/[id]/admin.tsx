@@ -215,6 +215,7 @@ const Index = () => {
       }),
       collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" }),
     ]);
+    mutate();
     toast.success("Notifications sent successfully");
   };
   if (!collection) {
@@ -375,11 +376,13 @@ const Index = () => {
                 )}
 
                 {/* <button>Payout Funds</button> */}
-                <Link href={`/collection/create?id=${collection?.id}`}>
-                  <button>
-                    Edit Collection Details <BiRightArrowAlt />
-                  </button>
-                </Link>
+                {collection.status !== "PUBLISHED" && (
+                  <Link href={`/collection/create?id=${collection?.id}`}>
+                    <button>
+                      Edit Collection Details <BiRightArrowAlt />
+                    </button>
+                  </Link>
+                )}
                 {collection.status === "VERIFIED" && (
                   <button className={styles.btnPublish} onClick={handlePublish}>
                     publish
@@ -488,11 +491,11 @@ const Index = () => {
                         {contributor && (
                           <DefaultAvatar
                             url={contributor?.user?.profile?.avatar}
-                            username={contributor.user.username}
-                            width={"88px"}
-                            height={"88px"}
+                            username={contributor?.user.username}
+                            width="88px"
+                            height="88px"
                             walletAddress={contributor?.user.walletAddress}
-                            fontSize={"8px"}
+                            // fontSize={"8px"}
                           />
                         )}
                         <div className={styles.details}>
@@ -511,7 +514,8 @@ const Index = () => {
                           </div>
                           <div className={styles.btnDiv}>
                             {contributor.userId !== user?.id &&
-                              collection.author.id === user?.id && (
+                              collection.author.id === user?.id &&
+                              collection.status !== "PUBLISHED" && (
                                 <>
                                   <button
                                     style={{

@@ -23,16 +23,19 @@ import { GeneralDs, NotificationDs } from "../../../ds";
 import { INotification } from "../../../types/notification.interface";
 import GlobalSearchDialog from "../GlobalSearchDialog";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import useDebounce from "../../../hooks/useDebounce";
+import Image from "next/image";
 
 function Header() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [searchData, setSearchData] = useState();
   const [notificationOpen, setNotificationOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [mobile, setMobile] = React.useState(false);
   const router = useRouter();
-  const { user, isAuthenticated } = useContext(AuthContext);
+  const { user, isAuthenticated, signOut } = useContext(AuthContext);
   const [balance, setBalance] = useState("0");
   const { account, active, activate, chainId } = useWeb3React();
   const wethContract = useContract(
@@ -74,6 +77,24 @@ function Header() {
   const handleSearch = (e: any) => {
     setSearch(e.target.value);
   };
+
+  const debouncedSearchTerm: string = useDebounce(search, 250);
+  useEffect(() => {
+    (async () => {
+      if (debouncedSearchTerm) {
+        setSearchLoading(true);
+        const data = await GeneralDs.search(debouncedSearchTerm);
+        if (data) {
+          setSearchLoading(false);
+
+          setSearchData(data);
+          setSearchResult(true);
+        }
+        console.log(data);
+      }
+    })();
+  }, [debouncedSearchTerm]);
+
   const handleSearchSubmit = async () => {
     try {
       const data = await GeneralDs.search(search);
@@ -111,13 +132,53 @@ function Header() {
             placeholder="Search Users, Items or Collections"
             onChange={(e) => handleSearch(e)}
           />
-          <img
-            onClick={handleSearchSubmit}
-            alt="search icon"
-            src={`/assets/searchIcon.svg`}
-          />
+          {searchLoading ? (
+            <Image
+              width="20px"
+              height="20px"
+              className={styles.spinner}
+              src={`/assets/singleItem/spinner.svg`}
+              alt=""
+            />
+          ) : (
+            <img
+              onClick={handleSearchSubmit}
+              alt="search icon"
+              src={`/assets/searchIcon.svg`}
+            />
+          )}
         </div>
         <div className={mobile ? styles.mobileContent : styles.contentNone}>
+          <div className={styles.balCard}>
+            <NextImage
+              width="50px"
+              height="50px"
+              src="/assets/balancecardimg.svg"
+            />
+            <div className={styles.balDiv}>
+              <span className={styles.bal}>Balance</span>
+              <span className={styles.amt}>{balance} ETH</span>
+            </div>
+          </div>
+          <div className={styles.list}>
+            {user && (
+              <DefaultAvatar
+                username={user.username}
+                url={user?.profile?.avatar}
+                width="40px"
+                height="40px"
+                walletAddress={user?.walletAddress || ""}
+                fontSize="0.7em"
+                length={2}
+                notActiveLink={true}
+              />
+            )}
+            {user && (
+              <Link href={`/profile/${user?.username}`}>
+                <span>Profile</span>
+              </Link>
+            )}
+          </div>
           <Link href={`/marketplace`}>
             <span>Marketplace</span>
           </Link>
@@ -125,19 +186,23 @@ function Header() {
             <span>Collections</span>
           </Link>
           {/* <span>How it works</span> */}
-          <Link href={`/notifications`}>
-            <span>Notifications</span>
-          </Link>
-          {user?.id && (
-            <Link href={`/profile/${user?.id}`}>
-              <span>Profile</span>
+          {user && (
+            <Link href={`/notifications`}>
+              <span>Notifications</span>
             </Link>
           )}
-          <Link href="/settings">
-            <span>Settings</span>
-          </Link>
+          {/* {user?.id && (
+            <Link href={`/profile/${user?.username}`}>
+              <span>Profile</span>
+            </Link>
+          )} */}
+          {user && (
+            <Link href="/settings">
+              <span>Settings</span>
+            </Link>
+          )}
           <button onClick={() => handleUpload()}>Upload</button>
-          <span>Logout</span>
+          {user && <span onClick={() => signOut()}>Logout</span>}
         </div>
       </div>
       <div className={styles.header}>
@@ -168,11 +233,21 @@ function Header() {
               placeholder="Search Users, Items or Collections"
               onChange={(e) => handleSearch(e)}
             />
-            <img
-              onClick={handleSearchSubmit}
-              alt="search icon"
-              src={`/assets/searchIcon.svg`}
-            />
+            {searchLoading ? (
+              <Image
+                width="20px"
+                height="20px"
+                className={styles.spinner}
+                src={`/assets/singleItem/spinner.svg`}
+                alt=""
+              />
+            ) : (
+              <img
+                onClick={handleSearchSubmit}
+                alt="search icon"
+                src={`/assets/searchIcon.svg`}
+              />
+            )}
           </div>
           {user && (
             <ClickAwayListener onClickAway={handleNotificationAway}>
@@ -221,6 +296,7 @@ function Header() {
                   walletAddress={user?.walletAddress || ""}
                   fontSize="0.7em"
                   length={1}
+                  notActiveLink={true}
                 />
                 <div className={styles.amt}>
                   {balance} <span>ETH</span>

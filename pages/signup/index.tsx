@@ -22,8 +22,20 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import useDebounce from "../../hooks/useDebounce";
+import { differenceInYears } from "date-fns";
 
 const Index = () => {
+  const [error, setError] = useState<any>("");
+  const [gender, setGender] = useState("");
+  const [verify, setVerify] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(null);
+  const router = useRouter();
+
+  const { account, activate } = useWeb3React();
+
+  const target = useRef<HTMLInputElement>(null);
+
   const { completeLogin } = useContext(AuthContext);
   const formSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -61,32 +73,60 @@ const Index = () => {
   });
 
   const debouncedSearchTerm: string = useDebounce(watch("username"), 500);
+  useEffect(() => {
+    const birthdate = new Date(watch("birthdate"));
+    const age = differenceInYears(new Date(), birthdate);
+
+    if (age < 16) {
+      setError({
+        ...error,
+        birthdate: {
+          type: "required",
+          name: "birthdate",
+          message: "You should be at least 16 years old",
+        },
+      });
+    } else {
+      setError({
+        ...error,
+        birthdate: null,
+      });
+    }
+  }, [watch("birthdate")]);
 
   useEffect(() => {
     (async () => {
       if (debouncedSearchTerm?.length >= 3) {
         const data = await userDs.fetchSearchedUsername(debouncedSearchTerm);
         if (data) {
-          seterror("username", {
-            type: "custom",
-            message: "Username is not available",
+          setError({
+            ...error,
+            username: {
+              type: "custom",
+              message: "Username is not available",
+            },
+          });
+        } else {
+          setError({
+            ...error,
+            username: null,
           });
         }
-        console.log(data);
       }
     })();
     clearErrors();
   }, [debouncedSearchTerm, seterror]);
 
-  console.log(errors);
-
   const handlegoogleLogin = async () => {
     try {
+      setLoading(true);
       const res = await googleLogin(account, setError, setVerify);
       console.log("google login ", res);
       completeLogin(res);
     } catch (error: any) {
+      setLoading(false);
       console.log(error);
+      setError(error.error?.message || error.message);
     }
   };
   const handleTwitterLogin = async () => {
@@ -95,11 +135,14 @@ const Index = () => {
       return;
     }
     try {
+      setLoading(true);
       const res = await twitterLogin(account, setError);
       console.log("twitter login", res);
       completeLogin(res);
     } catch (error: any) {
-      toast.error(error.error?.message || error.message);
+      console.log(error);
+      setLoading(false);
+      setError(error.error?.message || error.message);
     }
   };
   const handlefacebookLogin = async () => {
@@ -108,25 +151,16 @@ const Index = () => {
       return;
     }
     try {
+      setLoading(true);
       const res = await facebookLogin(account, setError, setVerify);
       console.log("facebook login", res);
       completeLogin(res);
     } catch (error: any) {
       console.log(error);
-      toast.error(error.error?.message || error.message);
+      setLoading(true);
+      setError(error.error?.message || error.message);
     }
   };
-
-  const [error, setError] = useState("");
-  const [gender, setGender] = useState("");
-  const [verify, setVerify] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(null);
-  const router = useRouter();
-
-  const { account, activate } = useWeb3React();
-
-  const target = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!account) {
@@ -228,7 +262,9 @@ const Index = () => {
               />
             </div>
 
-            {error !== "" && <span className={styles.error}>{error}</span>}
+            {error !== "" && typeof error == "string" && (
+              <span className={styles.error}>{error}</span>
+            )}
             <OnboardingInput
               register={register}
               errors={errors}
@@ -239,7 +275,7 @@ const Index = () => {
             />
             <OnboardingInput
               register={register}
-              errors={errors}
+              errors={{ ...errors, ...error }}
               label="Username"
               name="username"
               type="text"
@@ -330,12 +366,19 @@ const Index = () => {
                 type="date"
                 label=""
                 register={register}
-                errors={errors}
+                errors={{ ...errors, ...error }}
                 name="birthdate"
                 placeholder="choose your DOB"
               />
             </div>
-            <Button loading={loading}>Sign up </Button>
+            <Button
+              loading={loading}
+              disabled={
+                Object.values(error).filter((e) => e !== null).length > 0
+              }
+            >
+              Sign up{" "}
+            </Button>
           </form>
 
           <span className={styles.continue}>Or continue with</span>
