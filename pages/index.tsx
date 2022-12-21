@@ -34,7 +34,7 @@ const Lottie: any = dynamic(() => import("react-lottie-player"));
 
 const filter = {
   category: "ALL",
-  verifiedCreator: false,
+  verifiedCreator: "All",
   sort: "Most liked",
   priceRange: 1000,
 };
