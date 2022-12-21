@@ -77,7 +77,10 @@ export const handleChange = async (
     });
   }
   if (param === "CREATORS") {
-    const val = value === "Verified only" ? true : false;
+    const val =
+      value === "All" ? "ALL" : value === "Verified only" ? true : false;
+    console.log("val", val);
+
     setLoading(true);
     const res = await itemDs.getFilterData({ ...filter, verifiedCreator: val });
     setLoading(false);

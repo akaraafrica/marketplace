@@ -60,6 +60,8 @@ const Index = ({ collection }: { collection: ICollection }) => {
       setSelectedUser([...selectedUser, user]);
     }
   }, []);
+  // console.log(collection);
+
   useEffect(() => {
     if (collection) {
       setValue("title", collection.title);
@@ -71,6 +73,11 @@ const Index = ({ collection }: { collection: ICollection }) => {
       setSelectedUser(contributors);
       setSelectedItems(collection.items);
       setValue("items", collection.items);
+      setValue("image", collection.images[0]);
+      setError("image", {});
+      setValue("desc", collection.description);
+      setError("desc", {});
+      setValue("type", collection.type);
     }
   }, [collection, setValue]);
   useEffect(() => {
@@ -799,23 +806,17 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 </div>
               </div>
               <div className={styles.infoDiv}>
-                <h4>{(title && title) || "Amazing Digital Art"}</h4>
+                <h4>{title && title}</h4>
                 <div className={styles.bottom}>
                   <div className={styles.left}>
-                    <Image
-                      className={styles.image}
-                      src={
-                        collection?.author?.profile?.avatar ||
-                        `/assets/avatar.png`
-                      }
-                      width="50px"
-                      height="50px"
-                      alt=""
+                    <DefaultAvatar
+                      username={user?.username}
+                      walletAddress={user?.walletAddress!}
+                      url=""
                     />
-
-                    <div className={styles.owner}>
-                      {getUserName(collection?.author)}
-                    </div>
+                    {user && (
+                      <div className={styles.owner}>{getUserName(user)}</div>
+                    )}
                   </div>
                   <span>{selectedItems && selectedItems.length} Items</span>
                 </div>

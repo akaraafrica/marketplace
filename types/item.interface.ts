@@ -12,6 +12,7 @@ export interface IItem {
   tokenId: string;
   title: string;
   description: string;
+  itemId: number;
   images: string[];
   video: string;
   acceptedBid: number;

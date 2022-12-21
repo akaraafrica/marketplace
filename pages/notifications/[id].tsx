@@ -73,6 +73,14 @@ const Index = () => {
     if (user) await NotificationDs.update(id, user.walletAddress);
     mutate("notificationsAll");
   };
+  useEffect(() => {
+    if (router.asPath.split("=")[1]) {
+      const selected = notifications?.data.find(
+        (not) => not.id === parseInt(router.asPath.split("=")[1])
+      );
+      setSelectedNotification(selected);
+    }
+  }, [router.asPath]);
   const [selectedNotification, setSelectedNotification] = useState(
     notifications?.data[0]
   );
@@ -82,18 +90,6 @@ const Index = () => {
     }
   }, [selectedNotification]);
 
-  // useEffect(() => {
-  //   const id = router.query.id as string;
-
-  //   if (id && notifications?.data) {
-  //     const findNotification = notifications?.data.find(
-  //       (item) => item!.id === Number(id)
-  //     );
-  //     if (findNotification) {
-  //       setSelectedNotification(findNotification);
-  //     }
-  //   }
-  // }, [router, notifications]);
   useEffect(() => {
     if (selectedNotification)
       document
@@ -103,17 +99,7 @@ const Index = () => {
           block: "end",
         });
   }, [selectedNotification]);
-  // useEffect(() => {
-  //   if (!selectedNotification) {
-  //     setSelectedNotification(notifications?.data[0]);
-  //   }
-  // }, [notifications]);
 
-  // useEffect(() => {
-  //   if (selectedNotification && !selectedNotification?.read) {
-  //     updateData(selectedNotification.id as unknown as string);
-  //   }
-  // }, [selectedNotification]);
   const updateAllData = async () => {
     const data = await NotificationDs.updateAll(user!.walletAddress);
     mutate("notificationsAll");
@@ -261,7 +247,7 @@ const Index = () => {
               {selectedNotification?.collection && (
                 <>
                   <div className={styles.contributorImages}>
-                    {selectedNotification?.collection?.items.length
+                    {selectedNotification?.collection?.items.length > 0
                       ? selectedNotification?.collection?.items
                           ?.filter((item) => item.ownerId === user?.id)
                           .slice(0, 4)

@@ -84,9 +84,9 @@ function ListingMainCard() {
           items.slice(1, 4).map((item) => {
             return (
               <Link href={`item/${item.id}`} key={item.id}>
-                <a>
-                  <div className={styles.cards} key={item.id}>
-                    {item?.images[0] && (
+                <div className={styles.cards} key={item.id}>
+                  {item?.images[0] && (
+                    <a>
                       <NextImage
                         className={styles.cardImg}
                         src={item.images[0]}
@@ -94,15 +94,17 @@ function ListingMainCard() {
                         height="148px"
                         alt="product"
                       />
-                    )}
+                    </a>
+                  )}
 
-                    <div className={styles.cardDetails}>
-                      <Link href={`item/${item.id}`}>
-                        <span className={styles.cardName}>{item?.title}</span>
-                      </Link>
-                      <div className={styles.centerDiv}>
-                        {item?.owner.profile?.avatar && (
-                          <Link href={`item/${item.id}`}>
+                  <div className={styles.cardDetails}>
+                    <Link href={`item/${item.id}`}>
+                      <span className={styles.cardName}>{item?.title}</span>
+                    </Link>
+                    <div className={styles.centerDiv}>
+                      {item?.owner.profile?.avatar && (
+                        <Link href={`item/${item.id}`}>
+                          <a>
                             <NextImage
                               className={styles.centerDivImg}
                               src={item?.owner.profile?.avatar}
@@ -110,16 +112,13 @@ function ListingMainCard() {
                               height="24px"
                               alt="avatar"
                             />
-                          </Link>
-                        )}
-                        <span>{item?.price} ETH</span>
-                      </div>
-                      {/* <Link href={`item/${item.id}`}>
-                    <button>Buy</button>
-                  </Link> */}
+                          </a>
+                        </Link>
+                      )}
+                      <span>{item?.price} ETH</span>
                     </div>
                   </div>
-                </a>
+                </div>
               </Link>
             );
           })}
@@ -132,25 +131,23 @@ function ListingMainCard() {
             users.slice(0, 5).map((user) => {
               return (
                 <Link href={`/profile/${user.id}`} key={user.id}>
-                  <a key={user.id}>
-                    <div key={user.id} className={styles.creator}>
-                      <div className={styles.creatorImgDiv}>
-                        <DefaultAvatar
-                          username={user.username}
-                          url={user.profile?.avatar}
-                          walletAddress={user.walletAddress}
-                          width="60px"
-                          height="60px"
-                          verify={user.verified}
-                          showVerify={true}
-                          iconRight="-10px"
-                        />
-                      </div>
-                      <div className={styles.creatorNameDiv}>
-                        <span className={styles.name}>{getUserName(user)}</span>
-                      </div>
+                  <div key={user.id} className={styles.creator}>
+                    <div className={styles.creatorImgDiv}>
+                      <DefaultAvatar
+                        username={user.username}
+                        url={user.profile?.avatar}
+                        walletAddress={user.walletAddress}
+                        width="60px"
+                        height="60px"
+                        verify={user.verified}
+                        showVerify={true}
+                        iconRight="-10px"
+                      />
                     </div>
-                  </a>
+                    <div className={styles.creatorNameDiv}>
+                      <span className={styles.name}>{getUserName(user)}</span>
+                    </div>
+                  </div>
                 </Link>
               );
             })}
