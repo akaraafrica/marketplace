@@ -22,7 +22,7 @@ const LandingBidding = ({ collection }: properties) => {
     // @ts-ignore
     document
       .querySelector("#videoSec video")
-      .setAttribute("poster", `/assets/01.png`);
+      .setAttribute("poster", collection?.images[0] && collection?.images[0]);
   }, []);
 
   return (
