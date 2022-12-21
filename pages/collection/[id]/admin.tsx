@@ -784,17 +784,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   const cookie = getCookies(ctx);
 
-  let collection: { data: ICollection } = await CollectionDs.getCollectionById(
-    id
-  );
+  let collection: ICollection = await CollectionDs.getCollectionById(id);
+  console.log(collection);
 
-  // if (!collection) return { notFound: true };
+  if (!collection) return { notFound: true };
 
-  // const isContributor = collection.contributors.find((contributor) => {
-  //   return contributor.user.walletAddress == cookie.address;
-  // });
-  // if (!isContributor) return { notFound: true };
-  // if (!Object.keys(isContributor!).length) return { notFound: true };
+  const isContributor = collection.contributors.find((contributor) => {
+    return contributor.user.walletAddress == cookie.address;
+  });
+  if (!isContributor) return { notFound: true };
+  if (!Object.keys(isContributor!).length) return { notFound: true };
 
   return {
     props: {

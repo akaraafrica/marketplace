@@ -4,9 +4,23 @@ import prisma from "../../../utils/lib/prisma";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const data = req.body;
+  console.log(data.items.length);
 
   if (req.method === "PATCH") {
     try {
+      await prisma.collection.update({
+        where: {
+          id: data.id,
+        },
+        data: {
+          draftItems: {
+            deleteMany: {},
+          },
+          contributors: {
+            deleteMany: {},
+          },
+        },
+      });
       await prisma.collection.update({
         where: {
           id: data.id,
@@ -17,9 +31,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           visible: data.visible,
           updatedAt: new Date(),
           worth: data.worth,
+
           draftItems: {
-            set: data.items.map((item: IItem) => ({
-              id: item.id,
+            create: data.items.map((item: IItem) => ({
+              itemId: item.id,
               title: item.title,
               description: item.description,
               price: item.price,
@@ -29,7 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             })),
           },
           contributors: {
-            set: data.owners.map((user: { id: number }) => ({
+            create: data.owners.map((user: { id: number }) => ({
               user: {
                 connect: {
                   id: user.id,
