@@ -15,7 +15,6 @@ import NewProfileModal from "../NewProfileModal";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
 import { MdNotificationsNone } from "react-icons/md";
 import NextImage from "../Image";
-import CustomSelect from "../../MarketPlace/CustomSelect";
 import Link from "../Link";
 import DefaultAvatar from "../DefaultAvatar";
 import useSWR from "swr";
@@ -90,7 +89,6 @@ function Header() {
           setSearchData(data);
           setSearchResult(true);
         }
-        console.log(data);
       }
     })();
   }, [debouncedSearchTerm]);
@@ -104,7 +102,6 @@ function Header() {
       console.log(error);
     }
   };
-  console.log(search);
 
   return (
     <div className={styles.headerCon}>
