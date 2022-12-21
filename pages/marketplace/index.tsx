@@ -34,7 +34,7 @@ const Index = () => {
   const [open, setOpen] = useState(Filter.All);
   const [filter, setFilter] = useState({
     category: "ALL",
-    verifiedCreator: false,
+    verifiedCreator: "All",
     sort: "Most liked",
     priceRange: 1000,
     filterCount: 0,
@@ -152,7 +152,7 @@ const Index = () => {
             <div className={styles.filter}>
               <span>CREATOR</span>
               <CustomSelect
-                placeholder="Non verified only"
+                placeholder="All"
                 onChange={(e: any) =>
                   handleChange(
                     e,
@@ -163,7 +163,7 @@ const Index = () => {
                     setLoading
                   )
                 }
-                options={["Non verified only", "Verified only"]}
+                options={["All", "Non verified only", "Verified only"]}
               />
             </div>
             <hr />
@@ -335,7 +335,7 @@ export async function getServerSideProps(ctx: any) {
   const page = Number(ctx.query.page);
   const filter = {
     category: "ALL",
-    verifiedCreator: false,
+    verifiedCreator: "All",
     sort: "Most liked",
     priceRange: 1000,
   };

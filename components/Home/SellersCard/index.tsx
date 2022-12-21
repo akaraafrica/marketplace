@@ -20,7 +20,7 @@ const SellersCard = ({ seller, index }: any) => {
   return (
     <div className={styles.sellerCardMain}>
       <Link href={`/profile/${seller.username}`}>
-        <a>
+        <>
           <div className={styles.sellerCardHeaderCon}>
             <div className={styles.sellerCardHeader}>
               <span
@@ -61,18 +61,7 @@ const SellersCard = ({ seller, index }: any) => {
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              badgeContent={
-                // <SmallAvatar
-                //   alt="Payton Harris"
-                //   src="/assets/diamond.png"
-                //   sx={{
-                //     backgroundColor: "#FF8060",
-                //     border: "1px solid #000",
-                //     clipPath: `polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)`,
-                //   }}
-                // />
-                seller.verified ? <MdVerified size={25} /> : <></>
-              }
+              badgeContent={seller.verified ? <MdVerified size={25} /> : <></>}
             >
               {seller.profile && seller.profile.avatar ? (
                 <Avatar
@@ -95,12 +84,9 @@ const SellersCard = ({ seller, index }: any) => {
             </Badge>
             <div className={styles.sellerCardBody}>
               <span className={styles.sellerName}>{seller?.profile?.name}</span>
-              {/* <span className={styles.sellerPrice}>
-                2.456 <span className={styles.sellerPriceETHColor}>ETH</span>
-              </span> */}
             </div>
           </div>
-        </a>
+        </>
       </Link>
     </div>
   );
