@@ -300,7 +300,11 @@ const Index = () => {
                           })}
                   </div>
                   <Link
-                    href={"/collection/" + selectedNotification?.collection?.id}
+                    href={
+                      "/collection/" +
+                      selectedNotification?.collection?.id +
+                      "/admin"
+                    }
                   >
                     <button className={styles.visit}>
                       Collection Dashboard
