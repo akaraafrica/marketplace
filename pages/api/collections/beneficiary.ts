@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               email: email,
               walletAddress: walletAddress,
               description: description,
-              percentage: percentage,
+              percentage: parseInt(percentage),
             },
           },
         },
@@ -102,7 +102,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               email: user.email,
               walletAddress: user.walletAddress,
               description: user.description,
-              percentage: user.percentage,
+              percentage: parseInt(user.percentage),
               user: {
                 connect: {
                   id: user.id,
