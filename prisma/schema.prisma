@@ -74,10 +74,10 @@ model Item {
   category          Category?      @default(ART)
   collectionOnChain Boolean?       @default(true)
   authorId          Int?
-  collection        Collection?    @relation(fields: [collectionId], references: [id])
-  owner             User           @relation(fields: [ownerId], references: [id])
   auction           Auction?
   bids              Bid[]
+  collection        Collection?    @relation(fields: [collectionId], references: [id])
+  owner             User           @relation(fields: [ownerId], references: [id])
   ratings           ItemRating[]
   likes             Like[]
   Notification      Notification[]
@@ -134,8 +134,8 @@ model Rating {
   raterId           Int
   itemId            Int
   createdAt         DateTime           @default(now())
-  user              User               @relation(fields: [raterId], references: [id])
   collectionRatings CollectionRating[]
+  user              User               @relation(fields: [raterId], references: [id])
   userRatings       UserRating[]
 }
 
@@ -155,8 +155,8 @@ model Collection {
   revenue       Int?
   type          CollectionTypes    @default(ORDINARY)
   worth         Float?
-  author        User               @relation(fields: [authorId], references: [id])
   beneficiaries Beneficiary[]
+  author        User               @relation(fields: [authorId], references: [id])
   ratings       CollectionRating[]
   contributors  Contributor[]
   draftItems    DraftItems[]

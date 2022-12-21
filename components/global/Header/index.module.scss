@@ -70,6 +70,7 @@
           font-size: 20px;
           border-radius: 25px;
         }
+
         .balCard {
           width: 80%;
           height: auto;
@@ -89,12 +90,14 @@
             .bal {
               color: #777e91;
             }
+
             .amt {
               color: #fcfcfd;
               font-size: 20px;
             }
           }
         }
+
         .list {
           display: flex;
           align-items: center;
@@ -244,6 +247,7 @@
           outline: none;
           border: none;
         }
+
         .spinner {
           animation: rotation 2s infinite linear;
 
@@ -257,6 +261,7 @@
             }
           }
         }
+
         img {
           margin-right: 20px;
         }
