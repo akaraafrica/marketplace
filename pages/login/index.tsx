@@ -45,7 +45,7 @@ const Index = () => {
   useEffect(() => {
     if (!active) activate(injected);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [active]);
   const handleTwitterLogin = async () => {
     console.log("twitterlogin");
     if (!account) {
