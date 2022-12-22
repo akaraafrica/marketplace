@@ -13,18 +13,16 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { getFileUploadURL } from "../../../utils/upload/fileUpload";
 import userDs from "../../../ds/user.ds";
 import { IUser } from "../../../types/user.interface";
-import { watch } from "fs";
 import useDebounce from "../../../hooks/useDebounce";
+import { toast } from "react-toastify";
 
 type UnknownArrayOrObject = unknown[] | Record<string, unknown>;
 
-const SettingsForm = () => {
+const SettingsForm = ({ profile, mutate }: any) => {
   const user = useContext(AuthContext).user;
   const id = user?.id as number;
 
-  const { data: profile, mutate } = useSWR<IProfile>("profile" + id, () =>
-    ProfileDs.fetchSettings(id)
-  );
+  // console.log('profile is', profile)
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -41,7 +39,7 @@ const SettingsForm = () => {
   } = useForm({
     defaultValues: {
       name: profile?.profile?.name,
-      username: profile?.profile?.username,
+      username: profile?.username,
       phoneNumber: profile?.profile?.phoneNumber,
       bio: profile?.profile?.bio,
       website: profile?.profile?.website,
@@ -81,7 +79,8 @@ const SettingsForm = () => {
         const data = await userDs.fetchSearchedUsername(
           getValues("username") as string
         );
-        if (data) {
+        console.log(data);
+        if (data && data !== profile?.username) {
           setError("Username selected is not available");
           seterror("username", {
             type: "custom",
@@ -91,25 +90,21 @@ const SettingsForm = () => {
           return;
         }
       }
-      // console.log("values", dirtyValues(dirtyFields, getValues()));
+
       const accessToken: string = localStorage.getItem("accessToken")!;
 
       if (foto) {
-        // console.log(foto);
-
         const imageUrl = await getFileUploadURL(foto, `user/profile/${id}/`);
-        // await userDs.updateProfile({
-        //   id: id,
-        //   avatar: imageUrl,
-        // });
+
         await ProfileDs.updateSettingsData(
           { ...dirtyValues(dirtyFields, getValues()), avatar: imageUrl },
           id,
           accessToken
         );
         setLoading(false);
-        reset();
-        mutate();
+        toast.success("Profile updated successfully");
+        mutate("settings");
+        return reset();
       } else {
         await ProfileDs.updateSettingsData(
           dirtyValues(dirtyFields, getValues()),
@@ -117,8 +112,9 @@ const SettingsForm = () => {
           accessToken
         );
         setLoading(false);
-        reset();
-        mutate();
+        toast.success("Profile updated successfully");
+        mutate("settings");
+        return reset();
       }
     } catch (error) {
       setError("Something went wrong, try again!");
@@ -132,17 +128,16 @@ const SettingsForm = () => {
     (async () => {
       if (debouncedSearchTerm?.length >= 3) {
         const data = await userDs.fetchSearchedUsername(debouncedSearchTerm);
-        if (data) {
+        if (data && data.username !== profile?.username) {
           seterror("username", {
             type: "custom",
             message: "Username is not available",
           });
         }
-        // console.log(data);
       }
     })();
     clearErrors();
-  }, [clearErrors, debouncedSearchTerm, seterror]);
+  }, [clearErrors, debouncedSearchTerm, profile?.username, seterror]);
 
   const target = useRef<HTMLInputElement>(null);
   const handleChange = (e: any) => {
@@ -228,7 +223,9 @@ const SettingsForm = () => {
                     register={register}
                     errors={errors}
                     name="name"
-                    placeholder={"Enter your display name"}
+                    placeholder={
+                      profile?.profile?.name || "Enter your display name"
+                    }
                     value={watch("name")}
                   />
                   <Input
@@ -244,7 +241,7 @@ const SettingsForm = () => {
                     register={register}
                     errors={errors}
                     name="phoneNumber"
-                    placeholder={"+2340000000"}
+                    placeholder={profile?.profile?.phoneNumber || "+2340000000"}
                     value={watch("phoneNumber")}
                   />
 

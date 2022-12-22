@@ -82,7 +82,7 @@ const Index = ({ balance }: properties) => {
           alt="user icon"
           src="/assets/settingsicon.svg"
         />
-        <Link href={`/settings`}>
+        <Link href={`/settings/${user?.id}`}>
           <span>Settings</span>
         </Link>
       </div>

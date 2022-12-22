@@ -194,7 +194,7 @@ function Header() {
             </Link>
           )} */}
           {user && (
-            <Link href="/settings">
+            <Link href={`/settings/${user.id}`}>
               <span>Settings</span>
             </Link>
           )}
