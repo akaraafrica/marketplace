@@ -83,7 +83,6 @@ export default async function profile(
       res.status(200).json("successful");
     } catch (error) {
       console.log(error);
-      res.status(400).json("error");
       res.json({
         error: "There was an error",
       });

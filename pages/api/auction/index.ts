@@ -53,8 +53,6 @@ export default async function profile(
   }
 
   if (req.method === "DELETE") {
-    console.log(req.body);
-
     try {
       const data = await prisma.auction.delete({
         where: {
@@ -62,7 +60,6 @@ export default async function profile(
         },
       });
       console.log("auction deleted");
-
       res.status(200).json(data);
     } catch (error) {
       console.log(error);
