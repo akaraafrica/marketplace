@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import { CollectionDs } from "../../../ds";
+import { CollectionDs, ContributorDs } from "../../../ds";
 import Dialog from "../../global/Dialog/Dialog";
 import styles from "./styles.module.scss";
 import { toast } from "react-toastify";
@@ -93,10 +93,22 @@ const Index: React.FC<Properties> = ({
       };
       try {
         if (collection.status === "VERIFIED") {
-          await collectionsDs.updateStatus({
-            id: collection?.id,
-            status: "DRAFT",
-          });
+          const BatchUpdate = collection?.contributors.forEach(
+            (contributor: { id: string | number }) => {
+              // const contributorId = contributor.id;
+              ContributorDs.updateStatus({
+                id: contributor.id,
+                status: "PENDING",
+              });
+            }
+          );
+          await Promise.all([
+            BatchUpdate,
+            collectionsDs.updateStatus({
+              id: collection?.id,
+              status: "DRAFT",
+            }),
+          ]);
           await CollectionDs.updateBeneficiary(collection.id, data);
           setName("");
           setEmail("");
@@ -128,10 +140,22 @@ const Index: React.FC<Properties> = ({
     } else {
       try {
         if (collection.status === "VERIFIED") {
-          await collectionsDs.updateStatus({
-            id: collection?.id,
-            status: "DRAFT",
-          });
+          const BatchUpdate = collection?.contributors.forEach(
+            (contributor: { id: string | number }) => {
+              // const contributorId = contributor.id;
+              ContributorDs.updateStatus({
+                id: contributor.id,
+                status: "PENDING",
+              });
+            }
+          );
+          await Promise.all([
+            BatchUpdate,
+            collectionsDs.updateStatus({
+              id: collection?.id,
+              status: "DRAFT",
+            }),
+          ]);
           await CollectionDs.addBeneficiary(collection, data);
           setName("");
           setEmail("");
@@ -181,10 +205,22 @@ const Index: React.FC<Properties> = ({
     console.log("selected", selectedUserWithPercent);
     try {
       if (collection.status === "VERIFIED") {
-        await collectionsDs.updateStatus({
-          id: collection?.id,
-          status: "DRAFT",
-        });
+        const BatchUpdate = collection?.contributors.forEach(
+          (contributor: { id: string | number }) => {
+            // const contributorId = contributor.id;
+            ContributorDs.updateStatus({
+              id: contributor.id,
+              status: "PENDING",
+            });
+          }
+        );
+        await Promise.all([
+          BatchUpdate,
+          collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          }),
+        ]);
       }
       await CollectionDs.connectBeneficiary(
         collection,
