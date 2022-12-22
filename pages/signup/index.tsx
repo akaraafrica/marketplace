@@ -32,7 +32,7 @@ const Index = () => {
   const [image, setImage] = useState(null);
   const router = useRouter();
 
-  const { account, activate } = useWeb3React();
+  const { account, activate, active } = useWeb3React();
 
   const target = useRef<HTMLInputElement>(null);
 
@@ -167,7 +167,7 @@ const Index = () => {
       activate(injected);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [active]);
 
   const handleChangeImage = (e?: any) => {
     setImage(e.target.files[0]);
