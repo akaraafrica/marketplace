@@ -58,7 +58,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         id,
       } = req.body;
 
-      const item = await prisma.collection.update({
+      await prisma.collection.update({
         where: {
           id: collectionId,
         },
@@ -80,8 +80,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
       console.log("Beneficiary added");
-      console.log({ item });
-
       res.status(200).json("Beneficiary added");
     } catch (error) {
       console.log(error);

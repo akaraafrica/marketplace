@@ -9,9 +9,6 @@ export default async function profile(
 ) {
   try {
     const data = JSON.parse(req.body);
-
-    console.log("data", data);
-
     const item = await prisma.item.findUnique({
       where: {
         id: data.itemId,
@@ -29,8 +26,6 @@ export default async function profile(
     });
     if (item) {
       const bid = item.bids[0];
-
-      console.log("bid", bid);
 
       const createPurchase = prisma.purchase.create({
         data: {
