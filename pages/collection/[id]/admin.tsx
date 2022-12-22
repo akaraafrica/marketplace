@@ -128,19 +128,33 @@ const Index = () => {
   ) => {
     try {
       if (collection?.status === "VERIFIED") {
-        await collectionsDs.updateStatus({
-          id: collection?.id,
-          status: "DRAFT",
-        });
+        const BatchUpdate = collection?.contributors.forEach(
+          (contributor: { id: string | number }) => {
+            // const contributorId = contributor.id;
+            ContributorDs.updateStatus({
+              id: contributor.id,
+              status: "PENDING",
+            });
+          }
+        );
+        await Promise.all([
+          BatchUpdate,
+          collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          }),
+        ]);
       }
       await CollectionDs.removeContributor(
         collection?.id as number,
         contributorId,
         items
       );
+      toast.success("Contributor removed successfully");
+      mutate();
     } catch (error) {
       console.log(error);
-      toast.error("error");
+      toast.error("Error request not successfull");
     }
   };
   const handleChangePercent = (e: any) => {
@@ -183,10 +197,22 @@ const Index = () => {
 
     try {
       if (collection?.status === "VERIFIED") {
-        await collectionsDs.updateStatus({
-          id: collection?.id,
-          status: "DRAFT",
-        });
+        const BatchUpdate = collection?.contributors.forEach(
+          (contributor: { id: string | number }) => {
+            // const contributorId = contributor.id;
+            ContributorDs.updateStatus({
+              id: contributor.id,
+              status: "PENDING",
+            });
+          }
+        );
+        await Promise.all([
+          BatchUpdate,
+          collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          }),
+        ]);
       }
       const BatchUpdate = collection?.contributors.forEach(
         (contributor: { id: string | number }) => {
@@ -247,11 +273,22 @@ const Index = () => {
   const handleRemoveBeneficiary = async (beneficiary: any) => {
     try {
       if (collection.status === "VERIFIED") {
-        await collectionsDs.updateStatus({
-          id: collection?.id,
-          status: "DRAFT",
-        });
-        await collectionsDs.removeBeneficiary(beneficiary);
+        const BatchUpdate = collection?.contributors.forEach(
+          (contributor: { id: string | number }) => {
+            // const contributorId = contributor.id;
+            ContributorDs.updateStatus({
+              id: contributor.id,
+              status: "ACCEPTED",
+            });
+          }
+        );
+        await Promise.all([
+          BatchUpdate,
+          collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          }),
+        ]);
         mutate();
         toast.success("Beneficiary successful removed");
       }
