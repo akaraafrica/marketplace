@@ -270,7 +270,7 @@ const SettingsForm = ({ profile, mutate }: any) => {
                 register={register}
                 errors={errors}
                 name="twitter"
-                placeholder={"@twitter username"}
+                placeholder={"twitter username"}
                 value={watch("twitter")}
               />
               <Input
@@ -278,7 +278,7 @@ const SettingsForm = ({ profile, mutate }: any) => {
                 register={register}
                 errors={errors}
                 name="facebook"
-                placeholder={"@facebook username"}
+                placeholder={"facebook username"}
                 value={watch("facebook")}
               />
               <Input
@@ -286,7 +286,7 @@ const SettingsForm = ({ profile, mutate }: any) => {
                 register={register}
                 errors={errors}
                 name="instagram"
-                placeholder={"@instagram username"}
+                placeholder={"instagram username"}
                 value={watch("instagram")}
               />
               {/* <div className={styles.addsocialaccountbtn}>
@@ -302,7 +302,8 @@ const SettingsForm = ({ profile, mutate }: any) => {
               <div className={styles.socialtext}>
                 <p>
                   To update your profile settings click the button below.
-                  Profile update may take some seconds to reflect.
+                  Profile update may take some seconds to reflect. You may have
+                  to refresh your browser.
                 </p>
               </div>
               <div className={styles.clearallsec}></div>
