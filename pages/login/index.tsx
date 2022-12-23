@@ -44,10 +44,10 @@ const Index = () => {
     mode: "onTouched",
     resolver: yupResolver(formSchema),
   });
-  // useEffect(() => {
-  //   if (!active) activate(injected);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [active]);
+  useEffect(() => {
+    if (!active) activate(injected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
   const handleTwitterLogin = async () => {
     console.log("twitterlogin");
     if (!account) {
@@ -108,7 +108,7 @@ const Index = () => {
   const submit = async () => {
     if (!account) {
       toast.info("Please connect with metamask to login");
-      setError("Please connect with metamask to signup");
+      setError("Please connect with metamask to login");
       return;
     }
     const data = getValues();
@@ -142,7 +142,7 @@ const Index = () => {
       <OnboardingLayout>
         <div className={styles.login}>
           {isMobile && (
-            <button onClick={handleConnect}>connect Metamask</button>
+            <Button onClick={handleConnect}>Connect Metamask</Button>
           )}
           <h6 className={styles.title}>Login</h6>
           <p className={styles.text}>Log in with your email address</p>
