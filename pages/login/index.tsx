@@ -16,12 +16,14 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/global/Button/Button";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import getMobileOS from "../../utils/helpers/getMobileOS";
 
 const Index = () => {
   const router = useRouter();
   const { account, active, activate } = useWeb3React();
   const { signIn, completeLogin } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
   const [loading, setLoading] = useState(false);
   const formSchema = Yup.object().shape({
     email: Yup.string()
@@ -42,10 +44,10 @@ const Index = () => {
     mode: "onTouched",
     resolver: yupResolver(formSchema),
   });
-  useEffect(() => {
-    if (!active) activate(injected);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  // useEffect(() => {
+  //   if (!active) activate(injected);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [active]);
   const handleTwitterLogin = async () => {
     console.log("twitterlogin");
     if (!account) {
@@ -123,76 +125,92 @@ const Index = () => {
       setError(error.error?.message || error.message);
     }
   };
+  useEffect(() => {
+    const isMobile = getMobileOS();
+    if (isMobile) {
+      setIsMobile(true);
+    }
+  }, []);
+  const handleConnect = async () => {
+    router.push(
+      "https://metamask.app.link/dapp/marketplace.akaraafrica.com/login"
+    );
+  };
 
   return (
-    <OnboardingLayout>
-      <div className={styles.login}>
-        <h6 className={styles.title}>Login</h6>
-        <p className={styles.text}>Log in with your email address</p>
-        {error !== "" && <span className={styles.error}>{error}</span>}
+    !loading && (
+      <OnboardingLayout>
+        <div className={styles.login}>
+          {isMobile && (
+            <button onClick={handleConnect}>connect Metamask</button>
+          )}
+          <h6 className={styles.title}>Login</h6>
+          <p className={styles.text}>Log in with your email address</p>
+          {error !== "" && <span className={styles.error}>{error}</span>}
 
-        <form onSubmit={handleSubmit(submit)}>
-          <div className={styles.inputs}>
-            <OnboardingInput
-              name="email"
-              register={register}
-              errors={errors}
-              label="Email"
-              type="email"
-              placeholder="sarah@gmail.com"
-            />
-            <OnboardingInput
-              name="password"
-              register={register}
-              errors={errors}
-              label="Password"
-              type="password"
-              placeholder="***********"
-            />
-            <Button loading={loading}>Log in</Button>
-          </div>
-        </form>
-        <span
-          className={styles.forgot}
-          onClick={() => router.push("/forgot-password")}
-        >
-          Forgot Password
-        </span>
-        <span className={styles.continue}>Or continue with</span>
-        <div className={styles.socials}>
-          <span>
-            <FcGoogle
-              onClick={handlegoogleLogin}
-              style={{ cursor: "pointer" }}
-            />
-          </span>
-          <span>
-            <FaTwitter
-              color="#1877F2"
-              style={{ cursor: "pointer" }}
-              onClick={handleTwitterLogin}
-            />
-          </span>
-          <span>
-            <FaFacebook
-              color="#1877F2"
-              style={{ cursor: "pointer" }}
-              onClick={handlefacebookLogin}
-            />
-          </span>
-        </div>
-        <p>
-          Don’t have an account?{" "}
+          <form onSubmit={handleSubmit(submit)}>
+            <div className={styles.inputs}>
+              <OnboardingInput
+                name="email"
+                register={register}
+                errors={errors}
+                label="Email"
+                type="email"
+                placeholder="sarah@gmail.com"
+              />
+              <OnboardingInput
+                name="password"
+                register={register}
+                errors={errors}
+                label="Password"
+                type="password"
+                placeholder="***********"
+              />
+              <Button loading={loading}>Log in</Button>
+            </div>
+          </form>
           <span
-            className={styles.signup}
-            onClick={() => router.push("/signup")}
+            className={styles.forgot}
+            onClick={() => router.push("/forgot-password")}
           >
-            {" "}
-            Sign up
+            Forgot Password
           </span>
-        </p>
-      </div>
-    </OnboardingLayout>
+          <span className={styles.continue}>Or continue with</span>
+          <div className={styles.socials}>
+            <span>
+              <FcGoogle
+                onClick={handlegoogleLogin}
+                style={{ cursor: "pointer" }}
+              />
+            </span>
+            <span>
+              <FaTwitter
+                color="#1877F2"
+                style={{ cursor: "pointer" }}
+                onClick={handleTwitterLogin}
+              />
+            </span>
+            <span>
+              <FaFacebook
+                color="#1877F2"
+                style={{ cursor: "pointer" }}
+                onClick={handlefacebookLogin}
+              />
+            </span>
+          </div>
+          <p>
+            Don’t have an account?{" "}
+            <span
+              className={styles.signup}
+              onClick={() => router.push("/signup")}
+            >
+              {" "}
+              Sign up
+            </span>
+          </p>
+        </div>
+      </OnboardingLayout>
+    )
   );
 };
 
