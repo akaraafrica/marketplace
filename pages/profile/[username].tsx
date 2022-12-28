@@ -20,6 +20,7 @@ import NextLink from "../../components/global/Link";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import dynamic from "next/dynamic";
 import SocialShareDialog from "../../components/Profile/SocialShareDialog";
+import Link from "next/link";
 
 const DefaultAvatar = dynamic(
   () => import("../../components/global/DefaultAvatar"),
@@ -147,13 +148,29 @@ const Index = () => {
             </div>
             <div className={styles.social}>
               {profile?.profile?.twitter && (
-                <TbBrandTwitter size={25} color="#777E91" />
+                <Link href={`https://twitter.com/${profile?.profile?.twitter}`}>
+                  <a target="_blank">
+                    <TbBrandTwitter size={25} color="#777E91" />
+                  </a>
+                </Link>
               )}
               {profile.profile?.instagram && (
-                <TbBrandInstagram size={25} color="#777E91" />
+                <Link
+                  href={`https://instagram.com/${profile?.profile?.instagram}`}
+                >
+                  <a target="_blank">
+                    <TbBrandInstagram size={25} color="#777E91" />
+                  </a>
+                </Link>
               )}
               {profile.profile?.facebook && (
-                <RiFacebookCircleLine size={25} color="#777E91" />
+                <Link
+                  href={`https://facebook.com/${profile?.profile?.facebook}`}
+                >
+                  <a target="_blank">
+                    <RiFacebookCircleLine size={25} color="#777E91" />
+                  </a>
+                </Link>
               )}
             </div>
             <hr />
