@@ -11,8 +11,6 @@ interface properties {
   collections: ICollection[];
 }
 const Index = ({ collections }: properties) => {
-  console.log(collections);
-
   return (
     <div className={styles.root}>
       <h2>Hot collections</h2>

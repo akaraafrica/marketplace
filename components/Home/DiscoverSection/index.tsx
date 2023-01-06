@@ -23,7 +23,7 @@ function Discover({ items }: properties) {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
     category: "ALL",
-    verifiedCreator: false,
+    verifiedCreator: "All",
     sort: "Most liked",
     priceRange: 1000,
   });
@@ -162,7 +162,7 @@ function Discover({ items }: properties) {
         <div className={styles.filter}>
           <span>CREATOR</span>
           <CustomSelect
-            placeholder="Verified only"
+            placeholder="All"
             onChange={(e) =>
               handleChange(
                 e,
@@ -173,7 +173,7 @@ function Discover({ items }: properties) {
                 setLoading
               )
             }
-            options={["Non verified only", "Verified only"]}
+            options={["All", "Non verified only", "Verified only"]}
           />
         </div>
         <div className={styles.filter}>

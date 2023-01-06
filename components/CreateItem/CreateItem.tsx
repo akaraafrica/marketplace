@@ -135,6 +135,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
   });
   const [tokenId, setTokenId] = useState("");
   const [uploadId, setUploadId] = useState(0);
+  // console.log(item?.images.slice(0, 3));
 
   const onSubmit = async () => {
     if (item) {
@@ -151,6 +152,7 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       setLoading(true);
       await ItemDs.updateItem({ ...data, id: item!.id });
       let imageArr = [];
+
       for (const image of Object.entries(images)) {
         if (image[1])
           imageArr.push({
@@ -166,7 +168,41 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
       });
       const imageURLs = await Promise.all(promise);
       if (imageURLs.length) {
-        await itemDs.updateData({ id: item!.id, images: imageURLs });
+        let imageArr;
+        const prevImages = item?.images as any;
+        if (imageURLs.length === 1) {
+          imageArr = images["optional1"]
+            ? [
+                ...prevImages?.slice(0, 1),
+                ...imageURLs,
+                ...prevImages?.slice(2, 4),
+              ]
+            : images["optional2"]
+            ? [
+                ...prevImages?.slice(0, 2),
+                ...imageURLs,
+                ...prevImages?.slice(3, 4),
+              ]
+            : [...prevImages?.slice(0, 3), ...imageURLs];
+        } else if (imageURLs.length === 2) {
+          imageArr = !images["optional3"]
+            ? [
+                ...prevImages?.slice(0, 1),
+                ...imageURLs,
+                ...prevImages?.slice(3, 4),
+              ]
+            : !images["optional2"]
+            ? [
+                ...prevImages?.slice(0, 1),
+                ...imageURLs.slice(0, 1),
+                ...prevImages?.slice(2, 3),
+                ...imageURLs.slice(1, 2),
+              ]
+            : [...prevImages.slice(0, 2), ...imageURLs];
+        } else {
+          imageArr = [...prevImages.slice(0, 1), ...imageURLs];
+        }
+        await itemDs.updateData({ id: item!.id, images: imageArr });
       }
       setStep({ ...step, loading: false, complete: true });
       router.push("/item/" + item?.id);
@@ -178,12 +214,10 @@ function SingleCollectibleItem({ item }: { item?: IItem }) {
 
   const handleUpload = async () => {
     if (!user) return;
-    setStep({ ...step, loading: true });
     const data = getValues();
 
     try {
       setStep({ ...step, loading: true });
-      data.description = state.description;
       const result = await ItemDs.createData(data, user);
 
       setUploadId(result.data.id);

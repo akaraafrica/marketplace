@@ -12,9 +12,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         prisma.collection.findMany({
           skip: page * 6 || 0,
           take: 6,
-          // cursor: {
-          //   id: 6,
-          // },
+
+          where: {
+            status: "PUBLISHED",
+          },
           include: {
             author: {
               include: {

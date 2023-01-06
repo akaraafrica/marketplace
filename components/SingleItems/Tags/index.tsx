@@ -17,6 +17,8 @@ import { MdCancel, MdEdit } from "react-icons/md";
 import parse from "html-react-parser";
 import CloseAuctionDialog from "../CloseAuctionDialog";
 import { RiAuctionFill } from "react-icons/ri";
+import CountdownTimer from "../CountdownTimer";
+import { differenceInSeconds, isPast } from "date-fns";
 
 interface infoProperties {
   user: IUser;
@@ -31,6 +33,13 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
 
   const handleClose = () => setOpen(false);
   const { user } = useContext(AuthContext);
+  const auctionHasEnd =
+    isPast(new Date(item.auction?.endTime)) || !item.auction?.open;
+  const auctionHasStart =
+    differenceInSeconds(new Date(item.auction?.startTime), new Date()) < 0;
+
+  const auctionStartDate = new Date(item?.auction?.startTime).getTime();
+  const auctionEndDate = new Date(item?.auction?.endTime).getTime();
 
   return (
     <>
@@ -89,7 +98,7 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
             <div>{item && parse(item.description)}</div>
           </div>
         </div>
-        {user && (
+        {user && !item?.auction?.open && (
           <>
             <div className={styles.buttons}>
               {item.ownerId === user.id && (
@@ -103,17 +112,10 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
               )}
 
               <div>
-                {user.id === Itemuser.id && (
+                {user.id === Itemuser.id && item.published && (
                   <span onClick={() => setOpenAuction(true)}>
                     <RiAuctionFill size={25} />
                     place on auction
-                  </span>
-                )}
-
-                {item?.auction?.open && item.ownerId === user.id && (
-                  <span onClick={() => setOpenCloseAuction(true)}>
-                    <MdCancel size={30} color="orangered" />
-                    close auction
                   </span>
                 )}
               </div>
@@ -131,6 +133,16 @@ const InfoComponent = ({ user: Itemuser, item }: infoProperties) => {
                 )}
             </div>
           </>
+        )}
+        {!auctionHasEnd && (
+          <div>
+            <h5 className={styles.headiing}>
+              {auctionHasStart ? "Auction Ending" : "Auction Starting"}
+            </h5>
+            <CountdownTimer
+              targetDate={auctionHasStart ? auctionEndDate : auctionStartDate}
+            />
+          </div>
         )}
       </div>
     </>

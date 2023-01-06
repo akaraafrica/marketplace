@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 dob: req.body.dob,
                 rating: req.body.rating,
                 avatar: req.body.avatar,
-                // website: req.body.website,
+                website: req.body.website,
                 twitter: req.body.twitter,
                 facebook: req.body.facebook,
                 instagram: req.body.instagram,
@@ -50,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 dob: req.body.dob,
                 rating: req.body.rating,
                 avatar: req.body.avatar,
-                // website: req.body.website,
+                website: req.body.website,
                 twitter: req.body.twitter,
                 facebook: req.body.facebook,
                 instagram: req.body.instagram,
@@ -67,4 +67,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 };
-export default verifyToken(handler);
+export default handler;

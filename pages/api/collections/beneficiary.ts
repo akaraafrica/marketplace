@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               email: email,
               walletAddress: walletAddress,
               description: description,
-              percentage: percentage,
+              percentage: parseInt(percentage),
             },
           },
         },
@@ -58,7 +58,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         id,
       } = req.body;
 
-      const item = await prisma.collection.update({
+      await prisma.collection.update({
         where: {
           id: collectionId,
         },
@@ -73,15 +73,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 email: email,
                 walletAddress: walletAddress,
                 description: description,
-                percentage: percentage,
+                percentage: parseInt(percentage),
               },
             },
           },
         },
       });
       console.log("Beneficiary added");
-      console.log({ item });
-
       res.status(200).json("Beneficiary added");
     } catch (error) {
       console.log(error);
@@ -102,7 +100,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               email: user.email,
               walletAddress: user.walletAddress,
               description: user.description,
-              percentage: user.percentage,
+              percentage: parseInt(user.percentage),
               user: {
                 connect: {
                   id: user.id,

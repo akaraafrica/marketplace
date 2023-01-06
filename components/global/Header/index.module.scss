@@ -41,17 +41,17 @@
 
       .mobileContent {
         position: absolute;
-        top: 120px;
+        top: 60px;
         right: 0;
         transition: 0.9s ease-in-out;
-        background-color: #000000;
+        background-color: #000;
         z-index: 99;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 20px;
-        padding: 20px;
+        padding: 20px 0 0 60px;
 
         span {
           font-size: 24px;
@@ -69,6 +69,42 @@
           cursor: pointer;
           font-size: 20px;
           border-radius: 25px;
+        }
+
+        .balCard {
+          width: 80%;
+          height: auto;
+          background: #23262f;
+          box-shadow: 0px 24px 24px -3px rgba(15, 15, 15, 0.2);
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          padding: 7px;
+          gap: 15px;
+
+          .balDiv {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            .bal {
+              color: #777e91;
+            }
+
+            .amt {
+              color: #fcfcfd;
+              font-size: 20px;
+            }
+          }
+        }
+
+        .list {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          padding: 10px;
+          margin-top: 10px;
+          color: #777e91;
         }
       }
 
@@ -109,6 +145,20 @@
           outline: none;
           border: none;
           flex: 1;
+        }
+
+        .spinner {
+          animation: rotation 2s infinite linear;
+
+          @keyframes rotation {
+            from {
+              transform: rotate(0deg);
+            }
+
+            to {
+              transform: rotate(359deg);
+            }
+          }
         }
 
         img {
@@ -196,6 +246,20 @@
           color: #fcfcfd;
           outline: none;
           border: none;
+        }
+
+        .spinner {
+          animation: rotation 2s infinite linear;
+
+          @keyframes rotation {
+            from {
+              transform: rotate(0deg);
+            }
+
+            to {
+              transform: rotate(359deg);
+            }
+          }
         }
 
         img {
@@ -305,87 +369,3 @@
     }
   }
 }
-
-// @media (max-width: 640px) {
-
-//   .mobile {
-//     width: 100%;
-//     display: flex;
-//     flex-direction: column;
-//     gap: 10px;
-//     position: relative;
-//     padding: 20px;
-
-//     .mobileTop {
-//       display: flex;
-//       align-items: center;
-//       justify-content: space-between;
-//     }
-
-//     .mobileContent {
-//       position: absolute;
-//       top: 120px;
-//       right: 0;
-//       transition: 0.9s ease-in-out;
-//       background-color: #000000;
-//       z-index: 99;
-//       width: 100%;
-//       display: flex;
-//       flex-direction: column;
-//       align-items: center;
-//       gap: 20px;
-//       padding: 20px;
-
-//       span {
-//         font-size: 24px;
-//         color: #777e90;
-//       }
-
-//       button {
-//         background-color: #f2994a;
-//         padding: 6px;
-//         border: 1px solid #f2994a;
-//         color: #fcfcfd;
-//         width: 150px;
-//         font-size: 20px;
-//         border-radius: 25px;
-//       }
-//     }
-
-//     .contentNone {
-//       position: absolute;
-//       top: 120px;
-//       right: -120%;
-//       transition: 0.9s ease-in-out;
-//       background-color: #000000;
-//       z-index: 99;
-//       width: 100%;
-//       display: flex;
-//       flex-direction: column;
-//       align-items: center;
-//       gap: 20px;
-//       padding: 20px;
-
-//       span {
-//         font-size: 24px;
-//         color: #777e90;
-//       }
-
-//       button {
-//         background-color: #f2994a;
-//         padding: 6px;
-//         border: 1px solid #f2994a;
-//         color: #fcfcfd;
-//         width: 150px;
-//         font-size: 20px;
-//         border-radius: 25px;
-//       }
-//     }
-//   }
-// }
-
-// @media (min-width: 1440px) {
-//   .header {
-//     padding: 20px 15vw;
-//   }
-// }

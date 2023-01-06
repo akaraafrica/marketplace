@@ -12,7 +12,6 @@ interface properties {
 
 function HotCollectionCard(props: properties) {
   const { id, images, title, author, items, draftItems } = props.collection;
-  // console.log(props.collection);
 
   return (
     <div className={styles.root}>
@@ -46,9 +45,9 @@ function HotCollectionCard(props: properties) {
       <div className={styles.infoDiv}>
         <h4>{title && title}</h4>
         <div className={styles.bottom}>
-          <Link href={`/profile/${author?.id}`}>
-            <div className={styles.left}>
-              {author?.profile?.avatar && (
+          {/* <Link href={`/profile/${author?.id}`}> */}
+          <div className={styles.left}>
+            {/* {author?.profile?.avatar && (
                 <a>
                   <NextImage
                     className={styles.image}
@@ -57,21 +56,21 @@ function HotCollectionCard(props: properties) {
                     height="50px"
                   />
                 </a>
-              )}
-              <div className={styles.owner}>
-                <DefaultAvatar
-                  username={author?.username}
-                  url={author?.profile?.avatar}
-                  width="40px"
-                  height="40px"
-                  walletAddress={author?.walletAddress || ""}
-                  fontSize="0.7em"
-                  length={1}
-                />{" "}
-                {getUserName(author)}
-              </div>
+              )} */}
+            <div className={styles.owner}>
+              <DefaultAvatar
+                username={author?.username}
+                url={author?.profile?.avatar}
+                width="50px"
+                height="50px"
+                walletAddress={author?.walletAddress || ""}
+                fontSize="0.7em"
+                length={1}
+              />
             </div>
-          </Link>
+            <p>{author.username}</p>
+          </div>
+          {/* </Link> */}
           <span>{items?.length || draftItems?.length || 0} Items</span>
         </div>
       </div>

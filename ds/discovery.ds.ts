@@ -27,14 +27,10 @@ class Discovery {
     }
   }
   async getPageData(filterBy: any, page: any) {
-    // console.log(filterBy);
-
     try {
       const res = await api.get(
         `${url}/getpage?page=${page}&category=${filterBy.category}&verifiedCreator=${filterBy.verifiedCreator}&sort=${filterBy.sort}&priceRange=${filterBy.priceRange}`
       );
-      // console.log(res);
-
       return res.data;
     } catch (error) {
       console.log(error);

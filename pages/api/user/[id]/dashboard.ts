@@ -98,12 +98,14 @@ export default async function Fetch(req: NextApiRequest, res: NextApiResponse) {
 
       // @ts-ignore: Unreachable code error
       const userWithoutPassword = exclude(user, "password");
-      const { items, collections, likes } = userWithoutPassword as any;
+      const { items, collections, likes, walletAddress } =
+        userWithoutPassword as any;
       return res.status(200).json({
         items,
         collections,
         likes,
         bids,
+        walletAddress,
         mindtedItems,
         TotalMintedSold,
         TotalAuctionSold,

@@ -28,6 +28,7 @@ const twitterLogin = async (account: any, setError: any, setVerify?: any) => {
           email: user.email,
           password: user.uid,
           name: user.displayName,
+          username: user.email?.split("@")[0],
           dob: null,
           gender: null,
         });
@@ -46,14 +47,14 @@ const twitterLogin = async (account: any, setError: any, setVerify?: any) => {
   } catch (error: any) {
     console.log(error);
     if (error.code === "auth/account-exists-with-different-credential") {
-      setError("Use email or google to login");
+      throw new Error("Use email or google to login");
     }
     if (error.response?.status === 401)
-      return setError(error?.response?.data?.message);
+      throw new Error(error?.response?.data?.message);
     if (error?.response?.status === 409)
-      return setError(error?.response?.data?.message);
+      throw new Error(error?.response?.data?.message);
     if (error?.response?.status === 500)
-      return setError("Server error, please try again later");
+      throw new Error("Server error, please try again later");
   }
 };
 export default twitterLogin;

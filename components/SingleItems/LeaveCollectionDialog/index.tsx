@@ -14,10 +14,10 @@ export const LeaveCollectionDialog = ({ open, handleClose, item }: any) => {
       const newData = { ...item, collectionId: null };
       mutate("item" + item.id, () => newData, false);
       handleClose();
-      toast.success("item successfully remmoved");
+      toast.success("Item successfully removed");
     } catch (error) {
       console.log(error);
-      toast.error("error removing item");
+      toast.error("Error removing item");
       handleClose();
     }
   };

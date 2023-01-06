@@ -21,7 +21,7 @@ export const PutOnSaleDialog = ({ open, handleClose, item }: any) => {
       handleClose();
       toast.success(
         `item ${
-          item.published ? "remove from sale" : "placed on sale"
+          item.published ? "Removed from sale" : "Placed on sale"
         } successfully`
       );
       await ItemDs.updateItem({ ...item, published: !item.published });

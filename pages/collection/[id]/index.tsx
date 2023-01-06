@@ -72,7 +72,7 @@ const Index = ({ collection }: properties) => {
               onClick={() => setOpen(3)}
               className={open === 3 ? styles.active : ""}
             >
-              Participates
+              Participants
             </span>
           </section>
 

@@ -2,7 +2,6 @@ import React from "react";
 import { Backdrop } from "@mui/material";
 import styles from "./index.module.scss";
 import ClickAwayListener from "@mui/base/ClickAwayListener";
-import itemDs from "../../../ds/item.ds";
 import Link from "next/link";
 
 interface Properties {
@@ -11,8 +10,6 @@ interface Properties {
   handleClose: () => void;
 }
 const Index = ({ open, data, handleClose }: Properties) => {
-  console.log(data);
-
   return (
     <Backdrop
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

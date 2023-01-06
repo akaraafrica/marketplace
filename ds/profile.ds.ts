@@ -1,3 +1,4 @@
+import { data } from "cypress/types/jquery";
 import { api } from "../services/apiClient";
 
 const url = `/api/user`;
@@ -24,6 +25,7 @@ class Profile {
   async fetchSettings(id: number) {
     try {
       const res = await api.get(`/api/settings/${id}`);
+      console.log("settings", res.data);
       return res.data;
     } catch (error) {
       console.log(error);

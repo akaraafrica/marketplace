@@ -43,6 +43,7 @@ const Link: any = dynamic(() => import("next/link"));
 const Box: any = dynamic(() => import("@mui/material/Box"));
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { IContributor } from "../../../types/contributors.interface";
 
 const Index = () => {
   const router = useRouter();
@@ -68,9 +69,12 @@ const Index = () => {
   const [openAddBeneficiary, setOpenAddBeneficiary] = useState(false);
   const [openPublish, setOpenPublish] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [sendmailLoading, setSendmailLoading] = useState(false);
   const [warning, setWarning] = useState<
-    "SAVE" | "ADD" | "REMOVE" | "EDIT" | null
+    "SAVE" | "ADD" | "REMOVE" | "EDIT" | "REMOVE_CONTRIBUTOR" | null
   >(null);
+  const [selectedContributor, setSelectedContributor] = useState<any>(null);
 
   const handlePublish = () => {
     setOpenPublish(true);
@@ -124,19 +128,33 @@ const Index = () => {
   ) => {
     try {
       if (collection?.status === "VERIFIED") {
-        await collectionsDs.updateStatus({
-          id: collection?.id,
-          status: "DRAFT",
-        });
+        const BatchUpdate = collection?.contributors.forEach(
+          (contributor: { id: string | number }) => {
+            // const contributorId = contributor.id;
+            ContributorDs.updateStatus({
+              id: contributor.id,
+              status: "PENDING",
+            });
+          }
+        );
+        await Promise.all([
+          BatchUpdate,
+          collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          }),
+        ]);
       }
       await CollectionDs.removeContributor(
         collection?.id as number,
         contributorId,
         items
       );
+      toast.success("Contributor removed successfully");
+      mutate();
     } catch (error) {
       console.log(error);
-      toast.error("error");
+      toast.error("Error request not successfull");
     }
   };
   const handleChangePercent = (e: any) => {
@@ -168,6 +186,7 @@ const Index = () => {
   };
   const handleSave = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     if (handlePercentCheck() !== 100) {
       return;
     }
@@ -178,10 +197,22 @@ const Index = () => {
 
     try {
       if (collection?.status === "VERIFIED") {
-        await collectionsDs.updateStatus({
-          id: collection?.id,
-          status: "DRAFT",
-        });
+        const BatchUpdate = collection?.contributors.forEach(
+          (contributor: { id: string | number }) => {
+            // const contributorId = contributor.id;
+            ContributorDs.updateStatus({
+              id: contributor.id,
+              status: "PENDING",
+            });
+          }
+        );
+        await Promise.all([
+          BatchUpdate,
+          collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          }),
+        ]);
       }
       const BatchUpdate = collection?.contributors.forEach(
         (contributor: { id: string | number }) => {
@@ -196,26 +227,37 @@ const Index = () => {
         BatchUpdate,
         collectionsDs.updateStatus({ id: collection?.id, status: "READY" }),
       ]);
+      toast.success("Saved successfully");
       mutate();
     } catch (error) {
+      toast.error("Error, save not successfull");
       console.log(error);
     }
+    setLoading(false);
     console.log(percentages);
   };
   const handleSendEmails = async () => {
-    console.log("email sent");
-    const AdminContributor = collection?.contributors.find(
-      (con) => con.userId === collection.author.id
-    );
-    await Promise.all([
-      ContributorDs.sendNotifications({ collection, user }),
-      ContributorDs.updateStatus({
-        id: AdminContributor?.id,
-        status: "ACCEPTED",
-      }),
-      collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" }),
-    ]);
-    toast.success("Notifications sent successfully");
+    setSendmailLoading(true);
+    try {
+      const AdminContributor = collection?.contributors.find(
+        (con) => con.userId === collection.author.id
+      );
+      await Promise.all([
+        ContributorDs.sendNotifications({ collection, user }),
+        ContributorDs.updateStatus({
+          id: AdminContributor?.id,
+          status: "ACCEPTED",
+        }),
+        collectionsDs.updateStatus({ id: collection?.id, status: "PENDING" }),
+      ]);
+      console.log("email sent");
+      toast.success("Notifications sent successfully");
+      mutate();
+    } catch (error) {
+      toast.error("Error, notifications not sent");
+      console.log(error);
+    }
+    setSendmailLoading(false);
   };
   if (!collection) {
     return <h1>404</h1>;
@@ -231,11 +273,22 @@ const Index = () => {
   const handleRemoveBeneficiary = async (beneficiary: any) => {
     try {
       if (collection.status === "VERIFIED") {
-        await collectionsDs.updateStatus({
-          id: collection?.id,
-          status: "DRAFT",
-        });
-        await collectionsDs.removeBeneficiary(beneficiary);
+        const BatchUpdate = collection?.contributors.forEach(
+          (contributor: { id: string | number }) => {
+            // const contributorId = contributor.id;
+            ContributorDs.updateStatus({
+              id: contributor.id,
+              status: "ACCEPTED",
+            });
+          }
+        );
+        await Promise.all([
+          BatchUpdate,
+          collectionsDs.updateStatus({
+            id: collection?.id,
+            status: "DRAFT",
+          }),
+        ]);
         mutate();
         toast.success("Beneficiary successful removed");
       }
@@ -297,7 +350,7 @@ const Index = () => {
       <WarningDialog
         open={warning}
         handleClose={() => setWarning(null)}
-        handleContinue={(e: any, beneficiary: any) => {
+        handleContinue={(e: any) => {
           if (warning === "SAVE") {
             setWarning(null);
             return handleSave(e);
@@ -312,7 +365,19 @@ const Index = () => {
           }
           if (warning === "REMOVE") {
             setWarning(null);
-            return handleRemoveBeneficiary(beneficiary);
+            console.log("beneficiary", selectBeneficiary);
+
+            return handleRemoveBeneficiary(selectBeneficiary);
+          }
+          if (warning === "REMOVE_CONTRIBUTOR") {
+            setWarning(null);
+            console.log("contributor", selectedContributor);
+            return handleRemoveContributor(
+              selectedContributor.id,
+              collection.items?.filter((item) => {
+                return item.ownerId === selectedContributor.userId;
+              })
+            );
           }
           return;
         }}
@@ -356,7 +421,20 @@ const Index = () => {
                       className={styles.btnSave2}
                       onClick={handleSendEmails}
                     >
-                      Send Emails
+                      {sendmailLoading ? (
+                        <>
+                          Sending notifications{" "}
+                          <NextImage
+                            width="20px"
+                            height="20px"
+                            className={styles.spinner}
+                            src={`/assets/singleItem/spinner.svg`}
+                            alt=""
+                          />
+                        </>
+                      ) : (
+                        "Send Emails"
+                      )}
                     </button>
                   )}
                 {collection.type !== "ORDINARY" && (
@@ -370,16 +448,31 @@ const Index = () => {
                     }}
                     disabled={handlePercentCheck() !== 100}
                   >
-                    Save
+                    {loading ? (
+                      <>
+                        Saving{" "}
+                        <NextImage
+                          width="20px"
+                          height="20px"
+                          className={styles.spinner}
+                          src={`/assets/singleItem/spinner.svg`}
+                          alt=""
+                        />
+                      </>
+                    ) : (
+                      "Save"
+                    )}
                   </button>
                 )}
 
                 {/* <button>Payout Funds</button> */}
-                <Link href={`/collection/create?id=${collection?.id}`}>
-                  <button>
-                    Edit Collection Details <BiRightArrowAlt />
-                  </button>
-                </Link>
+                {collection.status !== "PUBLISHED" && (
+                  <Link href={`/collection/create?id=${collection?.id}`}>
+                    <button>
+                      Edit Collection Details <BiRightArrowAlt />
+                    </button>
+                  </Link>
+                )}
                 {collection.status === "VERIFIED" && (
                   <button className={styles.btnPublish} onClick={handlePublish}>
                     publish
@@ -488,11 +581,11 @@ const Index = () => {
                         {contributor && (
                           <DefaultAvatar
                             url={contributor?.user?.profile?.avatar}
-                            username={contributor.user.username}
-                            width={"88px"}
-                            height={"88px"}
+                            username={contributor?.user.username}
+                            width="88px"
+                            height="88px"
                             walletAddress={contributor?.user.walletAddress}
-                            fontSize={"8px"}
+                            // fontSize={"8px"}
                           />
                         )}
                         <div className={styles.details}>
@@ -511,7 +604,8 @@ const Index = () => {
                           </div>
                           <div className={styles.btnDiv}>
                             {contributor.userId !== user?.id &&
-                              collection.author.id === user?.id && (
+                              collection.author.id === user?.id &&
+                              collection.status !== "PUBLISHED" && (
                                 <>
                                   <button
                                     style={{
@@ -527,7 +621,11 @@ const Index = () => {
                                     {contributor.confirmation}
                                   </button>
                                   <button
-                                    onClick={() =>
+                                    onClick={() => {
+                                      if (collection.status === "VERIFIED") {
+                                        setSelectedContributor(contributor);
+                                        return setWarning("REMOVE_CONTRIBUTOR");
+                                      }
                                       handleRemoveContributor(
                                         contributor.id,
                                         collection.items?.filter((item) => {
@@ -535,8 +633,8 @@ const Index = () => {
                                             item.ownerId === contributor.userId
                                           );
                                         })
-                                      )
-                                    }
+                                      );
+                                    }}
                                     className={styles.btnRemove}
                                   >
                                     Remove
@@ -691,6 +789,7 @@ const Index = () => {
                         color="#fff"
                         onClick={() => {
                           if (collection.status === "VERIFIED") {
+                            setSelectBeneficiary(beneficiary);
                             return setWarning("EDIT");
                           }
                           return setOpenAddBeneficiary(true);
@@ -701,6 +800,7 @@ const Index = () => {
                         color="orangered"
                         onClick={() => {
                           if (collection.status === "VERIFIED") {
+                            setSelectBeneficiary(beneficiary);
                             return setWarning("REMOVE");
                           }
                           return handleRemoveBeneficiary(beneficiary);
@@ -721,17 +821,33 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   const cookie = getCookies(ctx);
 
-  let collection: { data: ICollection } = await CollectionDs.getCollectionById(
-    id
-  );
+  let collection: ICollection = await CollectionDs.getCollectionById(id);
 
-  // if (!collection) return { notFound: true };
+  if (!collection)
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
 
-  // const isContributor = collection.contributors.find((contributor) => {
-  //   return contributor.user.walletAddress == cookie.address;
-  // });
-  // if (!isContributor) return { notFound: true };
-  // if (!Object.keys(isContributor!).length) return { notFound: true };
+  const isContributor = collection.contributors.find((contributor) => {
+    return contributor.user.walletAddress == cookie.address;
+  });
+  if (!isContributor)
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  if (!Object.keys(isContributor!).length)
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
 
   return {
     props: {

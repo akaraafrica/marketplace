@@ -24,9 +24,6 @@ export default async function profile(
         item,
         bidAmount: amount,
       });
-
-      res.status(200);
-
       res.status(200).json(data);
       console.log(data);
     } catch (error) {

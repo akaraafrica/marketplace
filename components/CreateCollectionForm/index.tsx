@@ -60,6 +60,8 @@ const Index = ({ collection }: { collection: ICollection }) => {
       setSelectedUser([...selectedUser, user]);
     }
   }, []);
+  // console.log(collection);
+
   useEffect(() => {
     if (collection) {
       setValue("title", collection.title);
@@ -71,6 +73,11 @@ const Index = ({ collection }: { collection: ICollection }) => {
       setSelectedUser(contributors);
       setSelectedItems(collection.items);
       setValue("items", collection.items);
+      setValue("image", collection.images[0]);
+      setError("image", {});
+      setValue("desc", collection.description);
+      setError("desc", {});
+      setValue("type", collection.type);
     }
   }, [collection, setValue]);
   useEffect(() => {
@@ -563,20 +570,20 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 {searchUser &&
                   searchedUser
                     ?.filter((userS) => userS.id !== user?.id)
-                    .map((user, index) => (
+                    .map((userS, index) => (
                       <span
                         key={index}
                         onClick={() => {
                           for (let i = 0; i < selectedUser.length; i++) {
                             if (
                               selectedUser[i].walletAddress ===
-                              user.walletAddress
+                              userS.walletAddress
                             ) {
                               toast.warning("User already selected");
                               return;
                             }
                           }
-                          setSelectedUser([...selectedUser, user]);
+                          setSelectedUser([...selectedUser, userS]);
                           setSearchUser("");
                           setResultDisplay(false);
                         }}
@@ -584,13 +591,14 @@ const Index = ({ collection }: { collection: ICollection }) => {
                         <div className={styles.avatarFlex}>
                           <DefaultAvatar
                             fontSize=".6rem"
-                            username={user!.username}
-                            url={user?.profile?.avatar}
-                            walletAddress={user.walletAddress}
+                            username={userS!.username}
+                            url={userS?.profile?.avatar}
+                            walletAddress={userS.walletAddress}
                             width="56px"
                             height="56px"
+                            notActiveLink={true}
                           />
-                          <p>{user.email && user.email}</p>
+                          <p>{userS.email && userS.email}</p>
                         </div>
                       </span>
                     ))}
@@ -619,11 +627,12 @@ const Index = ({ collection }: { collection: ICollection }) => {
                     </div>
                     <DefaultAvatar
                       fontSize=".6rem"
-                      username={user!.username}
-                      url={user?.profile?.avatar}
+                      username={selUser!.username}
+                      url={selUser?.profile?.avatar}
                       walletAddress={selUser.walletAddress}
                       width="56px"
                       height="56px"
+                      notActiveLink={true}
                     />
                   </div>
                 ))}
@@ -797,23 +806,17 @@ const Index = ({ collection }: { collection: ICollection }) => {
                 </div>
               </div>
               <div className={styles.infoDiv}>
-                <h4>{(title && title) || "Amazing Digital Art"}</h4>
+                <h4>{title && title}</h4>
                 <div className={styles.bottom}>
                   <div className={styles.left}>
-                    <Image
-                      className={styles.image}
-                      src={
-                        collection?.author?.profile?.avatar ||
-                        `/assets/avatar.png`
-                      }
-                      width="50px"
-                      height="50px"
-                      alt=""
+                    <DefaultAvatar
+                      username={user?.username}
+                      walletAddress={user?.walletAddress!}
+                      url=""
                     />
-
-                    <div className={styles.owner}>
-                      {getUserName(collection?.author)}
-                    </div>
+                    {user && (
+                      <div className={styles.owner}>{getUserName(user)}</div>
+                    )}
                   </div>
                   <span>{selectedItems && selectedItems.length} Items</span>
                 </div>

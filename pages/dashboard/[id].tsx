@@ -16,6 +16,7 @@ import withAuth from "../../HOC/withAuth";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 import { useRouter } from "next/router";
 import DashboardSidebar from "../../components/Dashboard/DashboardSidebar";
+import { getCookies } from "cookies-next";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -30,7 +31,8 @@ const Dashboard = () => {
   const { data, mutate } = useSWR(["dashboard", id], () =>
     ProfileDs.getDashboradData(id)
   );
-  const { items, collections, likes, bids } = data as {
+
+  const { items, collections } = data as {
     items: IItem[];
     collections: ICollection[];
     likes: ILike[];
@@ -108,7 +110,15 @@ const Dashboard = () => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
   const data = await ProfileDs.getDashboradData(id);
-
+  const cookie = getCookies(ctx);
+  if (cookie?.address !== data?.walletAddress || !data) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
       fallback: {
@@ -125,28 +135,3 @@ const Page = ({ fallback }: any) => {
   );
 };
 export default withAuth(Page);
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Box color="ActiveBorder">{children}</Box>
-        </Box>
-      )}
-    </div>
-  );
-}
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}

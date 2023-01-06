@@ -17,9 +17,11 @@ import { useRouter } from "next/router";
 
 const Index = ({ open, handleClose, name }: any) => {
   const router = useRouter();
-  const url = `${window.location.origin || process.env.NEXT_PUBLIC_DOMAIN}${
-    router.asPath
-  }`;
+  // let url;
+  if (typeof window !== "undefined") {
+    // browser code
+  }
+  const url = `${process.env.NEXT_PUBLIC_DOMAIN}${router.asPath}`;
   return (
     <Dialog open={open} handleClose={handleClose}>
       <main className={styles.main}>

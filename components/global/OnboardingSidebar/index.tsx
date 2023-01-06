@@ -2,12 +2,12 @@
 // TODO: convert this to NextImage when given the chance
 import React, { useState } from "react";
 import styles from "./index.module.scss";
-import { AiOutlineTwitter, AiOutlineGoogle } from "react-icons/ai";
+import { AiOutlineTwitter, AiOutlineInstagram } from "react-icons/ai";
 import { TiSocialFacebook } from "react-icons/ti";
 import Link from "../Link";
 
 const OnboardingSideBar = () => {
-  const [swipe, setSwipe] = useState(false);
+  // const [swipe, setSwipe] = useState(false);
 
   return (
     <div className={styles.sideBar}>
@@ -44,9 +44,21 @@ const OnboardingSideBar = () => {
         </ul>
       </div>
       <div className={styles.icons}>
-        <AiOutlineTwitter color="#F78F21" />
-        <TiSocialFacebook color="#ffffff" />
-        <AiOutlineGoogle color="#ffffff" />
+        <Link href={"https://twitter.com/akara4africa"}>
+          <a target="_blank">
+            <AiOutlineTwitter color="#F78F21" />
+          </a>
+        </Link>
+        <Link href={"https://www.facebook.com/akara4africa"}>
+          <a target="_blank">
+            <TiSocialFacebook color="#ffffff" />
+          </a>
+        </Link>
+        <Link href={"https://www.instagram.com/akara4africa"}>
+          <a target="_blank">
+            <AiOutlineInstagram color="#ffffff" />
+          </a>
+        </Link>
       </div>
     </div>
   );
