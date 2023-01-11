@@ -1,4 +1,5 @@
 import React from "react";
+import { string } from "yup/lib/locale";
 import styles from "./index.module.scss";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
   register: any;
   errors: any;
   autoComplete?: string;
+  dataTestId?: string;
 }
 const OnboardingInput = ({
   label,
@@ -18,6 +20,7 @@ const OnboardingInput = ({
   register,
   errors,
   autoComplete,
+  dataTestId,
 }: Props) => {
   return (
     <div className={errors && errors[name] && errors[name] ? styles.error : ""}>
@@ -29,6 +32,7 @@ const OnboardingInput = ({
           placeholder={placeholder}
           name={name}
           autoComplete={autoComplete}
+          data-testid={dataTestId}
         />
       </div>
       {errors[name] && <span>{errors[name].message}</span>}

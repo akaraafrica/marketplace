@@ -3,6 +3,7 @@
   "include": ["**/*.ts"],
   "exclude": ["**/node_modules", "**/.*/"],
   "compilerOptions": {
+    "baseUrl": "http://localhost:3000",
     "target": "es5",
     "types": ["cypress", "node"],
     "lib": ["es2015", "dom"],

@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  margin-left: 200px;
+  @media (max-width: 1024px) {
+    margin-left: 0px;
+  }
 
   .title {
     font-style: normal;

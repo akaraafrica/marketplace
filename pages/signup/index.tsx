@@ -271,6 +271,7 @@ const Index = () => {
               label="Full Name"
               name="name"
               type="text"
+              dataTestId="fullname"
               placeholder="John Smith"
             />
             <OnboardingInput
@@ -279,6 +280,7 @@ const Index = () => {
               label="Username"
               name="username"
               type="text"
+              dataTestId="username"
               placeholder="Johnsmith"
               autoComplete="off"
             />
@@ -288,6 +290,7 @@ const Index = () => {
               label="Email"
               name="email"
               type="email"
+              dataTestId="email"
               placeholder="johnsmith@gmail.com"
             />
             <OnboardingInput
@@ -296,13 +299,15 @@ const Index = () => {
               label="Password"
               name="password"
               type="password"
+              dataTestId="password"
               placeholder="***********"
             />
             <OnboardingInput
               register={register}
               errors={errors}
-              label="Password"
+              label="Confirm Password"
               name="confirmPassword"
+              dataTestId="confirmPassword"
               type="password"
               placeholder="***********"
             />
@@ -316,6 +321,7 @@ const Index = () => {
               >
                 <div className={styles.btns}>
                   <button
+                    data-testid="gender"
                     className={
                       gender === "MALE" ? styles.active : styles.button
                     }
@@ -369,9 +375,12 @@ const Index = () => {
                 errors={{ ...errors, ...error }}
                 name="birthdate"
                 placeholder="choose your DOB"
+                dataTestId="dob"
               />
             </div>
             <Button
+              type="submit"
+              data-testid="submit"
               loading={loading}
               disabled={
                 Object.values(error).filter((e) => e !== null).length > 0
@@ -383,30 +392,20 @@ const Index = () => {
 
           <span className={styles.continue}>Or continue with</span>
           <div className={styles.socials}>
-            <span>
-              <FcGoogle
-                onClick={handlegoogleLogin}
-                style={{ cursor: "pointer" }}
-              />
+            <span data-testid="google" onClick={handlegoogleLogin}>
+              <FcGoogle style={{ cursor: "pointer" }} />
             </span>
-            <span>
-              <FaTwitter
-                color="#1877F2"
-                style={{ cursor: "pointer" }}
-                onClick={handleTwitterLogin}
-              />
+            <span data-testid="twitter" onClick={handleTwitterLogin}>
+              <FaTwitter color="#1877F2" style={{ cursor: "pointer" }} />
             </span>
-            <span>
-              <FaFacebook
-                color="#1877F2"
-                style={{ cursor: "pointer" }}
-                onClick={handlefacebookLogin}
-              />
+            <span data-testid="facebook" onClick={handlefacebookLogin}>
+              <FaFacebook color="#1877F2" style={{ cursor: "pointer" }} />
             </span>
           </div>
           <p>
             Don’t have an account?{" "}
             <span
+              data-testid="login"
               className={styles.signup}
               onClick={() => router.push("/login")}
             >
