@@ -156,6 +156,7 @@ const Index = () => {
                 errors={errors}
                 label="Email"
                 type="email"
+                dataTestId="email"
                 placeholder="sarah@gmail.com"
               />
               <OnboardingInput
@@ -164,9 +165,12 @@ const Index = () => {
                 errors={errors}
                 label="Password"
                 type="password"
+                dataTestId="password"
                 placeholder="***********"
               />
-              <Button loading={loading}>Log in</Button>
+              <Button type="submit" data-testid="submit" loading={loading}>
+                Log in
+              </Button>
             </div>
           </form>
           <span
