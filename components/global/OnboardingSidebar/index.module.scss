@@ -5,7 +5,8 @@
   padding: 100px 50px 32px;
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  align-items: flex-start;
+  gap: 50px;
 
   @media (max-width: 800px) {
     width: 100%;
@@ -15,6 +16,7 @@
   .image {
     width: 129px;
     height: 46.06px;
+    cursor: pointer;
   }
 
   .leftCenter {

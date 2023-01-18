@@ -2,14 +2,17 @@
   width: 100%;
   display: flex;
   background-color: #ffffff;
-  @media (max-width: 800px) {
+  @media (max-width: 1024px) {
     width: 100%;
   }
 
   .sidebar {
     width: 400px;
     height: 130vh !important;
-    @media (max-width: 800px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    @media (max-width: 1024px) {
       position: fixed;
       margin-left: -150%;
       transition: 5s;
@@ -18,13 +21,14 @@
   }
 
   .children {
-    width: calc(100% - 400px);
-    padding: 100px 0 0;
+    width: calc(100% - 0px);
+    justify-content: right;
+    padding: 100px;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    // justify-content: center;
+    // align-items: flex-start;
     text-align: center;
-    @media (max-width: 800px) {
+    @media (max-width: 1024px) {
       width: 100%;
     }
   }
