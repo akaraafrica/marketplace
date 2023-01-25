@@ -4,42 +4,71 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import VerifyEmail from "../../components/global/VerifyEmail";
 import OnboardingLayout from "../../components/global/OnboardingLayout";
+import OnboardingInput from "../../components/global/OnboardingInput";
+import Button from "../../components/global/Button/Button";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const Index = () => {
   const [email, setEmail] = useState("");
   const [verify, setVerify] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const email = e.target.value;
-    setEmail(email);
-  };
+  const formSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(4, "Password length should be at least 4 characters")
+      .max(25, "Password cannot exceed more than 20 characters"),
+  });
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const pattern =
-      /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
-    const result = pattern.test(email);
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    mode: "onTouched",
+    resolver: yupResolver(formSchema),
+  });
+
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const email = e.target.value;
+  //   setEmail(email);
+  // };
+
+  const submit = async () => {
+    // const pattern =
+    //   /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+    // const result = pattern.test(email);
+    const data = getValues();
+    setLoading(true);
 
     try {
-      if (!email) {
-        return setError("Email field is empty");
-      }
-      if (!result) {
-        return setError("Invalid email, check email and try again");
-      }
+      // if (!email) {
+      //   return setError("Email field is empty");
+      // }
+      // if (!result) {
+      //   return setError("Invalid email, check email and try again");
+      // }
 
       const res = await axios.post("/api/user/forgot-password", {
-        email: email,
+        email: data.email,
       });
 
       if (res.status === 200) {
+        setLoading(false);
         setVerify(true);
         return toast.success(
           "Email has been sent to mailbox with reset password link."
         );
       }
     } catch (error: any) {
+      setLoading(false);
       if (error.response.status === 401) {
         return setError(error.response.data.message);
       }
@@ -63,15 +92,20 @@ const Index = () => {
           <h6 className={styles.title}>Forgot Password</h6>
           <p>Type your correct email address to get your password reset link</p>
           {error !== "" && <span className={styles.error}>{error}</span>}
-          <div className={styles.action}>
-            {/* <OnboardingInput
-              label="Email"
+          <form className={styles.action} onSubmit={handleSubmit(submit)}>
+            <OnboardingInput
               name="email"
+              register={register}
+              errors={errors}
+              label="Email"
               type="email"
-              placeholder="example@gmail.com"
-            /> */}
-            {/* <Button text="Reset Password" onClick={handleSubmit} /> */}
-          </div>
+              dataTestId="email"
+              placeholder="sarah@gmail.com"
+            />
+            <Button type="submit" data-testid="submit">
+              Reset Password
+            </Button>
+          </form>
         </div>
       )}
     </OnboardingLayout>

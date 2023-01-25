@@ -6,7 +6,7 @@ type Prop = {
   disabled?: boolean;
   loading?: boolean;
   customStyle?: {};
-  onClick?: () => void;
+  onClick?: any;
   type?: "button" | "reset" | "submit" | undefined;
 };
 
